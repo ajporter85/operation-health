@@ -209,9 +209,13 @@ Phase 2 ships in small, independently-useful slices, smallest-first:
    existing DailyLog (no new data entities). Evolved scoring + streak; added the 7-day
    dot strip. Built in three commits: 1a rename+migration+config seed, 1b graded engine,
    1c dot strip + band coloring.
-2. **Slice 2 — Trend charts. ← next up.** Weight, steps, sleep over time. **Hand-rolled
-   inline SVG, zero dependencies** to start (see "Charting dependency" below).
-3. **Slice 3 — Multi-level log inspection.** Browse a day → week → month (parked idea).
+2. **Slice 2 — Trend charts. ✅ SHIPPED (2026-07-05).** Weight, steps, sleep over time as
+   **hand-rolled inline SVG, zero dependencies**. Built in four commits: 2a Trends tab +
+   weight chart (buildSeries / seriesStats / plotLine); 2b steps + sleep + steps target
+   line; 2c timeframe dropdown (rangeToDays, persisted via a new UI-prefs store); 2d chart
+   stats row (Avg / Change / On-target), sleep target from bed/wake goals, per-point hover
+   tooltips, and a "Last 7 days" range. Dashed gap-bridges span un-logged days throughout.
+3. **Slice 3 — Multi-level log inspection. ← next up.** Browse a day → week → month.
 4. **Slice 4 — Unit/display preferences.** e.g. water in ounces (parked idea).
 5. **Later — heavy modules.** Full nutrition (protein *grams*), meal/exercise libraries,
    measurements, per-habit dot strips, the scoring-dials Settings UI.
@@ -312,6 +316,18 @@ Captured so they aren't lost; now mapped to the slices above where they fit:
   display/entry only.
 - **Multi-level log inspection** (Slice 3). Browse a **day → week → month** view — a natural
   lead-in to the Slice-2 trend charts.
+- **Trends polish (deferred, from Slice 2 playtesting)** — a dedicated pass, whenever the
+  list feels cluttered (not tied to Slice 3):
+  - **Range list consistency review.** The dropdown currently mixes *rolling* ("Last 7/30
+    days, 3/6 months, 1 year") with *calendar* ("This month"). Decide on one paradigm or
+    cleanly group the two; consider adding **"This week"** (calendar) to pair with "This month".
+  - **Richer chart stats.** A **7-day moving-average overlay** to smooth daily noise; a
+    **best/worst day** (value + date). Revisit the **"Change" metric** too — it's plain
+    last−first per range now; a denoised trend measure was tried (first-vs-last-quarter
+    average) but read as confusing, so it was reverted. Reconsider once there's more data.
+- **In-calendar "logged day" markers** (Slice 3). The Daily Log date field uses the native
+  picker, which can't be annotated; browsing logs will want a custom calendar that marks
+  which days have entries.
 
 ---
 
@@ -361,8 +377,25 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
     continue, 🔴 breaks, unlogged-today grace kept). Steps/water/wake drop from the
     denominator when their target/goal is unset.
   - *1c* — dashboard 7-day dot strip (`last7Grades`): solid 🟢🟡🔴 for logged days by
-    whole-day grade, hollow for un-logged days, brand ring on today; consistency number
+    whole-day grade, hollow for un-logged days, small brand "today" dot; consistency number
     colored by its band. Verified via seeded headless render.
+- **Phase 2 Slice 2 — shipped & working (2026-07-05).** Trends tab with hand-rolled inline
+  SVG charts (zero deps), in four commits:
+  - *2a* — Trends tab + Weight chart. Pure `buildSeries` / `seriesStats` / `plotLine`
+    (auto-scaled y, line breaks across gaps).
+  - *2b* — Steps + Sleep charts via the shared `chartCard`; **steps target line** (widens
+    the y-range, dashed reference line).
+  - *2c* — **timeframe dropdown** (Last 7/30 days, This month, 3/6 months, 1 year, All);
+    pure `rangeToDays`; choice **persisted** via a new `oh.prefs` UI-prefs store
+    (`getPrefs`/`setPref`) kept out of exports.
+  - *2d* — stat row **Avg · Change · On target** (`countOnTarget`); **Change is plain
+    last−first over the range** (a denoised quarter-average version was tried and reverted
+    as confusing — see §9.3); **Sleep target** from bed/wake goals (`goalSleepHours`,
+    midnight-wrap aware); **per-point hover tooltips** (native SVG `<title>`, skipped past
+    60 points). Dashed **gap-bridges** span un-logged days on every chart.
+- **Test fixture:** `test-data/sample-30days.json` — 27 logged days over a 30-day span (3
+  gaps, 2 partial days, weight decline + jitter, green/yellow/red spreads). Import via
+  Settings → Import → Replace-all to exercise the dashboard, dot strip, and charts.
 - **Repo:** private GitHub repo `ajporter85/operation-health` (`origin/main`, HTTPS via
   `gh`). All work committed and pushed.
 - **Dev environment on Andrew's Windows PC:** git, GitHub CLI (`gh`), Node LTS + npm, and
@@ -376,8 +409,14 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
   In-calendar "which days are logged" markers need a custom calendar → deferred to Slice 3
   (log inspection); the dashboard dot strip covers the last-7-days case for now.
 
-**Next session resumes at: Phase 2 → Slice 2 (trend charts)** — full spec in §9.2.
-Weight, steps, sleep over time as **hand-rolled inline SVG, zero dependencies** to start;
-a later dedicated pass weighs a charting library (see "Charting dependency"). Suggested
-first step: decide which metrics/timeframes to chart and the SVG approach, share for
-Andrew's nod, then build smallest-first.
+**Next session resumes at: Phase 2 → Slice 3 (multi-level log inspection).** Browse a
+**day → week → month** view of logged days — a natural lead-in that also wants a **custom
+calendar marking which days have entries** (the native date picker can't be annotated; see
+§9.3). Suggested first step: turn Slice 3 into a concrete build plan — what the day/week/
+month views show, how you navigate between them, and where they live (likely a new tab or
+an expansion of Trends) — share for Andrew's nod, then build smallest-first. Reuse the
+`sample-30days.json` fixture for testing.
+
+*Also queued (smaller, do whenever):* the **Trends polish** pass in §9.3 (range-list
+consistency + "This week", moving-average overlay, best/worst-day, revisit "Change"). Not
+blocking Slice 3.
