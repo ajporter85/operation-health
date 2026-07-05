@@ -56,74 +56,104 @@
   ok('wakeWithin: midnight wrap', L.wakeWithin('23:55', '00:10', 30));
   ok('wakeWithin: invalid time', !L.wakeWithin('nope', '06:30', 30));
 
+  // ----------------------- grading (three-state) ------------------------
+  var cfg = L.scoringConfig(profile);
+  eq('gradeBinary Y → green', L.gradeBinary('Y'), 'green');
+  eq('gradeBinary N → red', L.gradeBinary('N'), 'red');
+  eq('gradeBinary missing → red', L.gradeBinary(undefined), 'red');
+  eq('gradeNumeric ≥100% → green', L.gradeNumeric(8000, 8000, cfg), 'green');
+  eq('gradeNumeric 80% → yellow', L.gradeNumeric(6400, 8000, cfg), 'yellow');
+  eq('gradeNumeric 74% → red', L.gradeNumeric(5920, 8000, cfg), 'red');
+  eq('gradeNumeric blank value → red', L.gradeNumeric(undefined, 8000, cfg), 'red');
+  eq('gradeWake ±0 → green', L.gradeWake('06:30', '06:30', cfg), 'green');
+  eq('gradeWake ±45 → yellow', L.gradeWake('07:15', '06:30', cfg), 'yellow');
+  eq('gradeWake ±90 → red', L.gradeWake('08:00', '06:30', cfg), 'red');
+  eq('gradeWake no goal → null', L.gradeWake('06:30', '', cfg), null);
+  eq('creditFor green = 1', L.creditFor('green', cfg), 1);
+  eq('creditFor yellow = 0.75', L.creditFor('yellow', cfg), 0.75);
+  eq('creditFor red = 0', L.creditFor('red', cfg), 0);
+  eq('gradeDay 80 → green', L.gradeDay(80, cfg.dayBands), 'green');
+  eq('gradeDay 50 → yellow', L.gradeDay(50, cfg.dayBands), 'yellow');
+  eq('gradeDay 49 → red', L.gradeDay(49, cfg.dayBands), 'red');
+
+  // day builders (6 active signals under `profile`)
+  function greenLog(date) {
+    return log(date, { proteinWithin30: 'Y', morningExercise: 'Y',
+      steps: 9000, waterLiters: 4, wakeTime: '06:30' }); // → 100 (🟢)
+  }
+  function yellowLog(date) {
+    return log(date, { proteinWithin30: 'Y', morningExercise: 'N',
+      steps: 9000, waterLiters: 4, wakeTime: '12:00' }); // → 67 (🟡)
+  }
+  function redLog(date) {
+    return log(date, { proteinWithin30: 'N', morningExercise: 'N',
+      steps: 0, waterLiters: 0, wakeTime: '12:00' });    // → 17 (🔴, only logged)
+  }
+
+  // --------------------------- daily score ------------------------------
+  eq('dailyScore: perfect = 100', L.computeDailyScore(greenLog(AS), profile).score, 100);
+  eq('dailyScore: only-logged = 17', L.computeDailyScore(redLog(AS), profile).score, 17);
+  eq('dailyScore: one binary miss = 83',
+     L.computeDailyScore(log(AS, { proteinWithin30: 'N', morningExercise: 'Y',
+       steps: 9000, waterLiters: 4, wakeTime: '06:30' }), profile).score, 83);
+  eq('dailyScore: states.water green', L.computeDailyScore(greenLog(AS), profile).states.water, 'green');
+
   // ------------------------------ streak --------------------------------
-  eq('streak: empty logs', L.computeStreak([], AS), 0);
-  eq('streak: today counts (protein)',
-     L.computeStreak([log(AS, { proteinWithin30: 'Y' })], AS), 1);
-  eq('streak: 3-day chain ending today',
-     L.computeStreak([
-       log('2026-07-02', { morningExercise: 'Y' }),
-       log('2026-07-03', { morningExercise: 'Y' }),
-       log('2026-07-04', { morningExercise: 'Y' })
-     ], AS), 3);
+  eq('streak: empty logs', L.computeStreak([], profile, AS), 0);
+  eq('streak: 3 green days ending today',
+     L.computeStreak([greenLog('2026-07-02'), greenLog('2026-07-03'), greenLog('2026-07-04')], profile, AS), 3);
+  eq('streak: a 🟡 day continues the streak',
+     L.computeStreak([greenLog('2026-07-03'), yellowLog('2026-07-04')], profile, AS), 2);
+  eq('streak: a 🔴 today breaks it → 0',
+     L.computeStreak([greenLog('2026-07-03'), redLog('2026-07-04')], profile, AS), 0);
   eq('streak: today unlogged, count from yesterday',
-     L.computeStreak([
-       log('2026-07-02', { morningExercise: 'Y' }),
-       log('2026-07-03', { morningExercise: 'Y' })
-     ], AS), 2);
-  eq('streak: today logged but does not count → 0',
-     L.computeStreak([
-       log('2026-07-03', { morningExercise: 'Y' }),
-       log('2026-07-04', { proteinWithin30: 'N', morningExercise: 'N' })
-     ], AS), 0);
+     L.computeStreak([greenLog('2026-07-02'), greenLog('2026-07-03')], profile, AS), 2);
   eq('streak: gap breaks the chain',
-     L.computeStreak([
-       log('2026-07-01', { morningExercise: 'Y' }),
-       log('2026-07-03', { morningExercise: 'Y' }),
-       log('2026-07-04', { morningExercise: 'Y' })
-     ], AS), 2);
+     L.computeStreak([greenLog('2026-07-01'), greenLog('2026-07-03'), greenLog('2026-07-04')], profile, AS), 2);
 
   // --------------------------- consistency ------------------------------
+  function seven(makeLog) {
+    var logs = [];
+    for (var i = 0; i < 7; i++) logs.push(makeLog(L.addDaysISO(AS, -i)));
+    return logs;
+  }
+
   var cEmpty = L.computeConsistency([], profile, AS);
   eq('consistency: empty score is 0', cEmpty.score, 0);
   eq('consistency: empty drag is logged', cEmpty.dragSignal, 'logged');
-  eq('consistency: empty possible = 35 (5 signals x 7)', cEmpty.possible, 35);
 
-  function sevenPerfect() {
-    var logs = [];
-    for (var i = 0; i < 7; i++) {
-      logs.push(log(L.addDaysISO(AS, -i), {
-        proteinWithin30: 'Y', morningExercise: 'Y', waterLiters: 4, wakeTime: '06:30'
-      }));
-    }
-    return logs;
-  }
-  var cPerfect = L.computeConsistency(sevenPerfect(), profile, AS);
+  var cPerfect = L.computeConsistency(seven(greenLog), profile, AS);
   eq('consistency: 7 perfect days = 100', cPerfect.score, 100);
   eq('consistency: perfect has no drag', cPerfect.dragSignal, null);
   eq('consistency: perfect hint is null', cPerfect.hint, null);
 
-  // wakeGoal unset → 4 signals, denominator 28
-  var cNoWake = L.computeConsistency(sevenPerfect(),
-    { stepsTarget: 8000, waterTarget: 3.5 }, AS);
-  eq('consistency: no wakeGoal → possible 28', cNoWake.possible, 28);
-  eq('consistency: no wakeGoal still 100', cNoWake.score, 100);
+  eq('consistency: 3 of 7 perfect = 43',
+     L.computeConsistency(
+       [greenLog(AS), greenLog(L.addDaysISO(AS, -1)), greenLog(L.addDaysISO(AS, -2))],
+       profile, AS).score, 43);
 
-  // hydration is the drag (water below target every day)
-  var dryLogs = [];
-  for (var j = 0; j < 7; j++) {
-    dryLogs.push(log(L.addDaysISO(AS, -j), {
-      proteinWithin30: 'Y', morningExercise: 'Y', waterLiters: 1, wakeTime: '06:30'
-    }));
+  // dry week: water red every day → water is the drag, day score 83
+  function dryLog(date) {
+    return log(date, { proteinWithin30: 'Y', morningExercise: 'Y',
+      steps: 9000, waterLiters: 1, wakeTime: '06:30' });
   }
-  var cDry = L.computeConsistency(dryLogs, profile, AS);
-  eq('consistency: dry days drag = hydration', cDry.dragSignal, 'hydration');
-  eq('consistency: dry days score = 80', cDry.score, 80);
+  var cDry = L.computeConsistency(seven(dryLog), profile, AS);
+  eq('consistency: dry week drag = water', cDry.dragSignal, 'water');
+  eq('consistency: dry week score = 83', cDry.score, 83);
 
-  // moved via steps threshold (no explicit moved flag)
-  var cSteps = L.computeConsistency(
-    [log(AS, { proteinWithin30: 'N', steps: 9000, waterLiters: 0 })], profile, AS);
-  eq('consistency: steps>=target counts as moved', cSteps.perSignal.moved, 1);
+  // no targets/goals set → only the 3 binary signals are active
+  var cMin = L.computeConsistency(seven(greenLog), {}, AS);
+  eq('consistency: no targets → 3 active signals', cMin.signals.length, 3);
+  eq('consistency: no targets still 100', cMin.score, 100);
+
+  // ---------------------------- dot strip -------------------------------
+  var strip = L.last7Grades([greenLog(AS), redLog(L.addDaysISO(AS, -1))], profile, AS);
+  eq('last7Grades: returns 7 days', strip.length, 7);
+  eq('last7Grades: oldest first (day -6)', strip[0].date, L.addDaysISO(AS, -6));
+  eq('last7Grades: newest is today', strip[6].date, AS);
+  eq('last7Grades: today green', strip[6].grade, 'green');
+  eq('last7Grades: missing day is red', strip[2].grade, 'red');
+  ok('last7Grades: missing day logged:false', strip[2].logged === false);
 
   // --------------------------- validators -------------------------------
   ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);

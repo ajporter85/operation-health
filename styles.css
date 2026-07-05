@@ -37,6 +37,7 @@ body {
   color: var(--ink);
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* ---- Header & tabs ---- */

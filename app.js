@@ -41,7 +41,7 @@
     $('#today-cta').textContent = loggedToday ? 'Edit today' : 'Log today';
 
     // Streak card
-    var streak = L.computeStreak(logs, today);
+    var streak = L.computeStreak(logs, profile, today);
     $('#streak-value').textContent = streak;
     $('#streak-sub').textContent = streak === 1 ? 'day in a row' : 'days in a row';
 

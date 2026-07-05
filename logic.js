@@ -82,34 +82,159 @@
     return diff <= tolMin;
   }
 
-  // ---- Core scoring: streak ----
+  // ---- Core scoring: grading (§9.2 three-state model) ----
 
-  /**
-   * A day "counts" toward the streak if it was logged AND at least one core
-   * thing happened (morning protein OR moved).
-   */
-  function dayCounts(log) {
-    if (!log) return false;
-    return log.proteinWithin30 === 'Y' || log.morningExercise === 'Y';
+  // Canonical scoring defaults. storage.js seeds DEFAULT_PROFILE.scoring from
+  // this same object, so there is one source of truth for the dials.
+  var DEFAULT_SCORING = {
+    yellowCredit: 0.75,      // credit for a 🟡 signal (🟢 = 1.0, 🔴 = 0.0)
+    numericGreenPct: 1.0,    // 🟢 at ≥100% of target (steps, water)
+    numericYellowPct: 0.75,  // 🟡 at ≥75% of target
+    wakeGreenMin: 30,        // 🟢 within ±30 min of wakeGoal
+    wakeYellowMin: 60,       // 🟡 within ±60 min
+    dayBands: { green: 80, yellow: 50 }, // whole-day grade from daily score
+    weights: { logged: 1, protein: 1, morningExercise: 1, steps: 1, water: 1, wake: 1 }
+  };
+
+  /** Resolve a full scoring config from a profile, filling any gaps with defaults. */
+  function scoringConfig(profile) {
+    var s = (profile && profile.scoring) || {};
+    var num = function (v, d) { return isNum(v) ? v : d; };
+    return {
+      yellowCredit: num(s.yellowCredit, DEFAULT_SCORING.yellowCredit),
+      numericGreenPct: num(s.numericGreenPct, DEFAULT_SCORING.numericGreenPct),
+      numericYellowPct: num(s.numericYellowPct, DEFAULT_SCORING.numericYellowPct),
+      wakeGreenMin: num(s.wakeGreenMin, DEFAULT_SCORING.wakeGreenMin),
+      wakeYellowMin: num(s.wakeYellowMin, DEFAULT_SCORING.wakeYellowMin),
+      dayBands: Object.assign({}, DEFAULT_SCORING.dayBands, s.dayBands),
+      weights: Object.assign({}, DEFAULT_SCORING.weights, s.weights)
+    };
+  }
+
+  /** Binary habit → 🟢 only on 'Y', else 🔴 (missing/'N' both miss). */
+  function gradeBinary(val) {
+    return val === 'Y' ? 'green' : 'red';
   }
 
   /**
-   * computeStreak(logs, asOfDate)
-   * Consecutive counting days ending on asOfDate — or ending yesterday if
-   * asOfDate isn't logged yet, so an unlogged morning doesn't zero the streak.
-   * @param {Array} logs      array of DailyLog records
+   * Numeric metric vs a target → 🟢/🟡/🔴 at greenPct/yellowPct of target.
+   * A logged-but-blank (or invalid) value is a miss → 🔴.
+   */
+  function gradeNumeric(value, target, cfg) {
+    cfg = cfg || DEFAULT_SCORING;
+    if (!isNum(target) || target <= 0) return 'red'; // signal inactive upstream
+    if (!isNum(value)) return 'red';
+    var pct = value / target;
+    if (pct >= cfg.numericGreenPct) return 'green';
+    if (pct >= cfg.numericYellowPct) return 'yellow';
+    return 'red';
+  }
+
+  /** Wake time vs goal → 🟢 within ±green, 🟡 within ±yellow, else 🔴. */
+  function gradeWake(wakeTime, wakeGoal, cfg) {
+    cfg = cfg || DEFAULT_SCORING;
+    if (!wakeGoal) return null; // no goal → signal inactive
+    if (wakeWithin(wakeTime, wakeGoal, cfg.wakeGreenMin)) return 'green';
+    if (wakeWithin(wakeTime, wakeGoal, cfg.wakeYellowMin)) return 'yellow';
+    return 'red';
+  }
+
+  /** Credit for a grade state: 🟢 1.0, 🟡 yellowCredit, 🔴 0.0. */
+  function creditFor(state, cfg) {
+    cfg = cfg || DEFAULT_SCORING;
+    if (state === 'green') return 1;
+    if (state === 'yellow') return cfg.yellowCredit;
+    return 0;
+  }
+
+  /**
+   * Which signals are scored this run. Steps/water/wake drop out of the
+   * denominator when their target/goal is unset (as wake did in Phase 1),
+   * so an un-configured metric never drags the score down.
+   */
+  function activeSignals(profile) {
+    profile = profile || {};
+    var sig = ['logged', 'protein', 'morningExercise'];
+    if (isNum(profile.stepsTarget) && profile.stepsTarget > 0) sig.push('steps');
+    if (isNum(profile.waterTarget) && profile.waterTarget > 0) sig.push('water');
+    if (profile.wakeGoal) sig.push('wake');
+    return sig;
+  }
+
+  /** Grade one signal for a present log. `logged` is always 🟢 (a record exists). */
+  function gradeSignal(signal, log, profile, cfg) {
+    switch (signal) {
+      case 'logged': return 'green';
+      case 'protein': return gradeBinary(log.proteinWithin30);
+      case 'morningExercise': return gradeBinary(log.morningExercise);
+      case 'steps': return gradeNumeric(log.steps, profile.stepsTarget, cfg);
+      case 'water': return gradeNumeric(log.waterLiters, profile.waterTarget, cfg);
+      case 'wake': return gradeWake(log.wakeTime, profile.wakeGoal, cfg);
+      default: return 'red';
+    }
+  }
+
+  /**
+   * computeDailyScore(log, profile) → { score, states, signals }
+   * Weighted average of each active signal's credit × 100 (0–100).
+   * Only call for a present log; a missing day scores 0 by definition.
+   */
+  function computeDailyScore(log, profile) {
+    profile = profile || {};
+    var cfg = scoringConfig(profile);
+    var signals = activeSignals(profile);
+    var states = {};
+    var wSum = 0, cSum = 0;
+    signals.forEach(function (s) {
+      var state = gradeSignal(s, log, profile, cfg);
+      states[s] = state;
+      var w = isNum(cfg.weights[s]) ? cfg.weights[s] : 1;
+      wSum += w;
+      cSum += w * creditFor(state, cfg);
+    });
+    var score = wSum > 0 ? Math.round((cSum / wSum) * 100) : 0;
+    return { score: score, states: states, signals: signals };
+  }
+
+  /** Whole-day grade from a daily score: 🟢 ≥ green band, 🟡 ≥ yellow band, else 🔴. */
+  function gradeDay(score, bands) {
+    bands = bands || DEFAULT_SCORING.dayBands;
+    if (score >= bands.green) return 'green';
+    if (score >= bands.yellow) return 'yellow';
+    return 'red';
+  }
+
+  /** The whole-day grade for a (possibly missing) log. Missing → 🔴. */
+  function dayGrade(log, profile, cfg) {
+    if (!log) return 'red';
+    return gradeDay(computeDailyScore(log, profile).score, cfg.dayBands);
+  }
+
+  // ---- Core scoring: streak ----
+
+  /**
+   * computeStreak(logs, profile, asOfDate)
+   * Consecutive days whose whole-day grade is 🟢 or 🟡, ending on asOfDate —
+   * or ending yesterday if asOfDate isn't logged yet, so an unlogged morning
+   * doesn't zero the streak. A 🔴 day (incl. a missing day) breaks it.
+   * @param {Array}  logs     array of DailyLog records
+   * @param {Object} profile  scoring config + targets/goals
    * @param {string} asOfDate YYYY-MM-DD (defaults to today)
    * @returns {number} streak length in days
    */
-  function computeStreak(logs, asOfDate) {
+  function computeStreak(logs, profile, asOfDate) {
     var as = asOfDate || todayISO();
+    profile = profile || {};
+    var cfg = scoringConfig(profile);
     var byDate = indexByDate(logs);
 
     // Anchor on today if it's logged; otherwise start counting from yesterday.
     var cursor = byDate[as] ? as : addDaysISO(as, -1);
 
     var streak = 0;
-    while (dayCounts(byDate[cursor])) {
+    while (true) {
+      var g = dayGrade(byDate[cursor], profile, cfg);
+      if (g !== 'green' && g !== 'yellow') break;
       streak++;
       cursor = addDaysISO(cursor, -1);
     }
@@ -118,70 +243,54 @@
 
   // ---- Core scoring: consistency ----
 
-  // The per-day core signals and the "what's dragging it down" hints.
-  // Order also serves as the tie-break priority for the drag hint
-  // (sleep/wake-first spirit: logging first, then the habit chain).
+  // The scored signals and the "what's dragging it down" hints. Object order
+  // also serves as the tie-break priority for the drag hint (logging first,
+  // then the morning chain, then the graded metrics).
   var SIGNAL_HINTS = {
-    logged:    "You're skipping daily logs — even a 10-second entry keeps the score alive.",
-    protein:   "Morning protein is lagging — prep a shake the night before.",
-    moved:     "Movement is the gap — a short walk anywhere counts.",
-    hydration: "Hydration is low — fill your water bottle first thing.",
-    wake:      "Wake time is drifting — anchor a steady wake-up to steady the rest."
+    logged:          "You're skipping daily logs — even a 10-second entry keeps the score alive.",
+    protein:         "Morning protein is lagging — prep a shake the night before.",
+    morningExercise: "Morning movement is the gap — even 10 minutes after waking counts.",
+    steps:           "Your step count is short of target — a short walk anywhere adds up.",
+    water:           "Hydration is low — fill your water bottle first thing.",
+    wake:            "Wake time is drifting — anchor a steady wake-up to steady the rest."
   };
 
   /**
    * computeConsistency(logs, profile, asOfDate)
-   * 0–100 measure of consistency of core habits over the trailing 7 days
-   * (including asOfDate). A missing day scores 0 on every signal.
-   * Wake-consistency is dropped from the denominator when wakeGoal is unset.
+   * 0–100: the daily score (graded, weighted) averaged over the trailing 7
+   * days including asOfDate. A missing day scores 0 (all-red = not consistent).
+   * Steps/water/wake drop out when their target/goal is unset.
    *
-   * @returns {{score:number, achieved:number, possible:number,
-   *            perSignal:Object, dragSignal:(string|null), hint:(string|null)}}
+   * @returns {{score:number, perSignal:Object, signals:string[],
+   *            dragSignal:(string|null), hint:(string|null)}}
    */
   function computeConsistency(logs, profile, asOfDate) {
     var as = asOfDate || todayISO();
     profile = profile || {};
+    var cfg = scoringConfig(profile);
     var byDate = indexByDate(logs);
+    var signals = activeSignals(profile);
+    var DAYS = 7;
 
-    var useWake = !!profile.wakeGoal; // in the denominator only if a goal is set
-
-    // Which signals are active this run.
-    var signals = ['logged', 'protein', 'moved', 'hydration'];
-    if (useWake) signals.push('wake');
-
-    // Per-signal achieved counts across the 7-day window.
+    // Sum of each signal's credit across the window (missing day adds 0).
     var perSignal = {};
     signals.forEach(function (s) { perSignal[s] = 0; });
+    var scoreSum = 0;
 
-    var DAYS = 7;
     for (var i = 0; i < DAYS; i++) {
-      var d = addDaysISO(as, -i);
-      var log = byDate[d];
-      if (!log) continue; // missing day: 0 on every signal
-
-      perSignal.logged += 1;
-      if (log.proteinWithin30 === 'Y') perSignal.protein += 1;
-
-      var moved = log.morningExercise === 'Y' ||
-        (isNum(log.steps) && isNum(profile.stepsTarget) && log.steps >= profile.stepsTarget);
-      if (moved) perSignal.moved += 1;
-
-      if (isNum(log.waterLiters) && isNum(profile.waterTarget) &&
-          log.waterLiters >= profile.waterTarget) {
-        perSignal.hydration += 1;
-      }
-
-      if (useWake && wakeWithin(log.wakeTime, profile.wakeGoal, 30)) {
-        perSignal.wake += 1;
-      }
+      var log = byDate[addDaysISO(as, -i)];
+      if (!log) continue; // missing day: 0 daily score, 0 credit everywhere
+      var day = computeDailyScore(log, profile);
+      scoreSum += day.score;
+      signals.forEach(function (s) {
+        perSignal[s] += creditFor(day.states[s], cfg);
+      });
     }
 
-    var achieved = signals.reduce(function (sum, s) { return sum + perSignal[s]; }, 0);
-    var possible = signals.length * DAYS;
-    var score = possible > 0 ? Math.round((achieved / possible) * 100) : 0;
+    var score = Math.round(scoreSum / DAYS);
 
-    // "What's dragging it down": the lowest-achieving signal.
-    // Ties break by SIGNAL order (object insertion order of `signals`).
+    // "What's dragging it down": the active signal with the least total credit.
+    // Ties break by signal order. If a signal is maxed every day, skip it.
     var dragSignal = null;
     var lowest = Infinity;
     signals.forEach(function (s) {
@@ -190,17 +299,40 @@
         dragSignal = s;
       }
     });
-    // If everything is perfect, there's nothing to nag about.
-    if (lowest >= DAYS) dragSignal = null;
+    if (lowest >= DAYS) dragSignal = null; // everything green all week
 
     return {
       score: score,
-      achieved: achieved,
-      possible: possible,
       perSignal: perSignal,
+      signals: signals,
       dragSignal: dragSignal,
       hint: dragSignal ? SIGNAL_HINTS[dragSignal] : null
     };
+  }
+
+  /**
+   * last7Grades(logs, profile, asOfDate) → [{date, grade, score, logged}]
+   * Oldest → newest, for the dashboard 7-day dot strip. A missing day is
+   * grade 🔴, score 0, logged:false.
+   */
+  function last7Grades(logs, profile, asOfDate) {
+    var as = asOfDate || todayISO();
+    profile = profile || {};
+    var cfg = scoringConfig(profile);
+    var byDate = indexByDate(logs);
+    var out = [];
+    for (var i = 6; i >= 0; i--) {
+      var date = addDaysISO(as, -i);
+      var log = byDate[date];
+      var score = log ? computeDailyScore(log, profile).score : 0;
+      out.push({
+        date: date,
+        score: score,
+        grade: log ? gradeDay(score, cfg.dayBands) : 'red',
+        logged: !!log
+      });
+    }
+    return out;
   }
 
   // ---- Validation ----
@@ -330,10 +462,19 @@
     // time
     timeToMinutes: timeToMinutes,
     wakeWithin: wakeWithin,
+    // grading (§9.2 three-state model)
+    DEFAULT_SCORING: DEFAULT_SCORING,
+    scoringConfig: scoringConfig,
+    gradeBinary: gradeBinary,
+    gradeNumeric: gradeNumeric,
+    gradeWake: gradeWake,
+    creditFor: creditFor,
+    computeDailyScore: computeDailyScore,
+    gradeDay: gradeDay,
     // scoring
     computeStreak: computeStreak,
     computeConsistency: computeConsistency,
-    dayCounts: dayCounts,
+    last7Grades: last7Grades,
     isLoggedToday: isLoggedToday,
     // validation & migration
     validateDailyLog: validateDailyLog,
