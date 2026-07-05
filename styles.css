@@ -314,8 +314,10 @@ input:focus, select:focus, textarea:focus {
   gap: 7px;
   align-items: center;
   margin-top: 12px;
+  padding-bottom: 7px; /* room for the "today" marker under the last dot */
 }
 .dot {
+  position: relative;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -327,5 +329,15 @@ input:focus, select:focus, textarea:focus {
 .dot.y { background: var(--grade-amber); border-color: var(--grade-amber); }
 .dot.r { background: var(--grade-red);   border-color: var(--grade-red); }
 .dot.none { background: transparent; border-color: var(--line); }
-/* ring out today so it's easy to find on the strip */
-.dot.today { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--brand); }
+/* mark today with a small dot centered beneath it (not a grade — a "you are here") */
+.dot.today::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 5px);
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand);
+}
