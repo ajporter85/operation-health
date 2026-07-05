@@ -12,6 +12,10 @@
   --good: #15803d;
   --warn: #b45309;
   --bad: #b91c1c;
+  /* Grade dots + score coloring — vivid enough to read at a glance in both themes. */
+  --grade-green: #16a34a;
+  --grade-amber: #d97706;
+  --grade-red:   #dc2626;
   --radius: 14px;
   --shadow: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
   --maxw: 640px;
@@ -26,6 +30,9 @@
     --line: #2a3634;
     --brand: #2dd4bf;
     --brand-ink: #04302b;
+    --grade-green: #34d399;
+    --grade-amber: #fbbf24;
+    --grade-red:   #f87171;
   }
 }
 
@@ -294,3 +301,31 @@ input:focus, select:focus, textarea:focus {
 @media (max-width: 380px) {
   .cards, .grid-2 { grid-template-columns: 1fr; }
 }
+
+/* ---- Consistency: whole-day grade coloring + 7-day dot strip ---- */
+.card-big.grade-green { color: var(--grade-green); }
+.card-big.grade-yellow { color: var(--grade-amber); }
+.card-big.grade-red { color: var(--grade-red); }
+/* keep the "/100" unit muted regardless of the number's grade color */
+.card-big .unit { color: var(--muted); }
+
+.dot-strip {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  margin-top: 12px;
+}
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: transparent;
+  border: 2px solid var(--line); /* default = a not-logged day */
+}
+.dot.g { background: var(--grade-green); border-color: var(--grade-green); }
+.dot.y { background: var(--grade-amber); border-color: var(--grade-amber); }
+.dot.r { background: var(--grade-red);   border-color: var(--grade-red); }
+.dot.none { background: transparent; border-color: var(--line); }
+/* ring out today so it's easy to find on the strip */
+.dot.today { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--brand); }

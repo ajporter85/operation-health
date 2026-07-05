@@ -52,6 +52,26 @@
     $('#score-hint').textContent =
       c.hint || (logs.length ? 'Nailing every core habit — keep it up.' :
                                'Log a few days to build your score.');
+
+    // Color the number by its whole-day band — but only once there's data to
+    // grade (an empty history shouldn't glare red before you've logged a thing).
+    var band = logs.length ? L.gradeDay(c.score, L.scoringConfig(profile).dayBands) : '';
+    $('#score-value').className = 'card-big' + (band ? ' grade-' + band : '');
+
+    // 7-day overall-grade dot strip.
+    renderDotStrip(L.last7Grades(logs, profile, today), today);
+  }
+
+  var DOT_CLASS = { green: 'g', yellow: 'y', red: 'r' };
+  function renderDotStrip(days, today) {
+    $('#dot-strip').innerHTML = days.map(function (d) {
+      var cls = 'dot ' + (d.logged ? DOT_CLASS[d.grade] : 'none') +
+                (d.date === today ? ' today' : '');
+      var label = escapeHtml(formatLongDate(d.date) + (d.logged
+        ? ' — ' + d.score + '/100 (' + d.grade + ')'
+        : ' — no log'));
+      return '<span class="' + cls + '" title="' + label + '" aria-label="' + label + '"></span>';
+    }).join('');
   }
 
   // ------------------------------------------------------------- log form
