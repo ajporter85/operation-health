@@ -341,3 +341,37 @@ input:focus, select:focus, textarea:focus {
   border-radius: 50%;
   background: var(--brand);
 }
+
+/* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
+.charts { display: flex; flex-direction: column; gap: 12px; }
+.chart-card h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.chart-latest { font-size: 22px; font-weight: 800; color: var(--brand); }
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.chart-line {
+  stroke: var(--brand);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.chart-last { fill: var(--brand); stroke: var(--surface); stroke-width: 2; }
+.chart-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.chart-empty { margin: 6px 0 0; }

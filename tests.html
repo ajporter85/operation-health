@@ -155,6 +155,39 @@
   eq('last7Grades: missing day is red', strip[2].grade, 'red');
   ok('last7Grades: missing day logged:false', strip[2].logged === false);
 
+  // ----------------------- trends / charts ------------------------------
+  var wLogs = [
+    log(L.addDaysISO(AS, -3), { weight: 200 }),
+    log(L.addDaysISO(AS, -2), { weight: 198 }),
+    // -1 missing (a gap)
+    log(AS, { weight: 196 })
+  ];
+  var wSeries = L.buildSeries(wLogs, 'weight', AS, 4);
+  eq('buildSeries: length = days', wSeries.length, 4);
+  eq('buildSeries: oldest first', wSeries[0].value, 200);
+  eq('buildSeries: newest is today', wSeries[3].value, 196);
+  eq('buildSeries: missing day is null', wSeries[2].value, null);
+  eq('buildSeries: blank/absent field is null',
+     L.buildSeries([log(AS, { steps: '' })], 'steps', AS, 1)[0].value, null);
+
+  var wStats = L.seriesStats(wSeries);
+  eq('seriesStats: min', wStats.min, 196);
+  eq('seriesStats: max', wStats.max, 200);
+  eq('seriesStats: first', wStats.first, 200);
+  eq('seriesStats: last', wStats.last, 196);
+  eq('seriesStats: count ignores gaps', wStats.count, 3);
+  eq('seriesStats: empty series', L.seriesStats([]).count, 0);
+
+  var plot = L.plotLine(wSeries, 300, 100, { pad: 0 });
+  eq('plotLine: one point per non-null', plot.points.length, 3);
+  eq('plotLine: first x at left edge', plot.points[0].x, 0);
+  eq('plotLine: last x at right edge', plot.points[2].x, 300);
+  ok('plotLine: max value sits at top (y≈0)', plot.points[0].y === 0);   // 200 is the max
+  ok('plotLine: min value sits at bottom (y≈100)', plot.points[2].y === 100); // 196 is the min
+  ok('plotLine: path starts with a moveto', plot.path.charAt(0) === 'M');
+  ok('plotLine: gap breaks the line (a second M)', plot.path.split('M').length === 3);
+  eq('plotLine: empty data → empty path', L.plotLine([], 300, 100).path, '');
+
   // --------------------------- validators -------------------------------
   ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);
   ok('validate: bad date invalid', !L.validateDailyLog({ date: 'nope' }).valid);

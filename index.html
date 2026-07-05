@@ -14,6 +14,7 @@
   <nav class="tabs" role="tablist">
     <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
     <button class="tab" data-view="log" role="tab" aria-selected="false">Daily Log</button>
+    <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
     <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
   </nav>
 </header>
@@ -138,6 +139,13 @@
         <span class="save-feedback" id="log-saved" hidden>Saved ✓</span>
       </div>
     </form>
+  </section>
+
+  <!-- ============================= TRENDS ============================= -->
+  <section id="view-trends" class="view" data-view="trends" hidden>
+    <h2 class="section-title">Trends <span class="muted small">(last 30 days)</span></h2>
+    <div id="trends-charts" class="charts"></div>
+    <p class="muted small" id="trends-empty" hidden>Log a few days to see your trends here.</p>
   </section>
 
   <!-- ============================ SETTINGS ============================ -->

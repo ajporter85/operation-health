@@ -19,6 +19,7 @@
     });
     if (name === 'dashboard') renderDashboard();
     if (name === 'log') loadLogForm($('#f-date').value || L.todayISO());
+    if (name === 'trends') renderTrends();
     if (name === 'settings') loadSettingsForm();
   }
 
@@ -72,6 +73,71 @@
         : ' — no log'));
       return '<span class="' + cls + '" title="' + label + '" aria-label="' + label + '"></span>';
     }).join('');
+  }
+
+  // -------------------------------------------------------------- trends
+  var CHART_W = 600, CHART_H = 150, CHART_PADX = 10, CHART_PADY = 16;
+  var TREND_DAYS = 30;
+
+  function renderTrends() {
+    var logs = S.getLogs();
+    var today = L.todayISO();
+    var host = $('#trends-charts');
+    var empty = $('#trends-empty');
+
+    if (!logs.length) { host.innerHTML = ''; empty.hidden = false; return; }
+    empty.hidden = true;
+
+    // Slice 2a ships Weight; 2b adds Steps + Sleep through this same builder.
+    host.innerHTML = [
+      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today })
+    ].join('');
+  }
+
+  function round1(v) { return Math.round(v * 10) / 10; }
+
+  function chartCard(o) {
+    var series = L.buildSeries(o.logs, o.field, o.today, TREND_DAYS);
+    var stats = L.seriesStats(series);
+    var title = escapeHtml(o.label);
+    var unit = o.unit ? ' ' + escapeHtml(o.unit) : '';
+
+    if (!stats.count) {
+      return '<article class="card chart-card">' +
+        '<h3>' + title + '</h3>' +
+        '<p class="muted small chart-empty">No ' + title.toLowerCase() +
+        ' logged in the last ' + TREND_DAYS + ' days.</p></article>';
+    }
+
+    var iw = CHART_W - CHART_PADX * 2, ih = CHART_H - CHART_PADY * 2;
+    var plot = L.plotLine(series, iw, ih, {});
+    var last = plot.points[plot.points.length - 1];
+
+    var summary = title + ' over the last ' + TREND_DAYS + ' days: ' +
+      round1(stats.first) + unit + ' to ' + round1(stats.last) + unit +
+      ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ').';
+
+    var svg =
+      '<svg class="chart" viewBox="0 0 ' + CHART_W + ' ' + CHART_H + '" ' +
+        'role="img" aria-label="' + escapeHtml(summary) + '">' +
+        '<g transform="translate(' + CHART_PADX + ',' + CHART_PADY + ')">' +
+          '<path class="chart-line" d="' + plot.path + '" fill="none" ' +
+            'vector-effect="non-scaling-stroke"/>' +
+          '<circle class="chart-last" cx="' + last.x + '" cy="' + last.y + '" r="4" ' +
+            'vector-effect="non-scaling-stroke"/>' +
+        '</g></svg>';
+
+    var meta =
+      '<div class="chart-meta">' +
+        '<span>' + escapeHtml(shortDate(series[0].date)) + '</span>' +
+        '<span class="muted">min ' + round1(stats.min) + unit +
+          ' · max ' + round1(stats.max) + unit + '</span>' +
+        '<span>' + escapeHtml(shortDate(series[series.length - 1].date)) + '</span>' +
+      '</div>';
+
+    return '<article class="card chart-card">' +
+      '<h3>' + title + ' <span class="chart-latest">' + round1(stats.last) + unit +
+      '</span></h3>' + svg + meta + '</article>';
   }
 
   // ------------------------------------------------------------- log form
@@ -304,6 +370,12 @@
     return d.toLocaleDateString(undefined, {
       weekday: 'long', month: 'short', day: 'numeric'
     });
+  }
+
+  function shortDate(iso) {
+    var p = iso.split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2])
+      .toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   }
 
   function escapeHtml(s) {

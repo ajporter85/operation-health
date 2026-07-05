@@ -335,6 +335,85 @@
     return out;
   }
 
+  // ---- Trends / charts (§9.2 Slice 2 — pure geometry, zero deps) ----
+
+  /** Round to 1 decimal — keeps generated SVG paths compact. */
+  function r1(x) { return Math.round(x * 10) / 10; }
+
+  /**
+   * buildSeries(logs, field, asOfDate, days) → [{date, value|null}]
+   * One numeric point per day over the trailing `days` window (oldest→newest).
+   * A missing day, or a blank/non-numeric field, yields value:null (a gap).
+   */
+  function buildSeries(logs, field, asOfDate, days) {
+    var as = asOfDate || todayISO();
+    days = isNum(days) && days > 0 ? days : 30;
+    var byDate = indexByDate(logs);
+    var out = [];
+    for (var i = days - 1; i >= 0; i--) {
+      var date = addDaysISO(as, -i);
+      var log = byDate[date];
+      var raw = log ? log[field] : undefined;
+      var num = (raw === '' || raw == null) ? NaN : Number(raw);
+      out.push({ date: date, value: isNum(num) ? num : null });
+    }
+    return out;
+  }
+
+  /** Summary stats over the non-null points of a series (for scaling + labels). */
+  function seriesStats(series) {
+    var pts = (series || []).filter(function (p) { return isNum(p.value); });
+    if (!pts.length) return { min: null, max: null, first: null, last: null, count: 0 };
+    var nums = pts.map(function (p) { return p.value; });
+    return {
+      min: Math.min.apply(null, nums),
+      max: Math.max.apply(null, nums),
+      first: pts[0].value,
+      last: pts[pts.length - 1].value,
+      count: pts.length
+    };
+  }
+
+  /**
+   * plotLine(series, width, height, opts) → { path, points, lo, hi }
+   * Maps a series into an SVG coordinate box (0,0 top-left → width,height).
+   * - y is auto-scaled to the data range (NOT zero-based — weight needs this),
+   *   padded by `opts.pad` (default 0.1); `opts.min`/`opts.max` can widen it
+   *   (e.g. to include a target line).
+   * - the line breaks across null gaps (a new "M" starts each run).
+   * - `points` are the plotted (non-null) coordinates, for dots/markers.
+   */
+  function plotLine(series, width, height, opts) {
+    opts = opts || {};
+    var n = (series || []).length;
+    var stats = seriesStats(series);
+    if (n === 0 || stats.count === 0) return { path: '', points: [], lo: null, hi: null };
+
+    var lo = isNum(opts.min) ? Math.min(opts.min, stats.min) : stats.min;
+    var hi = isNum(opts.max) ? Math.max(opts.max, stats.max) : stats.max;
+    if (hi === lo) { hi = lo + 1; lo = lo - 1; } // flat data → give the line room
+    var padFrac = isNum(opts.pad) ? opts.pad : 0.1;
+    var padV = (hi - lo) * padFrac;
+    lo -= padV; hi += padV;
+    var range = hi - lo;
+
+    var xAt = function (i) { return n === 1 ? width / 2 : (i / (n - 1)) * width; };
+    var yAt = function (v) { return height - ((v - lo) / range) * height; };
+
+    var path = '';
+    var points = [];
+    var penDown = false;
+    for (var i = 0; i < n; i++) {
+      var v = series[i].value;
+      if (!isNum(v)) { penDown = false; continue; }
+      var x = r1(xAt(i)), y = r1(yAt(v));
+      path += (path ? ' ' : '') + (penDown ? 'L' : 'M') + x + ',' + y;
+      points.push({ x: x, y: y, value: v, date: series[i].date, index: i });
+      penDown = true;
+    }
+    return { path: path, points: points, lo: lo, hi: hi };
+  }
+
   // ---- Validation ----
 
   /** True if today is logged (used by the dashboard "Today" card). */
@@ -476,6 +555,10 @@
     computeConsistency: computeConsistency,
     last7Grades: last7Grades,
     isLoggedToday: isLoggedToday,
+    // trends / charts
+    buildSeries: buildSeries,
+    seriesStats: seriesStats,
+    plotLine: plotLine,
     // validation & migration
     validateDailyLog: validateDailyLog,
     validateImport: validateImport,
