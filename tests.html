@@ -194,6 +194,14 @@
     [log(L.addDaysISO(AS, -1), { weight: 199 }), log(AS, { weight: 198 })], 'weight', AS, 2);
   eq('plotLine: consecutive days → no bridge', L.plotLine(fullSeries, 300, 100).gapPath, '');
 
+  // opts.max widens the y-range so a target line above the data stays in view:
+  // the data's own max should then sit lower (larger y) than with a tight range.
+  var twoPts = [{ date: 'a', value: 5 }, { date: 'b', value: 9 }];
+  var tight = L.plotLine(twoPts, 100, 100);
+  var wide = L.plotLine(twoPts, 100, 100, { max: 13 });
+  ok('plotLine: opts.max widens range (data pushed down)',
+     wide.points[1].y > tight.points[1].y);
+
   // --------------------------- validators -------------------------------
   ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);
   ok('validate: bad date invalid', !L.validateDailyLog({ date: 'nope' }).valid);

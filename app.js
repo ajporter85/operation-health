@@ -81,6 +81,7 @@
 
   function renderTrends() {
     var logs = S.getLogs();
+    var profile = S.getProfile();
     var today = L.todayISO();
     var host = $('#trends-charts');
     var empty = $('#trends-empty');
@@ -88,19 +89,23 @@
     if (!logs.length) { host.innerHTML = ''; empty.hidden = false; return; }
     empty.hidden = true;
 
-    // Slice 2a ships Weight; 2b adds Steps + Sleep through this same builder.
     host.innerHTML = [
-      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today })
+      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today }),
+      chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today,
+                  target: profile.stepsTarget }),
+      chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today })
     ].join('');
   }
 
   function round1(v) { return Math.round(v * 10) / 10; }
+  function isFiniteNum(v) { return typeof v === 'number' && isFinite(v); }
 
   function chartCard(o) {
     var series = L.buildSeries(o.logs, o.field, o.today, TREND_DAYS);
     var stats = L.seriesStats(series);
     var title = escapeHtml(o.label);
     var unit = o.unit ? ' ' + escapeHtml(o.unit) : '';
+    var hasTarget = isFiniteNum(o.target);
 
     if (!stats.count) {
       return '<article class="card chart-card">' +
@@ -110,17 +115,27 @@
     }
 
     var iw = CHART_W - CHART_PADX * 2, ih = CHART_H - CHART_PADY * 2;
-    var plot = L.plotLine(series, iw, ih, {});
+    // A target widens the y-range so the reference line is always in view.
+    var plot = L.plotLine(series, iw, ih, hasTarget ? { min: o.target, max: o.target } : {});
     var last = plot.points[plot.points.length - 1];
+
+    var targetSvg = '';
+    if (hasTarget && plot.hi > plot.lo) {
+      var ty = round1(ih - ((o.target - plot.lo) / (plot.hi - plot.lo)) * ih);
+      targetSvg = '<line class="chart-target" x1="0" y1="' + ty + '" x2="' + iw + '" y2="' + ty +
+        '" vector-effect="non-scaling-stroke"/>';
+    }
 
     var summary = title + ' over the last ' + TREND_DAYS + ' days: ' +
       round1(stats.first) + unit + ' to ' + round1(stats.last) + unit +
-      ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ').';
+      ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ')' +
+      (hasTarget ? ', target ' + round1(o.target) + unit : '') + '.';
 
     var svg =
       '<svg class="chart" viewBox="0 0 ' + CHART_W + ' ' + CHART_H + '" ' +
         'role="img" aria-label="' + escapeHtml(summary) + '">' +
         '<g transform="translate(' + CHART_PADX + ',' + CHART_PADY + ')">' +
+          targetSvg +
           (plot.gapPath ? '<path class="chart-gap" d="' + plot.gapPath + '" fill="none" ' +
             'vector-effect="non-scaling-stroke"/>' : '') +
           '<path class="chart-line" d="' + plot.path + '" fill="none" ' +
@@ -133,7 +148,8 @@
       '<div class="chart-meta">' +
         '<span>' + escapeHtml(shortDate(series[0].date)) + '</span>' +
         '<span class="muted">min ' + round1(stats.min) + unit +
-          ' · max ' + round1(stats.max) + unit + '</span>' +
+          ' · max ' + round1(stats.max) + unit +
+          (hasTarget ? ' · target ' + round1(o.target) + unit : '') + '</span>' +
         '<span>' + escapeHtml(shortDate(series[series.length - 1].date)) + '</span>' +
       '</div>';
 

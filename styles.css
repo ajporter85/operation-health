@@ -372,6 +372,13 @@ input:focus, select:focus, textarea:focus {
   stroke-dasharray: 3 4;
   opacity: .7;
 }
+/* horizontal reference line for a metric's target (e.g. steps goal) */
+.chart-target {
+  stroke: var(--good);
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+  opacity: .55;
+}
 .chart-last { fill: var(--brand); stroke: var(--surface); stroke-width: 2; }
 .chart-meta {
   display: flex;
