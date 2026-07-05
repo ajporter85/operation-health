@@ -205,10 +205,12 @@ they supersede the §9.1 "MVP starting definition" once Phase 2 begins.
 
 ### Build slices (sequencing — CONFIRMED)
 Phase 2 ships in small, independently-useful slices, smallest-first:
-1. **Slice 1 — Graded consistency + dot strip.** ← next up. Reuses the existing DailyLog
-   (no new data entities). Evolves scoring + streak; adds the 7-day dot strip.
-2. **Slice 2 — Trend charts.** Weight, steps, sleep over time. **Hand-rolled inline SVG,
-   zero dependencies** to start (see "Charting dependency" below).
+1. **Slice 1 — Graded consistency + dot strip. ✅ SHIPPED (2026-07-05).** Reused the
+   existing DailyLog (no new data entities). Evolved scoring + streak; added the 7-day
+   dot strip. Built in three commits: 1a rename+migration+config seed, 1b graded engine,
+   1c dot strip + band coloring.
+2. **Slice 2 — Trend charts. ← next up.** Weight, steps, sleep over time. **Hand-rolled
+   inline SVG, zero dependencies** to start (see "Charting dependency" below).
 3. **Slice 3 — Multi-level log inspection.** Browse a day → week → month (parked idea).
 4. **Slice 4 — Unit/display preferences.** e.g. water in ounces (parked idea).
 5. **Later — heavy modules.** Full nutrition (protein *grams*), meal/exercise libraries,
@@ -340,14 +342,27 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
 
 ## 13. Status & session handoff
 
-**As of 2026-07-04 (end of day):**
+**As of 2026-07-05 (end of day):**
 
 - **Phase 1 MVP — shipped & working.** No-build, zero-dependency PWA: `index.html`,
   `styles.css`, `app.js` (UI wiring), `logic.js` (pure functions), `storage.js`
-  (localStorage boundary), `tests.html` (38 passing pure-logic tests), plus a minimal
+  (localStorage boundary), `tests.html` (pure-logic tests), plus a minimal
   `manifest.webmanifest` + `sw.js`. Dashboard (Today / Streak / Consistency), Daily Log,
   Settings, and JSON export/import (Merge / Replace-all modal) all working and persisting.
   Verified booting from `file://` and via headless render.
+- **Phase 2 Slice 1 — shipped & working (2026-07-05).** Graded three-state consistency
+  model per §9.2, in three commits:
+  - *1a* — `schemaVersion`→2 with the first real migration (`moved`→`morningExercise`,
+    idempotent); seeded `profile.scoring` dials; `validateImport` accepts & migrates v1
+    backups. `DEFAULT_SCORING` in `logic.js` is the single source of truth.
+  - *1b* — grading engine (`gradeBinary`/`gradeNumeric`/`gradeWake`/`creditFor`/
+    `computeDailyScore`/`gradeDay`); rewrote `computeConsistency` (avg of daily scores
+    over 7 days, missing = 0) and `computeStreak` (keys off the whole-day grade, 🟢/🟡
+    continue, 🔴 breaks, unlogged-today grace kept). Steps/water/wake drop from the
+    denominator when their target/goal is unset.
+  - *1c* — dashboard 7-day dot strip (`last7Grades`): solid 🟢🟡🔴 for logged days by
+    whole-day grade, hollow for un-logged days, brand ring on today; consistency number
+    colored by its band. Verified via seeded headless render.
 - **Repo:** private GitHub repo `ajporter85/operation-health` (`origin/main`, HTTPS via
   `gh`). All work committed and pushed.
 - **Dev environment on Andrew's Windows PC:** git, GitHub CLI (`gh`), Node LTS + npm, and
@@ -356,9 +371,13 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
   Tools' webhint a11y/compat/security linting); **the app itself stays zero-dependency**.
 - **Working agreement:** make change → **Andrew tests locally & confirms** → *then*
   commit/push. Applies to code changes.
+- **Known deferred:** the Edge Tools **`apple-touch-icon`** warning is left as-is on
+  purpose — iOS home-screen icons belong to the later **installability phase**, not now.
+  In-calendar "which days are logged" markers need a custom calendar → deferred to Slice 3
+  (log inspection); the dashboard dot strip covers the last-7-days case for now.
 
-**Next session resumes at: Phase 2 → Slice 1 (graded consistency + dot strip)** — full spec
-in §9.2. Suggested first step: turn §9.2 Slice 1 into a concrete build plan (function
-signatures for `gradeMetric` / revised `computeConsistency` / day-grade / revised
-`computeStreak`; the v1→v2 migration incl. `moved` → `morningExercise`; the new unit tests),
-share it for Andrew's nod, then build — smallest reviewable change first.
+**Next session resumes at: Phase 2 → Slice 2 (trend charts)** — full spec in §9.2.
+Weight, steps, sleep over time as **hand-rolled inline SVG, zero dependencies** to start;
+a later dedicated pass weighs a charting library (see "Charting dependency"). Suggested
+first step: decide which metrics/timeframes to chart and the SVG approach, share for
+Andrew's nod, then build smallest-first.
