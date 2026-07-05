@@ -44,10 +44,13 @@
   <!-- ============================ DAILY LOG ============================ -->
   <section id="view-log" class="view" data-view="log" hidden>
     <form id="log-form" novalidate>
-      <div class="field">
-        <label for="f-date">Date</label>
-        <input type="date" id="f-date" name="date" required>
-      </div>
+      <fieldset>
+        <legend>Date</legend>
+        <div class="field">
+          <label for="f-date" class="sr-only">Date</label>
+          <input type="date" id="f-date" name="date" required>
+        </div>
+      </fieldset>
 
       <fieldset>
         <legend>The core two <span class="muted small">(these drive your streak)</span></legend>
