@@ -143,7 +143,13 @@
 
   <!-- ============================= TRENDS ============================= -->
   <section id="view-trends" class="view" data-view="trends" hidden>
-    <h2 class="section-title">Trends <span class="muted small">(last 30 days)</span></h2>
+    <div class="trends-head">
+      <h2 class="section-title">Trends</h2>
+      <div class="range-picker">
+        <label for="trend-range" class="sr-only">Time range</label>
+        <select id="trend-range"></select>
+      </div>
+    </div>
     <div id="trends-charts" class="charts"></div>
     <p class="muted small" id="trends-empty" hidden>Log a few days to see your trends here.</p>
   </section>

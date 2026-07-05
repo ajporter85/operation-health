@@ -343,6 +343,20 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
+.trends-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.trends-head .section-title { margin: 0; }
+#trend-range {
+  width: auto;
+  min-height: 40px;
+  padding: 8px 10px;
+}
 .charts { display: flex; flex-direction: column; gap: 12px; }
 .chart-card h3 {
   margin: 0 0 8px;

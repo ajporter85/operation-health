@@ -202,6 +202,17 @@
   ok('plotLine: opts.max widens range (data pushed down)',
      wide.points[1].y > tight.points[1].y);
 
+  // range → day-count resolver (AS = 2026-07-04, per the constant above)
+  eq('rangeToDays: 30d', L.rangeToDays('30d', [], AS), 30);
+  eq('rangeToDays: 3m', L.rangeToDays('3m', [], AS), 90);
+  eq('rangeToDays: 6m', L.rangeToDays('6m', [], AS), 180);
+  eq('rangeToDays: 1y', L.rangeToDays('1y', [], AS), 365);
+  eq('rangeToDays: month = day-of-month (Jul 1–4)', L.rangeToDays('month', [], AS), 4);
+  eq('rangeToDays: all spans earliest→today inclusive (Jun 6–Jul 4 = 29)',
+     L.rangeToDays('all', [log('2026-06-06', {}), log('2026-06-20', {})], AS), 29);
+  eq('rangeToDays: all with no logs falls back to 30', L.rangeToDays('all', [], AS), 30);
+  eq('rangeToDays: unknown key falls back to 30', L.rangeToDays('nope', [], AS), 30);
+
   // --------------------------- validators -------------------------------
   ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);
   ok('validate: bad date invalid', !L.validateDailyLog({ date: 'nope' }).valid);

@@ -77,7 +77,30 @@
 
   // -------------------------------------------------------------- trends
   var CHART_W = 600, CHART_H = 150, CHART_PADX = 10, CHART_PADY = 16;
-  var TREND_DAYS = 30;
+  var RANGES = [
+    { key: '30d',   label: 'Last 30 days' },
+    { key: 'month', label: 'This month' },
+    { key: '3m',    label: 'Last 3 months' },
+    { key: '6m',    label: 'Last 6 months' },
+    { key: '1y',    label: 'Last year' },
+    { key: 'all',   label: 'All time' }
+  ];
+  var DEFAULT_RANGE = '30d';
+
+  // Populate the range dropdown, restore the saved choice, and persist changes.
+  // Called once at startup (the elements are static).
+  function setupTrends() {
+    var sel = $('#trend-range');
+    sel.innerHTML = RANGES.map(function (r) {
+      return '<option value="' + r.key + '">' + escapeHtml(r.label) + '</option>';
+    }).join('');
+    var saved = S.getPrefs().trendRange;
+    sel.value = RANGES.some(function (r) { return r.key === saved; }) ? saved : DEFAULT_RANGE;
+    sel.addEventListener('change', function () {
+      S.setPref('trendRange', sel.value);
+      renderTrends();
+    });
+  }
 
   function renderTrends() {
     var logs = S.getLogs();
@@ -89,11 +112,14 @@
     if (!logs.length) { host.innerHTML = ''; empty.hidden = false; return; }
     empty.hidden = true;
 
+    var rangeKey = $('#trend-range').value || DEFAULT_RANGE;
+    var days = L.rangeToDays(rangeKey, logs, today);
+
     host.innerHTML = [
-      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today }),
-      chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today,
+      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today, days: days }),
+      chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today, days: days,
                   target: profile.stepsTarget }),
-      chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today })
+      chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today, days: days })
     ].join('');
   }
 
@@ -101,7 +127,7 @@
   function isFiniteNum(v) { return typeof v === 'number' && isFinite(v); }
 
   function chartCard(o) {
-    var series = L.buildSeries(o.logs, o.field, o.today, TREND_DAYS);
+    var series = L.buildSeries(o.logs, o.field, o.today, o.days);
     var stats = L.seriesStats(series);
     var title = escapeHtml(o.label);
     var unit = o.unit ? ' ' + escapeHtml(o.unit) : '';
@@ -111,7 +137,7 @@
       return '<article class="card chart-card">' +
         '<h3>' + title + '</h3>' +
         '<p class="muted small chart-empty">No ' + title.toLowerCase() +
-        ' logged in the last ' + TREND_DAYS + ' days.</p></article>';
+        ' logged in this range.</p></article>';
     }
 
     var iw = CHART_W - CHART_PADX * 2, ih = CHART_H - CHART_PADY * 2;
@@ -126,7 +152,8 @@
         '" vector-effect="non-scaling-stroke"/>';
     }
 
-    var summary = title + ' over the last ' + TREND_DAYS + ' days: ' +
+    var summary = title + ' over ' + stats.count + ' logged day' +
+      (stats.count === 1 ? '' : 's') + ': ' +
       round1(stats.first) + unit + ' to ' + round1(stats.last) + unit +
       ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ')' +
       (hasTarget ? ', target ' + round1(o.target) + unit : '') + '.';
@@ -404,6 +431,7 @@
 
   // ------------------------------------------------------------------ init
   $('#f-date').value = L.todayISO();
+  setupTrends();
   showView('dashboard');
 
   // Service worker: harmless if it fails (e.g. opened via file://).

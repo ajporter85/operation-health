@@ -428,6 +428,37 @@
     return { path: path, gapPath: gapPath, points: points, lo: lo, hi: hi };
   }
 
+  /**
+   * rangeToDays(rangeKey, logs, asOfDate) → integer day-count for a trailing
+   * window ending on asOfDate. Fixed ranges are constant; 'month' is
+   * month-to-date; 'all' spans from the earliest logged day (falls back to 30
+   * when there are no logs). Feeds buildSeries' `days` argument.
+   */
+  function rangeToDays(rangeKey, logs, asOfDate) {
+    var as = asOfDate || todayISO();
+    switch (rangeKey) {
+      case '30d': return 30;
+      case '3m': return 90;
+      case '6m': return 180;
+      case '1y': return 365;
+      case 'month': return Number(as.slice(8, 10)); // day-of-month = month-to-date
+      case 'all': {
+        var dates = (logs || [])
+          .map(function (l) { return l && l.date; })
+          .filter(function (d) { return isValidISODate(d); })
+          .sort();
+        if (!dates.length) return 30;
+        var p1 = dates[0].split('-').map(Number);
+        var p2 = as.split('-').map(Number);
+        var diff = Math.round(
+          (Date.UTC(p2[0], p2[1] - 1, p2[2]) - Date.UTC(p1[0], p1[1] - 1, p1[2])) / 86400000
+        ) + 1;
+        return diff > 0 ? diff : 1;
+      }
+      default: return 30;
+    }
+  }
+
   // ---- Validation ----
 
   /** True if today is logged (used by the dashboard "Today" card). */
@@ -573,6 +604,7 @@
     buildSeries: buildSeries,
     seriesStats: seriesStats,
     plotLine: plotLine,
+    rangeToDays: rangeToDays,
     // validation & migration
     validateDailyLog: validateDailyLog,
     validateImport: validateImport,

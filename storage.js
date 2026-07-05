@@ -13,6 +13,7 @@
   var L = window.Logic;
   var KEY_PROFILE = 'oh.profile';
   var KEY_LOGS = 'oh.dailyLogs';
+  var KEY_PREFS = 'oh.prefs'; // lightweight UI prefs (not health data, not exported)
 
   // Default targets — seeded from the requirements §5 but fully editable.
   // NEVER hard-code these anywhere else; they live here and in Settings.
@@ -140,10 +141,26 @@
     return result;
   }
 
+  // ---- UI prefs (view state like the chosen trend range) ----
+
+  function getPrefs() {
+    var p = readJSON(KEY_PREFS, {});
+    return (p && typeof p === 'object') ? p : {};
+  }
+
+  function setPref(key, value) {
+    var p = getPrefs();
+    p[key] = value;
+    writeJSON(KEY_PREFS, p);
+    return p;
+  }
+
   window.Storage = {
     DEFAULT_PROFILE: DEFAULT_PROFILE,
     getProfile: getProfile,
     saveProfile: saveProfile,
+    getPrefs: getPrefs,
+    setPref: setPref,
     getLogs: getLogs,
     getLog: getLog,
     saveLog: saveLog,
