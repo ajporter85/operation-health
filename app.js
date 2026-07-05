@@ -93,7 +93,7 @@
     $('#f-weight').value = valOr(rec.weight);
     $('#f-notes').value = rec.notes || '';
     setToggle('proteinWithin30', rec.proteinWithin30 || '');
-    setToggle('moved', rec.moved || '');
+    setToggle('morningExercise', rec.morningExercise || '');
 
     $('#log-delete').hidden = !S.getLog(date);
     hideErrors();
@@ -113,7 +113,7 @@
     setStr(rec, 'bedTime', $('#f-bed').value);
     setStr(rec, 'notes', $('#f-notes').value.trim());
     var p = getToggle('proteinWithin30'); if (p) rec.proteinWithin30 = p;
-    var m = getToggle('moved'); if (m) rec.moved = m;
+    var m = getToggle('morningExercise'); if (m) rec.morningExercise = m;
     return rec;
   }
 

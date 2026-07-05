@@ -23,6 +23,20 @@
     waterTarget: 3.5,   // litres
     proteinTarget: 170, // grams (display-only in Phase 1)
     roadmapPhase: 1,
+    // Graded-consistency scoring dials (§9.2). Seeded with the confirmed
+    // defaults; a tuning UI comes in a later Phase-2 slice. NEVER hard-code
+    // these in logic/UI — they flow in from the profile.
+    scoring: {
+      yellowCredit: 0.75,      // credit for a 🟡 signal (🟢 = 1.0, 🔴 = 0.0)
+      numericGreenPct: 1.0,    // 🟢 at ≥100% of target (steps, water)
+      numericYellowPct: 0.75,  // 🟡 at ≥75% of target
+      wakeGreenMin: 30,        // 🟢 within ±30 min of wakeGoal
+      wakeYellowMin: 60,       // 🟡 within ±60 min
+      dayBands: { green: 80, yellow: 50 }, // whole-day grade from daily score
+      weights: {               // per-signal weights (all equal to start)
+        logged: 1, protein: 1, morningExercise: 1, steps: 1, water: 1, wake: 1
+      }
+    },
     schemaVersion: L.SCHEMA_VERSION
   };
 

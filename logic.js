@@ -10,7 +10,7 @@
   'use strict';
 
   // Bump when the stored shape changes; every record carries this.
-  var SCHEMA_VERSION = 1;
+  var SCHEMA_VERSION = 2;
 
   // ---- Date helpers (timezone-safe via UTC arithmetic on YYYY-MM-DD) ----
 
@@ -90,7 +90,7 @@
    */
   function dayCounts(log) {
     if (!log) return false;
-    return log.proteinWithin30 === 'Y' || log.moved === 'Y';
+    return log.proteinWithin30 === 'Y' || log.morningExercise === 'Y';
   }
 
   /**
@@ -162,7 +162,7 @@
       perSignal.logged += 1;
       if (log.proteinWithin30 === 'Y') perSignal.protein += 1;
 
-      var moved = log.moved === 'Y' ||
+      var moved = log.morningExercise === 'Y' ||
         (isNum(log.steps) && isNum(profile.stepsTarget) && log.steps >= profile.stepsTarget);
       if (moved) perSignal.moved += 1;
 
@@ -250,7 +250,7 @@
       errors.morningEnergy = 'Morning energy must be 1–5.';
     }
 
-    ['proteinWithin30', 'moved'].forEach(function (f) {
+    ['proteinWithin30', 'morningExercise'].forEach(function (f) {
       if (record[f] != null && record[f] !== '' &&
           record[f] !== 'Y' && record[f] !== 'N') {
         errors[f] = "Must be 'Y' or 'N'.";
@@ -284,8 +284,11 @@
     if (data.app !== 'operation-health') {
       errors.push('This file is not an Operation: Health export.');
     }
-    if (data.schemaVersion !== SCHEMA_VERSION) {
-      errors.push('Unsupported schemaVersion: ' + data.schemaVersion + '.');
+    // Accept any known version up to the current one; older payloads are
+    // brought forward by migrateRecord on import (see storage.importData).
+    var v = data.schemaVersion;
+    if (!(typeof v === 'number' && v >= 1 && v <= SCHEMA_VERSION)) {
+      errors.push('Unsupported schemaVersion: ' + v + '.');
     }
     if (!Array.isArray(data.dailyLogs)) {
       errors.push('Missing dailyLogs array.');
@@ -297,11 +300,22 @@
 
   /**
    * migrateRecord(record) — brings any stored record up to SCHEMA_VERSION.
-   * Currently a no-op beyond stamping the version; future versions add steps.
+   * Runs on every profile and daily-log read/write, so it must be idempotent
+   * and safe to apply to both shapes.
    */
   function migrateRecord(record) {
     record = record || {};
-    // if (record.schemaVersion === 1) { ...upgrade to 2... }
+
+    // v1 → v2: the DailyLog binary habit `moved` is re-pointed at the morning
+    // routine and renamed `morningExercise` (§9.2). Profiles have no `moved`,
+    // so this is a no-op for them. Idempotent: only fires while `moved` exists.
+    if (record.moved !== undefined) {
+      if (record.morningExercise === undefined) {
+        record.morningExercise = record.moved;
+      }
+      delete record.moved;
+    }
+
     record.schemaVersion = SCHEMA_VERSION;
     return record;
   }
