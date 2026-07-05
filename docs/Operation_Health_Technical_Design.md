@@ -196,66 +196,120 @@ Import: validate `app` and `schemaVersion`, then **merge by `date`** (imported d
 
 ---
 
-## 9.2 Phase 2 — graded consistency model (agreed 2026-07-04)
+## 9.2 Phase 2 — graded consistency model (CONFIRMED 2026-07-04)
 
-The Phase-1 score is a proportion of **binary** per-day signals. Phase 2 keeps that
-structure but replaces each binary signal with a **three-state grade**, which adds
-nuance without changing the daily-logging experience. This is the agreed model; it
-supersedes the §9.1 "MVP starting definition" once Phase 2 begins.
+Phase-1 scoring is a proportion of **binary** signals. Phase 2 keeps that structure but
+upgrades the numeric/tolerance signals to a **three-state grade**, adding nuance without
+adding taps. All decisions below were reviewed and confirmed with Andrew on 2026-07-04;
+they supersede the §9.1 "MVP starting definition" once Phase 2 begins.
 
-**Per-metric grade (green / yellow / red).** Every scored metric resolves to one of
-three states:
-- 🟢 **green** — target met or exceeded → credit **1.0**
-- 🟡 **yellow** — close; meaningful progress → credit **0.75** *(configurable; default 0.75)*
-- 🔴 **red** — far enough off that the habit wasn't really done → credit **0.0**
+### Build slices (sequencing — CONFIRMED)
+Phase 2 ships in small, independently-useful slices, smallest-first:
+1. **Slice 1 — Graded consistency + dot strip.** ← next up. Reuses the existing DailyLog
+   (no new data entities). Evolves scoring + streak; adds the 7-day dot strip.
+2. **Slice 2 — Trend charts.** Weight, steps, sleep over time. **Hand-rolled inline SVG,
+   zero dependencies** to start (see "Charting dependency" below).
+3. **Slice 3 — Multi-level log inspection.** Browse a day → week → month (parked idea).
+4. **Slice 4 — Unit/display preferences.** e.g. water in ounces (parked idea).
+5. **Later — heavy modules.** Full nutrition (protein *grams*), meal/exercise libraries,
+   measurements, per-habit dot strips, the scoring-dials Settings UI.
 
-**Grades are derived from the value you already entered — never a separate tap.** Enter
-steps = 8,500 against a 10,000 target and the app computes yellow. This is a hard rule:
-graded scoring must not add friction (the sub-60-second logging requirement wins).
-Genuinely binary habits (e.g. "protein within 30 min", "did you walk") have no middle
-state and stay **green/red only** — you can't be "close" to a yes/no.
+### Grade rule (three states)
+Every scored metric resolves to one state:
+- 🟢 **green** — target met/exceeded → credit **1.0**
+- 🟡 **yellow** — close → credit **0.75** *(the yellow **credit**; configurable, default 0.75)*
+- 🔴 **red** — clearly missed → credit **0.0**
 
-**Daily score** = weighted average of each metric's credit × 100. Weights are **equal to
-start**, but each signal stores a `weight` (default 1) so weighting can be switched on
-later with no migration and no UX change.
+Grades are **derived from the value you already entered — never a separate tap** (enter
+steps 8,500 vs a 10,000 target → yellow). Genuinely binary habits have no middle state and
+stay 🟢/🔴 only.
 
-**Consistency score** = the same calculation averaged over the **trailing 7 days**
-(including today). A **missing day grades red on every signal** (unchanged from Phase 1:
-missing = not consistent).
+### Threshold defaults (CONFIRMED — all configurable later)
+- **Numeric metrics** (steps, water): 🟢 ≥ 100% of target · 🟡 ≥ 75% of target · 🔴 < 75%.
+- **Wake time**: 🟢 within ±30 min of `wakeGoal` · 🟡 within ±60 min · 🔴 beyond.
+  *(If `wakeGoal` is unset, wake is omitted from the denominator, as in Phase 1.)*
+- Note: this **75% "closeness" threshold** is a *different dial* from the 0.75 **yellow
+  credit** above — they coincidentally share the number 75.
 
-**Streak (revised).** A day **continues** the streak if it is **green *or* yellow** on the
-core habit(s); only **red breaks** it. This directly encodes the guiding principles
-"consistency beats perfection" and "never miss two days in a row" — a close day keeps you
-alive; only a real miss resets you. Keep the Phase-1 grace where an unlogged *today* falls
-back to yesterday so an unlogged morning doesn't zero the streak. *(A future "streak
-freeze" — one forgiven red per week — is a possible later nicety, deferred.)*
+### Scored signals (Slice 1)
+| Signal | Type | Grade rule |
+|---|---|---|
+| Logged | 🟢/🔴 | green if a record exists that day (missing day → red on everything) |
+| Morning protein (`proteinWithin30`) | 🟢/🔴 | green if `'Y'` |
+| Morning exercise (`morningExercise`) | 🟢/🔴 | green if `'Y'` — **see pivot below** |
+| Steps | 🟢/🟡/🔴 | vs `stepsTarget` at 100% / 75% |
+| Water | 🟢/🟡/🔴 | vs `waterTarget` at 100% / 75% |
+| Wake consistency | 🟢/🟡/🔴 | vs `wakeGoal` at ±30 / ±60 min |
 
-**Dashboard.** Show a **7-day dot strip** (🟢🟡🔴 per day) next to the score so consistency
-is *visible*, not just a number.
+**Signal pivot — "moved" → "morning exercise" (CONFIRMED direction; finalize field name in
+Slice 1).** In Phase 1 the binary habit was a generic "moved / walked today", with Steps
+folded into it. In Phase 2 we **split Steps out as its own graded signal** (above) and
+**re-point the binary habit at the morning routine**: *did you exercise in the morning?*
+This aligns the two binary morning habits — **morning protein + morning exercise** — with
+the **30/30/30 rule** (protein within 30 min of waking + ~30 min of morning movement), so
+the score reinforces the "get up → morning protein → morning movement" cluster. Steps then
+measures *general* daily activity separately.
+- Implementation: rename the DailyLog field `moved` → `morningExercise`; relabel the UI
+  toggle accordingly; migrate old `moved` values to `morningExercise` in the v1→v2 step.
 
-**Outcomes are never scored.** Weight (and later the scale trend) are outcomes you don't
-fully control — track them as **trends only, never in the score**. You are scored on what
-you *did* (effort), not on what the scale did. (Phase 1 already keeps `weight` out of the
-score; preserve that.)
+### Daily score & consistency score
+- **Daily score** = weighted average of each signal's credit × 100. **Weights equal to
+  start**; each signal stores a `weight` (default 1) so weighting can switch on later with
+  no migration and no UX change.
+- **Consistency score** = daily score averaged over the **trailing 7 days** (incl. today).
+  A **missing day grades red on every signal** (missing = not consistent).
 
-**Long-term considerations — revisit once there's real logged data** (both need data to
-show *where* consistency actually breaks down before they're worth the added complexity):
-1. **Per-metric weighting** — not every habit contributes equally; turn on the stored
-   weights once we know which habits matter most.
-2. **Individualized yellow thresholds per goal** — some habits are harder to stay
-   consistent on than others, so the green/yellow/red bands may need to be tuned
-   per-metric rather than one flat rule. Use accumulated data to decide where to be
-   stricter or more lenient.
+### Streak — now keyed off the whole-day grade (CONFIRMED)
+The Phase-1 streak keyed off one habit; in the graded model the "green-or-yellow keeps you
+alive" leniency only bites when it's based on the **day's overall grade**:
+- Grade the **day** from its daily score: 🟢 ≥ 80 · 🟡 ≥ 50 · 🔴 < 50 *(bands configurable)*.
+- A **🟢 or 🟡 day continues** the streak; a **🔴 day breaks** it.
+- Keep the Phase-1 grace: if **today** isn't logged yet, evaluate the streak ending
+  **yesterday** so an unlogged morning doesn't zero it. (A missing day = all-red = 🔴 =
+  breaks, as before.)
+- *(Deferred nicety: a once-a-week "streak freeze" that forgives one 🔴.)*
+
+### Dashboard (Slice 1)
+- **Single 7-day dot strip** = each of the last 7 days' **overall** grade (🟢🟡🔴), next to
+  the Consistency card. *(Per-habit strips are richer but deferred to a later slice.)*
+- Color the consistency number by its band.
+
+### Data / schema (Slice 1)
+- **`schemaVersion` → 2**, with a real migration (first non-no-op use of the hook):
+  - Profile: add scoring config (yellow credit, thresholds, day-grade bands, per-signal
+    weights) seeded with the defaults above.
+  - DailyLog: rename `moved` → `morningExercise`.
+  - Old records upgrade on load; no history lost.
+
+### Deferred within Phase 2 (CONFIRMED)
+- **Scoring-dials Settings UI** (yellow credit, thresholds) — ship sensible defaults in
+  Slice 1; add the tuning UI in a **follow-up slice**.
+- **Outcomes never scored** — weight (and later the scale trend) stay **trend-only, never
+  in the score** (Phase 1 already excludes `weight`; preserve that).
+
+### Long-term considerations — revisit once there's real logged data
+Both need data to reveal *where* consistency actually breaks down before they earn their
+complexity:
+1. **Per-metric weighting** — turn on the stored weights once we know which habits matter most.
+2. **Individualized thresholds per goal** — some habits are harder to stay consistent on;
+   the green/yellow/red bands may need per-metric tuning rather than one flat rule.
+
+### Charting dependency (Q7 — CONFIRMED approach)
+Slice 2 starts with **hand-rolled inline SVG charts (zero dependencies)** — our data is
+tiny, it works offline trivially, and it keeps the no-build ethos. Andrew is **not opposed
+to dependencies** but wants the **pros/cons laid out first**. So a **later dedicated pass
+will evaluate adding a charting library** (e.g. Chart.js) — weighing bundle/offline/vendoring
+cost vs. richer interactivity — and decide explicitly before adopting one. Do **not** quietly
+add a dependency; this stays an open, deliberate decision.
 
 ## 9.3 Parked ideas (from playtesting)
 
-Not scheduled yet — captured so they aren't lost:
-- **Display-unit preferences.** Let the user choose units per metric (e.g. water in
-  **ounces** rather than litres; distance/time units for the exercise modules later).
-  Store canonical values; convert only for display/entry.
-- **Multi-level log inspection.** Browse past logs at different time resolutions — a
-  specific **day**, then a **week**, then a **month** view — to inspect history and spot
-  patterns (a natural lead-in to the Phase-2 trend charts).
+Captured so they aren't lost; now mapped to the slices above where they fit:
+- **Display-unit preferences** (Slice 4). Choose units per metric (water in **ounces** vs
+  litres; distance/time units for exercise later). Store canonical values; convert for
+  display/entry only.
+- **Multi-level log inspection** (Slice 3). Browse a **day → week → month** view — a natural
+  lead-in to the Slice-2 trend charts.
 
 ---
 
@@ -281,3 +335,30 @@ Not scheduled yet — captured so they aren't lost:
 ## 12. Immediate next step
 
 On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're building) the single-file PWA — DailyLog + on-device storage + export/import + a minimal dashboard with your streak and consistency score — so you have a real, usable app in hand within days while the rest is built out in phases.
+
+---
+
+## 13. Status & session handoff
+
+**As of 2026-07-04 (end of day):**
+
+- **Phase 1 MVP — shipped & working.** No-build, zero-dependency PWA: `index.html`,
+  `styles.css`, `app.js` (UI wiring), `logic.js` (pure functions), `storage.js`
+  (localStorage boundary), `tests.html` (38 passing pure-logic tests), plus a minimal
+  `manifest.webmanifest` + `sw.js`. Dashboard (Today / Streak / Consistency), Daily Log,
+  Settings, and JSON export/import (Merge / Replace-all modal) all working and persisting.
+  Verified booting from `file://` and via headless render.
+- **Repo:** private GitHub repo `ajporter85/operation-health` (`origin/main`, HTTPS via
+  `gh`). All work committed and pushed.
+- **Dev environment on Andrew's Windows PC:** git, GitHub CLI (`gh`), Node LTS + npm, and
+  VS Code extensions **Live Preview** (installed, parked/unused for now) and **Microsoft
+  Edge Tools** (primary preview + inspect). Node is **dev tooling only** (enables Edge
+  Tools' webhint a11y/compat/security linting); **the app itself stays zero-dependency**.
+- **Working agreement:** make change → **Andrew tests locally & confirms** → *then*
+  commit/push. Applies to code changes.
+
+**Next session resumes at: Phase 2 → Slice 1 (graded consistency + dot strip)** — full spec
+in §9.2. Suggested first step: turn §9.2 Slice 1 into a concrete build plan (function
+signatures for `gradeMetric` / revised `computeConsistency` / day-grade / revised
+`computeStreak`; the v1→v2 migration incl. `moved` → `morningExercise`; the new unit tests),
+share it for Andrew's nod, then build — smallest reviewable change first.
