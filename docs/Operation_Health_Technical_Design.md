@@ -196,6 +196,69 @@ Import: validate `app` and `schemaVersion`, then **merge by `date`** (imported d
 
 ---
 
+## 9.2 Phase 2 — graded consistency model (agreed 2026-07-04)
+
+The Phase-1 score is a proportion of **binary** per-day signals. Phase 2 keeps that
+structure but replaces each binary signal with a **three-state grade**, which adds
+nuance without changing the daily-logging experience. This is the agreed model; it
+supersedes the §9.1 "MVP starting definition" once Phase 2 begins.
+
+**Per-metric grade (green / yellow / red).** Every scored metric resolves to one of
+three states:
+- 🟢 **green** — target met or exceeded → credit **1.0**
+- 🟡 **yellow** — close; meaningful progress → credit **0.75** *(configurable; default 0.75)*
+- 🔴 **red** — far enough off that the habit wasn't really done → credit **0.0**
+
+**Grades are derived from the value you already entered — never a separate tap.** Enter
+steps = 8,500 against a 10,000 target and the app computes yellow. This is a hard rule:
+graded scoring must not add friction (the sub-60-second logging requirement wins).
+Genuinely binary habits (e.g. "protein within 30 min", "did you walk") have no middle
+state and stay **green/red only** — you can't be "close" to a yes/no.
+
+**Daily score** = weighted average of each metric's credit × 100. Weights are **equal to
+start**, but each signal stores a `weight` (default 1) so weighting can be switched on
+later with no migration and no UX change.
+
+**Consistency score** = the same calculation averaged over the **trailing 7 days**
+(including today). A **missing day grades red on every signal** (unchanged from Phase 1:
+missing = not consistent).
+
+**Streak (revised).** A day **continues** the streak if it is **green *or* yellow** on the
+core habit(s); only **red breaks** it. This directly encodes the guiding principles
+"consistency beats perfection" and "never miss two days in a row" — a close day keeps you
+alive; only a real miss resets you. Keep the Phase-1 grace where an unlogged *today* falls
+back to yesterday so an unlogged morning doesn't zero the streak. *(A future "streak
+freeze" — one forgiven red per week — is a possible later nicety, deferred.)*
+
+**Dashboard.** Show a **7-day dot strip** (🟢🟡🔴 per day) next to the score so consistency
+is *visible*, not just a number.
+
+**Outcomes are never scored.** Weight (and later the scale trend) are outcomes you don't
+fully control — track them as **trends only, never in the score**. You are scored on what
+you *did* (effort), not on what the scale did. (Phase 1 already keeps `weight` out of the
+score; preserve that.)
+
+**Long-term considerations — revisit once there's real logged data** (both need data to
+show *where* consistency actually breaks down before they're worth the added complexity):
+1. **Per-metric weighting** — not every habit contributes equally; turn on the stored
+   weights once we know which habits matter most.
+2. **Individualized yellow thresholds per goal** — some habits are harder to stay
+   consistent on than others, so the green/yellow/red bands may need to be tuned
+   per-metric rather than one flat rule. Use accumulated data to decide where to be
+   stricter or more lenient.
+
+## 9.3 Parked ideas (from playtesting)
+
+Not scheduled yet — captured so they aren't lost:
+- **Display-unit preferences.** Let the user choose units per metric (e.g. water in
+  **ounces** rather than litres; distance/time units for the exercise modules later).
+  Store canonical values; convert only for display/entry.
+- **Multi-level log inspection.** Browse past logs at different time resolutions — a
+  specific **day**, then a **week**, then a **month** view — to inspect history and spot
+  patterns (a natural lead-in to the Phase-2 trend charts).
+
+---
+
 ## 10. Quality & data safety (the QA lens)
 
 - **Backup:** one-tap JSON export; import to restore. Encourage periodic exports until sync exists.

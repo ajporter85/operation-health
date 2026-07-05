@@ -184,6 +184,22 @@
   </section>
 </main>
 
+<dialog id="import-dialog" class="modal" aria-labelledby="import-title">
+  <h2 id="import-title">Import backup</h2>
+  <p id="import-summary"></p>
+  <ul class="import-choices">
+    <li><strong>Merge</strong> — keep the days you already have; days in the file
+      overwrite any matching dates, and new days are added. Nothing is lost.</li>
+    <li><strong>Replace all</strong> — delete every day currently on this device and
+      use only what's in the file. Can't be undone.</li>
+  </ul>
+  <div class="modal-actions">
+    <button type="button" class="btn btn-primary" data-choice="merge">Merge</button>
+    <button type="button" class="btn btn-danger" data-choice="replace">Replace all</button>
+    <button type="button" class="btn btn-ghost" data-choice="cancel">Cancel</button>
+  </div>
+</dialog>
+
 <script src="logic.js"></script>
 <script src="storage.js"></script>
 <script src="app.js"></script>

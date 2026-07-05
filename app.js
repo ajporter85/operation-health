@@ -213,22 +213,55 @@
       var check = L.validateImport(data);
       if (!check.valid) { alert('Import failed:\n\n' + check.errors.join('\n')); return; }
 
-      var count = (data.dailyLogs || []).length;
-      var replace = confirm(
-        'Import ' + count + ' day(s).\n\n' +
-        'OK = REPLACE ALL local data with this file.\n' +
-        'Cancel = MERGE (imported days overwrite matching dates, keep the rest).'
-      );
-      var res = S.importData(data, replace ? 'replace' : 'merge');
-      alert('Import complete.\nAdded: ' + res.added +
-            '  ·  Replaced: ' + res.replaced +
-            '  ·  Total now: ' + res.total);
-      renderDashboard();
-      loadSettingsForm();
+      // Show what this file will actually do: how many days are new vs. overlap.
+      var incoming = data.dailyLogs || [];
+      var have = {};
+      S.getLogs().forEach(function (l) { have[l.date] = true; });
+      var overlap = 0, fresh = 0;
+      incoming.forEach(function (l) { if (have[l.date]) overlap++; else fresh++; });
+
+      var summary =
+        'This backup has <strong>' + incoming.length + ' day(s)</strong>' +
+        (data.profile ? ' plus your settings' : '') + '.<br>' +
+        '<strong>' + fresh + '</strong> new to this device · ' +
+        '<strong>' + overlap + '</strong> match a date you already have.';
+
+      askImportMode(summary).then(function (mode) {
+        if (!mode) return; // cancelled — nothing changed
+        var res = S.importData(data, mode);
+        renderDashboard();
+        loadSettingsForm();
+        alert('Import complete (' + mode + ').\n' +
+              'Added: ' + res.added +
+              '  ·  Replaced: ' + res.replaced +
+              '  ·  Total now: ' + res.total);
+      });
     };
     reader.readAsText(file);
     e.target.value = ''; // allow re-importing the same file
   });
+
+  /** Show the import modal; resolves to 'merge' | 'replace' | null (cancel). */
+  function askImportMode(summaryHtml) {
+    var dlg = $('#import-dialog');
+    $('#import-summary').innerHTML = summaryHtml;
+    return new Promise(function (resolve) {
+      function finish(choice) {
+        dlg.removeEventListener('click', onClick);
+        dlg.removeEventListener('cancel', onCancel);
+        if (dlg.open) dlg.close();
+        resolve(choice);
+      }
+      function onClick(ev) {
+        var b = ev.target.closest('button[data-choice]');
+        if (b) finish(b.dataset.choice === 'cancel' ? null : b.dataset.choice);
+      }
+      function onCancel() { finish(null); } // Esc key
+      dlg.addEventListener('click', onClick);
+      dlg.addEventListener('cancel', onCancel);
+      dlg.showModal();
+    });
+  }
 
   // ------------------------------------------------------------- helpers
   function valOr(v) { return (v === undefined || v === null) ? '' : v; }

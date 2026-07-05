@@ -245,6 +245,38 @@ input:focus, select:focus, textarea:focus {
 }
 .errors ul { margin: 6px 0 0; padding-left: 18px; }
 
+/* ---- Modal (import) ---- */
+.modal {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 460px;
+  width: calc(100% - 32px);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 12px 44px rgba(0, 0, 0, .35);
+}
+.modal::backdrop { background: rgba(0, 0, 0, .45); }
+.modal h2 { margin: 0 0 10px; font-size: 18px; }
+.import-choices {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.import-choices strong { color: var(--ink); }
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.btn-danger { background: var(--bad); color: #fff; border-color: var(--bad); }
+.btn-danger:hover { border-color: var(--bad); filter: brightness(1.05); }
+
 @media (max-width: 380px) {
   .cards, .grid-2 { grid-template-columns: 1fr; }
 }
