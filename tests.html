@@ -176,7 +176,27 @@
   eq('seriesStats: first', wStats.first, 200);
   eq('seriesStats: last', wStats.last, 196);
   eq('seriesStats: count ignores gaps', wStats.count, 3);
+  eq('seriesStats: mean over logged days', wStats.mean, 198);   // (200+198+196)/3
+  eq('seriesStats: delta = last − first over range', wStats.delta, -4); // 196 − 200
   eq('seriesStats: empty series', L.seriesStats([]).count, 0);
+  eq('seriesStats: empty mean is null', L.seriesStats([]).mean, null);
+
+  // sleep target derived from bed/wake goals (handles the midnight wrap)
+  eq('goalSleepHours: 22:30→06:30 = 8', L.goalSleepHours({ bedGoal: '22:30', wakeGoal: '06:30' }), 8);
+  eq('goalSleepHours: 23:15→06:45 = 7.5', L.goalSleepHours({ bedGoal: '23:15', wakeGoal: '06:45' }), 7.5);
+  eq('goalSleepHours: missing bed goal → null', L.goalSleepHours({ wakeGoal: '06:30' }), null);
+
+  // on-target counts logged days meeting the target
+  var stepSeries = L.buildSeries([
+    log(L.addDaysISO(AS, -2), { steps: 9000 }), // ≥ 8000
+    log(L.addDaysISO(AS, -1), { steps: 5000 }), // below
+    log(AS, { steps: 8000 })                    // exactly on
+  ], 'steps', AS, 3);
+  var ot = L.countOnTarget(stepSeries, 8000);
+  eq('countOnTarget: on', ot.on, 2);
+  eq('countOnTarget: of (logged days)', ot.of, 3);
+  eq('countOnTarget: pct', ot.pct, 67);
+  eq('countOnTarget: no target → zeros', L.countOnTarget(stepSeries, null).of, 0);
 
   var plot = L.plotLine(wSeries, 300, 100, { pad: 0 });
   eq('plotLine: one point per non-null', plot.points.length, 3);
@@ -203,6 +223,7 @@
      wide.points[1].y > tight.points[1].y);
 
   // range → day-count resolver (AS = 2026-07-04, per the constant above)
+  eq('rangeToDays: 7d', L.rangeToDays('7d', [], AS), 7);
   eq('rangeToDays: 30d', L.rangeToDays('30d', [], AS), 30);
   eq('rangeToDays: 3m', L.rangeToDays('3m', [], AS), 90);
   eq('rangeToDays: 6m', L.rangeToDays('6m', [], AS), 180);

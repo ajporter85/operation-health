@@ -78,6 +78,7 @@
   // -------------------------------------------------------------- trends
   var CHART_W = 600, CHART_H = 150, CHART_PADX = 10, CHART_PADY = 16;
   var RANGES = [
+    { key: '7d',    label: 'Last 7 days' },
     { key: '30d',   label: 'Last 30 days' },
     { key: 'month', label: 'This month' },
     { key: '3m',    label: 'Last 3 months' },
@@ -119,12 +120,14 @@
       chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today, days: days }),
       chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today, days: days,
                   target: profile.stepsTarget }),
-      chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today, days: days })
+      chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today, days: days,
+                  target: L.goalSleepHours(profile) })
     ].join('');
   }
 
   function round1(v) { return Math.round(v * 10) / 10; }
   function isFiniteNum(v) { return typeof v === 'number' && isFinite(v); }
+  function signed(v) { return v > 0 ? '+' + v : String(v); } // -3.9 keeps its sign; 0 → "0"
 
   function chartCard(o) {
     var series = L.buildSeries(o.logs, o.field, o.today, o.days);
@@ -158,6 +161,17 @@
       ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ')' +
       (hasTarget ? ', target ' + round1(o.target) + unit : '') + '.';
 
+    // Per-point hover dots (native SVG <title>). Skipped on dense ranges where
+    // dots would overlap; the line + last marker + summary still convey it.
+    var dots = '';
+    if (plot.points.length <= 60) {
+      dots = plot.points.map(function (p) {
+        var lbl = escapeHtml(formatLongDate(p.date) + ' — ' + round1(p.value) + unit);
+        return '<circle class="chart-dot" cx="' + p.x + '" cy="' + p.y + '" r="4" ' +
+          'vector-effect="non-scaling-stroke"><title>' + lbl + '</title></circle>';
+      }).join('');
+    }
+
     var svg =
       '<svg class="chart" viewBox="0 0 ' + CHART_W + ' ' + CHART_H + '" ' +
         'role="img" aria-label="' + escapeHtml(summary) + '">' +
@@ -167,6 +181,7 @@
             'vector-effect="non-scaling-stroke"/>' : '') +
           '<path class="chart-line" d="' + plot.path + '" fill="none" ' +
             'vector-effect="non-scaling-stroke"/>' +
+          dots +
           '<circle class="chart-last" cx="' + last.x + '" cy="' + last.y + '" r="4" ' +
             'vector-effect="non-scaling-stroke"/>' +
         '</g></svg>';
@@ -180,9 +195,24 @@
         '<span>' + escapeHtml(shortDate(series[series.length - 1].date)) + '</span>' +
       '</div>';
 
+    var stat = function (k, v, title) {
+      return '<span class="stat"' + (title ? ' title="' + escapeHtml(title) + '"' : '') +
+        '><span class="stat-k">' + k + '</span> ' + v + '</span>';
+    };
+    var statItems = [
+      stat('Avg', round1(stats.mean) + unit),
+      stat('Change', signed(round1(stats.delta)) + unit,
+        'Latest logged value minus the first in this range')
+    ];
+    if (hasTarget) {
+      var ot = L.countOnTarget(series, o.target);
+      statItems.push(stat('On target', ot.on + '/' + ot.of + ' days'));
+    }
+    var statsRow = '<div class="chart-stats">' + statItems.join('') + '</div>';
+
     return '<article class="card chart-card">' +
       '<h3>' + title + ' <span class="chart-latest">' + round1(stats.last) + unit +
-      '</span></h3>' + svg + meta + '</article>';
+      '</span></h3>' + svg + meta + statsRow + '</article>';
   }
 
   // ------------------------------------------------------------- log form

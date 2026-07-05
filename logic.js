@@ -363,15 +363,48 @@
   /** Summary stats over the non-null points of a series (for scaling + labels). */
   function seriesStats(series) {
     var pts = (series || []).filter(function (p) { return isNum(p.value); });
-    if (!pts.length) return { min: null, max: null, first: null, last: null, count: 0 };
+    if (!pts.length) {
+      return { min: null, max: null, first: null, last: null, count: 0, mean: null, delta: null };
+    }
     var nums = pts.map(function (p) { return p.value; });
+    var sum = nums.reduce(function (a, b) { return a + b; }, 0);
+    var first = pts[0].value, last = pts[pts.length - 1].value;
     return {
       min: Math.min.apply(null, nums),
       max: Math.max.apply(null, nums),
-      first: pts[0].value,
-      last: pts[pts.length - 1].value,
-      count: pts.length
+      first: first,
+      last: last,
+      count: pts.length,
+      mean: sum / pts.length,   // average over logged days
+      delta: last - first       // net change over the range (last logged − first)
     };
+  }
+
+  /**
+   * goalSleepHours(profile) → number|null
+   * The nightly sleep target implied by the bed/wake goals (e.g. 22:30 → 06:30
+   * = 8h), handling the midnight wrap. null if either goal is unset — then the
+   * Sleep chart simply shows no target line.
+   */
+  function goalSleepHours(profile) {
+    profile = profile || {};
+    var bed = timeToMinutes(profile.bedGoal);
+    var wake = timeToMinutes(profile.wakeGoal);
+    if (bed === null || wake === null) return null;
+    var mins = (wake - bed + 1440) % 1440;
+    return mins === 0 ? null : mins / 60;
+  }
+
+  /**
+   * countOnTarget(series, target) → { on, of, pct }
+   * How many logged days met/exceeded the target (e.g. steps ≥ goal).
+   * `of` counts logged (non-null) days only; missing days aren't judged here.
+   */
+  function countOnTarget(series, target) {
+    if (!isNum(target)) return { on: 0, of: 0, pct: 0 };
+    var pts = (series || []).filter(function (p) { return isNum(p.value); });
+    var on = pts.filter(function (p) { return p.value >= target; }).length;
+    return { on: on, of: pts.length, pct: pts.length ? Math.round((on / pts.length) * 100) : 0 };
   }
 
   /**
@@ -437,6 +470,7 @@
   function rangeToDays(rangeKey, logs, asOfDate) {
     var as = asOfDate || todayISO();
     switch (rangeKey) {
+      case '7d': return 7;
       case '30d': return 30;
       case '3m': return 90;
       case '6m': return 180;
@@ -603,6 +637,8 @@
     // trends / charts
     buildSeries: buildSeries,
     seriesStats: seriesStats,
+    countOnTarget: countOnTarget,
+    goalSleepHours: goalSleepHours,
     plotLine: plotLine,
     rangeToDays: rangeToDays,
     // validation & migration

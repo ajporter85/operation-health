@@ -393,7 +393,15 @@ input:focus, select:focus, textarea:focus {
   stroke-dasharray: 5 4;
   opacity: .55;
 }
-.chart-last { fill: var(--brand); stroke: var(--surface); stroke-width: 2; }
+/* per-point hover targets: subtle until hovered, where the native <title> shows */
+.chart-dot {
+  fill: var(--brand);
+  opacity: .25;
+  transition: opacity .1s ease;
+}
+.chart-dot:hover { opacity: 1; stroke: var(--surface); stroke-width: 2; }
+/* the last-point emphasis shouldn't swallow hover from the dot beneath it */
+.chart-last { fill: var(--brand); stroke: var(--surface); stroke-width: 2; pointer-events: none; }
 .chart-meta {
   display: flex;
   justify-content: space-between;
@@ -403,3 +411,14 @@ input:focus, select:focus, textarea:focus {
   margin-top: 6px;
 }
 .chart-empty { margin: 6px 0 0; }
+.chart-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.chart-stats .stat { font-weight: 600; }
+.chart-stats .stat-k { color: var(--muted); font-weight: 400; margin-right: 2px; }
