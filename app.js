@@ -121,6 +121,8 @@
       '<svg class="chart" viewBox="0 0 ' + CHART_W + ' ' + CHART_H + '" ' +
         'role="img" aria-label="' + escapeHtml(summary) + '">' +
         '<g transform="translate(' + CHART_PADX + ',' + CHART_PADY + ')">' +
+          (plot.gapPath ? '<path class="chart-gap" d="' + plot.gapPath + '" fill="none" ' +
+            'vector-effect="non-scaling-stroke"/>' : '') +
           '<path class="chart-line" d="' + plot.path + '" fill="none" ' +
             'vector-effect="non-scaling-stroke"/>' +
           '<circle class="chart-last" cx="' + last.x + '" cy="' + last.y + '" r="4" ' +

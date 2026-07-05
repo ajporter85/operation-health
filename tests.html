@@ -185,8 +185,14 @@
   ok('plotLine: max value sits at top (y≈0)', plot.points[0].y === 0);   // 200 is the max
   ok('plotLine: min value sits at bottom (y≈100)', plot.points[2].y === 100); // 196 is the min
   ok('plotLine: path starts with a moveto', plot.path.charAt(0) === 'M');
-  ok('plotLine: gap breaks the line (a second M)', plot.path.split('M').length === 3);
+  ok('plotLine: gap breaks the solid line (a second M)', plot.path.split('M').length === 3);
+  ok('plotLine: gap produces a bridge path', plot.gapPath.charAt(0) === 'M');
+  eq('plotLine: one bridge for one gap', plot.gapPath.split('M').length, 2);
   eq('plotLine: empty data → empty path', L.plotLine([], 300, 100).path, '');
+
+  var fullSeries = L.buildSeries(
+    [log(L.addDaysISO(AS, -1), { weight: 199 }), log(AS, { weight: 198 })], 'weight', AS, 2);
+  eq('plotLine: consecutive days → no bridge', L.plotLine(fullSeries, 300, 100).gapPath, '');
 
   // --------------------------- validators -------------------------------
   ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);

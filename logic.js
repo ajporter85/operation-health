@@ -375,19 +375,24 @@
   }
 
   /**
-   * plotLine(series, width, height, opts) → { path, points, lo, hi }
+   * plotLine(series, width, height, opts) → { path, gapPath, points, lo, hi }
    * Maps a series into an SVG coordinate box (0,0 top-left → width,height).
    * - y is auto-scaled to the data range (NOT zero-based — weight needs this),
    *   padded by `opts.pad` (default 0.1); `opts.min`/`opts.max` can widen it
    *   (e.g. to include a target line).
-   * - the line breaks across null gaps (a new "M" starts each run).
+   * - `path` is the SOLID line over runs of consecutive logged days (a new
+   *   "M" starts each run).
+   * - `gapPath` bridges across missing days (drawn dashed/muted) so the trend
+   *   stays followable while signalling "inferred, not logged."
    * - `points` are the plotted (non-null) coordinates, for dots/markers.
    */
   function plotLine(series, width, height, opts) {
     opts = opts || {};
     var n = (series || []).length;
     var stats = seriesStats(series);
-    if (n === 0 || stats.count === 0) return { path: '', points: [], lo: null, hi: null };
+    if (n === 0 || stats.count === 0) {
+      return { path: '', gapPath: '', points: [], lo: null, hi: null };
+    }
 
     var lo = isNum(opts.min) ? Math.min(opts.min, stats.min) : stats.min;
     var hi = isNum(opts.max) ? Math.max(opts.max, stats.max) : stats.max;
@@ -401,17 +406,26 @@
     var yAt = function (v) { return height - ((v - lo) / range) * height; };
 
     var path = '';
+    var gapPath = '';
     var points = [];
-    var penDown = false;
+    var prev = null; // previous plotted point {x, y, index}
     for (var i = 0; i < n; i++) {
       var v = series[i].value;
-      if (!isNum(v)) { penDown = false; continue; }
+      if (!isNum(v)) continue;
       var x = r1(xAt(i)), y = r1(yAt(v));
-      path += (path ? ' ' : '') + (penDown ? 'L' : 'M') + x + ',' + y;
+      if (prev === null) {
+        path += 'M' + x + ',' + y;
+      } else if (prev.index === i - 1) {
+        path += ' L' + x + ',' + y;                 // consecutive day → solid
+      } else {
+        gapPath += (gapPath ? ' ' : '') +           // spanned ≥1 missing day →
+          'M' + prev.x + ',' + prev.y + ' L' + x + ',' + y; // dashed bridge
+        path += ' M' + x + ',' + y;                 // and start a fresh solid run
+      }
       points.push({ x: x, y: y, value: v, date: series[i].date, index: i });
-      penDown = true;
+      prev = { x: x, y: y, index: i };
     }
-    return { path: path, points: points, lo: lo, hi: hi };
+    return { path: path, gapPath: gapPath, points: points, lo: lo, hi: hi };
   }
 
   // ---- Validation ----

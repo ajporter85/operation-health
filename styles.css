@@ -365,6 +365,13 @@ input:focus, select:focus, textarea:focus {
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+/* bridges across un-logged days: dashed + muted = "inferred, not measured" */
+.chart-gap {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+  opacity: .7;
+}
 .chart-last { fill: var(--brand); stroke: var(--surface); stroke-width: 2; }
 .chart-meta {
   display: flex;
