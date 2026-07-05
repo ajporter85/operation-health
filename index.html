@@ -1,0 +1,192 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Operation: Health</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+
+<header class="app-header">
+  <h1>Operation: <span>Health</span></h1>
+  <nav class="tabs" role="tablist">
+    <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
+    <button class="tab" data-view="log" role="tab" aria-selected="false">Daily Log</button>
+    <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============================ DASHBOARD ============================ -->
+  <section id="view-dashboard" class="view" data-view="dashboard">
+    <div class="cards">
+      <article class="card card-today">
+        <h2>Today</h2>
+        <p class="card-status" id="today-status">—</p>
+        <p class="card-sub" id="today-date"></p>
+        <button class="btn btn-primary" id="today-cta">Log today</button>
+      </article>
+
+      <article class="card card-streak">
+        <h2>Streak</h2>
+        <p class="card-big" id="streak-value">0</p>
+        <p class="card-sub" id="streak-sub">days in a row</p>
+      </article>
+
+      <article class="card card-score">
+        <h2>Consistency</h2>
+        <p class="card-big" id="score-value">0<span class="unit">/100</span></p>
+        <div class="meter" aria-hidden="true"><div class="meter-fill" id="score-meter"></div></div>
+        <p class="card-sub" id="score-hint">Log a few days to build your score.</p>
+      </article>
+    </div>
+    <p class="muted small" id="score-window">Based on the last 7 days.</p>
+  </section>
+
+  <!-- ============================ DAILY LOG ============================ -->
+  <section id="view-log" class="view" data-view="log" hidden>
+    <form id="log-form" novalidate>
+      <div class="field">
+        <label for="f-date">Date</label>
+        <input type="date" id="f-date" name="date" required>
+      </div>
+
+      <fieldset>
+        <legend>The core two <span class="muted small">(these drive your streak)</span></legend>
+        <div class="toggle-row">
+          <span class="toggle-label">Morning protein within 30 min?</span>
+          <div class="yn" data-field="proteinWithin30">
+            <button type="button" data-val="Y">Yes</button>
+            <button type="button" data-val="N">No</button>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Moved / walked today?</span>
+          <div class="yn" data-field="moved">
+            <button type="button" data-val="Y">Yes</button>
+            <button type="button" data-val="N">No</button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Movement &amp; hydration</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-steps">Steps</label>
+            <input type="number" id="f-steps" name="steps" inputmode="numeric" min="0" step="100" placeholder="e.g. 8000">
+          </div>
+          <div class="field">
+            <label for="f-water">Water (L)</label>
+            <input type="number" id="f-water" name="waterLiters" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 3.5">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Sleep &amp; morning</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-wake">Wake time</label>
+            <input type="time" id="f-wake" name="wakeTime">
+          </div>
+          <div class="field">
+            <label for="f-bed">Bed time (last night)</label>
+            <input type="time" id="f-bed" name="bedTime">
+          </div>
+          <div class="field">
+            <label for="f-sleephours">Sleep (hrs)</label>
+            <input type="number" id="f-sleephours" name="sleepHours" inputmode="decimal" min="0" max="24" step="0.25" placeholder="e.g. 7.5">
+          </div>
+          <div class="field">
+            <label for="f-sleepquality">Sleep quality (1–5)</label>
+            <input type="number" id="f-sleepquality" name="sleepQuality" inputmode="numeric" min="1" max="5" step="1">
+          </div>
+          <div class="field">
+            <label for="f-energy">Morning energy (1–5)</label>
+            <input type="number" id="f-energy" name="morningEnergy" inputmode="numeric" min="1" max="5" step="1">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Optional</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="f-weight">Weight</label>
+            <input type="number" id="f-weight" name="weight" inputmode="decimal" min="0" step="0.1">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-notes">Notes</label>
+          <textarea id="f-notes" name="notes" rows="2" placeholder="Anything worth remembering about today"></textarea>
+        </div>
+      </fieldset>
+
+      <div id="log-errors" class="errors" hidden></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save day</button>
+        <button type="button" class="btn btn-ghost" id="log-delete" hidden>Delete this day</button>
+        <span class="save-feedback" id="log-saved" hidden>Saved ✓</span>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============================ SETTINGS ============================ -->
+  <section id="view-settings" class="view" data-view="settings" hidden>
+    <form id="settings-form" novalidate>
+      <p class="muted small">
+        Starting targets from your plan — adjust freely. Pending a doctor/dietitian
+        check, treat the nutrition numbers as provisional.
+      </p>
+      <div class="grid-2">
+        <div class="field">
+          <label for="s-wake">Wake goal</label>
+          <input type="time" id="s-wake" name="wakeGoal">
+        </div>
+        <div class="field">
+          <label for="s-bed">Bed goal <span class="muted small">(optional)</span></label>
+          <input type="time" id="s-bed" name="bedGoal">
+        </div>
+        <div class="field">
+          <label for="s-steps">Steps target</label>
+          <input type="number" id="s-steps" name="stepsTarget" inputmode="numeric" min="0" step="500">
+        </div>
+        <div class="field">
+          <label for="s-water">Water target (L)</label>
+          <input type="number" id="s-water" name="waterTarget" inputmode="decimal" min="0" step="0.1">
+        </div>
+        <div class="field">
+          <label for="s-protein">Protein target (g) <span class="muted small">(display only)</span></label>
+          <input type="number" id="s-protein" name="proteinTarget" inputmode="numeric" min="0" step="5">
+        </div>
+        <div class="field">
+          <label for="s-phase">Roadmap phase</label>
+          <select id="s-phase" name="roadmapPhase">
+            <option value="1">1 — Become a walker</option>
+            <option value="2">2 — Movement becomes lifestyle</option>
+            <option value="3">3 — Strength becomes routine</option>
+            <option value="4">4 — Performance</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save settings</button>
+        <span class="save-feedback" id="settings-saved" hidden>Saved ✓</span>
+      </div>
+    </form>
+
+    <hr>
+
+    <h2 class="section-title">Backup</h2>
+    <p class="muted small">Your data lives only on this device. Export regularly.</p>
+    <div class="form-actions">
+      <button type="button" class="btn" id="export-btn">Export JSON</button>
+      <button type="button" class="btn" id="import-btn">Import JSON…</button>
+      <input type="file" id="import-file" accept="application/json,.json" hidden>
+    </div>
+  </section>
+</main>
+
+<script src="logic.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>

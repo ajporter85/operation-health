@@ -1,0 +1,161 @@
+<meta charset="utf-8">
+<title>Operation: Health — logic tests</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 760px; margin: 24px auto; padding: 0 16px; }
+  h1 { font-size: 20px; }
+  #summary { font-weight: 700; padding: 10px 14px; border-radius: 8px; margin: 12px 0; }
+  .ok { background: #dcfce7; color: #166534; }
+  .fail { background: #fee2e2; color: #991b1b; }
+  ul { padding-left: 0; list-style: none; }
+  li { padding: 4px 8px; border-bottom: 1px solid #eee; font-family: ui-monospace, monospace; font-size: 13px; }
+  li.p::before { content: "PASS "; color: #16a34a; font-weight: 700; }
+  li.f::before { content: "FAIL "; color: #dc2626; font-weight: 700; }
+  li.f { background: #fff1f2; }
+</style>
+<h1>Operation: Health — logic.js unit tests</h1>
+<p>Pure-function tests. Open this file in a browser; no framework, no network.</p>
+<div id="summary">Running…</div>
+<ul id="results"></ul>
+
+<script src="logic.js"></script>
+<script>
+(function () {
+  var L = window.Logic;
+  var results = document.getElementById('results');
+  var pass = 0, fail = 0;
+
+  function ok(name, cond) {
+    var li = document.createElement('li');
+    li.className = cond ? 'p' : 'f';
+    li.textContent = name;
+    results.appendChild(li);
+    cond ? pass++ : fail++;
+    if (!cond) console.error('FAIL: ' + name);
+  }
+  function eq(name, actual, expected) {
+    ok(name + '  (got ' + JSON.stringify(actual) + ')', actual === expected);
+  }
+
+  // helper to build a log
+  function log(date, o) { return Object.assign({ date: date }, o); }
+  var AS = '2026-07-04';
+  var profile = { wakeGoal: '06:30', stepsTarget: 8000, waterTarget: 3.5 };
+
+  // ---------------------------- date helpers ----------------------------
+  eq('addDaysISO minus one', L.addDaysISO('2026-07-04', -1), '2026-07-03');
+  eq('addDaysISO month boundary', L.addDaysISO('2026-03-01', -1), '2026-02-28');
+  eq('addDaysISO year boundary', L.addDaysISO('2026-12-31', 1), '2027-01-01');
+  ok('isValidISODate accepts real date', L.isValidISODate('2026-07-04'));
+  ok('isValidISODate rejects month 13', !L.isValidISODate('2026-13-01'));
+  ok('isValidISODate rejects Feb 30', !L.isValidISODate('2026-02-30'));
+  ok('isValidISODate rejects garbage', !L.isValidISODate('nope'));
+
+  // ---------------------------- wakeWithin ------------------------------
+  ok('wakeWithin: 10 min inside', L.wakeWithin('06:40', '06:30', 30));
+  ok('wakeWithin: 35 min outside', !L.wakeWithin('07:05', '06:30', 30));
+  ok('wakeWithin: midnight wrap', L.wakeWithin('23:55', '00:10', 30));
+  ok('wakeWithin: invalid time', !L.wakeWithin('nope', '06:30', 30));
+
+  // ------------------------------ streak --------------------------------
+  eq('streak: empty logs', L.computeStreak([], AS), 0);
+  eq('streak: today counts (protein)',
+     L.computeStreak([log(AS, { proteinWithin30: 'Y' })], AS), 1);
+  eq('streak: 3-day chain ending today',
+     L.computeStreak([
+       log('2026-07-02', { moved: 'Y' }),
+       log('2026-07-03', { moved: 'Y' }),
+       log('2026-07-04', { moved: 'Y' })
+     ], AS), 3);
+  eq('streak: today unlogged, count from yesterday',
+     L.computeStreak([
+       log('2026-07-02', { moved: 'Y' }),
+       log('2026-07-03', { moved: 'Y' })
+     ], AS), 2);
+  eq('streak: today logged but does not count → 0',
+     L.computeStreak([
+       log('2026-07-03', { moved: 'Y' }),
+       log('2026-07-04', { proteinWithin30: 'N', moved: 'N' })
+     ], AS), 0);
+  eq('streak: gap breaks the chain',
+     L.computeStreak([
+       log('2026-07-01', { moved: 'Y' }),
+       log('2026-07-03', { moved: 'Y' }),
+       log('2026-07-04', { moved: 'Y' })
+     ], AS), 2);
+
+  // --------------------------- consistency ------------------------------
+  var cEmpty = L.computeConsistency([], profile, AS);
+  eq('consistency: empty score is 0', cEmpty.score, 0);
+  eq('consistency: empty drag is logged', cEmpty.dragSignal, 'logged');
+  eq('consistency: empty possible = 35 (5 signals x 7)', cEmpty.possible, 35);
+
+  function sevenPerfect() {
+    var logs = [];
+    for (var i = 0; i < 7; i++) {
+      logs.push(log(L.addDaysISO(AS, -i), {
+        proteinWithin30: 'Y', moved: 'Y', waterLiters: 4, wakeTime: '06:30'
+      }));
+    }
+    return logs;
+  }
+  var cPerfect = L.computeConsistency(sevenPerfect(), profile, AS);
+  eq('consistency: 7 perfect days = 100', cPerfect.score, 100);
+  eq('consistency: perfect has no drag', cPerfect.dragSignal, null);
+  eq('consistency: perfect hint is null', cPerfect.hint, null);
+
+  // wakeGoal unset → 4 signals, denominator 28
+  var cNoWake = L.computeConsistency(sevenPerfect(),
+    { stepsTarget: 8000, waterTarget: 3.5 }, AS);
+  eq('consistency: no wakeGoal → possible 28', cNoWake.possible, 28);
+  eq('consistency: no wakeGoal still 100', cNoWake.score, 100);
+
+  // hydration is the drag (water below target every day)
+  var dryLogs = [];
+  for (var j = 0; j < 7; j++) {
+    dryLogs.push(log(L.addDaysISO(AS, -j), {
+      proteinWithin30: 'Y', moved: 'Y', waterLiters: 1, wakeTime: '06:30'
+    }));
+  }
+  var cDry = L.computeConsistency(dryLogs, profile, AS);
+  eq('consistency: dry days drag = hydration', cDry.dragSignal, 'hydration');
+  eq('consistency: dry days score = 80', cDry.score, 80);
+
+  // moved via steps threshold (no explicit moved flag)
+  var cSteps = L.computeConsistency(
+    [log(AS, { proteinWithin30: 'N', steps: 9000, waterLiters: 0 })], profile, AS);
+  eq('consistency: steps>=target counts as moved', cSteps.perSignal.moved, 1);
+
+  // --------------------------- validators -------------------------------
+  ok('validate: minimal valid', L.validateDailyLog({ date: AS }).valid);
+  ok('validate: bad date invalid', !L.validateDailyLog({ date: 'nope' }).valid);
+  ok('validate: sleepQuality 6 invalid',
+     !L.validateDailyLog({ date: AS, sleepQuality: 6 }).valid);
+  ok('validate: protein X invalid',
+     !L.validateDailyLog({ date: AS, proteinWithin30: 'X' }).valid);
+  ok('validate: fractional steps invalid',
+     !L.validateDailyLog({ date: AS, steps: 100.5 }).valid);
+  ok('validate: full good record valid',
+     L.validateDailyLog({
+       date: AS, wakeTime: '06:30', bedTime: '22:30', sleepHours: 7.5,
+       sleepQuality: 4, morningEnergy: 3, proteinWithin30: 'Y', moved: 'Y',
+       steps: 8200, waterLiters: 3.6, weight: 190, notes: 'ok'
+     }).valid);
+
+  ok('validateImport: good payload',
+     L.validateImport({ app: 'operation-health', schemaVersion: 1, dailyLogs: [] }).valid);
+  ok('validateImport: wrong app rejected',
+     !L.validateImport({ app: 'other', schemaVersion: 1, dailyLogs: [] }).valid);
+  ok('validateImport: wrong version rejected',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 99, dailyLogs: [] }).valid);
+
+  // ----------------------------- migration ------------------------------
+  eq('migrateRecord stamps schemaVersion',
+     L.migrateRecord({ date: AS }).schemaVersion, L.SCHEMA_VERSION);
+
+  // ------------------------------ summary -------------------------------
+  var sum = document.getElementById('summary');
+  sum.className = fail === 0 ? 'ok' : 'fail';
+  sum.textContent = (fail === 0 ? '✓ All ' : '✗ ') +
+    (pass + fail) + ' tests — ' + pass + ' passed, ' + fail + ' failed.';
+})();
+</script>
