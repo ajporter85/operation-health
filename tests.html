@@ -269,6 +269,29 @@
   eq('migrateRecord keeps morningExercise if already present',
      L.migrateRecord({ date: AS, moved: 'N', morningExercise: 'Y' }).morningExercise, 'Y');
 
+  // ------------------------- monthGrid (Slice 3) ------------------------
+  // July 2026: the 1st is a Wednesday → 2 Monday-first leading blanks.
+  var mg = L.monthGrid(2026, 7, [
+    log('2026-07-01', { proteinWithin30: 'Y', morningExercise: 'Y',
+                        steps: 9000, waterLiters: 4, wakeTime: '06:30' }), // all green
+    log('2026-07-04', { proteinWithin30: 'N', morningExercise: 'N',
+                        steps: 1000, waterLiters: 0.5, wakeTime: '09:00' }) // red-ish
+  ], profile);
+  eq('monthGrid: 31 days in July', mg.days, 31);
+  eq('monthGrid: 5 week rows', mg.weeks.length, 5);
+  ok('monthGrid: 2 leading blanks (Wed start)',
+     mg.weeks[0][0] === null && mg.weeks[0][1] === null);
+  eq('monthGrid: July 1 sits in column 3 (Wed)', mg.weeks[0][2].day, 1);
+  ok('monthGrid: July 1 logged & green', mg.weeks[0][2].logged && mg.weeks[0][2].grade === 'green');
+  ok('monthGrid: July 4 logged & red', mg.weeks[0][5].logged && mg.weeks[0][5].grade === 'red');
+  ok('monthGrid: un-logged day has null grade',
+     mg.weeks[0][3].logged === false && mg.weeks[0][3].grade === null);
+  ok('monthGrid: trailing pad fills last row to 7', mg.weeks[4].length === 7);
+  // Feb 2026 (28 days): the 1st is a Sunday → 6 leading blanks, exactly 5 rows.
+  var feb = L.monthGrid(2026, 2, [], profile);
+  eq('monthGrid: Feb 2026 has 28 days', feb.days, 28);
+  ok('monthGrid: Feb 1 (Sun) in last column of row 0', feb.weeks[0][6].day === 1);
+
   // ------------------------------ summary -------------------------------
   var sum = document.getElementById('summary');
   sum.className = fail === 0 ? 'ok' : 'fail';

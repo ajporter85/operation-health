@@ -19,6 +19,7 @@
     });
     if (name === 'dashboard') renderDashboard();
     if (name === 'log') loadLogForm($('#f-date').value || L.todayISO());
+    if (name === 'history') renderHistory();
     if (name === 'trends') renderTrends();
     if (name === 'settings') loadSettingsForm();
   }
@@ -214,6 +215,154 @@
       '<h3>' + title + ' <span class="chart-latest">' + round1(stats.last) + unit +
       '</span></h3>' + svg + meta + statsRow + '</article>';
   }
+
+  // -------------------------------------------------------------- history
+  // Which month the calendar is showing: { year, month } with month 1–12.
+  var historyYM = null;
+
+  function renderHistory() {
+    var logs = S.getLogs();
+    var empty = $('#history-empty');
+    var cal = $('#calendar');
+
+    if (!historyYM) {
+      var t = L.todayISO().split('-').map(Number);
+      historyYM = { year: t[0], month: t[1] };
+    }
+    // The calendar always renders (an empty month is still a useful frame);
+    // the hint just tells a first-time user there's nothing to click yet.
+    empty.hidden = !!logs.length;
+    if (!logs.length) $('#day-detail').hidden = true;
+
+    var profile = S.getProfile();
+    var today = L.todayISO();
+    var grid = L.monthGrid(historyYM.year, historyYM.month, logs, profile);
+    $('#cal-label').textContent = monthLabel(historyYM.year, historyYM.month);
+
+    var head = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (d) {
+      return '<span class="cal-dow" role="columnheader">' + d + '</span>';
+    }).join('');
+
+    var body = grid.weeks.map(function (week) {
+      return week.map(function (c) { return calCell(c, today); }).join('');
+    }).join('');
+
+    cal.innerHTML = head + body;
+  }
+
+  var GRADE_CLASS = { green: 'g', yellow: 'y', red: 'r' };
+  function calCell(c, today) {
+    if (!c) return '<span class="cal-cell cal-blank" aria-hidden="true"></span>';
+    var cls = 'cal-cell' +
+      (c.logged ? ' logged ' + GRADE_CLASS[c.grade] : ' empty') +
+      (c.date === today ? ' today' : '');
+    var label = escapeHtml(formatLongDate(c.date) +
+      (c.logged ? ' — ' + c.score + '/100 (' + c.grade + ')' : ' — no log'));
+    return '<button type="button" class="' + cls + '" role="gridcell" ' +
+      'data-date="' + c.date + '" title="' + label + '" aria-label="' + label + '">' +
+      '<span class="cal-day">' + c.day + '</span></button>';
+  }
+
+  // Read-only detail for one day: grades + values + notes, with an Edit jump.
+  function renderDayDetail(date) {
+    var panel = $('#day-detail');
+    var log = S.getLog(date);
+    var profile = S.getProfile();
+
+    if (!log) {
+      panel.innerHTML =
+        '<div class="detail-head"><h3>' + escapeHtml(formatLongDate(date)) + '</h3></div>' +
+        '<p class="muted">No log for this day.</p>' +
+        '<div class="form-actions"><button type="button" class="btn btn-primary" ' +
+        'data-edit="' + date + '">Add a log</button></div>';
+      panel.hidden = false;
+      return;
+    }
+
+    var day = L.computeDailyScore(log, profile);
+    var band = L.gradeDay(day.score, L.scoringConfig(profile).dayBands);
+    var rows = signalRows(day, log, profile) + extraRows(log);
+
+    panel.innerHTML =
+      '<div class="detail-head">' +
+        '<h3>' + escapeHtml(formatLongDate(date)) + '</h3>' +
+        '<span class="detail-score grade-' + band + '">' + day.score +
+        '<span class="unit">/100</span></span>' +
+      '</div>' +
+      '<dl class="detail-list">' + rows + '</dl>' +
+      (log.notes ? '<p class="detail-notes">' + escapeHtml(log.notes) + '</p>' : '') +
+      '<div class="form-actions"><button type="button" class="btn btn-primary" ' +
+      'data-edit="' + date + '">Edit this day</button></div>';
+    panel.hidden = false;
+  }
+
+  // The scored signals, each with its grade dot and the value behind the grade.
+  var SIGNAL_LABEL = {
+    protein: 'Morning protein', morningExercise: 'Morning exercise',
+    steps: 'Steps', water: 'Water', wake: 'Wake time'
+  };
+  function signalValue(sig, log, profile) {
+    switch (sig) {
+      case 'protein': return log.proteinWithin30 === 'Y' ? 'Yes' : 'No';
+      case 'morningExercise': return log.morningExercise === 'Y' ? 'Yes' : 'No';
+      case 'steps': return isFiniteNum(log.steps) ? log.steps.toLocaleString() : '—';
+      case 'water': return isFiniteNum(log.waterLiters) ? log.waterLiters + ' L' : '—';
+      case 'wake': return log.wakeTime || '—';
+      default: return '';
+    }
+  }
+  function signalRows(day, log, profile) {
+    return day.signals.filter(function (s) { return s !== 'logged'; }).map(function (s) {
+      var g = day.states[s];
+      return '<div class="detail-row">' +
+        '<dt><span class="dot ' + GRADE_CLASS[g] + '"></span>' + SIGNAL_LABEL[s] + '</dt>' +
+        '<dd>' + escapeHtml(signalValue(s, log, profile)) + '</dd></div>';
+    }).join('');
+  }
+  // Logged-but-unscored fields, shown for context (no grade dot).
+  function extraRows(log) {
+    var out = [];
+    function row(label, val) {
+      if (val === undefined || val === null || val === '') return;
+      out.push('<div class="detail-row extra"><dt>' + label + '</dt><dd>' +
+        escapeHtml(String(val)) + '</dd></div>');
+    }
+    row('Sleep', isFiniteNum(log.sleepHours) ? log.sleepHours + ' h' : '');
+    row('Sleep quality', isFiniteNum(log.sleepQuality) ? log.sleepQuality + '/5' : '');
+    row('Morning energy', isFiniteNum(log.morningEnergy) ? log.morningEnergy + '/5' : '');
+    row('Bed time', log.bedTime);
+    row('Weight', isFiniteNum(log.weight) ? log.weight : '');
+    return out.join('');
+  }
+
+  function monthLabel(year, month) {
+    return new Date(year, month - 1, 1)
+      .toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  }
+
+  function shiftMonth(delta) {
+    var m = historyYM.month + delta;
+    var y = historyYM.year;
+    if (m < 1) { m = 12; y--; } else if (m > 12) { m = 1; y++; }
+    historyYM = { year: y, month: m };
+    $('#day-detail').hidden = true; // detail belongs to the month you left
+    renderHistory();
+  }
+
+  $('#cal-prev').addEventListener('click', function () { shiftMonth(-1); });
+  $('#cal-next').addEventListener('click', function () { shiftMonth(1); });
+
+  $('#calendar').addEventListener('click', function (e) {
+    var cell = e.target.closest('.cal-cell[data-date]');
+    if (cell) renderDayDetail(cell.dataset.date);
+  });
+
+  $('#day-detail').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-edit]');
+    if (!btn) return;
+    $('#f-date').value = btn.dataset.edit;
+    showView('log');
+  });
 
   // ------------------------------------------------------------- log form
   var logForm = $('#log-form');

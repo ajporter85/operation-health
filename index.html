@@ -14,6 +14,7 @@
   <nav class="tabs" role="tablist">
     <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
     <button class="tab" data-view="log" role="tab" aria-selected="false">Daily Log</button>
+    <button class="tab" data-view="history" role="tab" aria-selected="false">History</button>
     <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
     <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
   </nav>
@@ -139,6 +140,21 @@
         <span class="save-feedback" id="log-saved" hidden>Saved ✓</span>
       </div>
     </form>
+  </section>
+
+  <!-- ============================ HISTORY ============================ -->
+  <section id="view-history" class="view" data-view="history" hidden>
+    <div class="history-head">
+      <h2 class="section-title">History</h2>
+      <div class="month-nav">
+        <button type="button" class="btn btn-icon" id="cal-prev" aria-label="Previous month">‹</button>
+        <span class="month-label" id="cal-label" aria-live="polite"></span>
+        <button type="button" class="btn btn-icon" id="cal-next" aria-label="Next month">›</button>
+      </div>
+    </div>
+    <div id="calendar" class="calendar" role="grid" aria-label="Logged days this month"></div>
+    <div id="day-detail" class="day-detail" hidden></div>
+    <p class="muted small" id="history-empty" hidden>Log a few days to browse them here.</p>
   </section>
 
   <!-- ============================= TRENDS ============================= -->

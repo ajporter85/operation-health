@@ -335,6 +335,49 @@
     return out;
   }
 
+  // ---- Log inspection (§9.2 Slice 3 — calendar geometry, pure) ----
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  /**
+   * monthGrid(year, month, logs, profile) → { year, month, days, weeks }
+   * A Monday-first calendar for the given month (`month` is 1–12). `weeks` is
+   * an array of 7-cell rows; leading/trailing padding cells are `null`.
+   * Each day cell: { date, day, logged, score, grade }
+   *   - score/grade are null for un-logged days (no all-red penalty here — this
+   *     is a browse view, not the score; an empty cell just means "no entry").
+   */
+  function monthGrid(year, month, logs, profile) {
+    profile = profile || {};
+    var cfg = scoringConfig(profile);
+    var byDate = indexByDate(logs);
+    var daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+    // Monday-first column of the 1st: JS 0=Sun..6=Sat → 0=Mon..6=Sun.
+    var firstDow = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+    var lead = (firstDow + 6) % 7;
+
+    var cells = [];
+    var i;
+    for (i = 0; i < lead; i++) cells.push(null);
+    for (var d = 1; d <= daysInMonth; d++) {
+      var date = year + '-' + pad2(month) + '-' + pad2(d);
+      var log = byDate[date];
+      var score = log ? computeDailyScore(log, profile).score : null;
+      cells.push({
+        date: date,
+        day: d,
+        logged: !!log,
+        score: score,
+        grade: log ? gradeDay(score, cfg.dayBands) : null
+      });
+    }
+    while (cells.length % 7 !== 0) cells.push(null);
+
+    var weeks = [];
+    for (i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+    return { year: year, month: month, days: daysInMonth, weeks: weeks };
+  }
+
   // ---- Trends / charts (§9.2 Slice 2 — pure geometry, zero deps) ----
 
   /** Round to 1 decimal — keeps generated SVG paths compact. */
@@ -634,6 +677,8 @@
     computeConsistency: computeConsistency,
     last7Grades: last7Grades,
     isLoggedToday: isLoggedToday,
+    // log inspection (§9.2 Slice 3)
+    monthGrid: monthGrid,
     // trends / charts
     buildSeries: buildSeries,
     seriesStats: seriesStats,
