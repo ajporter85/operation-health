@@ -353,6 +353,91 @@
   ok('split: no weight → changed false', swClean.changed === false);
   eq('split: no weight → no measurements created', swClean.measurements.length, 0);
 
+  // ============ incremental logging: entries + projection ============
+  // ---------------------------- validateEntry ---------------------------
+  ok('validateEntry: valid water', L.validateEntry({ date: AS, type: 'water', value: 0.5 }).valid);
+  ok('validateEntry: unknown type invalid', !L.validateEntry({ date: AS, type: 'nope', value: 1 }).valid);
+  ok('validateEntry: bad date invalid', !L.validateEntry({ date: 'x', type: 'water', value: 1 }).valid);
+  ok('validateEntry: bad time invalid',
+     !L.validateEntry({ date: AS, type: 'water', value: 1, time: '25:00' }).valid);
+  ok('validateEntry: fractional steps invalid',
+     !L.validateEntry({ date: AS, type: 'steps', value: 100.5 }).valid);
+  ok('validateEntry: protein X invalid', !L.validateEntry({ date: AS, type: 'protein', value: 'X' }).valid);
+  ok('validateEntry: protein Y valid', L.validateEntry({ date: AS, type: 'protein', value: 'Y' }).valid);
+  ok('validateEntry: circumference needs a site',
+     !L.validateEntry({ date: AS, type: 'circumference', value: 34 }).valid);
+  ok('validateEntry: circumference with site valid',
+     L.validateEntry({ date: AS, type: 'circumference', site: 'waist', value: 34 }).valid);
+  ok('validateEntry: sleepQuality 6 invalid',
+     !L.validateEntry({ date: AS, type: 'sleepQuality', value: 6 }).valid);
+  ok('validateEntry: wake HH:MM valid', L.validateEntry({ date: AS, type: 'wake', value: '06:30' }).valid);
+  ok('validateEntry: wake bad value invalid', !L.validateEntry({ date: AS, type: 'wake', value: '6am' }).valid);
+
+  // ------------------------------ projectDay ----------------------------
+  eq('projectDay: empty → date null', L.projectDay([]).date, null);
+  eq('projectDay: additive water sums',
+     L.projectDay([
+       { date: AS, type: 'water', value: 2, time: '09:00' },
+       { date: AS, type: 'water', value: 1.5, time: '14:00' }
+     ]).waterLiters, 3.5);
+  eq('projectDay: additive steps sum (morning + evening walk)',
+     L.projectDay([
+       { date: AS, type: 'steps', value: 4000 },
+       { date: AS, type: 'steps', value: 3000 }
+     ]).steps, 7000);
+  eq('projectDay: snapshot weight — latest time wins',
+     L.projectDay([
+       { date: AS, type: 'weight', value: 200, time: '07:00' },
+       { date: AS, type: 'weight', value: 198, time: '20:00' }
+     ]).weight, 198);
+  eq('projectDay: binary flag maps to proteinWithin30',
+     L.projectDay([{ date: AS, type: 'protein', value: 'Y' }]).proteinWithin30, 'Y');
+  eq('projectDay: exercise maps to morningExercise',
+     L.projectDay([{ date: AS, type: 'exercise', value: 'N' }]).morningExercise, 'N');
+  var pCirc = L.projectDay([
+    { date: AS, type: 'circumference', site: 'waist', value: 34 },
+    { date: AS, type: 'circumference', site: 'chest', value: 42 }
+  ]);
+  eq('projectDay: circumference folds waist', pCirc.circumferences.waist, 34);
+  eq('projectDay: circumference folds chest', pCirc.circumferences.chest, 42);
+  eq('projectDay: sleep fields map through',
+     L.projectDay([{ date: AS, type: 'sleepHours', value: 7.5 }]).sleepHours, 7.5);
+
+  // the whole point: a day of entries projects into a record the scoring engine
+  // grades exactly as the old single-record form did.
+  var greenEntries = [
+    { date: AS, type: 'protein', value: 'Y' },
+    { date: AS, type: 'exercise', value: 'Y' },
+    { date: AS, type: 'water', value: 2, time: '09:00' },
+    { date: AS, type: 'water', value: 2, time: '15:00' }, // 4 L total ≥ target
+    { date: AS, type: 'steps', value: 9000 },
+    { date: AS, type: 'wake', value: '06:30' }
+  ];
+  eq('projectDay → computeDailyScore = 100 (matches old form)',
+     L.computeDailyScore(L.projectDay(greenEntries), profile).score, 100);
+
+  // ------------------------------ projectAll ----------------------------
+  var pa = L.projectAll([
+    { date: '2026-07-03', type: 'steps', value: 5000 },
+    { date: '2026-07-01', type: 'steps', value: 6000 },
+    { date: '2026-07-01', type: 'water', value: 3.5 }
+  ]);
+  eq('projectAll: one record per dated day', pa.length, 2);
+  eq('projectAll: ascending by date', pa[0].date, '2026-07-01');
+  eq('projectAll: same-day entries merge into one record', pa[0].steps, 6000);
+  // and it drops straight into the consistency engine
+  var entriesWeek = [];
+  for (var gi = 0; gi < 7; gi++) {
+    var gd = L.addDaysISO(AS, -gi);
+    entriesWeek.push({ date: gd, type: 'protein', value: 'Y' });
+    entriesWeek.push({ date: gd, type: 'exercise', value: 'Y' });
+    entriesWeek.push({ date: gd, type: 'water', value: 4 });
+    entriesWeek.push({ date: gd, type: 'steps', value: 9000 });
+    entriesWeek.push({ date: gd, type: 'wake', value: '06:30' });
+  }
+  eq('projectAll → computeConsistency = 100 over a perfect week',
+     L.computeConsistency(L.projectAll(entriesWeek), profile, AS).score, 100);
+
   // -------------------- validateImport (v3 + measurements) --------------
   ok('validateImport: v3 payload with measurements',
      L.validateImport({ app: 'operation-health', schemaVersion: 3,

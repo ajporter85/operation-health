@@ -14,9 +14,23 @@
   var KEY_PROFILE = 'oh.profile';
   var KEY_LOGS = 'oh.dailyLogs';
   var KEY_MEASUREMENTS = 'oh.measurements'; // periodic body metrics (§6), date-keyed
+  var KEY_ENTRIES = 'oh.entries'; // incremental-logging stream (LogEntry records)
   var KEY_PREFS = 'oh.prefs'; // lightweight UI prefs (not health data, not exported)
 
   function byDateAsc(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }
+
+  // Entries sort chronologically: by date, then time (time-less first), then id.
+  function byEntryOrder(a, b) {
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    var ta = a.time || '', tb = b.time || '';
+    if (ta !== tb) return ta < tb ? -1 : 1;
+    return (a.id || '') < (b.id || '') ? -1 : (a.id || '') > (b.id || '') ? 1 : 0;
+  }
+
+  // Opaque unique id for a LogEntry (so the ledger can edit/delete a single one).
+  function genId() {
+    return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
 
   // Default targets — seeded from the requirements §5 but fully editable.
   // NEVER hard-code these anywhere else; they live here and in Settings.
@@ -127,6 +141,61 @@
   function deleteMeasurement(date) {
     var all = getMeasurements().filter(function (m) { return m.date !== date; });
     writeJSON(KEY_MEASUREMENTS, all);
+  }
+
+  // ---- Log entries (incremental-logging stream) ----
+  // The forthcoming source of truth for daily data. Reads/writes here; the UI
+  // will project these into derived DailyLogs via Logic.projectAll (wired in a
+  // later sub-slice). Defined now so the UI can build on a stable, tested store.
+
+  /** All entries, migrated, in chronological order. */
+  function getEntries() {
+    var e = readJSON(KEY_ENTRIES, []);
+    if (!Array.isArray(e)) e = [];
+    return e.map(L.migrateRecord).sort(byEntryOrder);
+  }
+
+  /** Just one day's entries (chronological). */
+  function getDayEntries(date) {
+    return getEntries().filter(function (e) { return e.date === date; });
+  }
+
+  /**
+   * Insert or update a LogEntry.
+   * - additive types (water, steps): a new entry is appended; passing an existing
+   *   `id` edits that one entry in place.
+   * - snapshot/binary types: one-per-day — saving replaces any existing entry of
+   *   the same type that day (per site, for circumferences). New ids are minted.
+   */
+  function saveEntry(entry) {
+    var rec = L.migrateRecord(Object.assign({}, entry));
+    if (!rec.id) rec.id = genId();
+
+    var all = readJSON(KEY_ENTRIES, []);
+    if (!Array.isArray(all)) all = [];
+
+    var t = L.ENTRY_TYPES[rec.type];
+    if (t && t.semantic !== 'additive') {
+      // Enforce one-per-day (per site for circumference) by dropping the prior.
+      all = all.filter(function (e) {
+        if (e.date !== rec.date || e.type !== rec.type) return true;
+        if (t.semantic === 'circumference') return e.site !== rec.site;
+        return false;
+      });
+    } else if (entry.id) {
+      // Editing an existing additive entry: replace it rather than duplicate.
+      all = all.filter(function (e) { return e.id !== entry.id; });
+    }
+
+    all.push(rec);
+    all.sort(byEntryOrder);
+    writeJSON(KEY_ENTRIES, all);
+    return rec;
+  }
+
+  function deleteEntry(id) {
+    var all = getEntries().filter(function (e) { return e.id !== id; });
+    writeJSON(KEY_ENTRIES, all);
   }
 
   /**
@@ -240,6 +309,10 @@
     getMeasurement: getMeasurement,
     saveMeasurement: saveMeasurement,
     deleteMeasurement: deleteMeasurement,
+    getEntries: getEntries,
+    getDayEntries: getDayEntries,
+    saveEntry: saveEntry,
+    deleteEntry: deleteEntry,
     exportData: exportData,
     importData: importData
   };

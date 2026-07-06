@@ -24,6 +24,31 @@
     { key: 'neck',  label: 'Neck' }
   ];
 
+  // ---- Log entries (the incremental-logging model) ----
+  // A day is no longer one big record; it's a stream of small timestamped
+  // LogEntry records that a pure projection (projectDay) rolls up into the same
+  // derived-DailyLog shape the scoring/trends/history engine already consumes.
+  //
+  // Each type declares a `semantic` and the derived-day `field` it feeds:
+  //   additive      — multiple entries per day SUM (water, steps)
+  //   snapshot      — latest entry wins; one value for the day (weight, sleep…)
+  //   binary        — a Y/N flag (morning protein, morning exercise)
+  //   circumference — snapshot, but keyed per body site into circumferences{}
+  // Values are stored canonical (water=L, weight/circ handled by the unit layer).
+  var ENTRY_TYPES = {
+    water:         { semantic: 'additive',      field: 'waterLiters' },
+    steps:         { semantic: 'additive',      field: 'steps' },
+    weight:        { semantic: 'snapshot',      field: 'weight' },
+    circumference: { semantic: 'circumference', field: 'circumferences' },
+    protein:       { semantic: 'binary',        field: 'proteinWithin30' },
+    exercise:      { semantic: 'binary',        field: 'morningExercise' },
+    wake:          { semantic: 'snapshot',      field: 'wakeTime' },
+    bed:           { semantic: 'snapshot',      field: 'bedTime' },
+    sleepHours:    { semantic: 'snapshot',      field: 'sleepHours' },
+    sleepQuality:  { semantic: 'snapshot',      field: 'sleepQuality' },
+    energy:        { semantic: 'snapshot',      field: 'morningEnergy' }
+  };
+
   // ---- Date helpers (timezone-safe via UTC arithmetic on YYYY-MM-DD) ----
 
   /** Format a JS Date as a local YYYY-MM-DD string. */
@@ -789,6 +814,113 @@
     return { logs: outLogs, measurements: outMeas, changed: changed };
   }
 
+  /**
+   * validateEntry(entry) → { valid, errors:{field:message} }
+   * A single LogEntry. `date` and a known `type` are required; `value` is
+   * checked against that type's expectations; `time` (optional) must be HH:MM.
+   */
+  function validateEntry(entry) {
+    var errors = {};
+    entry = entry || {};
+
+    if (!isValidISODate(entry.date)) {
+      errors.date = 'A valid date (YYYY-MM-DD) is required.';
+    }
+    var t = ENTRY_TYPES[entry.type];
+    if (!t) {
+      errors.type = 'Unknown entry type.';
+      return { valid: false, errors: errors };
+    }
+    if (entry.time != null && entry.time !== '' && timeToMinutes(entry.time) === null) {
+      errors.time = 'Time must be HH:MM (24h).';
+    }
+
+    var v = entry.value;
+    switch (entry.type) {
+      case 'water':
+        if (!inRange(Number(v), 0, 20)) errors.value = 'Water must be between 0 and 20 L.';
+        break;
+      case 'steps':
+        var s = Number(v);
+        if (!isNum(s) || s < 0 || Math.floor(s) !== s) errors.value = 'Steps must be a whole number ≥ 0.';
+        break;
+      case 'weight':
+        if (!inRange(Number(v), 0, 1000)) errors.value = 'Weight looks out of range.';
+        break;
+      case 'circumference':
+        if (!entry.site || !CIRC_SITES.some(function (c) { return c.key === entry.site; })) {
+          errors.site = 'Pick a measurement site.';
+        }
+        if (!inRange(Number(v), 0, 500)) errors.value = 'Measurement looks out of range.';
+        break;
+      case 'protein':
+      case 'exercise':
+        if (v !== 'Y' && v !== 'N') errors.value = "Must be 'Y' or 'N'.";
+        break;
+      case 'wake':
+      case 'bed':
+        if (typeof v !== 'string' || timeToMinutes(v) === null) errors.value = 'Time must be HH:MM (24h).';
+        break;
+      case 'sleepHours':
+        if (!inRange(Number(v), 0, 24)) errors.value = 'Sleep hours must be between 0 and 24.';
+        break;
+      case 'sleepQuality':
+        if (!inRange(Number(v), 1, 5)) errors.value = 'Sleep quality must be 1–5.';
+        break;
+      case 'energy':
+        if (!inRange(Number(v), 1, 5)) errors.value = 'Morning energy must be 1–5.';
+        break;
+    }
+
+    return { valid: Object.keys(errors).length === 0, errors: errors };
+  }
+
+  /**
+   * projectDay(entries) → derived DailyLog for a single day.
+   * PURE. Rolls one day's entries into the same {waterLiters, steps, weight,
+   * proteinWithin30, wakeTime, …} shape the scoring engine already consumes, so
+   * nothing downstream changes. Additive types sum; snapshot/binary take the
+   * latest-by-time value; circumferences fold per-site. Assumes all entries share
+   * a date (projectAll groups first). Empty input → { date: null }.
+   */
+  function projectDay(entries) {
+    // Ascending by time so the last write wins for snapshots; time-less entries
+    // (backfill/migrated) sort first, so any timed correction supersedes them.
+    var sorted = (entries || []).slice().sort(function (a, b) {
+      var ta = a.time || '', tb = b.time || '';
+      return ta < tb ? -1 : ta > tb ? 1 : 0;
+    });
+
+    var day = { date: sorted.length ? sorted[0].date : null };
+    var circ = {};
+    sorted.forEach(function (e) {
+      var t = ENTRY_TYPES[e.type];
+      if (!t) return;
+      if (t.semantic === 'additive') {
+        if (isNum(e.value)) day[t.field] = (isNum(day[t.field]) ? day[t.field] : 0) + e.value;
+      } else if (t.semantic === 'circumference') {
+        if (e.site && isNum(e.value)) circ[e.site] = e.value;
+      } else { // snapshot | binary — latest wins via the ascending sort
+        day[t.field] = e.value;
+      }
+    });
+    if (Object.keys(circ).length) day.circumferences = circ;
+    return day;
+  }
+
+  /**
+   * projectAll(entries) → [derived DailyLog], one per dated day, ascending.
+   * The drop-in replacement for a stored-logs array: feed it to computeConsistency,
+   * computeStreak, buildSeries, monthGrid, etc.
+   */
+  function projectAll(entries) {
+    var byDate = {};
+    (entries || []).forEach(function (e) {
+      if (e && e.date) (byDate[e.date] = byDate[e.date] || []).push(e);
+    });
+    return Object.keys(byDate).sort().map(function (d) { return projectDay(byDate[d]); });
+  }
+
   /** Validate the shape of an import payload before we touch stored data. */
   function validateImport(data) {
     var errors = [];
@@ -888,6 +1020,11 @@
     CIRC_SITES: CIRC_SITES,
     validateMeasurement: validateMeasurement,
     splitWeightToMeasurements: splitWeightToMeasurements,
+    // incremental logging (event model + projection)
+    ENTRY_TYPES: ENTRY_TYPES,
+    validateEntry: validateEntry,
+    projectDay: projectDay,
+    projectAll: projectAll,
     // validation & migration
     validateDailyLog: validateDailyLog,
     validateImport: validateImport,
