@@ -3,14 +3,16 @@
 ## What this is
 A personal health-tracking app, built as a **local-first PWA**. The full vision and requirements live in `docs/Operation_Health_Vision_and_Requirements.md`; the technical design and phased build plan live in `docs/Operation_Health_Technical_Design.md`. **Those two files are the source of truth** — follow them, and if anything conflicts or is unclear, ask before proceeding.
 
-## Current focus: Phase 1 (MVP) ONLY
-Build only what's in the **"9.1 Phase 1 MVP — build scope"** section of the technical design doc. Do **not** build Phase 2+ features yet (meals, workouts, libraries, charts, rule engine, reminders, sync). The app runs in a **desktop browser on the user's PC** for now — installability and iPhone reminders come in a later phase.
+## Current status (as of 2026-07-05)
+**Phase 1 MVP + all Phase 2 build slices (1–4) + the Trends-polish pass are shipped and pushed.** That covers graded consistency + dot strip, trend charts (7-day moving average, High/Low), the History tab (month calendar + week view + day detail), and per-metric display units (water, weight). See §13 of the technical design doc for the full status/handoff and §9.2/§9.3 for the confirmed specs.
+
+**No slice is currently queued** — the next direction is open (candidates: the scoring-dials Settings UI, per-habit dot strips, or the Phase 2 heavy modules — nutrition/meals/workouts/measurements). **Confirm the next piece with the user and share a build plan before writing code.** Still **not** started: rule engine, reminders, sync, and installability/iPhone home-screen (a later phase). The app runs in a **desktop browser on the user's PC** for now.
 
 ## Hard constraints
-- **No build step, no framework, no external/CDN dependencies** in Phase 1. Vanilla HTML/CSS/JS.
+- **No build step, no framework, no external/CDN dependencies.** Vanilla HTML/CSS/JS — this has held through Phase 2 (charts are hand-rolled inline SVG). Node is dev-tooling only; the app ships zero-dependency. *(The one deliberately-open exception is a possible charting library — see §9.2 Q7; decide explicitly with the user before adopting, never quietly.)*
 - Persistence via **`localStorage`** through a thin storage module (so IndexedDB can replace it later without touching the UI).
-- Organize as `index.html`, `styles.css`, `app.js` (UI/wiring), `logic.js` (pure functions). Keep score/streak/validation logic **pure and out of the UI** so it's unit-testable.
-- Include a PWA manifest + service worker, but **don't over-invest** there in Phase 1.
+- Organize as `index.html`, `styles.css`, `app.js` (UI/wiring), `logic.js` (pure functions), `storage.js` (the localStorage boundary). Keep score/streak/validation/units logic **pure and out of the UI** so it's unit-testable (`tests.html`).
+- PWA manifest + service worker exist but stay minimal; **don't over-invest** — installability comes in a later phase.
 - **Ask before adding any dependency or changing the stack.**
 
 ## Quality expectations (the user is QA/systems-minded)

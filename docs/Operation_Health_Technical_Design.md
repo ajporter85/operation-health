@@ -420,8 +420,8 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
   commit/push. Applies to code changes.
 - **Known deferred:** the Edge Tools **`apple-touch-icon`** warning is left as-is on
   purpose — iOS home-screen icons belong to the later **installability phase**, not now.
-  In-calendar "which days are logged" markers need a custom calendar → deferred to Slice 3
-  (log inspection); the dashboard dot strip covers the last-7-days case for now.
+  *(The in-calendar "which days are logged" markers noted here originally were since
+  delivered in Slice 3a's month calendar.)*
 
 - **Phase 2 Slice 3 — shipped & working (2026-07-05).** New **History** tab, in two commits:
   - *3a* — custom **Monday-first month calendar** (the native date picker can't be
