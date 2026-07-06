@@ -14,6 +14,7 @@
   <nav class="tabs" role="tablist">
     <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
     <button class="tab" data-view="log" role="tab" aria-selected="false">Daily Log</button>
+    <button class="tab" data-view="measurements" role="tab" aria-selected="false">Measurements</button>
     <button class="tab" data-view="history" role="tab" aria-selected="false">History</button>
     <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
     <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
@@ -119,17 +120,13 @@
       </fieldset>
 
       <fieldset>
-        <legend>Optional</legend>
-        <div class="grid-2">
-          <div class="field">
-            <label for="f-weight" id="f-weight-label">Weight (lb)</label>
-            <input type="number" id="f-weight" name="weight" inputmode="decimal" min="0" step="0.1">
-          </div>
-        </div>
+        <legend>Notes</legend>
         <div class="field">
-          <label for="f-notes">Notes</label>
+          <label for="f-notes" class="sr-only">Notes</label>
           <textarea id="f-notes" name="notes" rows="2" placeholder="Anything worth remembering about today"></textarea>
         </div>
+        <p class="muted small">Weight &amp; body measurements now live in the
+          <strong>Measurements</strong> tab.</p>
       </fieldset>
 
       <div id="log-errors" class="errors" hidden></div>
@@ -140,6 +137,54 @@
         <span class="save-feedback" id="log-saved" hidden>Saved ✓</span>
       </div>
     </form>
+  </section>
+
+  <!-- ========================= MEASUREMENTS ========================= -->
+  <section id="view-measurements" class="view" data-view="measurements" hidden>
+    <form id="meas-form" novalidate>
+      <fieldset>
+        <legend>Date</legend>
+        <div class="field">
+          <label for="m-date" class="sr-only">Date</label>
+          <input type="date" id="m-date" name="date" required>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Weight</legend>
+        <div class="grid-2">
+          <div class="field">
+            <label for="m-weight" id="m-weight-label">Weight (lb)</label>
+            <input type="number" id="m-weight" name="weight" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 190">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Circumferences <span class="muted small">(log only what you measure)</span></legend>
+        <div class="grid-2" id="meas-circ-grid"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Notes</legend>
+        <div class="field">
+          <label for="m-notes" class="sr-only">Notes</label>
+          <textarea id="m-notes" name="notes" rows="2" placeholder="Time of day, conditions, anything worth noting"></textarea>
+        </div>
+      </fieldset>
+
+      <div id="meas-errors" class="errors" hidden></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save measurement</button>
+        <button type="button" class="btn btn-ghost" id="meas-delete" hidden>Delete this entry</button>
+        <span class="save-feedback" id="meas-saved" hidden>Saved ✓</span>
+      </div>
+    </form>
+
+    <h2 class="section-title">Recent measurements</h2>
+    <div id="meas-list" class="meas-list"></div>
+    <p class="muted small" id="meas-empty" hidden>No measurements yet. Log your first above.</p>
   </section>
 
   <!-- ============================ HISTORY ============================ -->
@@ -225,6 +270,13 @@
           <select id="s-weight-unit" name="weightUnit">
             <option value="lb">Pounds (lb)</option>
             <option value="kg">Kilograms (kg)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="s-circ-unit">Body measurements</label>
+          <select id="s-circ-unit" name="circumferenceUnit">
+            <option value="in">Inches (in)</option>
+            <option value="cm">Centimetres (cm)</option>
           </select>
         </div>
       </div>

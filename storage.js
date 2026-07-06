@@ -13,7 +13,10 @@
   var L = window.Logic;
   var KEY_PROFILE = 'oh.profile';
   var KEY_LOGS = 'oh.dailyLogs';
+  var KEY_MEASUREMENTS = 'oh.measurements'; // periodic body metrics (§6), date-keyed
   var KEY_PREFS = 'oh.prefs'; // lightweight UI prefs (not health data, not exported)
+
+  function byDateAsc(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }
 
   // Default targets — seeded from the requirements §5 but fully editable.
   // NEVER hard-code these anywhere else; they live here and in Settings.
@@ -29,6 +32,7 @@
     // read for older profiles, so no schema bump is needed.
     waterUnit: 'L',     // 'L' | 'oz'
     weightUnit: 'lb',   // 'lb' | 'kg' (existing weight data is canonical pounds)
+    circumferenceUnit: 'in', // 'in' | 'cm' (measurements stored canonical inches)
     // Graded-consistency scoring dials (§9.2). Seeded from the canonical
     // defaults in logic.js (one source of truth); a tuning UI comes in a later
     // Phase-2 slice. NEVER hard-code these in logic/UI — they flow in from the
@@ -97,6 +101,53 @@
     writeJSON(KEY_LOGS, logs);
   }
 
+  // ---- Measurements (periodic body metrics; date is the primary key) ----
+
+  /** All measurements, migrated, sorted ascending by date. */
+  function getMeasurements() {
+    var m = readJSON(KEY_MEASUREMENTS, []);
+    if (!Array.isArray(m)) m = [];
+    return m.map(L.migrateRecord).sort(byDateAsc);
+  }
+
+  function getMeasurement(date) {
+    return getMeasurements().filter(function (m) { return m.date === date; })[0] || null;
+  }
+
+  /** Insert or replace the measurement for its date. */
+  function saveMeasurement(record) {
+    var stamped = L.migrateRecord(Object.assign({}, record));
+    var all = getMeasurements().filter(function (m) { return m.date !== stamped.date; });
+    all.push(stamped);
+    all.sort(byDateAsc);
+    writeJSON(KEY_MEASUREMENTS, all);
+    return stamped;
+  }
+
+  function deleteMeasurement(date) {
+    var all = getMeasurements().filter(function (m) { return m.date !== date; });
+    writeJSON(KEY_MEASUREMENTS, all);
+  }
+
+  /**
+   * Move any pre-v3 weight still stored on daily logs into measurements.
+   * Idempotent and cheap: runs the pure Logic.splitWeightToMeasurements over the
+   * raw stores and only writes back when something actually moved. Called once
+   * at load (below) and again after an import of an older backup.
+   */
+  function migrateWeightToMeasurements() {
+    try {
+      var res = L.splitWeightToMeasurements(
+        readJSON(KEY_LOGS, []), readJSON(KEY_MEASUREMENTS, []));
+      if (res.changed) {
+        writeJSON(KEY_LOGS, res.logs);
+        writeJSON(KEY_MEASUREMENTS, res.measurements);
+      }
+    } catch (e) {
+      console.error('Weight→measurement migration failed', e);
+    }
+  }
+
   // ---- Export / Import ----
 
   /** The full backup payload, in the §9.1 export format. */
@@ -106,7 +157,8 @@
       schemaVersion: L.SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
       profile: getProfile(),
-      dailyLogs: getLogs()
+      dailyLogs: getLogs(),
+      measurements: getMeasurements()
     };
   }
 
@@ -120,11 +172,13 @@
    */
   function importData(data, mode) {
     var incoming = (data.dailyLogs || []).map(L.migrateRecord);
+    var incomingMeas = (data.measurements || []).map(L.migrateRecord);
 
     var result = { added: 0, replaced: 0, total: 0 };
 
     if (mode === 'replace') {
       writeJSON(KEY_LOGS, incoming);
+      writeJSON(KEY_MEASUREMENTS, incomingMeas);
       result.added = incoming.length;
     } else {
       var byDate = {};
@@ -134,13 +188,25 @@
         byDate[l.date] = l;
       });
       var merged = Object.keys(byDate).map(function (d) { return byDate[d]; });
-      merged.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+      merged.sort(byDateAsc);
       writeJSON(KEY_LOGS, merged);
+
+      // Measurements ride along on merge (same date-keyed upsert); the added/
+      // replaced tally stays about days, so it isn't counted here.
+      var mByDate = {};
+      getMeasurements().forEach(function (m) { mByDate[m.date] = m; });
+      incomingMeas.forEach(function (m) { mByDate[m.date] = m; });
+      var mMerged = Object.keys(mByDate).map(function (d) { return mByDate[d]; });
+      mMerged.sort(byDateAsc);
+      writeJSON(KEY_MEASUREMENTS, mMerged);
     }
 
     if (data.profile && typeof data.profile === 'object') {
       saveProfile(data.profile);
     }
+
+    // An older (pre-v3) backup carries weight on its logs — bring it across.
+    migrateWeightToMeasurements();
 
     result.total = getLogs().length;
     return result;
@@ -170,7 +236,15 @@
     getLog: getLog,
     saveLog: saveLog,
     deleteLog: deleteLog,
+    getMeasurements: getMeasurements,
+    getMeasurement: getMeasurement,
+    saveMeasurement: saveMeasurement,
+    deleteMeasurement: deleteMeasurement,
     exportData: exportData,
     importData: importData
   };
+
+  // One-time on load: relocate any weight that predates the Measurements module
+  // out of daily logs. No-op once the store is clean (idempotent).
+  migrateWeightToMeasurements();
 })();

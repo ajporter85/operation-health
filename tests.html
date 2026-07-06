@@ -301,6 +301,68 @@
   eq('migrateRecord keeps morningExercise if already present',
      L.migrateRecord({ date: AS, moved: 'N', morningExercise: 'Y' }).morningExercise, 'Y');
 
+  // -------------------- measurements: units (in ↔ cm) -------------------
+  eq('inToDisplay: in is identity', L.inToDisplay(34, 'in'), 34);
+  ok('inToDisplay: 34 in = 86.36 cm', Math.abs(L.inToDisplay(34, 'cm') - 86.36) < 1e-9);
+  eq('inFromDisplay: in is identity', L.inFromDisplay(34, 'in'), 34);
+  ok('circumference round-trips in→cm→in',
+     Math.abs(L.inFromDisplay(L.inToDisplay(34, 'cm'), 'cm') - 34) < 1e-9);
+  eq('inToDisplay: null-safe', L.inToDisplay(null, 'cm'), null);
+  eq('circumferenceUnitLabel: cm', L.circumferenceUnitLabel('cm'), 'cm');
+  eq('circumferenceUnitLabel: default in', L.circumferenceUnitLabel('nonsense'), 'in');
+
+  // ---------------------- validateMeasurement --------------------------
+  ok('validateMeasurement: minimal valid', L.validateMeasurement({ date: AS }).valid);
+  ok('validateMeasurement: bad date invalid', !L.validateMeasurement({ date: 'nope' }).valid);
+  ok('validateMeasurement: out-of-range weight invalid',
+     !L.validateMeasurement({ date: AS, weight: 5000 }).valid);
+  ok('validateMeasurement: out-of-range circumference invalid',
+     !L.validateMeasurement({ date: AS, circumferences: { waist: 9999 } }).valid);
+  ok('validateMeasurement: full good record valid',
+     L.validateMeasurement({ date: AS, weight: 190,
+       circumferences: { waist: 34, chest: 42, hips: 40, arm: 14, thigh: 22, neck: 15 },
+       notes: 'am' }).valid);
+  eq('CIRC_SITES has 6 sites', L.CIRC_SITES.length, 6);
+
+  // ------------------ splitWeightToMeasurements (pure) -----------------
+  var swLogs = [
+    log('2026-07-02', { steps: 8000, weight: 200 }),
+    log('2026-07-03', { steps: 7000 }),            // no weight
+    log('2026-07-04', { steps: 9000, weight: 198 })
+  ];
+  var sw = L.splitWeightToMeasurements(swLogs, []);
+  ok('split: reports changed', sw.changed === true);
+  ok('split: strips weight off logs', sw.logs.every(function (l) { return l.weight === undefined; }));
+  eq('split: keeps other log fields', sw.logs[0].steps, 8000);
+  eq('split: creates a measurement per weighed day', sw.measurements.length, 2);
+  eq('split: measurement carries the weight', sw.measurements[0].weight, 200);
+  eq('split: measurements sorted ascending', sw.measurements[0].date, '2026-07-02');
+  ok('split: does not mutate the input logs', swLogs[0].weight === 200);
+
+  // merges into an existing measurement for the same date, never clobbering weight
+  var swExisting = [{ date: '2026-07-02', circumferences: { waist: 34 } }];
+  var sw2 = L.splitWeightToMeasurements([log('2026-07-02', { weight: 205 })], swExisting);
+  eq('split: merges weight into existing measurement', sw2.measurements[0].weight, 205);
+  eq('split: preserves existing circumferences', sw2.measurements[0].circumferences.waist, 34);
+  var sw3 = L.splitWeightToMeasurements([log('2026-07-02', { weight: 999 })],
+    [{ date: '2026-07-02', weight: 205 }]);
+  eq('split: never clobbers an existing measurement weight', sw3.measurements[0].weight, 205);
+
+  // idempotent: once logs carry no weight, nothing changes
+  var swClean = L.splitWeightToMeasurements([log(AS, { steps: 5000 })], []);
+  ok('split: no weight → changed false', swClean.changed === false);
+  eq('split: no weight → no measurements created', swClean.measurements.length, 0);
+
+  // -------------------- validateImport (v3 + measurements) --------------
+  ok('validateImport: v3 payload with measurements',
+     L.validateImport({ app: 'operation-health', schemaVersion: 3,
+       dailyLogs: [], measurements: [] }).valid);
+  ok('validateImport: measurements omitted is fine',
+     L.validateImport({ app: 'operation-health', schemaVersion: 3, dailyLogs: [] }).valid);
+  ok('validateImport: non-array measurements rejected',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 3,
+       dailyLogs: [], measurements: {} }).valid);
+
   // ------------------------- monthGrid (Slice 3) ------------------------
   // July 2026: the 1st is a Wednesday → 2 Monday-first leading blanks.
   var mg = L.monthGrid(2026, 7, [

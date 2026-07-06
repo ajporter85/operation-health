@@ -10,7 +10,19 @@
   'use strict';
 
   // Bump when the stored shape changes; every record carries this.
-  var SCHEMA_VERSION = 2;
+  var SCHEMA_VERSION = 3;
+
+  // Body-measurement sites (§6 Measurement). One source of truth: storage seeds
+  // records from these, the form is built from these, and the trend charts read
+  // them. All optional — log only what you measure.
+  var CIRC_SITES = [
+    { key: 'waist', label: 'Waist' },
+    { key: 'chest', label: 'Chest' },
+    { key: 'hips',  label: 'Hips' },
+    { key: 'arm',   label: 'Arm' },
+    { key: 'thigh', label: 'Thigh' },
+    { key: 'neck',  label: 'Neck' }
+  ];
 
   // ---- Date helpers (timezone-safe via UTC arithmetic on YYYY-MM-DD) ----
 
@@ -513,6 +525,21 @@
   /** Short label for a weight unit, defaulting to pounds. */
   function weightUnitLabel(unit) { return unit === 'kg' ? 'kg' : 'lb'; }
 
+  var CM_PER_IN = 2.54;  // 1 inch = 2.54 centimetres (exact)
+
+  /** Canonical inches → display value in `unit` ('in' | 'cm'). null-safe. */
+  function inToDisplay(inches, unit) {
+    if (!isNum(inches)) return null;
+    return unit === 'cm' ? inches * CM_PER_IN : inches;
+  }
+  /** Display value in `unit` ('in' | 'cm') → canonical inches. null-safe. */
+  function inFromDisplay(value, unit) {
+    if (!isNum(value)) return null;
+    return unit === 'cm' ? value / CM_PER_IN : value;
+  }
+  /** Short label for a circumference unit, defaulting to inches. */
+  function circumferenceUnitLabel(unit) { return unit === 'cm' ? 'cm' : 'in'; }
+
   /**
    * goalSleepHours(profile) → number|null
    * The nightly sleep target implied by the bed/wake goals (e.g. 22:30 → 06:30
@@ -705,6 +732,63 @@
     return { valid: Object.keys(errors).length === 0, errors: errors };
   }
 
+  /**
+   * validateMeasurement(record) → { valid, errors:{field:message} }
+   * Like validateDailyLog: only `date` is required; weight and each
+   * circumference are optional but, when present, must be a sane number.
+   */
+  function validateMeasurement(record) {
+    var errors = {};
+    record = record || {};
+
+    if (!isValidISODate(record.date)) {
+      errors.date = 'A valid date (YYYY-MM-DD) is required.';
+    }
+    if (record.weight != null && record.weight !== '' &&
+        !inRange(Number(record.weight), 0, 1000)) {
+      errors.weight = 'Weight looks out of range.';
+    }
+    var c = record.circumferences || {};
+    CIRC_SITES.forEach(function (s) {
+      var v = c[s.key];
+      if (v != null && v !== '' && !inRange(Number(v), 0, 500)) {
+        errors[s.key] = s.label + ' looks out of range.';
+      }
+    });
+
+    return { valid: Object.keys(errors).length === 0, errors: errors };
+  }
+
+  /**
+   * splitWeightToMeasurements(logs, measurements) → { logs, measurements, changed }
+   * PURE. Moves any `weight` still living on a DailyLog (the pre-v3 home) into a
+   * Measurement for the same date, then strips it off the log. Never clobbers a
+   * weight already recorded in a measurement, and is idempotent — once every log
+   * is clean it reports changed:false. storage.js wraps this with read/write so
+   * the one-time migration (and old-export imports) run through one tested path.
+   * Operates on copies; the inputs are left untouched.
+   */
+  function splitWeightToMeasurements(logs, measurements) {
+    var outLogs = (logs || []).map(function (l) { return Object.assign({}, l); });
+    var outMeas = (measurements || []).map(function (m) { return Object.assign({}, m); });
+    var byDate = {};
+    outMeas.forEach(function (m) { if (m && m.date) byDate[m.date] = m; });
+
+    var changed = false;
+    outLogs.forEach(function (l) {
+      if (!l || l.weight == null || l.weight === '') return;
+      var w = Number(l.weight);
+      var m = byDate[l.date];
+      if (!m) { m = { date: l.date, schemaVersion: SCHEMA_VERSION }; byDate[l.date] = m; outMeas.push(m); }
+      if ((m.weight == null || m.weight === '') && isNum(w)) m.weight = w;
+      delete l.weight;
+      changed = true;
+    });
+    outMeas.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+    return { logs: outLogs, measurements: outMeas, changed: changed };
+  }
+
   /** Validate the shape of an import payload before we touch stored data. */
   function validateImport(data) {
     var errors = [];
@@ -722,6 +806,10 @@
     }
     if (!Array.isArray(data.dailyLogs)) {
       errors.push('Missing dailyLogs array.');
+    }
+    // measurements arrived in v3; older exports simply omit it (that's fine).
+    if (data.measurements !== undefined && !Array.isArray(data.measurements)) {
+      errors.push('measurements must be an array when present.');
     }
     return { valid: errors.length === 0, errors: errors };
   }
@@ -791,8 +879,15 @@
     weightToDisplay: weightToDisplay,
     weightFromDisplay: weightFromDisplay,
     weightUnitLabel: weightUnitLabel,
+    inToDisplay: inToDisplay,
+    inFromDisplay: inFromDisplay,
+    circumferenceUnitLabel: circumferenceUnitLabel,
     plotLine: plotLine,
     rangeToDays: rangeToDays,
+    // measurements (§6 — periodic body metrics)
+    CIRC_SITES: CIRC_SITES,
+    validateMeasurement: validateMeasurement,
+    splitWeightToMeasurements: splitWeightToMeasurements,
     // validation & migration
     validateDailyLog: validateDailyLog,
     validateImport: validateImport,

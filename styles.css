@@ -486,6 +486,26 @@ input:focus, select:focus, textarea:focus {
 .week-score.grade-yellow { color: var(--grade-amber); }
 .week-score.grade-red { color: var(--grade-red); }
 
+/* ---- Measurements: recent-entries list (clickable rows) ---- */
+.meas-list { display: flex; flex-direction: column; gap: 6px; }
+.meas-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  text-align: left;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+}
+.meas-row:hover { border-color: var(--brand); }
+.meas-date { flex: 0 0 4.5em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.meas-vals { flex: 1 1 auto; color: var(--muted); font-size: 13px; }
+
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
 .trends-head {
   display: flex;

@@ -19,6 +19,7 @@
     });
     if (name === 'dashboard') renderDashboard();
     if (name === 'log') loadLogForm($('#f-date').value || L.todayISO());
+    if (name === 'measurements') { loadMeasForm($('#m-date').value || L.todayISO()); renderMeasList(); }
     if (name === 'history') renderHistory();
     if (name === 'trends') renderTrends();
     if (name === 'settings') loadSettingsForm();
@@ -108,21 +109,25 @@
 
   function renderTrends() {
     var logs = S.getLogs();
+    // Weight lives in measurements now (§6), so its chart reads from there while
+    // Steps/Sleep still read the daily logs.
+    var measurements = S.getMeasurements();
     var profile = S.getProfile();
     var today = L.todayISO();
     var host = $('#trends-charts');
     var empty = $('#trends-empty');
 
-    if (!logs.length) { host.innerHTML = ''; empty.hidden = false; return; }
+    if (!logs.length && !measurements.length) { host.innerHTML = ''; empty.hidden = false; return; }
     empty.hidden = true;
 
+    // The window spans whatever history exists across both stores.
     var rangeKey = $('#trend-range').value || DEFAULT_RANGE;
-    var days = L.rangeToDays(rangeKey, logs, today);
+    var days = L.rangeToDays(rangeKey, logs.concat(measurements), today);
 
     var gunit = profile.weightUnit === 'kg' ? 'kg' : 'lb';
     host.innerHTML = [
       chartCard({ label: 'Weight', field: 'weight', unit: L.weightUnitLabel(gunit),
-                  logs: logs, today: today, days: days,
+                  logs: measurements, today: today, days: days,
                   toDisplay: function (v) { return L.weightToDisplay(v, gunit); } }),
       chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today, days: days,
                   target: profile.stepsTarget }),
@@ -139,6 +144,9 @@
   // ---- Display units (§9.3 Slice 4) — canonical stays L; convert at the UI edge
   function currentWaterUnit() { return S.getProfile().waterUnit === 'oz' ? 'oz' : 'L'; }
   function currentWeightUnit() { return S.getProfile().weightUnit === 'kg' ? 'kg' : 'lb'; }
+  function currentCircUnit() { return S.getProfile().circumferenceUnit === 'cm' ? 'cm' : 'in'; }
+  // Round a canonical-inches value for display in its unit (both to 0.1).
+  function fmtCirc(inches, unit) { return round1(L.inToDisplay(inches, unit)); }
   // Round a canonical-litres value for display in its unit (oz whole, L to 0.1).
   function fmtWater(liters, unit) {
     var v = L.waterToDisplay(liters, unit);
@@ -426,7 +434,10 @@
     row('Sleep quality', isFiniteNum(log.sleepQuality) ? log.sleepQuality + '/5' : '');
     row('Morning energy', isFiniteNum(log.morningEnergy) ? log.morningEnergy + '/5' : '');
     row('Bed time', log.bedTime);
-    row('Weight', isFiniteNum(log.weight) ? fmtWeight(log.weight, gunit) + ' ' + L.weightUnitLabel(gunit) : '');
+    // Weight now comes from that day's measurement, not the daily log.
+    var meas = S.getMeasurement(log.date);
+    row('Weight', meas && isFiniteNum(meas.weight)
+      ? fmtWeight(meas.weight, gunit) + ' ' + L.weightUnitLabel(gunit) : '');
     return out.join('');
   }
 
@@ -525,9 +536,6 @@
     $('#f-sleephours').value = valOr(rec.sleepHours);
     $('#f-sleepquality').value = valOr(rec.sleepQuality);
     $('#f-energy').value = valOr(rec.morningEnergy);
-    var gunit = currentWeightUnit();
-    $('#f-weight').value = isFiniteNum(rec.weight) ? fmtWeight(rec.weight, gunit) : '';
-    $('#f-weight-label').textContent = 'Weight (' + L.weightUnitLabel(gunit) + ')';
     $('#f-notes').value = rec.notes || '';
     setToggle('proteinWithin30', rec.proteinWithin30 || '');
     setToggle('morningExercise', rec.morningExercise || '');
@@ -550,12 +558,6 @@
     setNum(rec, 'sleepHours', $('#f-sleephours').value);
     setNum(rec, 'sleepQuality', $('#f-sleepquality').value);
     setNum(rec, 'morningEnergy', $('#f-energy').value);
-    // Weight is entered in the display unit; store canonical pounds.
-    var graw = $('#f-weight').value;
-    if (graw !== '') {
-      var lb = L.weightFromDisplay(Number(graw), currentWeightUnit());
-      if (isFiniteNum(lb)) rec.weight = round2(lb);
-    }
     setStr(rec, 'wakeTime', $('#f-wake').value);
     setStr(rec, 'bedTime', $('#f-bed').value);
     setStr(rec, 'notes', $('#f-notes').value.trim());
@@ -603,6 +605,141 @@
   }
   function hideErrors() { $('#log-errors').hidden = true; }
 
+  // ---------------------------------------------------- measurements form
+  var measForm = $('#meas-form');
+  function circFieldId(key) { return 'm-c-' + key; }
+
+  // Build the circumference inputs from the one canonical site list, labelled in
+  // the current unit. Rebuilt on each load so a unit change is reflected.
+  function buildCircGrid(unit) {
+    var ulabel = L.circumferenceUnitLabel(unit);
+    $('#meas-circ-grid').innerHTML = L.CIRC_SITES.map(function (s) {
+      var id = circFieldId(s.key);
+      return '<div class="field">' +
+        '<label for="' + id + '">' + escapeHtml(s.label) + ' (' + ulabel + ')</label>' +
+        '<input type="number" id="' + id + '" inputmode="decimal" min="0" step="0.1" ' +
+        'data-site="' + s.key + '"></div>';
+    }).join('');
+  }
+
+  /** Populate the measurement form from a stored record (or a blank day). */
+  function loadMeasForm(date) {
+    var rec = S.getMeasurement(date) || { date: date };
+    $('#m-date').value = rec.date || date;
+
+    var gunit = currentWeightUnit();
+    $('#m-weight').value = isFiniteNum(rec.weight) ? fmtWeight(rec.weight, gunit) : '';
+    $('#m-weight-label').textContent = 'Weight (' + L.weightUnitLabel(gunit) + ')';
+
+    var cunit = currentCircUnit();
+    buildCircGrid(cunit);
+    var c = rec.circumferences || {};
+    L.CIRC_SITES.forEach(function (s) {
+      $('#' + circFieldId(s.key)).value = isFiniteNum(c[s.key]) ? fmtCirc(c[s.key], cunit) : '';
+    });
+
+    $('#m-notes').value = rec.notes || '';
+    $('#meas-delete').hidden = !S.getMeasurement(date);
+    hideMeasErrors();
+    $('#meas-saved').hidden = true;
+  }
+
+  /** Collect the form into a clean record; blanks omitted, values → canonical. */
+  function collectMeas() {
+    var rec = { date: $('#m-date').value };
+
+    var graw = $('#m-weight').value;
+    if (graw !== '') {
+      var lb = L.weightFromDisplay(Number(graw), currentWeightUnit());
+      if (isFiniteNum(lb)) rec.weight = round2(lb);
+    }
+
+    var cunit = currentCircUnit();
+    var circ = {};
+    L.CIRC_SITES.forEach(function (s) {
+      var raw = $('#' + circFieldId(s.key)).value;
+      if (raw === '') return;
+      var inches = L.inFromDisplay(Number(raw), cunit);
+      if (isFiniteNum(inches)) circ[s.key] = round2(inches);
+    });
+    if (Object.keys(circ).length) rec.circumferences = circ;
+
+    setStr(rec, 'notes', $('#m-notes').value.trim());
+    return rec;
+  }
+
+  measForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var rec = collectMeas();
+    var check = L.validateMeasurement(rec);
+    if (!check.valid) { showMeasErrors(check.errors); return; }
+    // Don't persist an empty shell (just a date) — nudge for at least one value.
+    if (!isFiniteNum(rec.weight) && !rec.circumferences && !rec.notes) {
+      showMeasErrors({ empty: 'Enter a weight or at least one measurement before saving.' });
+      return;
+    }
+    hideMeasErrors();
+    S.saveMeasurement(rec);
+    $('#meas-delete').hidden = false;
+    flash($('#meas-saved'));
+    renderMeasList();
+  });
+
+  $('#meas-delete').addEventListener('click', function () {
+    var date = $('#m-date').value;
+    if (!confirm('Delete the measurement for ' + date + '? This cannot be undone.')) return;
+    S.deleteMeasurement(date);
+    loadMeasForm(date);
+    renderMeasList();
+  });
+
+  $('#m-date').addEventListener('change', function () {
+    loadMeasForm($('#m-date').value);
+  });
+
+  // Recent measurements, newest first; click a row to edit it in the form above.
+  function renderMeasList() {
+    var all = S.getMeasurements().slice().reverse();
+    var host = $('#meas-list');
+    $('#meas-empty').hidden = !!all.length;
+    if (!all.length) { host.innerHTML = ''; return; }
+
+    var gunit = currentWeightUnit(), cunit = currentCircUnit();
+    host.innerHTML = all.map(function (m) {
+      var bits = [];
+      if (isFiniteNum(m.weight)) {
+        bits.push(fmtWeight(m.weight, gunit) + ' ' + L.weightUnitLabel(gunit));
+      }
+      var c = m.circumferences || {};
+      L.CIRC_SITES.forEach(function (s) {
+        if (isFiniteNum(c[s.key])) {
+          bits.push(s.label + ' ' + fmtCirc(c[s.key], cunit) + ' ' + L.circumferenceUnitLabel(cunit));
+        }
+      });
+      var summary = bits.length ? escapeHtml(bits.join(' · ')) : '—';
+      return '<button type="button" class="meas-row" data-date="' + m.date + '">' +
+        '<span class="meas-date">' + escapeHtml(shortDate(m.date)) + '</span>' +
+        '<span class="meas-vals">' + summary + '</span></button>';
+    }).join('');
+  }
+
+  $('#meas-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-date]');
+    if (!btn) return;
+    loadMeasForm(btn.dataset.date);
+    measForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function showMeasErrors(errors) {
+    var box = $('#meas-errors');
+    var items = Object.keys(errors).map(function (k) {
+      return '<li>' + escapeHtml(errors[k]) + '</li>';
+    }).join('');
+    box.innerHTML = '<strong>Please fix:</strong><ul>' + items + '</ul>';
+    box.hidden = false;
+  }
+  function hideMeasErrors() { $('#meas-errors').hidden = true; }
+
   // -------------------------------------------------------- settings form
   var settingsForm = $('#settings-form');
 
@@ -621,6 +758,7 @@
     $('#s-water').step = shownWaterUnit === 'oz' ? '1' : '0.1';
     $('#s-water-label').textContent = 'Water target (' + L.waterUnitLabel(shownWaterUnit) + ')';
     $('#s-weight-unit').value = p.weightUnit === 'kg' ? 'kg' : 'lb';
+    $('#s-circ-unit').value = p.circumferenceUnit === 'cm' ? 'cm' : 'in';
     $('#s-protein').value = valOr(p.proteinTarget);
     $('#s-phase').value = String(p.roadmapPhase || 1);
     $('#settings-saved').hidden = true;
@@ -648,7 +786,8 @@
       bedGoal: $('#s-bed').value || '',
       roadmapPhase: Number($('#s-phase').value),
       waterUnit: wunit,
-      weightUnit: $('#s-weight-unit').value === 'kg' ? 'kg' : 'lb'
+      weightUnit: $('#s-weight-unit').value === 'kg' ? 'kg' : 'lb',
+      circumferenceUnit: $('#s-circ-unit').value === 'cm' ? 'cm' : 'in'
     };
     setNum(p, 'stepsTarget', $('#s-steps').value);
     // Water target is entered in the chosen unit; store canonical litres.
@@ -778,6 +917,7 @@
 
   // ------------------------------------------------------------------ init
   $('#f-date').value = L.todayISO();
+  $('#m-date').value = L.todayISO();
   setupTrends();
   showView('dashboard');
 
