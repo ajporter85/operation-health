@@ -78,14 +78,16 @@
 
   // -------------------------------------------------------------- trends
   var CHART_W = 600, CHART_H = 150, CHART_PADX = 10, CHART_PADY = 16;
+  // Rolling windows only — one consistent paradigm (calendar "This month" was
+  // dropped in the Trends-polish pass; §9.3). rangeToDays still supports other
+  // keys, and a stale saved pref falls back to DEFAULT_RANGE.
   var RANGES = [
-    { key: '7d',    label: 'Last 7 days' },
-    { key: '30d',   label: 'Last 30 days' },
-    { key: 'month', label: 'This month' },
-    { key: '3m',    label: 'Last 3 months' },
-    { key: '6m',    label: 'Last 6 months' },
-    { key: '1y',    label: 'Last year' },
-    { key: 'all',   label: 'All time' }
+    { key: '7d',  label: 'Last 7 days' },
+    { key: '30d', label: 'Last 30 days' },
+    { key: '3m',  label: 'Last 3 months' },
+    { key: '6m',  label: 'Last 6 months' },
+    { key: '1y',  label: 'Last year' },
+    { key: 'all', label: 'All time' }
   ];
   var DEFAULT_RANGE = '30d';
 
@@ -156,11 +158,25 @@
         '" vector-effect="non-scaling-stroke"/>';
     }
 
+    // 7-day moving average (§9.3), pinned to the raw line's y-scale so the two
+    // overlay cleanly. Only worth showing once the window spans enough days —
+    // a 7-day average over ≤7 days is meaningless — and only if it yields a line.
+    var maSvg = '', showMA = false;
+    if (o.days >= 14) {
+      var maPlot = L.plotLine(L.movingAverage(series, 7), iw, ih, { lo: plot.lo, hi: plot.hi });
+      if (maPlot.points.length >= 2) {
+        showMA = true;
+        maSvg = '<path class="chart-ma" d="' + maPlot.path + '" fill="none" ' +
+          'vector-effect="non-scaling-stroke"/>';
+      }
+    }
+
     var summary = title + ' over ' + stats.count + ' logged day' +
       (stats.count === 1 ? '' : 's') + ': ' +
       round1(stats.first) + unit + ' to ' + round1(stats.last) + unit +
       ' (range ' + round1(stats.min) + '–' + round1(stats.max) + unit + ')' +
-      (hasTarget ? ', target ' + round1(o.target) + unit : '') + '.';
+      (hasTarget ? ', target ' + round1(o.target) + unit : '') +
+      (showMA ? '. 7-day average shown' : '') + '.';
 
     // Per-point hover dots (native SVG <title>). Skipped on dense ranges where
     // dots would overlap; the line + last marker + summary still convey it.
@@ -178,6 +194,7 @@
         'role="img" aria-label="' + escapeHtml(summary) + '">' +
         '<g transform="translate(' + CHART_PADX + ',' + CHART_PADY + ')">' +
           targetSvg +
+          maSvg +
           (plot.gapPath ? '<path class="chart-gap" d="' + plot.gapPath + '" fill="none" ' +
             'vector-effect="non-scaling-stroke"/>' : '') +
           '<path class="chart-line" d="' + plot.path + '" fill="none" ' +
@@ -187,12 +204,18 @@
             'vector-effect="non-scaling-stroke"/>' +
         '</g></svg>';
 
+    // Legend only when the moving-average line is present (so it's explained).
+    var legend = showMA ?
+      '<div class="chart-legend">' +
+        '<span><span class="swatch swatch-actual"></span>actual</span>' +
+        '<span><span class="swatch swatch-ma"></span>7-day avg</span>' +
+      '</div>' : '';
+
+    // Endpoints frame the x-axis; the y-range now lives in the High/Low stats.
     var meta =
       '<div class="chart-meta">' +
         '<span>' + escapeHtml(shortDate(series[0].date)) + '</span>' +
-        '<span class="muted">min ' + round1(stats.min) + unit +
-          ' · max ' + round1(stats.max) + unit +
-          (hasTarget ? ' · target ' + round1(o.target) + unit : '') + '</span>' +
+        (hasTarget ? '<span class="muted">target ' + round1(o.target) + unit + '</span>' : '<span></span>') +
         '<span>' + escapeHtml(shortDate(series[series.length - 1].date)) + '</span>' +
       '</div>';
 
@@ -203,7 +226,11 @@
     var statItems = [
       stat('Avg', round1(stats.mean) + unit),
       stat('Change', signed(round1(stats.delta)) + unit,
-        'Latest logged value minus the first in this range')
+        'Latest logged value minus the first in this range'),
+      stat('High', round1(stats.max) + unit + ' · ' + escapeHtml(shortDate(stats.maxDate)),
+        'Highest logged value in this range, and when'),
+      stat('Low', round1(stats.min) + unit + ' · ' + escapeHtml(shortDate(stats.minDate)),
+        'Lowest logged value in this range, and when')
     ];
     if (hasTarget) {
       var ot = L.countOnTarget(series, o.target);
@@ -213,7 +240,7 @@
 
     return '<article class="card chart-card">' +
       '<h3>' + title + ' <span class="chart-latest">' + round1(stats.last) + unit +
-      '</span></h3>' + svg + meta + statsRow + '</article>';
+      '</span></h3>' + svg + legend + meta + statsRow + '</article>';
   }
 
   // -------------------------------------------------------------- history

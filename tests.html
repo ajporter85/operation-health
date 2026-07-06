@@ -180,6 +180,20 @@
   eq('seriesStats: delta = last − first over range', wStats.delta, -4); // 196 − 200
   eq('seriesStats: empty series', L.seriesStats([]).count, 0);
   eq('seriesStats: empty mean is null', L.seriesStats([]).mean, null);
+  eq('seriesStats: maxDate (High)', wStats.maxDate, '2026-07-01'); // 200 on the oldest day
+  eq('seriesStats: minDate (Low)', wStats.minDate, '2026-07-04');  // 196 on the newest day
+  eq('seriesStats: empty minDate is null', L.seriesStats([]).minDate, null);
+
+  // movingAverage: trailing window over the logged points, skipping gaps.
+  var ma2 = L.movingAverage(wSeries, 2); // wSeries values: 200, 198, null, 196
+  eq('movingAverage: same length as input', ma2.length, 4);
+  eq('movingAverage: first day = itself', ma2[0].value, 200);
+  eq('movingAverage: window mean (200+198)/2', ma2[1].value, 199);
+  eq('movingAverage: gap in window skipped (only 198)', ma2[2].value, 198);
+  eq('movingAverage: trailing pair with a gap (only 196)', ma2[3].value, 196);
+  eq('movingAverage: keeps the date', ma2[3].date, '2026-07-04');
+  ok('movingAverage: all-null window stays null',
+     L.movingAverage([{ date: 'a', value: null }], 7)[0].value === null);
 
   // sleep target derived from bed/wake goals (handles the midnight wrap)
   eq('goalSleepHours: 22:30→06:30 = 8', L.goalSleepHours({ bedGoal: '22:30', wakeGoal: '06:30' }), 8);

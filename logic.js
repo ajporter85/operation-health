@@ -434,20 +434,49 @@
   function seriesStats(series) {
     var pts = (series || []).filter(function (p) { return isNum(p.value); });
     if (!pts.length) {
-      return { min: null, max: null, first: null, last: null, count: 0, mean: null, delta: null };
+      return { min: null, max: null, minDate: null, maxDate: null,
+               first: null, last: null, count: 0, mean: null, delta: null };
     }
-    var nums = pts.map(function (p) { return p.value; });
-    var sum = nums.reduce(function (a, b) { return a + b; }, 0);
+    var sum = 0;
+    var min = pts[0].value, max = pts[0].value;
+    var minDate = pts[0].date, maxDate = pts[0].date;
+    pts.forEach(function (p) {
+      sum += p.value;
+      if (p.value < min) { min = p.value; minDate = p.date; }
+      if (p.value > max) { max = p.value; maxDate = p.date; } // first occurrence wins on ties
+    });
     var first = pts[0].value, last = pts[pts.length - 1].value;
     return {
-      min: Math.min.apply(null, nums),
-      max: Math.max.apply(null, nums),
+      min: min,
+      max: max,
+      minDate: minDate,        // date of the lowest logged value
+      maxDate: maxDate,        // date of the highest logged value
       first: first,
       last: last,
       count: pts.length,
       mean: sum / pts.length,   // average over logged days
       delta: last - first       // net change over the range (last logged − first)
     };
+  }
+
+  /**
+   * movingAverage(series, window) → [{date, value|null}]
+   * Trailing simple moving average: each day's value is the mean of the logged
+   * (non-null) values within the trailing `window`-day window ending that day.
+   * Days with no logged points in that window stay null. Same length/dates as
+   * the input, so it plots on the same x-scale. Smooths daily noise (§9.3).
+   */
+  function movingAverage(series, window) {
+    series = series || [];
+    window = isNum(window) && window > 0 ? Math.floor(window) : 7;
+    return series.map(function (p, i) {
+      var sum = 0, n = 0;
+      for (var j = Math.max(0, i - window + 1); j <= i; j++) {
+        var v = series[j].value;
+        if (isNum(v)) { sum += v; n++; }
+      }
+      return { date: p.date, value: n ? sum / n : null };
+    });
   }
 
   /**
@@ -482,7 +511,9 @@
    * Maps a series into an SVG coordinate box (0,0 top-left → width,height).
    * - y is auto-scaled to the data range (NOT zero-based — weight needs this),
    *   padded by `opts.pad` (default 0.1); `opts.min`/`opts.max` can widen it
-   *   (e.g. to include a target line).
+   *   (e.g. to include a target line). Pass explicit `opts.lo`/`opts.hi` to pin
+   *   the scale exactly (no auto-scale, no padding) so a second series — e.g. a
+   *   moving average — can be plotted on the same axis as the raw line.
    * - `path` is the SOLID line over runs of consecutive logged days (a new
    *   "M" starts each run).
    * - `gapPath` bridges across missing days (drawn dashed/muted) so the trend
@@ -497,13 +528,18 @@
       return { path: '', gapPath: '', points: [], lo: null, hi: null };
     }
 
-    var lo = isNum(opts.min) ? Math.min(opts.min, stats.min) : stats.min;
-    var hi = isNum(opts.max) ? Math.max(opts.max, stats.max) : stats.max;
-    if (hi === lo) { hi = lo + 1; lo = lo - 1; } // flat data → give the line room
-    var padFrac = isNum(opts.pad) ? opts.pad : 0.1;
-    var padV = (hi - lo) * padFrac;
-    lo -= padV; hi += padV;
-    var range = hi - lo;
+    var lo, hi;
+    if (isNum(opts.lo) && isNum(opts.hi)) {
+      lo = opts.lo; hi = opts.hi;              // pinned scale (share another line's axis)
+    } else {
+      lo = isNum(opts.min) ? Math.min(opts.min, stats.min) : stats.min;
+      hi = isNum(opts.max) ? Math.max(opts.max, stats.max) : stats.max;
+      if (hi === lo) { hi = lo + 1; lo = lo - 1; } // flat data → give the line room
+      var padFrac = isNum(opts.pad) ? opts.pad : 0.1;
+      var padV = (hi - lo) * padFrac;
+      lo -= padV; hi += padV;
+    }
+    var range = hi - lo || 1;
 
     var xAt = function (i) { return n === 1 ? width / 2 : (i / (n - 1)) * width; };
     var yAt = function (v) { return height - ((v - lo) / range) * height; };
@@ -711,6 +747,7 @@
     // trends / charts
     buildSeries: buildSeries,
     seriesStats: seriesStats,
+    movingAverage: movingAverage,
     countOnTarget: countOnTarget,
     goalSleepHours: goalSleepHours,
     plotLine: plotLine,
