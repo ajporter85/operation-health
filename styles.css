@@ -38,6 +38,11 @@
 
 * { box-sizing: border-box; }
 
+/* The `hidden` attribute must win even on elements we give an explicit
+   display (e.g. .calendar/grid, .week-list/flex) — otherwise toggling
+   `hidden` in JS is silently ignored and stale views stack up. */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -433,6 +438,53 @@ input:focus, select:focus, textarea:focus {
   border-top: 1px solid var(--line);
   white-space: pre-wrap;
 }
+
+/* Day · Week · Month segmented switcher */
+.level-switch {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.level-btn {
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 8px 14px;
+  min-height: 40px;
+  font: inherit;
+  cursor: pointer;
+}
+.level-btn + .level-btn { border-left: 1px solid var(--line); }
+.level-btn[aria-selected="true"] { background: var(--brand); color: var(--brand-ink); }
+
+/* Week view: one row per day, Monday-first */
+.week-list { display: flex; flex-direction: column; gap: 6px; }
+.week-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left-width: 4px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.week-row:hover { border-color: var(--brand); }
+.week-row.logged.g { border-left-color: var(--grade-green); }
+.week-row.logged.y { border-left-color: var(--grade-amber); }
+.week-row.logged.r { border-left-color: var(--grade-red); }
+.week-row.empty { color: var(--muted); }
+.week-row.today { outline: 2px solid var(--brand); outline-offset: 1px; }
+.week-date { flex: 0 0 4.5em; }
+.week-stats { flex: 1 1 auto; color: var(--muted); font-size: 13px; }
+.week-score { flex: 0 0 auto; font-weight: 800; font-variant-numeric: tabular-nums; }
+.week-score.grade-green { color: var(--grade-green); }
+.week-score.grade-yellow { color: var(--grade-amber); }
+.week-score.grade-red { color: var(--grade-red); }
 
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
 .trends-head {

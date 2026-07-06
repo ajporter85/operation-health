@@ -292,6 +292,22 @@
   eq('monthGrid: Feb 2026 has 28 days', feb.days, 28);
   ok('monthGrid: Feb 1 (Sun) in last column of row 0', feb.weeks[0][6].day === 1);
 
+  // -------------------------- weekGrid (Slice 3b) -----------------------
+  // 2026-07-04 is a Saturday → its Monday-first week is Jun 29 – Jul 5.
+  eq('startOfWeekISO: Sat → prior Monday', L.startOfWeekISO('2026-07-04'), '2026-06-29');
+  eq('startOfWeekISO: a Monday maps to itself', L.startOfWeekISO('2026-06-29'), '2026-06-29');
+  var wk = L.weekGrid('2026-07-04', [
+    log('2026-07-04', { proteinWithin30: 'N', morningExercise: 'N',
+                        steps: 1000, waterLiters: 0.5, wakeTime: '09:00' })
+  ], profile);
+  eq('weekGrid: start', wk.start, '2026-06-29');
+  eq('weekGrid: end', wk.end, '2026-07-05');
+  eq('weekGrid: always 7 days', wk.days.length, 7);
+  eq('weekGrid: day 0 is Monday Jun 29', wk.days[0].date, '2026-06-29');
+  ok('weekGrid: Sat Jul 4 is index 5, logged red',
+     wk.days[5].date === '2026-07-04' && wk.days[5].logged && wk.days[5].grade === 'red');
+  ok('weekGrid: un-logged day null grade', wk.days[0].logged === false && wk.days[0].grade === null);
+
   // ------------------------------ summary -------------------------------
   var sum = document.getElementById('summary');
   sum.className = fail === 0 ? 'ok' : 'fail';

@@ -145,14 +145,18 @@
   <!-- ============================ HISTORY ============================ -->
   <section id="view-history" class="view" data-view="history" hidden>
     <div class="history-head">
-      <h2 class="section-title">History</h2>
+      <div class="level-switch" role="tablist" aria-label="Browse level">
+        <button type="button" class="level-btn" data-level="week" role="tab">Week</button>
+        <button type="button" class="level-btn" data-level="month" role="tab">Month</button>
+      </div>
       <div class="month-nav">
-        <button type="button" class="btn btn-icon" id="cal-prev" aria-label="Previous month">‹</button>
+        <button type="button" class="btn btn-icon" id="cal-prev" aria-label="Previous">‹</button>
         <span class="month-label" id="cal-label" aria-live="polite"></span>
-        <button type="button" class="btn btn-icon" id="cal-next" aria-label="Next month">›</button>
+        <button type="button" class="btn btn-icon" id="cal-next" aria-label="Next">›</button>
       </div>
     </div>
-    <div id="calendar" class="calendar" role="grid" aria-label="Logged days this month"></div>
+    <div id="calendar" class="calendar" role="grid" aria-label="Logged days this month" hidden></div>
+    <div id="week-view" class="week-list" hidden></div>
     <div id="day-detail" class="day-detail" hidden></div>
     <p class="muted small" id="history-empty" hidden>Log a few days to browse them here.</p>
   </section>

@@ -217,37 +217,79 @@
   }
 
   // -------------------------------------------------------------- history
-  // Which month the calendar is showing: { year, month } with month 1–12.
-  var historyYM = null;
+  // One ISO anchor date drives all three zoom levels; the level decides what
+  // the anchor frames (its day / its week / its month) and how ‹ › steps.
+  var LEVELS = ['week', 'month'];
+  var historyAnchor = null;
+  var historyLevel = null;
 
   function renderHistory() {
-    var logs = S.getLogs();
-    var empty = $('#history-empty');
-    var cal = $('#calendar');
-
-    if (!historyYM) {
-      var t = L.todayISO().split('-').map(Number);
-      historyYM = { year: t[0], month: t[1] };
+    if (!historyAnchor) historyAnchor = L.todayISO();
+    if (!historyLevel) {
+      var saved = S.getPrefs().historyLevel;
+      historyLevel = LEVELS.indexOf(saved) >= 0 ? saved : 'month';
     }
-    // The calendar always renders (an empty month is still a useful frame);
-    // the hint just tells a first-time user there's nothing to click yet.
-    empty.hidden = !!logs.length;
+    var logs = S.getLogs();
+    // Every level renders even when empty (a blank frame is still useful); the
+    // hint just tells a first-time user there's nothing to click yet.
+    $('#history-empty').hidden = !!logs.length;
     if (!logs.length) $('#day-detail').hidden = true;
 
+    $$('.level-btn').forEach(function (b) {
+      b.setAttribute('aria-selected', String(b.dataset.level === historyLevel));
+    });
+    $('#calendar').hidden = historyLevel !== 'month';
+    $('#week-view').hidden = historyLevel !== 'week';
+
+    if (historyLevel === 'month') renderMonth(logs);
+    else renderWeek(logs);
+  }
+
+  function renderMonth(logs) {
     var profile = S.getProfile();
     var today = L.todayISO();
-    var grid = L.monthGrid(historyYM.year, historyYM.month, logs, profile);
-    $('#cal-label').textContent = monthLabel(historyYM.year, historyYM.month);
+    var p = historyAnchor.split('-').map(Number);
+    var grid = L.monthGrid(p[0], p[1], logs, profile);
+    $('#cal-label').textContent = monthLabel(p[0], p[1]);
 
     var head = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (d) {
       return '<span class="cal-dow" role="columnheader">' + d + '</span>';
     }).join('');
-
     var body = grid.weeks.map(function (week) {
       return week.map(function (c) { return calCell(c, today); }).join('');
     }).join('');
+    $('#calendar').innerHTML = head + body;
+  }
 
-    cal.innerHTML = head + body;
+  function renderWeek(logs) {
+    var profile = S.getProfile();
+    var today = L.todayISO();
+    var wk = L.weekGrid(historyAnchor, logs, profile);
+    $('#cal-label').textContent = weekLabel(wk.start, wk.end);
+
+    $('#week-view').innerHTML = wk.days.map(function (c) {
+      var isToday = c.date === today;
+      var cls = 'week-row' + (c.logged ? ' logged ' + GRADE_CLASS[c.grade] : ' empty') +
+                (isToday ? ' today' : '');
+      var dow = new Date(c.date.slice(0, 4), Number(c.date.slice(5, 7)) - 1, c.day)
+        .toLocaleDateString(undefined, { weekday: 'short' });
+      var right = c.logged
+        ? '<span class="week-score grade-' + c.grade + '">' + c.score + '</span>'
+        : '<span class="week-score muted">—</span>';
+      var stats = c.logged ? weekStats(logs, c.date, profile) : 'No log';
+      return '<button type="button" class="' + cls + '" data-date="' + c.date + '">' +
+        '<span class="week-date"><strong>' + dow + '</strong> ' + c.day + '</span>' +
+        '<span class="week-stats">' + stats + '</span>' + right + '</button>';
+    }).join('');
+  }
+
+  // A couple of at-a-glance metrics for a logged day in the week list.
+  function weekStats(logs, date, profile) {
+    var log = S.getLog(date);
+    var bits = [];
+    if (isFiniteNum(log.steps)) bits.push(log.steps.toLocaleString() + ' steps');
+    if (isFiniteNum(log.sleepHours)) bits.push(log.sleepHours + 'h sleep');
+    return bits.length ? escapeHtml(bits.join(' · ')) : '—';
   }
 
   var GRADE_CLASS = { green: 'g', yellow: 'y', red: 'r' };
@@ -339,23 +381,50 @@
     return new Date(year, month - 1, 1)
       .toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
   }
+  function weekLabel(startISO, endISO) {
+    var e = new Date(endISO.slice(0, 4), Number(endISO.slice(5, 7)) - 1, Number(endISO.slice(8)));
+    // "Jun 29 – Jul 5" (drop the repeated month when both fall in the same one).
+    var sameMonth = startISO.slice(0, 7) === endISO.slice(0, 7);
+    return shortDate(startISO) + ' – ' +
+      (sameMonth ? String(e.getDate()) : shortDate(endISO));
+  }
 
-  function shiftMonth(delta) {
-    var m = historyYM.month + delta;
-    var y = historyYM.year;
-    if (m < 1) { m = 12; y--; } else if (m > 12) { m = 1; y++; }
-    historyYM = { year: y, month: m };
-    $('#day-detail').hidden = true; // detail belongs to the month you left
+  // Step the anchor by the active level's unit; month steps land on the 1st.
+  function shiftNav(delta) {
+    if (historyLevel === 'week') {
+      historyAnchor = L.addDaysISO(historyAnchor, delta * 7);
+    } else {
+      var p = historyAnchor.split('-').map(Number);
+      var m = p[1] + delta, y = p[0];
+      if (m < 1) { m = 12; y--; } else if (m > 12) { m = 1; y++; }
+      historyAnchor = y + '-' + String(m).padStart(2, '0') + '-01';
+    }
+    $('#day-detail').hidden = true; // the detail belongs to the period you left
     renderHistory();
   }
 
-  $('#cal-prev').addEventListener('click', function () { shiftMonth(-1); });
-  $('#cal-next').addEventListener('click', function () { shiftMonth(1); });
+  function setLevel(level) {
+    if (LEVELS.indexOf(level) < 0 || level === historyLevel) return;
+    historyLevel = level;
+    S.setPref('historyLevel', level);
+    $('#day-detail').hidden = true; // start clean when changing zoom
+    renderHistory();
+  }
 
-  $('#calendar').addEventListener('click', function (e) {
-    var cell = e.target.closest('.cal-cell[data-date]');
-    if (cell) renderDayDetail(cell.dataset.date);
+  $('#cal-prev').addEventListener('click', function () { shiftNav(-1); });
+  $('#cal-next').addEventListener('click', function () { shiftNav(1); });
+
+  $$('.level-btn').forEach(function (b) {
+    b.addEventListener('click', function () { setLevel(b.dataset.level); });
   });
+
+  // Clicking a day in month or week drills into its detail below.
+  function onDayPick(e) {
+    var cell = e.target.closest('[data-date]');
+    if (cell) renderDayDetail(cell.dataset.date);
+  }
+  $('#calendar').addEventListener('click', onDayPick);
+  $('#week-view').addEventListener('click', onDayPick);
 
   $('#day-detail').addEventListener('click', function (e) {
     var btn = e.target.closest('button[data-edit]');

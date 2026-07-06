@@ -340,12 +340,33 @@
   function pad2(n) { return String(n).padStart(2, '0'); }
 
   /**
+   * One calendar cell for an ISO date: { date, day, logged, score, grade }.
+   * score/grade are null for un-logged days — this is a browse view, not the
+   * score, so an empty cell means "no entry", not an all-red penalty.
+   */
+  function dayCell(iso, byDate, profile, cfg) {
+    var log = byDate[iso];
+    var score = log ? computeDailyScore(log, profile).score : null;
+    return {
+      date: iso,
+      day: Number(iso.slice(8, 10)),
+      logged: !!log,
+      score: score,
+      grade: log ? gradeDay(score, cfg.dayBands) : null
+    };
+  }
+
+  /** Monday-first start of the week containing `iso` (JS 0=Sun..6=Sat). */
+  function startOfWeekISO(iso) {
+    var p = iso.split('-').map(Number);
+    var dow = new Date(Date.UTC(p[0], p[1] - 1, p[2])).getUTCDay();
+    return addDaysISO(iso, -((dow + 6) % 7));
+  }
+
+  /**
    * monthGrid(year, month, logs, profile) → { year, month, days, weeks }
    * A Monday-first calendar for the given month (`month` is 1–12). `weeks` is
    * an array of 7-cell rows; leading/trailing padding cells are `null`.
-   * Each day cell: { date, day, logged, score, grade }
-   *   - score/grade are null for un-logged days (no all-red penalty here — this
-   *     is a browse view, not the score; an empty cell just means "no entry").
    */
   function monthGrid(year, month, logs, profile) {
     profile = profile || {};
@@ -360,22 +381,28 @@
     var i;
     for (i = 0; i < lead; i++) cells.push(null);
     for (var d = 1; d <= daysInMonth; d++) {
-      var date = year + '-' + pad2(month) + '-' + pad2(d);
-      var log = byDate[date];
-      var score = log ? computeDailyScore(log, profile).score : null;
-      cells.push({
-        date: date,
-        day: d,
-        logged: !!log,
-        score: score,
-        grade: log ? gradeDay(score, cfg.dayBands) : null
-      });
+      cells.push(dayCell(year + '-' + pad2(month) + '-' + pad2(d), byDate, profile, cfg));
     }
     while (cells.length % 7 !== 0) cells.push(null);
 
     var weeks = [];
     for (i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
     return { year: year, month: month, days: daysInMonth, weeks: weeks };
+  }
+
+  /**
+   * weekGrid(anchorDate, logs, profile) → { start, end, days }
+   * The Monday-first week containing `anchorDate` as 7 day cells (no padding —
+   * a week is always exactly seven days).
+   */
+  function weekGrid(anchorDate, logs, profile) {
+    profile = profile || {};
+    var cfg = scoringConfig(profile);
+    var byDate = indexByDate(logs);
+    var start = startOfWeekISO(anchorDate);
+    var days = [];
+    for (var i = 0; i < 7; i++) days.push(dayCell(addDaysISO(start, i), byDate, profile, cfg));
+    return { start: start, end: addDaysISO(start, 6), days: days };
   }
 
   // ---- Trends / charts (§9.2 Slice 2 — pure geometry, zero deps) ----
@@ -678,7 +705,9 @@
     last7Grades: last7Grades,
     isLoggedToday: isLoggedToday,
     // log inspection (§9.2 Slice 3)
+    startOfWeekISO: startOfWeekISO,
     monthGrid: monthGrid,
+    weekGrid: weekGrid,
     // trends / charts
     buildSeries: buildSeries,
     seriesStats: seriesStats,
