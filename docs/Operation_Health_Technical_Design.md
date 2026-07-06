@@ -316,9 +316,15 @@ add a dependency; this stays an open, deliberate decision.
 ## 9.3 Parked ideas (from playtesting)
 
 Captured so they aren't lost; now mapped to the slices above where they fit:
-- **Display-unit preferences** (Slice 4). Choose units per metric (water in **ounces** vs
-  litres; distance/time units for exercise later). Store canonical values; convert for
-  display/entry only.
+- **Display-unit preferences. ✅ SHIPPED (2026-07-05, Slice 4).** Per-metric display units,
+  storing **canonical** values and converting only for display/entry. Two commits: 4a **water**
+  (canonical litres; `waterUnit` L/oz), 4b **weight** (canonical **pounds** — existing
+  unlabeled data is treated as lb, so no migration; `weightUnit` lb/kg). Pure `*ToDisplay`/
+  `*FromDisplay`/`*UnitLabel` helpers; a **Units** section in Settings; conversions applied at
+  the Log/Settings/Trends/History edges (`chartCard` gained a `toDisplay` hook so the weight
+  chart — line, MA, High/Low, axis — reads fully in-unit). Prefs live in `profile` (travel with
+  a backup), default on read (no schema bump). *Future units — distance/time for exercise —
+  slot into the same pattern later.*
 - **Multi-level log inspection** (Slice 3). Browse a **day → week → month** view — a natural
   lead-in to the Slice-2 trend charts.
 - **Trends polish. ✅ DONE (2026-07-05).** Dedicated pass from Slice-2 playtesting:
@@ -438,9 +444,18 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
   ranges, 7-day MA overlay on all charts, High/Low day, meta trim, Change left plain). New
   pure helpers: `movingAverage`, `seriesStats.minDate`/`maxDate`, `plotLine` pinned `lo`/`hi`.
 
-**Next session resumes at: Phase 2 → Slice 4 (unit/display preferences).** Per-metric display
-units (e.g. water in **ounces** vs litres; distance/time units for exercise later): store
-**canonical** values and convert only for display/entry (§9.3). Not started — first step is a
-concrete build plan (which metrics get unit choices, where the setting lives, how the storage
-boundary stays canonical) for Andrew's nod, then build smallest-first. Reuse
+- **Phase 2 Slice 4 — shipped & working (2026-07-05).** Per-metric **display units** (§9.3),
+  canonical storage untouched. Two commits: 4a **water** (canonical litres; `waterUnit` L/oz),
+  4b **weight** (canonical **pounds**, existing unlabeled data treated as lb → no migration;
+  `weightUnit` lb/kg). Pure `waterToDisplay`/`waterFromDisplay`/`waterUnitLabel` +
+  `weight*` equivalents; a **Units** section in Settings (live water-target reconvert on flip);
+  conversions applied at the Log/Settings/Trends/History edges. `chartCard` gained a
+  `toDisplay` hook so the weight chart (line, MA, High/Low, axis suffix) reads fully in-unit.
+  Unit prefs live in `profile`, default on read (no schema bump).
+
+**Phase 2 build slices (§9.2) are all shipped.** No slice is currently queued. Likely next
+directions (confirm with Andrew before starting, and write a build plan first): the deferred
+**scoring-dials Settings UI** (§9.2 — expose yellow-credit/thresholds/day-bands/weights, which
+already exist in `profile.scoring`); **per-habit dot strips**; or opening the **Phase 2 heavy
+modules** (full nutrition with protein *grams*, meal/exercise libraries, measurements). Reuse
 `sample-30days.json` for testing.
