@@ -215,7 +215,12 @@ Phase 2 ships in small, independently-useful slices, smallest-first:
    line; 2c timeframe dropdown (rangeToDays, persisted via a new UI-prefs store); 2d chart
    stats row (Avg / Change / On-target), sleep target from bed/wake goals, per-point hover
    tooltips, and a "Last 7 days" range. Dashed gap-bridges span un-logged days throughout.
-3. **Slice 3 — Multi-level log inspection. ← next up.** Browse a day → week → month.
+3. **Slice 3 — Multi-level log inspection. ✅ SHIPPED (2026-07-05).** New History tab
+   browsing week → month with click-to-drill day detail. Built in two commits: 3a History
+   tab + custom Monday-first month calendar (grade-colored logged-day markers) + read-only
+   day-detail panel; 3b Week/Month switcher (persisted) + Monday-first week list. The
+   originally-planned separate **Day** level was dropped as redundant — clicking a day in
+   either view already opens its detail.
 4. **Slice 4 — Unit/display preferences.** e.g. water in ounces (parked idea).
 5. **Later — heavy modules.** Full nutrition (protein *grams*), meal/exercise libraries,
    measurements, per-habit dot strips, the scoring-dials Settings UI.
@@ -409,14 +414,26 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
   In-calendar "which days are logged" markers need a custom calendar → deferred to Slice 3
   (log inspection); the dashboard dot strip covers the last-7-days case for now.
 
-**Next session resumes at: Phase 2 → Slice 3 (multi-level log inspection).** Browse a
-**day → week → month** view of logged days — a natural lead-in that also wants a **custom
-calendar marking which days have entries** (the native date picker can't be annotated; see
-§9.3). Suggested first step: turn Slice 3 into a concrete build plan — what the day/week/
-month views show, how you navigate between them, and where they live (likely a new tab or
-an expansion of Trends) — share for Andrew's nod, then build smallest-first. Reuse the
-`sample-30days.json` fixture for testing.
+- **Phase 2 Slice 3 — shipped & working (2026-07-05).** New **History** tab, in two commits:
+  - *3a* — custom **Monday-first month calendar** (the native date picker can't be
+    annotated). Pure `monthGrid(year, month, logs, profile)` reusing `computeDailyScore`/
+    `gradeDay`; logged days are filled with their whole-day grade color, un-logged days are
+    blank (a browse view deliberately does **not** apply the score model's missing=all-red
+    rule), today is ringed. Clicking a day opens a **read-only day-detail panel** — score +
+    grade badge, each scored signal with its grade dot and value, unscored context rows
+    (sleep, quality, energy, bed, weight), notes, and an **Edit** jump to the prefilled log.
+  - *3b* — **Week/Month switcher** driven by one ISO anchor date (persisted via `historyLevel`
+    in `oh.prefs`); prev/next steps ±1 week / ±1 month. Pure `startOfWeekISO` + `weekGrid`
+    (shared `dayCell` extracted from `monthGrid`). Week view is a Monday-first 7-day list
+    (weekday+date, steps·sleep stats, grade-colored score, grade left-edge). Also fixed a
+    view-clearing bug — `.calendar`/`.week-list` gave the elements an explicit `display` that
+    overrode the UA `[hidden]{display:none}`, so a global `[hidden]{display:none !important}`
+    guard now ensures only the active level shows. The originally-planned separate **Day**
+    level was dropped as redundant.
 
-*Also queued (smaller, do whenever):* the **Trends polish** pass in §9.3 (range-list
-consistency + "This week", moving-average overlay, best/worst-day, revisit "Change"). Not
-blocking Slice 3.
+**Next session resumes at: Phase 2 → the Trends polish pass (§9.3), or Slice 4
+(unit/display preferences) — Andrew's call.** Trends polish: range-list consistency +
+"This week", a 7-day moving-average overlay, best/worst-day, and revisiting the "Change"
+metric. Slice 4: per-metric display units (e.g. water in ounces), storing canonical values
+and converting only for display/entry. Neither is started. Reuse `sample-30days.json` for
+testing.
