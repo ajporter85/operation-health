@@ -86,7 +86,7 @@
             <input type="number" id="f-steps" name="steps" inputmode="numeric" min="0" step="100" placeholder="e.g. 8000">
           </div>
           <div class="field">
-            <label for="f-water">Water (L)</label>
+            <label for="f-water" id="f-water-label">Water (L)</label>
             <input type="number" id="f-water" name="waterLiters" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 3.5">
           </div>
         </div>
@@ -192,7 +192,7 @@
           <input type="number" id="s-steps" name="stepsTarget" inputmode="numeric" min="0" step="500">
         </div>
         <div class="field">
-          <label for="s-water">Water target (L)</label>
+          <label for="s-water" id="s-water-label">Water target (L)</label>
           <input type="number" id="s-water" name="waterTarget" inputmode="decimal" min="0" step="0.1">
         </div>
         <div class="field">
@@ -209,6 +209,19 @@
           </select>
         </div>
       </div>
+
+      <h2 class="section-title">Units</h2>
+      <p class="muted small">Display &amp; entry only — your data is always stored in one unit.</p>
+      <div class="grid-2">
+        <div class="field">
+          <label for="s-water-unit">Water</label>
+          <select id="s-water-unit" name="waterUnit">
+            <option value="L">Litres (L)</option>
+            <option value="oz">Ounces (oz)</option>
+          </select>
+        </div>
+      </div>
+
       <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save settings</button>
         <span class="save-feedback" id="settings-saved" hidden>Saved ✓</span>

@@ -21,9 +21,13 @@
     wakeGoal: '06:30',
     bedGoal: '22:30',
     stepsTarget: 8000,
-    waterTarget: 3.5,   // litres
+    waterTarget: 3.5,   // litres (canonical; display unit is a preference)
     proteinTarget: 170, // grams (display-only in Phase 1)
     roadmapPhase: 1,
+    // Display-unit preferences (§9.3 Slice 4). Canonical storage is unchanged
+    // (water = L, weight = lb); these only affect display/entry. Defaulted on
+    // read for older profiles, so no schema bump is needed.
+    waterUnit: 'L',     // 'L' | 'oz'
     // Graded-consistency scoring dials (§9.2). Seeded from the canonical
     // defaults in logic.js (one source of truth); a tuning UI comes in a later
     // Phase-2 slice. NEVER hard-code these in logic/UI — they flow in from the

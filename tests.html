@@ -200,6 +200,15 @@
   eq('goalSleepHours: 23:15→06:45 = 7.5', L.goalSleepHours({ bedGoal: '23:15', wakeGoal: '06:45' }), 7.5);
   eq('goalSleepHours: missing bed goal → null', L.goalSleepHours({ wakeGoal: '06:30' }), null);
 
+  // display units — water (Slice 4): canonical litres ↔ display oz/L
+  eq('waterToDisplay: L is identity', L.waterToDisplay(3.5, 'L'), 3.5);
+  ok('waterToDisplay: 3.5 L ≈ 118.3 oz', Math.abs(L.waterToDisplay(3.5, 'oz') - 118.349) < 0.01);
+  eq('waterFromDisplay: L is identity', L.waterFromDisplay(3.5, 'L'), 3.5);
+  ok('water round-trips L→oz→L', Math.abs(L.waterFromDisplay(L.waterToDisplay(3.5, 'oz'), 'oz') - 3.5) < 1e-9);
+  eq('waterToDisplay: null-safe', L.waterToDisplay(null, 'oz'), null);
+  eq('waterUnitLabel: oz', L.waterUnitLabel('oz'), 'oz');
+  eq('waterUnitLabel: default L', L.waterUnitLabel('nonsense'), 'L');
+
   // on-target counts logged days meeting the target
   var stepSeries = L.buildSeries([
     log(L.addDaysISO(AS, -2), { steps: 9000 }), // ≥ 8000

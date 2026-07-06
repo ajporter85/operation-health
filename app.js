@@ -129,8 +129,17 @@
   }
 
   function round1(v) { return Math.round(v * 10) / 10; }
+  function round2(v) { return Math.round(v * 100) / 100; }
   function isFiniteNum(v) { return typeof v === 'number' && isFinite(v); }
   function signed(v) { return v > 0 ? '+' + v : String(v); } // -3.9 keeps its sign; 0 → "0"
+
+  // ---- Display units (§9.3 Slice 4) — canonical stays L; convert at the UI edge
+  function currentWaterUnit() { return S.getProfile().waterUnit === 'oz' ? 'oz' : 'L'; }
+  // Round a canonical-litres value for display in its unit (oz whole, L to 0.1).
+  function fmtWater(liters, unit) {
+    var v = L.waterToDisplay(liters, unit);
+    return unit === 'oz' ? Math.round(v) : round1(v);
+  }
 
   function chartCard(o) {
     var series = L.buildSeries(o.logs, o.field, o.today, o.days);
@@ -375,7 +384,10 @@
       case 'protein': return log.proteinWithin30 === 'Y' ? 'Yes' : 'No';
       case 'morningExercise': return log.morningExercise === 'Y' ? 'Yes' : 'No';
       case 'steps': return isFiniteNum(log.steps) ? log.steps.toLocaleString() : '—';
-      case 'water': return isFiniteNum(log.waterLiters) ? log.waterLiters + ' L' : '—';
+      case 'water':
+        if (!isFiniteNum(log.waterLiters)) return '—';
+        var wu = profile.waterUnit === 'oz' ? 'oz' : 'L';
+        return fmtWater(log.waterLiters, wu) + ' ' + L.waterUnitLabel(wu);
       case 'wake': return log.wakeTime || '—';
       default: return '';
     }
@@ -490,7 +502,10 @@
     var rec = S.getLog(date) || { date: date };
     $('#f-date').value = rec.date || date;
     $('#f-steps').value = valOr(rec.steps);
-    $('#f-water').value = valOr(rec.waterLiters);
+    var wunit = currentWaterUnit();
+    $('#f-water').value = isFiniteNum(rec.waterLiters) ? fmtWater(rec.waterLiters, wunit) : '';
+    $('#f-water').step = wunit === 'oz' ? '1' : '0.1';
+    $('#f-water-label').textContent = 'Water (' + L.waterUnitLabel(wunit) + ')';
     $('#f-wake').value = rec.wakeTime || '';
     $('#f-bed').value = rec.bedTime || '';
     $('#f-sleephours').value = valOr(rec.sleepHours);
@@ -510,7 +525,12 @@
   function collectLog() {
     var rec = { date: $('#f-date').value };
     setNum(rec, 'steps', $('#f-steps').value);
-    setNum(rec, 'waterLiters', $('#f-water').value);
+    // Water is entered in the display unit; store canonical litres.
+    var wraw = $('#f-water').value;
+    if (wraw !== '') {
+      var liters = L.waterFromDisplay(Number(wraw), currentWaterUnit());
+      if (isFiniteNum(liters)) rec.waterLiters = round2(liters);
+    }
     setNum(rec, 'sleepHours', $('#f-sleephours').value);
     setNum(rec, 'sleepQuality', $('#f-sleepquality').value);
     setNum(rec, 'morningEnergy', $('#f-energy').value);
@@ -565,26 +585,55 @@
   // -------------------------------------------------------- settings form
   var settingsForm = $('#settings-form');
 
+  // The unit the water-target field is currently displayed in (so a live unit
+  // switch can convert the shown value via canonical litres).
+  var shownWaterUnit = 'L';
+
   function loadSettingsForm() {
     var p = S.getProfile();
     $('#s-wake').value = p.wakeGoal || '';
     $('#s-bed').value = p.bedGoal || '';
     $('#s-steps').value = valOr(p.stepsTarget);
-    $('#s-water').value = valOr(p.waterTarget);
+    shownWaterUnit = p.waterUnit === 'oz' ? 'oz' : 'L';
+    $('#s-water-unit').value = shownWaterUnit;
+    $('#s-water').value = isFiniteNum(p.waterTarget) ? fmtWater(p.waterTarget, shownWaterUnit) : '';
+    $('#s-water').step = shownWaterUnit === 'oz' ? '1' : '0.1';
+    $('#s-water-label').textContent = 'Water target (' + L.waterUnitLabel(shownWaterUnit) + ')';
     $('#s-protein').value = valOr(p.proteinTarget);
     $('#s-phase').value = String(p.roadmapPhase || 1);
     $('#settings-saved').hidden = true;
   }
 
+  // Flip the water unit live: reinterpret the shown target into the new unit
+  // (via canonical litres) and relabel. Persists only on Save, like the rest.
+  $('#s-water-unit').addEventListener('change', function () {
+    var newUnit = this.value === 'oz' ? 'oz' : 'L';
+    var cur = $('#s-water').value;
+    if (cur !== '' && isFiniteNum(Number(cur))) {
+      var liters = L.waterFromDisplay(Number(cur), shownWaterUnit);
+      $('#s-water').value = fmtWater(liters, newUnit);
+    }
+    $('#s-water').step = newUnit === 'oz' ? '1' : '0.1';
+    $('#s-water-label').textContent = 'Water target (' + L.waterUnitLabel(newUnit) + ')';
+    shownWaterUnit = newUnit;
+  });
+
   settingsForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    var wunit = $('#s-water-unit').value === 'oz' ? 'oz' : 'L';
     var p = {
       wakeGoal: $('#s-wake').value || '',
       bedGoal: $('#s-bed').value || '',
-      roadmapPhase: Number($('#s-phase').value)
+      roadmapPhase: Number($('#s-phase').value),
+      waterUnit: wunit
     };
     setNum(p, 'stepsTarget', $('#s-steps').value);
-    setNum(p, 'waterTarget', $('#s-water').value);
+    // Water target is entered in the chosen unit; store canonical litres.
+    var wt = $('#s-water').value;
+    if (wt !== '') {
+      var liters = L.waterFromDisplay(Number(wt), wunit);
+      if (isFiniteNum(liters)) p.waterTarget = round2(liters);
+    }
     setNum(p, 'proteinTarget', $('#s-protein').value);
     S.saveProfile(p);
     flash($('#settings-saved'));

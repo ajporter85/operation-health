@@ -479,6 +479,25 @@
     });
   }
 
+  // ---- Display units (§9.3 Slice 4 — store canonical, convert for display) ----
+  // Canonical stored units never change: water = litres, weight = pounds. The
+  // per-metric unit pref only affects how values are shown and entered; storage,
+  // scoring, and export all stay canonical. Conversions are pure and lossless.
+  var OZ_PER_L = 33.814;   // 1 litre = 33.814 US fluid ounces
+
+  /** Canonical litres → display value in `unit` ('L' | 'oz'). null-safe. */
+  function waterToDisplay(liters, unit) {
+    if (!isNum(liters)) return null;
+    return unit === 'oz' ? liters * OZ_PER_L : liters;
+  }
+  /** Display value in `unit` ('L' | 'oz') → canonical litres. null-safe. */
+  function waterFromDisplay(value, unit) {
+    if (!isNum(value)) return null;
+    return unit === 'oz' ? value / OZ_PER_L : value;
+  }
+  /** Short label for a water unit, defaulting to litres. */
+  function waterUnitLabel(unit) { return unit === 'oz' ? 'oz' : 'L'; }
+
   /**
    * goalSleepHours(profile) → number|null
    * The nightly sleep target implied by the bed/wake goals (e.g. 22:30 → 06:30
@@ -750,6 +769,10 @@
     movingAverage: movingAverage,
     countOnTarget: countOnTarget,
     goalSleepHours: goalSleepHours,
+    // display units (§9.3 Slice 4)
+    waterToDisplay: waterToDisplay,
+    waterFromDisplay: waterFromDisplay,
+    waterUnitLabel: waterUnitLabel,
     plotLine: plotLine,
     rangeToDays: rangeToDays,
     // validation & migration
