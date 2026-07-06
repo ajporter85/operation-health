@@ -119,8 +119,11 @@
     var rangeKey = $('#trend-range').value || DEFAULT_RANGE;
     var days = L.rangeToDays(rangeKey, logs, today);
 
+    var gunit = profile.weightUnit === 'kg' ? 'kg' : 'lb';
     host.innerHTML = [
-      chartCard({ label: 'Weight', field: 'weight', unit: '', logs: logs, today: today, days: days }),
+      chartCard({ label: 'Weight', field: 'weight', unit: L.weightUnitLabel(gunit),
+                  logs: logs, today: today, days: days,
+                  toDisplay: function (v) { return L.weightToDisplay(v, gunit); } }),
       chartCard({ label: 'Steps', field: 'steps', unit: '', logs: logs, today: today, days: days,
                   target: profile.stepsTarget }),
       chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today, days: days,
@@ -135,14 +138,24 @@
 
   // ---- Display units (§9.3 Slice 4) — canonical stays L; convert at the UI edge
   function currentWaterUnit() { return S.getProfile().waterUnit === 'oz' ? 'oz' : 'L'; }
+  function currentWeightUnit() { return S.getProfile().weightUnit === 'kg' ? 'kg' : 'lb'; }
   // Round a canonical-litres value for display in its unit (oz whole, L to 0.1).
   function fmtWater(liters, unit) {
     var v = L.waterToDisplay(liters, unit);
     return unit === 'oz' ? Math.round(v) : round1(v);
   }
+  // Round a canonical-pounds value for display in its unit (both to 0.1).
+  function fmtWeight(lb, unit) { return round1(L.weightToDisplay(lb, unit)); }
 
   function chartCard(o) {
     var series = L.buildSeries(o.logs, o.field, o.today, o.days);
+    // Convert canonical values to the display unit (e.g. weight lb→kg) before
+    // scaling/stats, so the whole chart — line, MA, High/Low — reads in-unit.
+    if (o.toDisplay) {
+      series = series.map(function (p) {
+        return { date: p.date, value: isFiniteNum(p.value) ? o.toDisplay(p.value) : p.value };
+      });
+    }
     var stats = L.seriesStats(series);
     var title = escapeHtml(o.label);
     var unit = o.unit ? ' ' + escapeHtml(o.unit) : '';
@@ -359,7 +372,7 @@
 
     var day = L.computeDailyScore(log, profile);
     var band = L.gradeDay(day.score, L.scoringConfig(profile).dayBands);
-    var rows = signalRows(day, log, profile) + extraRows(log);
+    var rows = signalRows(day, log, profile) + extraRows(log, profile);
 
     panel.innerHTML =
       '<div class="detail-head">' +
@@ -401,7 +414,8 @@
     }).join('');
   }
   // Logged-but-unscored fields, shown for context (no grade dot).
-  function extraRows(log) {
+  function extraRows(log, profile) {
+    var gunit = profile.weightUnit === 'kg' ? 'kg' : 'lb';
     var out = [];
     function row(label, val) {
       if (val === undefined || val === null || val === '') return;
@@ -412,7 +426,7 @@
     row('Sleep quality', isFiniteNum(log.sleepQuality) ? log.sleepQuality + '/5' : '');
     row('Morning energy', isFiniteNum(log.morningEnergy) ? log.morningEnergy + '/5' : '');
     row('Bed time', log.bedTime);
-    row('Weight', isFiniteNum(log.weight) ? log.weight : '');
+    row('Weight', isFiniteNum(log.weight) ? fmtWeight(log.weight, gunit) + ' ' + L.weightUnitLabel(gunit) : '');
     return out.join('');
   }
 
@@ -511,7 +525,9 @@
     $('#f-sleephours').value = valOr(rec.sleepHours);
     $('#f-sleepquality').value = valOr(rec.sleepQuality);
     $('#f-energy').value = valOr(rec.morningEnergy);
-    $('#f-weight').value = valOr(rec.weight);
+    var gunit = currentWeightUnit();
+    $('#f-weight').value = isFiniteNum(rec.weight) ? fmtWeight(rec.weight, gunit) : '';
+    $('#f-weight-label').textContent = 'Weight (' + L.weightUnitLabel(gunit) + ')';
     $('#f-notes').value = rec.notes || '';
     setToggle('proteinWithin30', rec.proteinWithin30 || '');
     setToggle('morningExercise', rec.morningExercise || '');
@@ -534,7 +550,12 @@
     setNum(rec, 'sleepHours', $('#f-sleephours').value);
     setNum(rec, 'sleepQuality', $('#f-sleepquality').value);
     setNum(rec, 'morningEnergy', $('#f-energy').value);
-    setNum(rec, 'weight', $('#f-weight').value);
+    // Weight is entered in the display unit; store canonical pounds.
+    var graw = $('#f-weight').value;
+    if (graw !== '') {
+      var lb = L.weightFromDisplay(Number(graw), currentWeightUnit());
+      if (isFiniteNum(lb)) rec.weight = round2(lb);
+    }
     setStr(rec, 'wakeTime', $('#f-wake').value);
     setStr(rec, 'bedTime', $('#f-bed').value);
     setStr(rec, 'notes', $('#f-notes').value.trim());
@@ -599,6 +620,7 @@
     $('#s-water').value = isFiniteNum(p.waterTarget) ? fmtWater(p.waterTarget, shownWaterUnit) : '';
     $('#s-water').step = shownWaterUnit === 'oz' ? '1' : '0.1';
     $('#s-water-label').textContent = 'Water target (' + L.waterUnitLabel(shownWaterUnit) + ')';
+    $('#s-weight-unit').value = p.weightUnit === 'kg' ? 'kg' : 'lb';
     $('#s-protein').value = valOr(p.proteinTarget);
     $('#s-phase').value = String(p.roadmapPhase || 1);
     $('#settings-saved').hidden = true;
@@ -625,7 +647,8 @@
       wakeGoal: $('#s-wake').value || '',
       bedGoal: $('#s-bed').value || '',
       roadmapPhase: Number($('#s-phase').value),
-      waterUnit: wunit
+      waterUnit: wunit,
+      weightUnit: $('#s-weight-unit').value === 'kg' ? 'kg' : 'lb'
     };
     setNum(p, 'stepsTarget', $('#s-steps').value);
     // Water target is entered in the chosen unit; store canonical litres.

@@ -498,6 +498,21 @@
   /** Short label for a water unit, defaulting to litres. */
   function waterUnitLabel(unit) { return unit === 'oz' ? 'oz' : 'L'; }
 
+  var LB_PER_KG = 2.2046226;  // 1 kilogram = 2.2046226 pounds
+
+  /** Canonical pounds → display value in `unit` ('lb' | 'kg'). null-safe. */
+  function weightToDisplay(lb, unit) {
+    if (!isNum(lb)) return null;
+    return unit === 'kg' ? lb / LB_PER_KG : lb;
+  }
+  /** Display value in `unit` ('lb' | 'kg') → canonical pounds. null-safe. */
+  function weightFromDisplay(value, unit) {
+    if (!isNum(value)) return null;
+    return unit === 'kg' ? value * LB_PER_KG : value;
+  }
+  /** Short label for a weight unit, defaulting to pounds. */
+  function weightUnitLabel(unit) { return unit === 'kg' ? 'kg' : 'lb'; }
+
   /**
    * goalSleepHours(profile) → number|null
    * The nightly sleep target implied by the bed/wake goals (e.g. 22:30 → 06:30
@@ -773,6 +788,9 @@
     waterToDisplay: waterToDisplay,
     waterFromDisplay: waterFromDisplay,
     waterUnitLabel: waterUnitLabel,
+    weightToDisplay: weightToDisplay,
+    weightFromDisplay: weightFromDisplay,
+    weightUnitLabel: weightUnitLabel,
     plotLine: plotLine,
     rangeToDays: rangeToDays,
     // validation & migration

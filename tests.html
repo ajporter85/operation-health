@@ -209,6 +209,15 @@
   eq('waterUnitLabel: oz', L.waterUnitLabel('oz'), 'oz');
   eq('waterUnitLabel: default L', L.waterUnitLabel('nonsense'), 'L');
 
+  // display units — weight (Slice 4b): canonical pounds ↔ display lb/kg
+  eq('weightToDisplay: lb is identity', L.weightToDisplay(190, 'lb'), 190);
+  ok('weightToDisplay: 190 lb ≈ 86.18 kg', Math.abs(L.weightToDisplay(190, 'kg') - 86.1826) < 0.01);
+  eq('weightFromDisplay: lb is identity', L.weightFromDisplay(190, 'lb'), 190);
+  ok('weight round-trips lb→kg→lb', Math.abs(L.weightFromDisplay(L.weightToDisplay(190, 'kg'), 'kg') - 190) < 1e-9);
+  eq('weightToDisplay: null-safe', L.weightToDisplay(null, 'kg'), null);
+  eq('weightUnitLabel: kg', L.weightUnitLabel('kg'), 'kg');
+  eq('weightUnitLabel: default lb', L.weightUnitLabel('nonsense'), 'lb');
+
   // on-target counts logged days meeting the target
   var stepSeries = L.buildSeries([
     log(L.addDaysISO(AS, -2), { steps: 9000 }), // ≥ 8000

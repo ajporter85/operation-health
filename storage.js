@@ -28,6 +28,7 @@
     // (water = L, weight = lb); these only affect display/entry. Defaulted on
     // read for older profiles, so no schema bump is needed.
     waterUnit: 'L',     // 'L' | 'oz'
+    weightUnit: 'lb',   // 'lb' | 'kg' (existing weight data is canonical pounds)
     // Graded-consistency scoring dials (§9.2). Seeded from the canonical
     // defaults in logic.js (one source of truth); a tuning UI comes in a later
     // Phase-2 slice. NEVER hard-code these in logic/UI — they flow in from the
