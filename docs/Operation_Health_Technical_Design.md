@@ -321,15 +321,18 @@ Captured so they aren't lost; now mapped to the slices above where they fit:
   display/entry only.
 - **Multi-level log inspection** (Slice 3). Browse a **day → week → month** view — a natural
   lead-in to the Slice-2 trend charts.
-- **Trends polish (deferred, from Slice 2 playtesting)** — a dedicated pass, whenever the
-  list feels cluttered (not tied to Slice 3):
-  - **Range list consistency review.** The dropdown currently mixes *rolling* ("Last 7/30
-    days, 3/6 months, 1 year") with *calendar* ("This month"). Decide on one paradigm or
-    cleanly group the two; consider adding **"This week"** (calendar) to pair with "This month".
-  - **Richer chart stats.** A **7-day moving-average overlay** to smooth daily noise; a
-    **best/worst day** (value + date). Revisit the **"Change" metric** too — it's plain
-    last−first per range now; a denoised trend measure was tried (first-vs-last-quarter
-    average) but read as confusing, so it was reverted. Reconsider once there's more data.
+- **Trends polish. ✅ DONE (2026-07-05).** Dedicated pass from Slice-2 playtesting:
+  - **Range list** — went **all-rolling** (dropped calendar "This month"; "This week" not
+    added) for one consistent paradigm: Last 7/30 days · 3/6 months · 1 year · All. `rangeToDays`
+    keeps its other cases (still tested/reusable); a stale saved pref falls back to the default.
+  - **7-day moving-average overlay** on all three charts — pure `movingAverage` (trailing,
+    gap-skipping), plotted via `plotLine`'s new pinned `lo`/`hi` so it shares the raw line's
+    y-scale; shown only when the range spans ≥14 days, with an *actual / 7-day-avg* legend.
+  - **High/Low day** (value + date) — `seriesStats` now returns `minDate`/`maxDate`; the stats
+    row gains High and Low. Neutral naming (not "best/worst") so it reads for weight too.
+    The redundant min/max was dropped from the chart meta line.
+  - **Change metric** — kept **plain last−first** (the denoised quarter-average tried earlier
+    read as confusing; the MA line now carries the denoised trend visually).
 - **In-calendar "logged day" markers** (Slice 3). The Daily Log date field uses the native
   picker, which can't be annotated; browsing logs will want a custom calendar that marks
   which days have entries.
@@ -431,9 +434,13 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
     guard now ensures only the active level shows. The originally-planned separate **Day**
     level was dropped as redundant.
 
-**Next session resumes at: Phase 2 → the Trends polish pass (§9.3), or Slice 4
-(unit/display preferences) — Andrew's call.** Trends polish: range-list consistency +
-"This week", a 7-day moving-average overlay, best/worst-day, and revisiting the "Change"
-metric. Slice 4: per-metric display units (e.g. water in ounces), storing canonical values
-and converting only for display/entry. Neither is started. Reuse `sample-30days.json` for
-testing.
+- **Trends polish — shipped & working (2026-07-05).** See §9.3 for the pass (all-rolling
+  ranges, 7-day MA overlay on all charts, High/Low day, meta trim, Change left plain). New
+  pure helpers: `movingAverage`, `seriesStats.minDate`/`maxDate`, `plotLine` pinned `lo`/`hi`.
+
+**Next session resumes at: Phase 2 → Slice 4 (unit/display preferences).** Per-metric display
+units (e.g. water in **ounces** vs litres; distance/time units for exercise later): store
+**canonical** values and convert only for display/entry (§9.3). Not started — first step is a
+concrete build plan (which metrics get unit choices, where the setting lives, how the storage
+boundary stays canonical) for Andrew's nod, then build smallest-first. Reuse
+`sample-30days.json` for testing.
