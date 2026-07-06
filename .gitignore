@@ -7,3 +7,8 @@ Desktop.ini
 
 # Local exports / backups (your health data — keep it off git)
 operation-health-*.json
+
+# The live-data folder holds real logged health data — keep ALL of it off git,
+# whatever the files are named. Only the explanatory README is tracked.
+/live-data/*
+!/live-data/README.md
