@@ -10,7 +10,9 @@
   'use strict';
 
   // Bump when the stored shape changes; every record carries this.
-  var SCHEMA_VERSION = 3;
+  // v4: the store became a stream of LogEntry records (incremental logging);
+  // daily logs and measurements are now derived via projectAll/projectDay.
+  var SCHEMA_VERSION = 4;
 
   // Body-measurement sites (§6 Measurement). One source of truth: storage seeds
   // records from these, the form is built from these, and the trend charts read
@@ -936,12 +938,12 @@
     if (!(typeof v === 'number' && v >= 1 && v <= SCHEMA_VERSION)) {
       errors.push('Unsupported schemaVersion: ' + v + '.');
     }
-    if (!Array.isArray(data.dailyLogs)) {
-      errors.push('Missing dailyLogs array.');
-    }
-    // measurements arrived in v3; older exports simply omit it (that's fine).
-    if (data.measurements !== undefined && !Array.isArray(data.measurements)) {
-      errors.push('measurements must be an array when present.');
+    // v4 backups carry an entries stream. Pre-v4 files (dailyLogs/measurements)
+    // predate incremental logging and aren't importable — surface that clearly.
+    if (!Array.isArray(data.entries)) {
+      errors.push(data.dailyLogs
+        ? 'This backup predates incremental logging (v4) and can’t be imported.'
+        : 'Missing entries array.');
     }
     return { valid: errors.length === 0, errors: errors };
   }

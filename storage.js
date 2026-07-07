@@ -12,12 +12,8 @@
 
   var L = window.Logic;
   var KEY_PROFILE = 'oh.profile';
-  var KEY_LOGS = 'oh.dailyLogs';
-  var KEY_MEASUREMENTS = 'oh.measurements'; // periodic body metrics (§6), date-keyed
-  var KEY_ENTRIES = 'oh.entries'; // incremental-logging stream (LogEntry records)
+  var KEY_ENTRIES = 'oh.entries'; // incremental-logging stream (LogEntry records) — source of truth
   var KEY_PREFS = 'oh.prefs'; // lightweight UI prefs (not health data, not exported)
-
-  function byDateAsc(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }
 
   // Entries sort chronologically: by date, then time (time-less first), then id.
   function byEntryOrder(a, b) {
@@ -85,68 +81,42 @@
     return toStore;
   }
 
-  // ---- Daily logs ----
+  // ---- Daily logs (DERIVED — projected from the entries stream) ----
+  // Entries are the source of truth; these project them into the DailyLog shape
+  // the scoring/trends/history engine consumes, so that engine is untouched.
 
-  /** All logs, migrated, sorted ascending by date. */
+  /** All days that have entries, projected, ascending by date. */
   function getLogs() {
-    var logs = readJSON(KEY_LOGS, []);
-    if (!Array.isArray(logs)) logs = [];
-    return logs.map(L.migrateRecord).sort(function (a, b) {
-      return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+    return L.projectAll(getEntries());
+  }
+
+  /** One day's projected log, or null if that day has no entries. */
+  function getLog(date) {
+    var es = getDayEntries(date);
+    return es.length ? L.projectDay(es) : null;
+  }
+
+  // ---- Measurements (DERIVED) ----
+  // Body metrics are now weight/circumference entries; these thin accessors keep
+  // the Trends weight chart and History day-detail reading through one shape.
+
+  /** Projected days that carry a weight or any circumference. */
+  function getMeasurements() {
+    return getLogs().filter(function (d) {
+      return isNum(d.weight) || (d.circumferences && Object.keys(d.circumferences).length);
     });
   }
 
-  function getLog(date) {
-    return getLogs().filter(function (l) { return l.date === date; })[0] || null;
-  }
-
-  /** Insert or replace the record for its date (date is the primary key). */
-  function saveLog(record) {
-    var stamped = L.migrateRecord(Object.assign({}, record));
-    var logs = getLogs().filter(function (l) { return l.date !== stamped.date; });
-    logs.push(stamped);
-    logs.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-    writeJSON(KEY_LOGS, logs);
-    return stamped;
-  }
-
-  function deleteLog(date) {
-    var logs = getLogs().filter(function (l) { return l.date !== date; });
-    writeJSON(KEY_LOGS, logs);
-  }
-
-  // ---- Measurements (periodic body metrics; date is the primary key) ----
-
-  /** All measurements, migrated, sorted ascending by date. */
-  function getMeasurements() {
-    var m = readJSON(KEY_MEASUREMENTS, []);
-    if (!Array.isArray(m)) m = [];
-    return m.map(L.migrateRecord).sort(byDateAsc);
-  }
-
+  /** One day's projected measurement view, or null if nothing body-related. */
   function getMeasurement(date) {
-    return getMeasurements().filter(function (m) { return m.date === date; })[0] || null;
+    var d = getLog(date);
+    if (!d) return null;
+    return (isNum(d.weight) || d.circumferences) ? d : null;
   }
 
-  /** Insert or replace the measurement for its date. */
-  function saveMeasurement(record) {
-    var stamped = L.migrateRecord(Object.assign({}, record));
-    var all = getMeasurements().filter(function (m) { return m.date !== stamped.date; });
-    all.push(stamped);
-    all.sort(byDateAsc);
-    writeJSON(KEY_MEASUREMENTS, all);
-    return stamped;
-  }
+  function isNum(v) { return typeof v === 'number' && isFinite(v); }
 
-  function deleteMeasurement(date) {
-    var all = getMeasurements().filter(function (m) { return m.date !== date; });
-    writeJSON(KEY_MEASUREMENTS, all);
-  }
-
-  // ---- Log entries (incremental-logging stream) ----
-  // The forthcoming source of truth for daily data. Reads/writes here; the UI
-  // will project these into derived DailyLogs via Logic.projectAll (wired in a
-  // later sub-slice). Defined now so the UI can build on a stable, tested store.
+  // ---- Log entries (incremental-logging stream — the source of truth) ----
 
   /** All entries, migrated, in chronological order. */
   function getEntries() {
@@ -198,86 +168,54 @@
     writeJSON(KEY_ENTRIES, all);
   }
 
-  /**
-   * Move any pre-v3 weight still stored on daily logs into measurements.
-   * Idempotent and cheap: runs the pure Logic.splitWeightToMeasurements over the
-   * raw stores and only writes back when something actually moved. Called once
-   * at load (below) and again after an import of an older backup.
-   */
-  function migrateWeightToMeasurements() {
-    try {
-      var res = L.splitWeightToMeasurements(
-        readJSON(KEY_LOGS, []), readJSON(KEY_MEASUREMENTS, []));
-      if (res.changed) {
-        writeJSON(KEY_LOGS, res.logs);
-        writeJSON(KEY_MEASUREMENTS, res.measurements);
-      }
-    } catch (e) {
-      console.error('Weight→measurement migration failed', e);
-    }
-  }
-
   // ---- Export / Import ----
 
-  /** The full backup payload, in the §9.1 export format. */
+  /** The full backup payload — the entries stream plus profile (v4). */
   function exportData() {
     return {
       app: 'operation-health',
       schemaVersion: L.SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
       profile: getProfile(),
-      dailyLogs: getLogs(),
-      measurements: getMeasurements()
+      entries: getEntries()
     };
   }
 
   /**
    * importData(data, mode)
-   * mode 'merge'   → imported day replaces same-date local day; others kept.
-   * mode 'replace' → wipe local logs, use imported set.
+   * mode 'merge'   → imported entry replaces a local one with the same id;
+   *                  entries with new ids are added.
+   * mode 'replace' → wipe local entries, use the imported set.
    * Profile is taken from the import when present.
    * Caller must have validated with Logic.validateImport first.
    * @returns {{added:number, replaced:number, total:number}}
    */
   function importData(data, mode) {
-    var incoming = (data.dailyLogs || []).map(L.migrateRecord);
-    var incomingMeas = (data.measurements || []).map(L.migrateRecord);
+    var incoming = (data.entries || []).map(L.migrateRecord);
+    incoming.forEach(function (e) { if (!e.id) e.id = genId(); });
 
     var result = { added: 0, replaced: 0, total: 0 };
 
     if (mode === 'replace') {
-      writeJSON(KEY_LOGS, incoming);
-      writeJSON(KEY_MEASUREMENTS, incomingMeas);
+      writeJSON(KEY_ENTRIES, incoming);
       result.added = incoming.length;
     } else {
-      var byDate = {};
-      getLogs().forEach(function (l) { byDate[l.date] = l; });
-      incoming.forEach(function (l) {
-        if (byDate[l.date]) result.replaced++; else result.added++;
-        byDate[l.date] = l;
+      var byId = {};
+      getEntries().forEach(function (e) { byId[e.id] = e; });
+      incoming.forEach(function (e) {
+        if (byId[e.id]) result.replaced++; else result.added++;
+        byId[e.id] = e;
       });
-      var merged = Object.keys(byDate).map(function (d) { return byDate[d]; });
-      merged.sort(byDateAsc);
-      writeJSON(KEY_LOGS, merged);
-
-      // Measurements ride along on merge (same date-keyed upsert); the added/
-      // replaced tally stays about days, so it isn't counted here.
-      var mByDate = {};
-      getMeasurements().forEach(function (m) { mByDate[m.date] = m; });
-      incomingMeas.forEach(function (m) { mByDate[m.date] = m; });
-      var mMerged = Object.keys(mByDate).map(function (d) { return mByDate[d]; });
-      mMerged.sort(byDateAsc);
-      writeJSON(KEY_MEASUREMENTS, mMerged);
+      var merged = Object.keys(byId).map(function (id) { return byId[id]; });
+      merged.sort(byEntryOrder);
+      writeJSON(KEY_ENTRIES, merged);
     }
 
     if (data.profile && typeof data.profile === 'object') {
       saveProfile(data.profile);
     }
 
-    // An older (pre-v3) backup carries weight on its logs — bring it across.
-    migrateWeightToMeasurements();
-
-    result.total = getLogs().length;
+    result.total = getEntries().length;
     return result;
   }
 
@@ -303,12 +241,8 @@
     setPref: setPref,
     getLogs: getLogs,
     getLog: getLog,
-    saveLog: saveLog,
-    deleteLog: deleteLog,
     getMeasurements: getMeasurements,
     getMeasurement: getMeasurement,
-    saveMeasurement: saveMeasurement,
-    deleteMeasurement: deleteMeasurement,
     getEntries: getEntries,
     getDayEntries: getDayEntries,
     saveEntry: saveEntry,
@@ -316,8 +250,4 @@
     exportData: exportData,
     importData: importData
   };
-
-  // One-time on load: relocate any weight that predates the Measurements module
-  // out of daily logs. No-op once the store is clean (idempotent).
-  migrateWeightToMeasurements();
 })();

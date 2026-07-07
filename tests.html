@@ -282,14 +282,16 @@
        steps: 8200, waterLiters: 3.6, weight: 190, notes: 'ok'
      }).valid);
 
-  ok('validateImport: current-version payload',
-     L.validateImport({ app: 'operation-health', schemaVersion: 2, dailyLogs: [] }).valid);
-  ok('validateImport: older v1 payload accepted (migrated on import)',
-     L.validateImport({ app: 'operation-health', schemaVersion: 1, dailyLogs: [] }).valid);
+  ok('validateImport: v4 entries payload',
+     L.validateImport({ app: 'operation-health', schemaVersion: 4, entries: [] }).valid);
   ok('validateImport: wrong app rejected',
-     !L.validateImport({ app: 'other', schemaVersion: 2, dailyLogs: [] }).valid);
+     !L.validateImport({ app: 'other', schemaVersion: 4, entries: [] }).valid);
   ok('validateImport: future version rejected',
-     !L.validateImport({ app: 'operation-health', schemaVersion: 99, dailyLogs: [] }).valid);
+     !L.validateImport({ app: 'operation-health', schemaVersion: 99, entries: [] }).valid);
+  ok('validateImport: missing entries rejected',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 4 }).valid);
+  ok('validateImport: pre-v4 (dailyLogs) rejected clearly',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 3, dailyLogs: [] }).valid);
 
   // ----------------------------- migration ------------------------------
   eq('migrateRecord stamps schemaVersion',
@@ -438,15 +440,12 @@
   eq('projectAll → computeConsistency = 100 over a perfect week',
      L.computeConsistency(L.projectAll(entriesWeek), profile, AS).score, 100);
 
-  // -------------------- validateImport (v3 + measurements) --------------
-  ok('validateImport: v3 payload with measurements',
-     L.validateImport({ app: 'operation-health', schemaVersion: 3,
-       dailyLogs: [], measurements: [] }).valid);
-  ok('validateImport: measurements omitted is fine',
-     L.validateImport({ app: 'operation-health', schemaVersion: 3, dailyLogs: [] }).valid);
-  ok('validateImport: non-array measurements rejected',
-     !L.validateImport({ app: 'operation-health', schemaVersion: 3,
-       dailyLogs: [], measurements: {} }).valid);
+  // -------------------- validateImport (v4 entries) --------------------
+  ok('validateImport: entries with records valid',
+     L.validateImport({ app: 'operation-health', schemaVersion: 4,
+       entries: [{ date: AS, type: 'water', value: 1 }] }).valid);
+  ok('validateImport: non-array entries rejected',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 4, entries: {} }).valid);
 
   // ------------------------- monthGrid (Slice 3) ------------------------
   // July 2026: the 1st is a Wednesday → 2 Monday-first leading blanks.

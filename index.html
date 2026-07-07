@@ -13,8 +13,7 @@
   <h1>Operation: <span>Health</span></h1>
   <nav class="tabs" role="tablist">
     <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
-    <button class="tab" data-view="log" role="tab" aria-selected="false">Daily Log</button>
-    <button class="tab" data-view="measurements" role="tab" aria-selected="false">Measurements</button>
+    <button class="tab" data-view="log" role="tab" aria-selected="false">Log</button>
     <button class="tab" data-view="history" role="tab" aria-selected="false">History</button>
     <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
     <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
@@ -50,141 +49,36 @@
     <p class="muted small" id="score-window">Based on the last 7 days.</p>
   </section>
 
-  <!-- ============================ DAILY LOG ============================ -->
+  <!-- ============================== LOG =============================== -->
   <section id="view-log" class="view" data-view="log" hidden>
-    <form id="log-form" novalidate>
-      <fieldset>
-        <legend>Date</legend>
-        <div class="field">
-          <label for="f-date" class="sr-only">Date</label>
+    <div class="log-head">
+      <div class="log-context">
+        <div class="field log-date-field">
+          <label for="f-date">Logging for</label>
           <input type="date" id="f-date" name="date" required>
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>The core two <span class="muted small">(these drive your streak)</span></legend>
-        <div class="toggle-row">
-          <span class="toggle-label">Morning protein within 30 min?</span>
-          <div class="yn" data-field="proteinWithin30">
-            <button type="button" data-val="Y">Yes</button>
-            <button type="button" data-val="N">No</button>
-          </div>
+        <div class="field log-time-field">
+          <label for="f-time">Time</label>
+          <input type="time" id="f-time">
         </div>
-        <div class="toggle-row">
-          <span class="toggle-label">Morning exercise?</span>
-          <div class="yn" data-field="morningExercise">
-            <button type="button" data-val="Y">Yes</button>
-            <button type="button" data-val="N">No</button>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Movement &amp; hydration</legend>
-        <div class="grid-2">
-          <div class="field">
-            <label for="f-steps">Steps</label>
-            <input type="number" id="f-steps" name="steps" inputmode="numeric" min="0" step="100" placeholder="e.g. 8000">
-          </div>
-          <div class="field">
-            <label for="f-water" id="f-water-label">Water (L)</label>
-            <input type="number" id="f-water" name="waterLiters" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 3.5">
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Sleep &amp; morning</legend>
-        <div class="grid-2">
-          <div class="field">
-            <label for="f-wake">Wake time</label>
-            <input type="time" id="f-wake" name="wakeTime">
-          </div>
-          <div class="field">
-            <label for="f-bed">Bed time (last night)</label>
-            <input type="time" id="f-bed" name="bedTime">
-          </div>
-          <div class="field">
-            <label for="f-sleephours">Sleep (hrs)</label>
-            <input type="number" id="f-sleephours" name="sleepHours" inputmode="decimal" min="0" max="24" step="0.25" placeholder="e.g. 7.5">
-          </div>
-          <div class="field">
-            <label for="f-sleepquality">Sleep quality (1–5)</label>
-            <input type="number" id="f-sleepquality" name="sleepQuality" inputmode="numeric" min="1" max="5" step="1">
-          </div>
-          <div class="field">
-            <label for="f-energy">Morning energy (1–5)</label>
-            <input type="number" id="f-energy" name="morningEnergy" inputmode="numeric" min="1" max="5" step="1">
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Notes</legend>
-        <div class="field">
-          <label for="f-notes" class="sr-only">Notes</label>
-          <textarea id="f-notes" name="notes" rows="2" placeholder="Anything worth remembering about today"></textarea>
-        </div>
-        <p class="muted small">Weight &amp; body measurements now live in the
-          <strong>Measurements</strong> tab.</p>
-      </fieldset>
-
-      <div id="log-errors" class="errors" hidden></div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save day</button>
-        <button type="button" class="btn btn-ghost" id="log-delete" hidden>Delete this day</button>
-        <span class="save-feedback" id="log-saved" hidden>Saved ✓</span>
       </div>
-    </form>
-  </section>
+      <p class="muted small">Tap a metric to log it as you go — date &amp; time default
+        to now; change them to backfill.</p>
+    </div>
 
-  <!-- ========================= MEASUREMENTS ========================= -->
-  <section id="view-measurements" class="view" data-view="measurements" hidden>
-    <form id="meas-form" novalidate>
-      <fieldset>
-        <legend>Date</legend>
-        <div class="field">
-          <label for="m-date" class="sr-only">Date</label>
-          <input type="date" id="m-date" name="date" required>
-        </div>
-      </fieldset>
+    <div class="chip-grid" id="chip-grid">
+      <button type="button" class="chip" data-chip="water" aria-pressed="false">💧 Water</button>
+      <button type="button" class="chip" data-chip="steps" aria-pressed="false">👟 Steps</button>
+      <button type="button" class="chip" data-chip="weight" aria-pressed="false">⚖️ Weight</button>
+      <button type="button" class="chip" data-chip="measurement" aria-pressed="false">📏 Measurements</button>
+      <button type="button" class="chip" data-chip="morning" aria-pressed="false">☀️ Morning</button>
+      <button type="button" class="chip" data-chip="sleep" aria-pressed="false">😴 Sleep</button>
+    </div>
 
-      <fieldset>
-        <legend>Weight</legend>
-        <div class="grid-2">
-          <div class="field">
-            <label for="m-weight" id="m-weight-label">Weight (lb)</label>
-            <input type="number" id="m-weight" name="weight" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 190">
-          </div>
-        </div>
-      </fieldset>
+    <div id="log-sheet" class="log-sheet" hidden></div>
 
-      <fieldset>
-        <legend>Circumferences <span class="muted small">(log only what you measure)</span></legend>
-        <div class="grid-2" id="meas-circ-grid"></div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Notes</legend>
-        <div class="field">
-          <label for="m-notes" class="sr-only">Notes</label>
-          <textarea id="m-notes" name="notes" rows="2" placeholder="Time of day, conditions, anything worth noting"></textarea>
-        </div>
-      </fieldset>
-
-      <div id="meas-errors" class="errors" hidden></div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save measurement</button>
-        <button type="button" class="btn btn-ghost" id="meas-delete" hidden>Delete this entry</button>
-        <span class="save-feedback" id="meas-saved" hidden>Saved ✓</span>
-      </div>
-    </form>
-
-    <h2 class="section-title">Recent measurements</h2>
-    <div id="meas-list" class="meas-list"></div>
-    <p class="muted small" id="meas-empty" hidden>No measurements yet. Log your first above.</p>
+    <h2 class="section-title">This day so far</h2>
+    <div id="day-summary" class="day-summary"></div>
   </section>
 
   <!-- ============================ HISTORY ============================ -->

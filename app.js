@@ -18,8 +18,7 @@
       t.setAttribute('aria-selected', String(t.dataset.view === name));
     });
     if (name === 'dashboard') renderDashboard();
-    if (name === 'log') loadLogForm($('#f-date').value || L.todayISO());
-    if (name === 'measurements') { loadMeasForm($('#m-date').value || L.todayISO()); renderMeasList(); }
+    if (name === 'log') renderLog();
     if (name === 'history') renderHistory();
     if (name === 'trends') renderTrends();
     if (name === 'settings') loadSettingsForm();
@@ -497,248 +496,338 @@
     showView('log');
   });
 
-  // ------------------------------------------------------------- log form
-  var logForm = $('#log-form');
+  // ------------------------------------------------------------- log tab
+  // Incremental logging: pick a metric chip → a focused sheet → save entries.
+  // Everything writes to the entries store; the day summary reflects the
+  // projection so running totals update as you go.
 
-  // Y/N toggle buttons
-  $$('.yn').forEach(function (group) {
-    group.addEventListener('click', function (e) {
-      var btn = e.target.closest('button[data-val]');
-      if (!btn) return;
-      var already = btn.getAttribute('aria-pressed') === 'true';
-      $$('button', group).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-      // Allow un-selecting by tapping the active one again.
-      btn.setAttribute('aria-pressed', already ? 'false' : 'true');
-    });
+  function currentTime() {
+    var d = new Date();
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  function logDate() { return $('#f-date').value || L.todayISO(); }
+
+  function renderLog() {
+    if (!$('#f-date').value) $('#f-date').value = L.todayISO();
+    syncTopTime();
+    closeSheet();
+    renderDaySummary(logDate());
+  }
+
+  // The date + time at the top are the shared timestamp for whatever you log.
+  // Default the time to now when logging for today; blank when backfilling a past
+  // day (its exact time doesn't matter). Refreshed whenever you enter the tab or
+  // change the date, so as-you-go logging picks up the current time.
+  function syncTopTime() {
+    $('#f-time').value = (logDate() === L.todayISO()) ? currentTime() : '';
+  }
+  function topTime() { var el = $('#f-time'); return el && el.value ? el.value : ''; }
+
+  var openType = null;
+  var ADDITIVE_STAYS_OPEN = { water: true, steps: true };
+
+  // Shared sheet footer: an optional per-entry note (time lives up top, with date).
+  function sheetFooter(opts) {
+    opts = opts || {};
+    return '<div class="field"><label for="sh-note">Note <span class="muted small">(optional)</span></label>' +
+        '<input type="text" id="sh-note" maxlength="140" placeholder="optional"></div>' +
+      '<div class="errors" id="sheet-errors" hidden></div>' +
+      '<div class="form-actions">' +
+        '<button type="button" class="btn btn-primary" data-act="save">' + (opts.saveLabel || 'Save') + '</button>' +
+        '<button type="button" class="btn btn-ghost" data-act="cancel">Cancel</button>' +
+        '<span class="save-feedback" id="sheet-saved" hidden>Added ✓</span>' +
+      '</div>';
+  }
+
+  function ynRow(label, field) {
+    return '<div class="toggle-row"><span class="toggle-label">' + escapeHtml(label) + '</span>' +
+      '<div class="yn" data-field="' + field + '">' +
+        '<button type="button" data-val="Y">Yes</button>' +
+        '<button type="button" data-val="N">No</button>' +
+      '</div></div>';
+  }
+
+  function sheetHtml(type) {
+    switch (type) {
+      case 'water': {
+        var wu = currentWaterUnit();
+        var presets = wu === 'oz' ? [8, 12, 16] : [0.25, 0.5, 1];
+        var btns = presets.map(function (p) {
+          return '<button type="button" class="preset" data-add="' + p + '">+' + p + ' ' + L.waterUnitLabel(wu) + '</button>';
+        }).join('');
+        return '<h3>💧 Water</h3>' +
+          '<p class="muted small">Tap a preset to log instantly, or enter an amount.</p>' +
+          '<div class="preset-row">' + btns + '</div>' +
+          '<div class="field"><label for="sh-water">Amount (' + L.waterUnitLabel(wu) + ')</label>' +
+          '<input type="number" id="sh-water" inputmode="decimal" min="0" step="0.1"></div>' +
+          sheetFooter({ saveLabel: 'Add water' });
+      }
+      case 'steps':
+        return '<h3>👟 Steps</h3>' +
+          '<p class="muted small">Adds to the day — a morning and an evening walk can be logged separately.</p>' +
+          '<div class="field"><label for="sh-steps">Steps</label>' +
+          '<input type="number" id="sh-steps" inputmode="numeric" min="0" step="100"></div>' +
+          sheetFooter({ saveLabel: 'Add steps' });
+      case 'weight': {
+        var gu = currentWeightUnit();
+        return '<h3>⚖️ Weight</h3>' +
+          '<div class="field"><label for="sh-weight">Weight (' + L.weightUnitLabel(gu) + ')</label>' +
+          '<input type="number" id="sh-weight" inputmode="decimal" min="0" step="0.1"></div>' +
+          sheetFooter({ saveLabel: 'Save weight' });
+      }
+      case 'measurement': {
+        var cu = currentCircUnit();
+        var fields = L.CIRC_SITES.map(function (s) {
+          return '<div class="field"><label for="sh-c-' + s.key + '">' + escapeHtml(s.label) +
+            ' (' + L.circumferenceUnitLabel(cu) + ')</label>' +
+            '<input type="number" id="sh-c-' + s.key + '" inputmode="decimal" min="0" step="0.1"></div>';
+        }).join('');
+        return '<h3>📏 Body measurements</h3>' +
+          '<p class="muted small">Log only what you measure.</p>' +
+          '<div class="grid-2">' + fields + '</div>' +
+          sheetFooter({ saveLabel: 'Save measurements' });
+      }
+      case 'morning':
+        return '<h3>☀️ Morning</h3>' +
+          ynRow('Morning protein within 30 min?', 'protein') +
+          ynRow('Morning exercise?', 'exercise') +
+          sheetFooter({ saveLabel: 'Save morning' });
+      case 'sleep':
+        return '<h3>😴 Sleep</h3>' +
+          '<div class="grid-2">' +
+            '<div class="field"><label for="sh-wake">Wake time</label><input type="time" id="sh-wake"></div>' +
+            '<div class="field"><label for="sh-bed">Bed time</label><input type="time" id="sh-bed"></div>' +
+            '<div class="field"><label for="sh-sleephours">Sleep (hrs)</label><input type="number" id="sh-sleephours" inputmode="decimal" min="0" max="24" step="0.25"></div>' +
+            '<div class="field"><label for="sh-sleepquality">Sleep quality (1–5)</label><input type="number" id="sh-sleepquality" inputmode="numeric" min="1" max="5" step="1"></div>' +
+            '<div class="field"><label for="sh-energy">Morning energy (1–5)</label><input type="number" id="sh-energy" inputmode="numeric" min="1" max="5" step="1"></div>' +
+          '</div>' +
+          sheetFooter({ saveLabel: 'Save sleep' });
+      default: return '';
+    }
+  }
+
+  function openSheet(type) {
+    openType = type;
+    var sheet = $('#log-sheet');
+    sheet.innerHTML = sheetHtml(type);
+    sheet.hidden = false;
+    $$('.chip').forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.chip === type)); });
+    var first = sheet.querySelector('input');
+    if (first) first.focus();
+    sheet.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function closeSheet() {
+    openType = null;
+    var sheet = $('#log-sheet');
+    sheet.hidden = true;
+    sheet.innerHTML = '';
+    $$('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+  }
+
+  $('#chip-grid').addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    if (openType === chip.dataset.chip) { closeSheet(); return; } // tap active chip → close
+    openSheet(chip.dataset.chip);
   });
 
-  function getToggle(field) {
+  // Delegated handling inside the active sheet: presets, Y/N toggles, save/cancel.
+  $('#log-sheet').addEventListener('click', function (e) {
+    var preset = e.target.closest('.preset');
+    if (preset) { addWaterPreset(Number(preset.dataset.add)); return; }
+
+    var yn = e.target.closest('.yn button[data-val]');
+    if (yn) {
+      var group = yn.parentNode;
+      var already = yn.getAttribute('aria-pressed') === 'true';
+      $$('button', group).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      yn.setAttribute('aria-pressed', already ? 'false' : 'true'); // tap again to clear
+      return;
+    }
+
+    var act = e.target.closest('[data-act]');
+    if (!act) return;
+    if (act.dataset.act === 'cancel') closeSheet();
+    else if (act.dataset.act === 'save') saveSheet(openType);
+  });
+
+  function sheetNote() { var el = $('#sh-note'); return el && el.value.trim() ? el.value.trim() : ''; }
+  // Attach the shared top time + this sheet's note onto an entry.
+  function stamp(entry) {
+    var t = topTime(); if (t) entry.time = t;
+    var n = sheetNote(); if (n) entry.note = n;
+    return entry;
+  }
+  function ynVal(field) {
     var pressed = $('.yn[data-field="' + field + '"] button[aria-pressed="true"]');
     return pressed ? pressed.dataset.val : '';
   }
-  function setToggle(field, val) {
-    $$('.yn[data-field="' + field + '"] button').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.dataset.val === val));
-    });
-  }
 
-  /** Populate the form from a stored record (or a blank day). */
-  function loadLogForm(date) {
-    var rec = S.getLog(date) || { date: date };
-    $('#f-date').value = rec.date || date;
-    $('#f-steps').value = valOr(rec.steps);
-    var wunit = currentWaterUnit();
-    $('#f-water').value = isFiniteNum(rec.waterLiters) ? fmtWater(rec.waterLiters, wunit) : '';
-    $('#f-water').step = wunit === 'oz' ? '1' : '0.1';
-    $('#f-water-label').textContent = 'Water (' + L.waterUnitLabel(wunit) + ')';
-    $('#f-wake').value = rec.wakeTime || '';
-    $('#f-bed').value = rec.bedTime || '';
-    $('#f-sleephours').value = valOr(rec.sleepHours);
-    $('#f-sleepquality').value = valOr(rec.sleepQuality);
-    $('#f-energy').value = valOr(rec.morningEnergy);
-    $('#f-notes').value = rec.notes || '';
-    setToggle('proteinWithin30', rec.proteinWithin30 || '');
-    setToggle('morningExercise', rec.morningExercise || '');
-
-    $('#log-delete').hidden = !S.getLog(date);
-    hideErrors();
-    $('#log-saved').hidden = true;
-  }
-
-  /** Collect the form into a clean record; blanks are omitted, not stored. */
-  function collectLog() {
-    var rec = { date: $('#f-date').value };
-    setNum(rec, 'steps', $('#f-steps').value);
-    // Water is entered in the display unit; store canonical litres.
-    var wraw = $('#f-water').value;
-    if (wraw !== '') {
-      var liters = L.waterFromDisplay(Number(wraw), currentWaterUnit());
-      if (isFiniteNum(liters)) rec.waterLiters = round2(liters);
+  // Validate everything before writing, so a batch save is all-or-nothing.
+  function commitEntries(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      var check = L.validateEntry(entries[i]);
+      if (!check.valid) { showSheetErrors(check.errors); return false; }
     }
-    setNum(rec, 'sleepHours', $('#f-sleephours').value);
-    setNum(rec, 'sleepQuality', $('#f-sleepquality').value);
-    setNum(rec, 'morningEnergy', $('#f-energy').value);
-    setStr(rec, 'wakeTime', $('#f-wake').value);
-    setStr(rec, 'bedTime', $('#f-bed').value);
-    setStr(rec, 'notes', $('#f-notes').value.trim());
-    var p = getToggle('proteinWithin30'); if (p) rec.proteinWithin30 = p;
-    var m = getToggle('morningExercise'); if (m) rec.morningExercise = m;
-    return rec;
+    entries.forEach(function (e) { S.saveEntry(e); });
+    return true;
+  }
+  function afterSave(keepOpen) {
+    flash($('#sheet-saved'));
+    renderDaySummary(logDate());
+    renderDashboard();
+    if (!keepOpen) { closeSheet(); return; }
+    $$('#log-sheet input[type="number"]').forEach(function (i) { i.value = ''; });
+    var f = $('#log-sheet input'); if (f) f.focus();
   }
 
-  logForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var rec = collectLog();
-    var check = L.validateDailyLog(rec);
-    if (!check.valid) { showErrors(check.errors); return; }
-    hideErrors();
-    S.saveLog(rec);
-    $('#log-delete').hidden = false;
-    flash($('#log-saved'));
-    renderDashboard();
+  // One-tap water preset → immediate entry; the sheet stays open for another.
+  function addWaterPreset(displayAmount) {
+    var liters = L.waterFromDisplay(displayAmount, currentWaterUnit());
+    if (!isFiniteNum(liters)) return;
+    if (commitEntries([stamp({ date: logDate(), type: 'water', value: round2(liters) })])) afterSave(true);
+  }
+
+  function saveSheet(type) {
+    var date = logDate();
+    var entries = [];
+    switch (type) {
+      case 'water': {
+        var wv = $('#sh-water').value;
+        if (wv === '') { showSheetErrors({ value: 'Enter an amount, or tap a preset.' }); return; }
+        entries.push({ date: date, type: 'water', value: round2(L.waterFromDisplay(Number(wv), currentWaterUnit())) });
+        break;
+      }
+      case 'steps': {
+        var sv = $('#sh-steps').value;
+        if (sv === '') { showSheetErrors({ value: 'Enter a step count.' }); return; }
+        entries.push({ date: date, type: 'steps', value: Number(sv) });
+        break;
+      }
+      case 'weight': {
+        var gv = $('#sh-weight').value;
+        if (gv === '') { showSheetErrors({ value: 'Enter a weight.' }); return; }
+        entries.push({ date: date, type: 'weight', value: round2(L.weightFromDisplay(Number(gv), currentWeightUnit())) });
+        break;
+      }
+      case 'measurement': {
+        var cu = currentCircUnit();
+        L.CIRC_SITES.forEach(function (s) {
+          var raw = $('#sh-c-' + s.key).value;
+          if (raw === '') return;
+          entries.push({ date: date, type: 'circumference', site: s.key, value: round2(L.inFromDisplay(Number(raw), cu)) });
+        });
+        if (!entries.length) { showSheetErrors({ value: 'Enter at least one measurement.' }); return; }
+        break;
+      }
+      case 'morning': {
+        var p = ynVal('protein'), m = ynVal('exercise');
+        if (p) entries.push({ date: date, type: 'protein', value: p });
+        if (m) entries.push({ date: date, type: 'exercise', value: m });
+        if (!entries.length) { showSheetErrors({ value: 'Tap Yes or No for at least one.' }); return; }
+        break;
+      }
+      case 'sleep': {
+        [['sh-wake', 'wake', String], ['sh-bed', 'bed', String],
+         ['sh-sleephours', 'sleepHours', Number], ['sh-sleepquality', 'sleepQuality', Number],
+         ['sh-energy', 'energy', Number]].forEach(function (f) {
+          var raw = $('#' + f[0]).value;
+          if (raw === '') return;
+          entries.push({ date: date, type: f[1], value: f[2](raw) });
+        });
+        if (!entries.length) { showSheetErrors({ value: 'Enter at least one sleep detail.' }); return; }
+        break;
+      }
+    }
+    entries.forEach(stamp); // shared top time + this sheet's note onto every entry
+    if (commitEntries(entries)) afterSave(!!ADDITIVE_STAYS_OPEN[type]);
+  }
+
+  function showSheetErrors(errors) {
+    var box = $('#sheet-errors');
+    if (!box) return;
+    box.innerHTML = '<strong>Please fix:</strong><ul>' +
+      Object.keys(errors).map(function (k) { return '<li>' + escapeHtml(errors[k]) + '</li>'; }).join('') + '</ul>';
+    box.hidden = false;
+  }
+
+  // ---- day summary: running totals + what's logged for the chosen date ----
+  function renderDaySummary(date) {
+    var entries = S.getDayEntries(date);
+    var host = $('#day-summary');
+    if (!entries.length) {
+      host.innerHTML = '<p class="muted">Nothing logged for ' + escapeHtml(shortDate(date)) +
+        ' yet. Pick something above to start.</p>';
+      return;
+    }
+    var day = L.projectDay(entries);
+    var profile = S.getProfile();
+    var gu = currentWeightUnit(), wu = currentWaterUnit(), cu = currentCircUnit();
+    var rows = [];
+    function row(label, val) { rows.push('<div class="detail-row"><dt>' + label + '</dt><dd>' + val + '</dd></div>'); }
+
+    if (isFiniteNum(day.waterLiters)) {
+      var wtxt = fmtWater(day.waterLiters, wu) + ' ' + L.waterUnitLabel(wu);
+      if (isFiniteNum(profile.waterTarget)) wtxt += ' <span class="muted">/ ' + fmtWater(profile.waterTarget, wu) + '</span>';
+      row('💧 Water', wtxt);
+    }
+    if (isFiniteNum(day.steps)) {
+      var stxt = day.steps.toLocaleString();
+      if (isFiniteNum(profile.stepsTarget)) stxt += ' <span class="muted">/ ' + profile.stepsTarget.toLocaleString() + '</span>';
+      row('👟 Steps', stxt);
+    }
+    if (isFiniteNum(day.weight)) row('⚖️ Weight', fmtWeight(day.weight, gu) + ' ' + L.weightUnitLabel(gu));
+    if (day.proteinWithin30) row('Morning protein', day.proteinWithin30 === 'Y' ? 'Yes' : 'No');
+    if (day.morningExercise) row('Morning exercise', day.morningExercise === 'Y' ? 'Yes' : 'No');
+    if (day.wakeTime) row('Wake', escapeHtml(day.wakeTime));
+    if (day.bedTime) row('Bed', escapeHtml(day.bedTime));
+    if (isFiniteNum(day.sleepHours)) row('Sleep', day.sleepHours + ' h');
+    if (isFiniteNum(day.sleepQuality)) row('Sleep quality', day.sleepQuality + '/5');
+    if (isFiniteNum(day.morningEnergy)) row('Morning energy', day.morningEnergy + '/5');
+    if (day.circumferences) {
+      var cbits = L.CIRC_SITES.filter(function (s) { return isFiniteNum(day.circumferences[s.key]); })
+        .map(function (s) { return s.label + ' ' + fmtCirc(day.circumferences[s.key], cu) + ' ' + L.circumferenceUnitLabel(cu); });
+      if (cbits.length) row('📏 Measurements', escapeHtml(cbits.join(' · ')));
+    }
+
+    host.innerHTML =
+      '<dl class="detail-list">' + rows.join('') + '</dl>' +
+      '<div class="form-actions summary-actions">' +
+        '<span class="muted small">' + entries.length + ' entr' + (entries.length === 1 ? 'y' : 'ies') +
+        ' · <a href="#" data-goto-history="' + date + '">see all in History</a></span>' +
+        '<button type="button" class="btn btn-ghost" id="undo-last">Undo last add</button>' +
+      '</div>';
+  }
+
+  $('#day-summary').addEventListener('click', function (e) {
+    var undo = e.target.closest('#undo-last');
+    if (undo) {
+      var entries = S.getDayEntries(logDate());
+      if (!entries.length) return;
+      // "last added" ≈ the largest id (genId embeds the creation timestamp).
+      var last = entries.slice().sort(function (a, b) { return a.id < b.id ? -1 : 1; }).pop();
+      if (last && confirm('Remove the last entry you added for this day?')) {
+        S.deleteEntry(last.id);
+        renderDaySummary(logDate());
+        renderDashboard();
+      }
+      return;
+    }
+    var hist = e.target.closest('[data-goto-history]');
+    if (hist) {
+      e.preventDefault();
+      historyAnchor = hist.dataset.gotoHistory;
+      showView('history');
+      renderDayDetail(historyAnchor);
+    }
   });
 
-  $('#log-delete').addEventListener('click', function () {
-    var date = $('#f-date').value;
-    if (!confirm('Delete the log for ' + date + '? This cannot be undone.')) return;
-    S.deleteLog(date);
-    loadLogForm(date);
-    renderDashboard();
-  });
-
-  $('#f-date').addEventListener('change', function () {
-    loadLogForm($('#f-date').value);
-  });
+  $('#f-date').addEventListener('change', renderLog);
 
   $('#today-cta').addEventListener('click', function () {
     $('#f-date').value = L.todayISO();
     showView('log');
   });
-
-  function showErrors(errors) {
-    var box = $('#log-errors');
-    var items = Object.keys(errors).map(function (k) {
-      return '<li>' + escapeHtml(errors[k]) + '</li>';
-    }).join('');
-    box.innerHTML = '<strong>Please fix:</strong><ul>' + items + '</ul>';
-    box.hidden = false;
-  }
-  function hideErrors() { $('#log-errors').hidden = true; }
-
-  // ---------------------------------------------------- measurements form
-  var measForm = $('#meas-form');
-  function circFieldId(key) { return 'm-c-' + key; }
-
-  // Build the circumference inputs from the one canonical site list, labelled in
-  // the current unit. Rebuilt on each load so a unit change is reflected.
-  function buildCircGrid(unit) {
-    var ulabel = L.circumferenceUnitLabel(unit);
-    $('#meas-circ-grid').innerHTML = L.CIRC_SITES.map(function (s) {
-      var id = circFieldId(s.key);
-      return '<div class="field">' +
-        '<label for="' + id + '">' + escapeHtml(s.label) + ' (' + ulabel + ')</label>' +
-        '<input type="number" id="' + id + '" inputmode="decimal" min="0" step="0.1" ' +
-        'data-site="' + s.key + '"></div>';
-    }).join('');
-  }
-
-  /** Populate the measurement form from a stored record (or a blank day). */
-  function loadMeasForm(date) {
-    var rec = S.getMeasurement(date) || { date: date };
-    $('#m-date').value = rec.date || date;
-
-    var gunit = currentWeightUnit();
-    $('#m-weight').value = isFiniteNum(rec.weight) ? fmtWeight(rec.weight, gunit) : '';
-    $('#m-weight-label').textContent = 'Weight (' + L.weightUnitLabel(gunit) + ')';
-
-    var cunit = currentCircUnit();
-    buildCircGrid(cunit);
-    var c = rec.circumferences || {};
-    L.CIRC_SITES.forEach(function (s) {
-      $('#' + circFieldId(s.key)).value = isFiniteNum(c[s.key]) ? fmtCirc(c[s.key], cunit) : '';
-    });
-
-    $('#m-notes').value = rec.notes || '';
-    $('#meas-delete').hidden = !S.getMeasurement(date);
-    hideMeasErrors();
-    $('#meas-saved').hidden = true;
-  }
-
-  /** Collect the form into a clean record; blanks omitted, values → canonical. */
-  function collectMeas() {
-    var rec = { date: $('#m-date').value };
-
-    var graw = $('#m-weight').value;
-    if (graw !== '') {
-      var lb = L.weightFromDisplay(Number(graw), currentWeightUnit());
-      if (isFiniteNum(lb)) rec.weight = round2(lb);
-    }
-
-    var cunit = currentCircUnit();
-    var circ = {};
-    L.CIRC_SITES.forEach(function (s) {
-      var raw = $('#' + circFieldId(s.key)).value;
-      if (raw === '') return;
-      var inches = L.inFromDisplay(Number(raw), cunit);
-      if (isFiniteNum(inches)) circ[s.key] = round2(inches);
-    });
-    if (Object.keys(circ).length) rec.circumferences = circ;
-
-    setStr(rec, 'notes', $('#m-notes').value.trim());
-    return rec;
-  }
-
-  measForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var rec = collectMeas();
-    var check = L.validateMeasurement(rec);
-    if (!check.valid) { showMeasErrors(check.errors); return; }
-    // Don't persist an empty shell (just a date) — nudge for at least one value.
-    if (!isFiniteNum(rec.weight) && !rec.circumferences && !rec.notes) {
-      showMeasErrors({ empty: 'Enter a weight or at least one measurement before saving.' });
-      return;
-    }
-    hideMeasErrors();
-    S.saveMeasurement(rec);
-    $('#meas-delete').hidden = false;
-    flash($('#meas-saved'));
-    renderMeasList();
-  });
-
-  $('#meas-delete').addEventListener('click', function () {
-    var date = $('#m-date').value;
-    if (!confirm('Delete the measurement for ' + date + '? This cannot be undone.')) return;
-    S.deleteMeasurement(date);
-    loadMeasForm(date);
-    renderMeasList();
-  });
-
-  $('#m-date').addEventListener('change', function () {
-    loadMeasForm($('#m-date').value);
-  });
-
-  // Recent measurements, newest first; click a row to edit it in the form above.
-  function renderMeasList() {
-    var all = S.getMeasurements().slice().reverse();
-    var host = $('#meas-list');
-    $('#meas-empty').hidden = !!all.length;
-    if (!all.length) { host.innerHTML = ''; return; }
-
-    var gunit = currentWeightUnit(), cunit = currentCircUnit();
-    host.innerHTML = all.map(function (m) {
-      var bits = [];
-      if (isFiniteNum(m.weight)) {
-        bits.push(fmtWeight(m.weight, gunit) + ' ' + L.weightUnitLabel(gunit));
-      }
-      var c = m.circumferences || {};
-      L.CIRC_SITES.forEach(function (s) {
-        if (isFiniteNum(c[s.key])) {
-          bits.push(s.label + ' ' + fmtCirc(c[s.key], cunit) + ' ' + L.circumferenceUnitLabel(cunit));
-        }
-      });
-      var summary = bits.length ? escapeHtml(bits.join(' · ')) : '—';
-      return '<button type="button" class="meas-row" data-date="' + m.date + '">' +
-        '<span class="meas-date">' + escapeHtml(shortDate(m.date)) + '</span>' +
-        '<span class="meas-vals">' + summary + '</span></button>';
-    }).join('');
-  }
-
-  $('#meas-list').addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-date]');
-    if (!btn) return;
-    loadMeasForm(btn.dataset.date);
-    measForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-  function showMeasErrors(errors) {
-    var box = $('#meas-errors');
-    var items = Object.keys(errors).map(function (k) {
-      return '<li>' + escapeHtml(errors[k]) + '</li>';
-    }).join('');
-    box.innerHTML = '<strong>Please fix:</strong><ul>' + items + '</ul>';
-    box.hidden = false;
-  }
-  function hideMeasErrors() { $('#meas-errors').hidden = true; }
 
   // -------------------------------------------------------- settings form
   var settingsForm = $('#settings-form');
@@ -830,18 +919,23 @@
       var check = L.validateImport(data);
       if (!check.valid) { alert('Import failed:\n\n' + check.errors.join('\n')); return; }
 
-      // Show what this file will actually do: how many days are new vs. overlap.
-      var incoming = data.dailyLogs || [];
+      // Show what this file will do: how many entries are new vs. already here.
+      var incoming = data.entries || [];
       var have = {};
-      S.getLogs().forEach(function (l) { have[l.date] = true; });
+      S.getEntries().forEach(function (en) { have[en.id] = true; });
+      var days = {};
       var overlap = 0, fresh = 0;
-      incoming.forEach(function (l) { if (have[l.date]) overlap++; else fresh++; });
+      incoming.forEach(function (en) {
+        if (en.date) days[en.date] = true;
+        if (have[en.id]) overlap++; else fresh++;
+      });
 
       var summary =
-        'This backup has <strong>' + incoming.length + ' day(s)</strong>' +
+        'This backup has <strong>' + incoming.length + ' entr' + (incoming.length === 1 ? 'y' : 'ies') +
+        '</strong> across <strong>' + Object.keys(days).length + ' day(s)</strong>' +
         (data.profile ? ' plus your settings' : '') + '.<br>' +
         '<strong>' + fresh + '</strong> new to this device · ' +
-        '<strong>' + overlap + '</strong> match a date you already have.';
+        '<strong>' + overlap + '</strong> already here.';
 
       askImportMode(summary).then(function (mode) {
         if (!mode) return; // cancelled — nothing changed
@@ -917,7 +1011,6 @@
 
   // ------------------------------------------------------------------ init
   $('#f-date').value = L.todayISO();
-  $('#m-date').value = L.todayISO();
   setupTrends();
   showView('dashboard');
 

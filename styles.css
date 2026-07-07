@@ -486,25 +486,55 @@ input:focus, select:focus, textarea:focus {
 .week-score.grade-yellow { color: var(--grade-amber); }
 .week-score.grade-red { color: var(--grade-red); }
 
-/* ---- Measurements: recent-entries list (clickable rows) ---- */
-.meas-list { display: flex; flex-direction: column; gap: 6px; }
-.meas-row {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  text-align: left;
-  width: 100%;
-  padding: 12px 14px;
+/* ---- Log tab: quick-add chips + focused sheet + day summary ---- */
+.log-head { margin-bottom: 14px; }
+.log-context { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 8px; }
+.log-context .field { margin: 0; }
+.log-date-field { flex: 1 1 12rem; max-width: 16rem; }
+.log-time-field { flex: 0 0 8rem; }
+
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip {
+  font: inherit; font-size: 15px;
+  padding: 10px 14px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 999px;
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
-  font: inherit;
 }
-.meas-row:hover { border-color: var(--brand); }
-.meas-date { flex: 0 0 4.5em; font-weight: 700; font-variant-numeric: tabular-nums; }
-.meas-vals { flex: 1 1 auto; color: var(--muted); font-size: 13px; }
+.chip:hover { border-color: var(--brand); }
+.chip[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.log-sheet {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+.log-sheet h3 { margin: 0 0 6px; }
+
+.preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.preset {
+  font: inherit;
+  padding: 8px 12px;
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--brand);
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.preset:hover { background: var(--brand); color: var(--bg); }
+
+.day-summary .detail-list { margin: 0; }
+.summary-actions { justify-content: space-between; align-items: center; }
 
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
 .trends-head {
