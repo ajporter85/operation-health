@@ -372,6 +372,25 @@ On agreement of §11.1–§11.3, **Phase 1**: I build (or scaffold, if you're bu
 
 ## 13. Status & session handoff
 
+**As of 2026-07-06 (end of day) — supersedes the 07-05 notes below for anything that conflicts.**
+
+Two large pieces landed this session; both are shipped, tested, and pushed.
+
+- **Incremental-logging rework — `schemaVersion` → 4.** The store is now a **stream of `LogEntry` records** (`oh.entries`); the old `oh.dailyLogs` and `oh.measurements` stores are **retired**. A pure projection rolls entries into the *same* derived-DailyLog shape the scoring/trends/history engine already consumed, so that engine was untouched:
+  - `logic.js`: `ENTRY_TYPES` registry (each type → **semantic** `additive`|`snapshot`|`binary`|`circumference`|`meal` + the derived-day field it feeds); `projectDay(entries)` / `projectAll(entries)` (additive sums, snapshot latest-by-time, circumferences per-site, meals → `day.nutrition`); `validateEntry`; `formatTime`.
+  - `storage.js`: `getLogs`/`getLog`/`getMeasurements` **project** from `oh.entries`; `saveEntry` upserts one-per-day for snapshot/binary/circumference and **appends** (edit-by-id) for additive + meal; export/import speak a **v4 `entries`** payload (pre-v4 backups rejected with a clear message).
+  - UI: Log tab = **quick-add chip grid** → focused sheets; water one-tap presets; shared **date + time** at top (defaults to now for today / blank for backfill; 12/24h display pref); **"This day so far"** running-totals summary with **undo-last**. History day-detail = graded summary **+ editable per-entry ledger** (inline edit/delete, per-entry notes). **Measurements tab removed** (it's a chip). Settings gained **units** (water/weight/circumference) and **time-format** prefs.
+  - Migration was **deliberately skipped** (user re-entered the single live day). The full-day "power form" (**B4**) was **deliberately skipped** — chips + grouped Morning/Sleep sheets + the ledger already cover it, and a full-day form fights the additive model.
+- **Meals module (M1 + M2).**
+  - *M1:* `meal` entry (`slot` B/L/D/S + optional `name` + the five macros); meals **accrue** into `day.nutrition = {calories, protein, carbs, fat, fiber}` (kept separate from the morning `proteinWithin30` binary). **Configurable nutrition targets** in Settings (calorie/protein/carb/fat/fiber, seeded from §5 — **never hard-coded**). Day summary shows totals vs target; meals appear in the History ledger (inline edit/delete reusing the meal form).
+  - *M2:* **Meal Library** (`oh.mealLibrary`, reference data, in export/import). Log meal sheet has a **"Log a saved meal" picker** (prefills the form); a shared **"★ Save to library"** toggle lives in the meal-field builder so it appears in **both** the Log sheet and the History ledger meal editor (upsert **by name**). Settings has a Meal Library manager (list + delete).
+  - *Deferred:* **M3** — feed nutrition adherence (protein/calories/fiber) into the consistency **dials**, and nutrition **trend charts**. Not built.
+- **Test fixture refreshed:** `test-data/sample-30days.json` is now **v4 entries format** (~29 logged days incl. ~99 meals + a 4-item `mealLibrary`). Import via Settings → Import → Replace.
+- **Tests:** `tests.html` at **237 pure-logic assertions**, all green (run in-browser, or under a Node DOM/localStorage shim during dev).
+- **Next-slice candidates:** Meals M3, the **Workouts** heavy module, the **scoring-dials Settings UI**, per-habit dot strips. Rule engine / reminders / sync / installability still not started. **Before building: confirm the piece + share a plan.** See **§14** for the external-dependency question that will increasingly shape the heavy modules.
+
+---
+
 **As of 2026-07-05 (end of day):**
 
 - **Phase 1 MVP — shipped & working.** No-build, zero-dependency PWA: `index.html`,
@@ -459,3 +478,68 @@ directions (confirm with Andrew before starting, and write a build plan first): 
 already exist in `profile.scoring`); **per-habit dot strips**; or opening the **Phase 2 heavy
 modules** (full nutrition with protein *grams*, meal/exercise libraries, measurements). Reuse
 `sample-30days.json` for testing.
+
+---
+
+## 14. Future directions — external dependencies & the local-first line (added 2026-07-06)
+
+### The stance (important — this reframes §2/§3's "local-first, zero-dependency")
+Local-first / zero-dependency was adopted as a **deliberate "start small, don't over-complicate"
+forcing function** early on — *not* an ideological constraint. Andrew is **open to relaxing it**
+when a specific dependency clearly buys enough production value / less logging friction to justify
+it. The decision is about **timing and tradeoffs**, per-dependency, made explicitly:
+
+> **Rule that stays firm:** never add a dependency, make a network call, ship a large bundled
+> asset, or change the stack **quietly**. Propose it with concrete pros/cons and get an explicit
+> yes first. Prefer introducing one at a well-chosen stage, not reactively.
+
+### The immediate motivating case: food data for Meals
+Meals M1/M2 are fully local (manual macros + a personal Meal Library). That covers the 80% case
+(you eat the same handful of meals) but entering macros by hand is the main friction. The
+"level-up" ladder we mapped, in increasing constraint cost:
+
+- **L0 — manual macros.** *(shipped)* No external data.
+- **L1 — personal Meal Library.** *(shipped, M2)* One-tap reuse of *your* meals. Fully offline,
+  zero-dependency, best-aligned; highest bang-for-buck for a personal app.
+- **L2 — ship a curated public-domain food list locally.** Bundle a *subset* of **USDA
+  FoodData Central** (US government, **public domain** — no license/attribution strings, unlike
+  Open Food Facts which is ODbL/share-alike) as a static JSON (a few hundred common whole foods
+  with per-serving macros). Search it in-memory to prefill/compose a meal. **Still offline, no
+  network, no runtime dependency** — just a larger app + a data-curation task. This is where meals
+  could become *itemized* (foods + quantities → computed macros). **This is the recommended first
+  step over the line** if manual entry stays annoying — it raises value without giving up offline.
+- **L3 — live food API + barcode scanning.** USDA FDC hosted API, or **Open Food Facts** (~3M
+  crowd-sourced products, barcode-oriented, ODbL), or a freemium API (Nutritionix/Edamam/FatSecret
+  — API keys, rate limits). Powerful, but **this is the one that breaks no-network / on-device.**
+  A deliberate, later decision — realistically once the app is installed on the phone (barcode
+  scanning wants a camera + mobile context anyway).
+
+### Pros / cons checklist to apply before adopting *any* dependency
+- **Value vs. friction removed** — does it materially cut logging effort or add real capability?
+- **License** — public-domain (USDA) is cleanest; ODbL/share-alike (Open Food Facts) carries
+  attribution + share-alike obligations; freemium APIs carry keys/ToS/rate limits.
+- **Offline impact** — does it require network? does it break "data stays on-device / no analytics"?
+  Bundled static data (L2) keeps offline; live APIs (L3) don't.
+- **Size / cost** — bundle weight (L2 curation), API cost/limits (L3), a build step? (still want none).
+- **Privacy** — any request to a third party publishes what the user ate/weighs; unacceptable
+  without explicit opt-in.
+- **Reversibility** — can we keep it behind the `storage.js` / a thin adapter so it's swappable and
+  the pure `logic.js` core stays dependency-free and testable?
+- **Maintenance** — schema drift, dead endpoints, data quality (Open Food Facts quality varies).
+
+### Proposed progression (when to explore external deps)
+1. **Keep building modules on the current zero-dep stack** while it isn't the bottleneck —
+   **Workouts** (+ Exercise Library, mirrors Meals/M2 exactly) and **Meals M3** (nutrition into the
+   consistency dials + nutrition trends) need no external data.
+2. **First candidate to cross the line: L2** (bundled USDA public-domain foods) — *if/when* manual
+   macro entry is the thing slowing you down. Offline-preserving, so low-risk. Do it as its own
+   slice with the checklist above.
+3. **Defer L3 (live APIs / barcode) to the installability/iPhone phase**, where a camera + mobile
+   context make barcode scanning worthwhile and a network call is a conscious, scoped choice.
+4. **Also revisit at that phase:** a charting library (still hand-rolled SVG today), IndexedDB
+   behind the `storage.js` boundary (for large bundled datasets), and sync — each via the same
+   propose-with-tradeoffs gate.
+
+**Bottom line:** continuing to progress modules on the current stack makes sense; the external-
+dependency question is a *when*, not an *if*. L2 (offline USDA subset) is the natural first step;
+L3 (live APIs) belongs to the mobile/installability phase. Always propose + decide explicitly.
