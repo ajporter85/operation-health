@@ -17,6 +17,9 @@
     $$('.tab').forEach(function (t) {
       t.setAttribute('aria-selected', String(t.dataset.view === name));
     });
+    // Leaving the Log tab closes any open sheet, so its form ids (shared with the
+    // History meal editor) can't linger in the DOM and collide.
+    if (name !== 'log') closeSheet();
     if (name === 'dashboard') renderDashboard();
     if (name === 'log') renderLog();
     if (name === 'history') renderHistory();
@@ -439,6 +442,7 @@
   };
 
   function entryLabel(e) {
+    if (e.type === 'meal') return '🍽️ ' + mealSlotLabel(e.slot) + (e.name ? ' — ' + e.name : '');
     var m = ENTRY_META[e.type];
     var lab = m ? m.label : e.type;
     if (e.type === 'circumference') {
@@ -448,6 +452,10 @@
     return lab;
   }
   function entryValueText(e) {
+    if (e.type === 'meal') {
+      return L.MEAL_MACROS.filter(function (mm) { return isFiniteNum(e[mm.key]); })
+        .map(function (mm) { return fmtMacro(e[mm.key], mm); }).join(' · ');
+    }
     var m = ENTRY_META[e.type];
     if (!m) return String(e.value);
     if (m.kind === 'yn') return e.value === 'Y' ? 'Yes' : 'No';
@@ -478,6 +486,18 @@
   }
 
   function ledEditHtml(e) {
+    if (e.type === 'meal') {
+      return '<div class="led-meal-edit">' + mealFieldsHtml(e) + '</div>' +
+        '<span class="led-edit-line"><label class="muted small" for="led-time">Time</label> ' +
+          '<input type="time" id="led-time" value="' + (e.time || '') + '"></span>' +
+        '<span class="led-edit-line"><input type="text" id="led-note" maxlength="140" placeholder="note (optional)" value="' +
+          escapeHtml(e.note || '') + '"></span>' +
+        '<div class="errors" id="led-err" hidden></div>' +
+        '<span class="led-edit-actions">' +
+          '<button type="button" class="btn btn-primary btn-sm" data-led-save="' + e.id + '">Save</button>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-led-cancel="1">Cancel</button>' +
+        '</span>';
+    }
     var m = ENTRY_META[e.type];
     var valInput;
     if (m.kind === 'yn') {
@@ -503,6 +523,13 @@
   }
 
   function collectLedEdit(e) {
+    if (e.type === 'meal') {
+      var meal = collectMealFields();
+      meal.id = e.id; meal.date = e.date; meal.type = 'meal';
+      var mt = $('#led-time').value; if (mt) meal.time = mt;
+      var mn = $('#led-note').value.trim(); if (mn) meal.note = mn;
+      return meal;
+    }
     var m = ENTRY_META[e.type];
     var out = { id: e.id, date: e.date, type: e.type };
     if (e.site) out.site = e.site;
@@ -609,6 +636,8 @@
   $('#week-view').addEventListener('click', onDayPick);
 
   $('#day-detail').addEventListener('click', function (e) {
+    if (maybeHandleSlotClick(e)) return; // meal editor slot picker
+
     var jump = e.target.closest('button[data-edit]');
     if (jump) { $('#f-date').value = jump.dataset.edit; showView('log'); return; }
 
@@ -636,7 +665,11 @@
       var check = L.validateEntry(edited);
       if (!check.valid) {
         var box = $('#led-err');
-        if (box) { box.textContent = check.errors.value || check.errors.time || 'Please enter a valid value.'; box.hidden = false; }
+        if (box) {
+          var firstKey = Object.keys(check.errors)[0];
+          box.textContent = check.errors[firstKey] || 'Please enter a valid value.';
+          box.hidden = false;
+        }
         return;
       }
       S.saveEntry(edited);
@@ -696,6 +729,52 @@
       '</div></div>';
   }
 
+  // ---- meal fields (shared by the Log meal sheet and the ledger meal editor) ----
+  function mealFieldsHtml(m) {
+    m = m || {};
+    var slots = L.MEAL_SLOTS.map(function (s) {
+      return '<button type="button" class="slot-btn" data-slot="' + s.key + '" aria-pressed="' +
+        (m.slot === s.key ? 'true' : 'false') + '">' + s.label + '</button>';
+    }).join('');
+    var macros = L.MEAL_MACROS.map(function (mm) {
+      var val = isFiniteNum(m[mm.key]) ? m[mm.key] : '';
+      return '<div class="field"><label for="meal-' + mm.key + '">' + mm.label + ' (' + mm.unit + ')</label>' +
+        '<input type="number" id="meal-' + mm.key + '" inputmode="decimal" min="0" step="' +
+        (mm.key === 'calories' ? '10' : '1') + '" value="' + val + '"></div>';
+    }).join('');
+    return '<div class="slot-row" id="meal-slots">' + slots + '</div>' +
+      '<div class="field"><label for="meal-name">Name <span class="muted small">(optional)</span></label>' +
+      '<input type="text" id="meal-name" maxlength="80" value="' + escapeHtml(m.name || '') +
+      '" placeholder="e.g. Oatmeal + shake"></div>' +
+      '<div class="grid-2">' + macros + '</div>';
+  }
+  function collectMealFields() {
+    var out = {};
+    var slot = $('#meal-slots [aria-pressed="true"]');
+    if (slot) out.slot = slot.dataset.slot;
+    var name = $('#meal-name').value.trim(); if (name) out.name = name;
+    L.MEAL_MACROS.forEach(function (mm) {
+      var raw = $('#meal-' + mm.key).value;
+      if (raw === '') return;
+      var n = Number(raw);
+      if (isFiniteNum(n)) out[mm.key] = mm.key === 'calories' ? Math.round(n) : round1(n);
+    });
+    return out;
+  }
+  // Single-select slot picker, shared by the sheet and the ledger editor.
+  function maybeHandleSlotClick(e) {
+    var slot = e.target.closest('.slot-btn');
+    if (!slot) return false;
+    $$('.slot-btn', slot.parentNode).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    slot.setAttribute('aria-pressed', 'true');
+    return true;
+  }
+  function fmtMacro(v, mm) { return (mm.key === 'calories' ? Math.round(v) : round1(v)) + ' ' + mm.unit; }
+  function mealSlotLabel(key) {
+    var s = L.MEAL_SLOTS.filter(function (x) { return x.key === key; })[0];
+    return s ? s.label : 'Meal';
+  }
+
   function sheetHtml(type) {
     switch (type) {
       case 'water': {
@@ -711,6 +790,8 @@
           '<input type="number" id="sh-water" inputmode="decimal" min="0" step="0.1"></div>' +
           sheetFooter({ saveLabel: 'Add water' });
       }
+      case 'meal':
+        return '<h3>🍽️ Meal</h3>' + mealFieldsHtml({}) + sheetFooter({ saveLabel: 'Save meal' });
       case 'steps':
         return '<h3>👟 Steps</h3>' +
           '<p class="muted small">Adds to the day — a morning and an evening walk can be logged separately.</p>' +
@@ -780,8 +861,10 @@
     openSheet(chip.dataset.chip);
   });
 
-  // Delegated handling inside the active sheet: presets, Y/N toggles, save/cancel.
+  // Delegated handling inside the active sheet: slot picker, presets, Y/N, save/cancel.
   $('#log-sheet').addEventListener('click', function (e) {
+    if (maybeHandleSlotClick(e)) return;
+
     var preset = e.target.closest('.preset');
     if (preset) { addWaterPreset(Number(preset.dataset.add)); return; }
 
@@ -851,6 +934,12 @@
         var sv = $('#sh-steps').value;
         if (sv === '') { showSheetErrors({ value: 'Enter a step count.' }); return; }
         entries.push({ date: date, type: 'steps', value: Number(sv) });
+        break;
+      }
+      case 'meal': {
+        var meal = collectMealFields();
+        meal.date = date; meal.type = 'meal';
+        entries.push(meal); // validateEntry (in commitEntries) enforces slot + a macro
         break;
       }
       case 'weight': {
@@ -938,6 +1027,22 @@
         .map(function (s) { return s.label + ' ' + fmtCirc(day.circumferences[s.key], cu) + ' ' + L.circumferenceUnitLabel(cu); });
       if (cbits.length) row('📏 Measurements', escapeHtml(cbits.join(' · ')));
     }
+    // Nutrition totals vs target, then each logged meal.
+    if (day.nutrition) {
+      L.MEAL_MACROS.forEach(function (mm) {
+        var v = day.nutrition[mm.key];
+        if (!isFiniteNum(v)) return;
+        var target = profile[mm.target];
+        var txt = fmtMacro(v, mm);
+        if (isFiniteNum(target)) txt += ' <span class="muted">/ ' + fmtMacro(target, mm) + '</span>';
+        row(mm.label, txt);
+      });
+    }
+    entries.filter(function (e) { return e.type === 'meal'; }).forEach(function (e) {
+      var nm = e.name || mealSlotLabel(e.slot);
+      var cal = isFiniteNum(e.calories) ? ' — ' + Math.round(e.calories) + ' kcal' : '';
+      row('🍽️ ' + escapeHtml(mealSlotLabel(e.slot)), escapeHtml(nm) + cal);
+    });
 
     host.innerHTML =
       '<dl class="detail-list">' + rows.join('') + '</dl>' +
@@ -998,8 +1103,12 @@
     $('#s-weight-unit').value = p.weightUnit === 'kg' ? 'kg' : 'lb';
     $('#s-circ-unit').value = p.circumferenceUnit === 'cm' ? 'cm' : 'in';
     $('#s-time-format').value = p.timeFormat === '12' ? '12' : '24';
-    $('#s-protein').value = valOr(p.proteinTarget);
     $('#s-phase').value = String(p.roadmapPhase || 1);
+    $('#s-calories').value = valOr(p.calorieTarget);
+    $('#s-protein').value = valOr(p.proteinTarget);
+    $('#s-carbs').value = valOr(p.carbTarget);
+    $('#s-fat').value = valOr(p.fatTarget);
+    $('#s-fiber').value = valOr(p.fiberTarget);
     $('#settings-saved').hidden = true;
   }
 
@@ -1036,7 +1145,11 @@
       var liters = L.waterFromDisplay(Number(wt), wunit);
       if (isFiniteNum(liters)) p.waterTarget = round2(liters);
     }
+    setNum(p, 'calorieTarget', $('#s-calories').value);
     setNum(p, 'proteinTarget', $('#s-protein').value);
+    setNum(p, 'carbTarget', $('#s-carbs').value);
+    setNum(p, 'fatTarget', $('#s-fat').value);
+    setNum(p, 'fiberTarget', $('#s-fiber').value);
     S.saveProfile(p);
     flash($('#settings-saved'));
     renderDashboard();

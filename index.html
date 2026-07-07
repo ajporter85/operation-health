@@ -68,6 +68,7 @@
 
     <div class="chip-grid" id="chip-grid">
       <button type="button" class="chip" data-chip="water" aria-pressed="false">💧 Water</button>
+      <button type="button" class="chip" data-chip="meal" aria-pressed="false">🍽️ Meal</button>
       <button type="button" class="chip" data-chip="steps" aria-pressed="false">👟 Steps</button>
       <button type="button" class="chip" data-chip="weight" aria-pressed="false">⚖️ Weight</button>
       <button type="button" class="chip" data-chip="measurement" aria-pressed="false">📏 Measurements</button>
@@ -135,10 +136,6 @@
           <input type="number" id="s-water" name="waterTarget" inputmode="decimal" min="0" step="0.1">
         </div>
         <div class="field">
-          <label for="s-protein">Protein target (g) <span class="muted small">(display only)</span></label>
-          <input type="number" id="s-protein" name="proteinTarget" inputmode="numeric" min="0" step="5">
-        </div>
-        <div class="field">
           <label for="s-phase">Roadmap phase</label>
           <select id="s-phase" name="roadmapPhase">
             <option value="1">1 — Become a walker</option>
@@ -179,6 +176,32 @@
             <option value="24">24-hour (14:30)</option>
             <option value="12">12-hour (2:30 PM)</option>
           </select>
+        </div>
+      </div>
+
+      <h2 class="section-title">Nutrition targets</h2>
+      <p class="muted small">Starting numbers from your plan — adjust freely (pending your
+        doctor/dietitian check). Carbs ≈ whatever calories remain.</p>
+      <div class="grid-2">
+        <div class="field">
+          <label for="s-calories">Calories (kcal)</label>
+          <input type="number" id="s-calories" name="calorieTarget" inputmode="numeric" min="0" step="50">
+        </div>
+        <div class="field">
+          <label for="s-protein">Protein (g)</label>
+          <input type="number" id="s-protein" name="proteinTarget" inputmode="numeric" min="0" step="5">
+        </div>
+        <div class="field">
+          <label for="s-carbs">Carbs (g)</label>
+          <input type="number" id="s-carbs" name="carbTarget" inputmode="numeric" min="0" step="5">
+        </div>
+        <div class="field">
+          <label for="s-fat">Fat (g)</label>
+          <input type="number" id="s-fat" name="fatTarget" inputmode="numeric" min="0" step="5">
+        </div>
+        <div class="field">
+          <label for="s-fiber">Fiber (g)</label>
+          <input type="number" id="s-fiber" name="fiberTarget" inputmode="numeric" min="0" step="1">
         </div>
       </div>
 

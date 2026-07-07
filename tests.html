@@ -384,6 +384,32 @@
   ok('validateEntry: wake HH:MM valid', L.validateEntry({ date: AS, type: 'wake', value: '06:30' }).valid);
   ok('validateEntry: wake bad value invalid', !L.validateEntry({ date: AS, type: 'wake', value: '6am' }).valid);
 
+  // ------------------------------ meals ---------------------------------
+  ok('validateEntry: valid meal', L.validateEntry({ date: AS, type: 'meal', slot: 'B', calories: 500, protein: 30 }).valid);
+  ok('validateEntry: meal needs a slot', !L.validateEntry({ date: AS, type: 'meal', calories: 500 }).valid);
+  ok('validateEntry: meal bad slot invalid', !L.validateEntry({ date: AS, type: 'meal', slot: 'Z', calories: 500 }).valid);
+  ok('validateEntry: meal needs at least one macro', !L.validateEntry({ date: AS, type: 'meal', slot: 'L' }).valid);
+  ok('validateEntry: meal out-of-range macro invalid', !L.validateEntry({ date: AS, type: 'meal', slot: 'L', calories: 99999 }).valid);
+  ok('validateEntry: meal name is optional', L.validateEntry({ date: AS, type: 'meal', slot: 'S', fiber: 6 }).valid);
+
+  var mealDay = L.projectDay([
+    { date: AS, type: 'meal', slot: 'B', calories: 500, protein: 35, carbs: 40, fat: 15, fiber: 8, time: '08:00' },
+    { date: AS, type: 'meal', slot: 'L', calories: 700, protein: 45, carbs: 60, fat: 20, fiber: 10, time: '13:00' },
+    { date: AS, type: 'water', value: 1 }
+  ]);
+  eq('projectDay: meals sum calories', mealDay.nutrition.calories, 1200);
+  eq('projectDay: meals sum protein', mealDay.nutrition.protein, 80);
+  eq('projectDay: meals sum fiber', mealDay.nutrition.fiber, 18);
+  eq('projectDay: nutrition coexists with other entries (water)', mealDay.waterLiters, 1);
+  ok('projectDay: no meals → no nutrition',
+     L.projectDay([{ date: AS, type: 'water', value: 1 }]).nutrition === undefined);
+  eq('projectDay: partial-macro meal sums only what is present',
+     L.projectDay([{ date: AS, type: 'meal', slot: 'S', fiber: 5 }]).nutrition.fiber, 5);
+  ok('projectDay: partial-macro meal leaves others unset',
+     L.projectDay([{ date: AS, type: 'meal', slot: 'S', fiber: 5 }]).nutrition.calories === undefined);
+  eq('MEAL_SLOTS has 4 slots', L.MEAL_SLOTS.length, 4);
+  eq('MEAL_MACROS has 5 macros', L.MEAL_MACROS.length, 5);
+
   // ------------------------------ projectDay ----------------------------
   eq('projectDay: empty → date null', L.projectDay([]).date, null);
   eq('projectDay: additive water sums',

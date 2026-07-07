@@ -556,6 +556,23 @@ input:focus, select:focus, textarea:focus {
 .led-edit input, .led-edit select { width: auto; }
 .led-edit input[type="text"] { min-width: 11rem; }
 .led-edit-actions { display: inline-flex; gap: 6px; align-items: center; }
+.led-meal-edit { flex: 1 1 100%; }
+
+/* ---- Meal slot picker (single-select), shared by sheet + ledger editor ---- */
+.slot-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.slot-btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit; font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.slot-btn:hover { border-color: var(--brand); }
+.slot-btn[aria-pressed="true"] {
+  background: var(--brand); color: var(--bg); border-color: var(--brand);
+}
 
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
 .trends-head {

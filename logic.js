@@ -26,6 +26,22 @@
     { key: 'neck',  label: 'Neck' }
   ];
 
+  // Meal slots and the macro fields a meal carries (§5/§6). One source of truth:
+  // storage targets, the meal form, projection, and the ledger all read these.
+  var MEAL_SLOTS = [
+    { key: 'B', label: 'Breakfast' },
+    { key: 'L', label: 'Lunch' },
+    { key: 'D', label: 'Dinner' },
+    { key: 'S', label: 'Snack' }
+  ];
+  var MEAL_MACROS = [
+    { key: 'calories', label: 'Calories', unit: 'kcal', max: 10000, target: 'calorieTarget' },
+    { key: 'protein',  label: 'Protein',  unit: 'g',    max: 2000,  target: 'proteinTarget' },
+    { key: 'carbs',    label: 'Carbs',    unit: 'g',    max: 2000,  target: 'carbTarget' },
+    { key: 'fat',      label: 'Fat',      unit: 'g',    max: 2000,  target: 'fatTarget' },
+    { key: 'fiber',    label: 'Fiber',    unit: 'g',    max: 500,   target: 'fiberTarget' }
+  ];
+
   // ---- Log entries (the incremental-logging model) ----
   // A day is no longer one big record; it's a stream of small timestamped
   // LogEntry records that a pure projection (projectDay) rolls up into the same
@@ -48,7 +64,11 @@
     bed:           { semantic: 'snapshot',      field: 'bedTime' },
     sleepHours:    { semantic: 'snapshot',      field: 'sleepHours' },
     sleepQuality:  { semantic: 'snapshot',      field: 'sleepQuality' },
-    energy:        { semantic: 'snapshot',      field: 'morningEnergy' }
+    energy:        { semantic: 'snapshot',      field: 'morningEnergy' },
+    // A meal carries its macros directly (calories/protein/carbs/fat/fiber) plus
+    // a slot and name; it's additive-like (many per day) but its macros roll up
+    // into day.nutrition rather than a single scalar field.
+    meal:          { semantic: 'meal',          field: 'nutrition' }
   };
 
   // ---- Date helpers (timezone-safe via UTC arithmetic on YYYY-MM-DD) ----
@@ -890,6 +910,20 @@
       case 'energy':
         if (!inRange(Number(v), 1, 5)) errors.value = 'Morning energy must be 1–5.';
         break;
+      case 'meal': {
+        if (!entry.slot || !MEAL_SLOTS.some(function (s) { return s.key === entry.slot; })) {
+          errors.slot = 'Pick a meal slot.';
+        }
+        var provided = 0;
+        MEAL_MACROS.forEach(function (mm) {
+          var mv = entry[mm.key];
+          if (mv == null || mv === '') return;
+          provided++;
+          if (!inRange(Number(mv), 0, mm.max)) errors[mm.key] = mm.label + ' looks out of range.';
+        });
+        if (provided === 0) errors.macros = 'Enter at least one macro (calories, protein, …).';
+        break;
+      }
     }
 
     return { valid: Object.keys(errors).length === 0, errors: errors };
@@ -920,6 +954,13 @@
         if (isNum(e.value)) day[t.field] = (isNum(day[t.field]) ? day[t.field] : 0) + e.value;
       } else if (t.semantic === 'circumference') {
         if (e.site && isNum(e.value)) circ[e.site] = e.value;
+      } else if (t.semantic === 'meal') {
+        // Sum each present macro across the day's meals into day.nutrition.
+        MEAL_MACROS.forEach(function (mm) {
+          if (!isNum(e[mm.key])) return;
+          if (!day.nutrition) day.nutrition = {};
+          day.nutrition[mm.key] = (isNum(day.nutrition[mm.key]) ? day.nutrition[mm.key] : 0) + e[mm.key];
+        });
       } else { // snapshot | binary — latest wins via the ascending sort
         day[t.field] = e.value;
       }
@@ -1043,6 +1084,8 @@
     splitWeightToMeasurements: splitWeightToMeasurements,
     // incremental logging (event model + projection)
     ENTRY_TYPES: ENTRY_TYPES,
+    MEAL_SLOTS: MEAL_SLOTS,
+    MEAL_MACROS: MEAL_MACROS,
     validateEntry: validateEntry,
     projectDay: projectDay,
     projectAll: projectAll,

@@ -35,8 +35,14 @@
     bedGoal: '22:30',
     stepsTarget: 8000,
     waterTarget: 3.5,   // litres (canonical; display unit is a preference)
-    proteinTarget: 170, // grams (display-only in Phase 1)
     roadmapPhase: 1,
+    // Nutrition targets (reqs §5 starting numbers) — CONFIGURABLE, never hard-coded
+    // anywhere else. Pending a doctor/dietitian check. Carbs ≈ remaining calories.
+    calorieTarget: 2400,
+    proteinTarget: 170, // grams
+    carbTarget: 260,
+    fatTarget: 75,
+    fiberTarget: 30,
     // Display-unit preferences (§9.3 Slice 4). Canonical storage is unchanged
     // (water = L, weight = lb); these only affect display/entry. Defaulted on
     // read for older profiles, so no schema bump is needed.
@@ -145,16 +151,18 @@
     var all = readJSON(KEY_ENTRIES, []);
     if (!Array.isArray(all)) all = [];
 
+    // additive and meal entries accrue (many per day); snapshot/binary/circumference
+    // are one-per-day (per site) and replace the prior on save.
     var t = L.ENTRY_TYPES[rec.type];
-    if (t && t.semantic !== 'additive') {
-      // Enforce one-per-day (per site for circumference) by dropping the prior.
+    var appendLike = t && (t.semantic === 'additive' || t.semantic === 'meal');
+    if (t && !appendLike) {
       all = all.filter(function (e) {
         if (e.date !== rec.date || e.type !== rec.type) return true;
         if (t.semantic === 'circumference') return e.site !== rec.site;
         return false;
       });
     } else if (entry.id) {
-      // Editing an existing additive entry: replace it rather than duplicate.
+      // Editing an existing append-like entry: replace it rather than duplicate.
       all = all.filter(function (e) { return e.id !== entry.id; });
     }
 

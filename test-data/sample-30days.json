@@ -1,2716 +1,4068 @@
 {
   "app": "operation-health",
   "schemaVersion": 4,
-  "exportedAt": "2026-07-07T00:31:37.325Z",
+  "exportedAt": "2026-07-07T01:13:28.120Z",
   "profile": {
     "wakeGoal": "06:30",
     "bedGoal": "22:30",
     "stepsTarget": 8000,
     "waterTarget": 3.5,
+    "calorieTarget": 2400,
     "proteinTarget": 170,
+    "carbTarget": 260,
+    "fatTarget": 75,
+    "fiberTarget": 30,
     "roadmapPhase": 1,
     "waterUnit": "L",
     "weightUnit": "lb",
     "circumferenceUnit": "in",
+    "timeFormat": "24",
     "schemaVersion": 4
   },
   "entries": [
     {
-      "id": "elflt1yqy",
+      "id": "elflt9ay0",
       "date": "2026-06-06",
       "type": "protein",
+      "schemaVersion": 4,
       "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:15"
-    },
-    {
-      "id": "elfluhxl9",
-      "date": "2026-06-06",
-      "type": "wake",
-      "value": "06:46",
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elflvdg02",
-      "date": "2026-06-06",
-      "type": "bed",
-      "value": "22:54",
-      "schemaVersion": 4,
-      "time": "06:47"
-    },
-    {
-      "id": "elflwbj1b",
-      "date": "2026-06-06",
-      "type": "sleepHours",
-      "value": 8,
-      "schemaVersion": 4,
-      "time": "06:45"
-    },
-    {
-      "id": "elflx890j",
-      "date": "2026-06-06",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:50"
-    },
-    {
-      "id": "elflyd4jq",
-      "date": "2026-06-06",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elflzmyva",
-      "date": "2026-06-06",
-      "type": "steps",
-      "value": 5300,
-      "schemaVersion": 4,
-      "time": "07:22"
-    },
-    {
-      "id": "elfm0tw6z",
-      "date": "2026-06-06",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "08:42"
-    },
-    {
-      "id": "elfm13zsp",
-      "date": "2026-06-06",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "14:54"
-    },
-    {
-      "id": "elfm2vkvg",
-      "date": "2026-06-06",
-      "type": "water",
-      "value": 0.61,
-      "schemaVersion": 4,
-      "time": "16:06"
-    },
-    {
-      "id": "elfm36n8r",
-      "date": "2026-06-07",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:52"
-    },
-    {
-      "id": "elfm4x5hb",
-      "date": "2026-06-07",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:55"
-    },
-    {
-      "id": "elfm58rlk",
-      "date": "2026-06-07",
-      "type": "wake",
-      "value": "06:17",
-      "schemaVersion": 4,
-      "time": "06:32"
-    },
-    {
-      "id": "elfm67f2e",
-      "date": "2026-06-07",
-      "type": "sleepHours",
-      "value": 6.4,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfm7xa39",
-      "date": "2026-06-07",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:41"
-    },
-    {
-      "id": "elfm8jf1u",
-      "date": "2026-06-07",
-      "type": "steps",
-      "value": 5400,
-      "schemaVersion": 4,
-      "time": "07:26"
-    },
-    {
-      "id": "elfm9y18t",
-      "date": "2026-06-07",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "10:27"
-    },
-    {
-      "id": "elfmablt6",
-      "date": "2026-06-07",
-      "type": "water",
-      "value": 0.43,
-      "schemaVersion": 4,
-      "time": "12:34"
-    },
-    {
-      "id": "elfmbb3ct",
-      "date": "2026-06-07",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "14:39"
-    },
-    {
-      "id": "elfmc887a",
-      "date": "2026-06-07",
-      "type": "water",
-      "value": 0.41,
-      "schemaVersion": 4,
-      "time": "16:39"
-    },
-    {
-      "id": "elfmduroc",
-      "date": "2026-06-07",
-      "type": "circumference",
-      "value": 35.5,
-      "schemaVersion": 4,
-      "time": "06:40",
-      "site": "waist"
-    },
-    {
-      "id": "elfmeqbks",
-      "date": "2026-06-07",
-      "type": "circumference",
-      "value": 14.4,
-      "schemaVersion": 4,
-      "time": "06:42",
-      "site": "arm"
-    },
-    {
-      "id": "elfmffae9",
-      "date": "2026-06-08",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfmgrur2",
-      "date": "2026-06-08",
-      "type": "exercise",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfmh0edx",
-      "date": "2026-06-08",
-      "type": "wake",
-      "value": "06:39",
-      "schemaVersion": 4,
-      "time": "06:51"
-    },
-    {
-      "id": "elfmit05y",
-      "date": "2026-06-08",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:50"
-    },
-    {
-      "id": "elfmjjebb",
-      "date": "2026-06-08",
-      "type": "steps",
-      "value": 5800,
-      "schemaVersion": 4,
-      "time": "07:29"
-    },
-    {
-      "id": "elfmkfkuc",
-      "date": "2026-06-08",
-      "type": "steps",
-      "value": 2200,
-      "schemaVersion": 4,
-      "time": "18:51"
-    },
-    {
-      "id": "elfmlut1x",
-      "date": "2026-06-08",
-      "type": "water",
-      "value": 0.69,
-      "schemaVersion": 4,
-      "time": "08:22"
-    },
-    {
-      "id": "elfmmlyab",
-      "date": "2026-06-08",
-      "type": "water",
-      "value": 0.37,
-      "schemaVersion": 4,
-      "time": "10:52"
-    },
-    {
-      "id": "elfmnimlo",
-      "date": "2026-06-08",
-      "type": "water",
-      "value": 0.69,
-      "schemaVersion": 4,
-      "time": "16:34"
-    },
-    {
-      "id": "elfmog5va",
-      "date": "2026-06-08",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "19:33"
-    },
-    {
-      "id": "elfmpc183",
-      "date": "2026-06-08",
-      "type": "weight",
-      "value": 198.3,
-      "schemaVersion": 4,
-      "time": "06:41"
-    },
-    {
-      "id": "elfmqmlvj",
-      "date": "2026-06-09",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elfmrme1q",
-      "date": "2026-06-09",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:27"
-    },
-    {
-      "id": "elfms7umu",
-      "date": "2026-06-09",
-      "type": "wake",
-      "value": "06:26",
-      "schemaVersion": 4,
-      "time": "06:42"
-    },
-    {
-      "id": "elfmtgn4v",
-      "date": "2026-06-09",
-      "type": "bed",
-      "value": "22:45",
-      "schemaVersion": 4,
-      "time": "06:43"
-    },
-    {
-      "id": "elfmu3f2d",
-      "date": "2026-06-09",
-      "type": "sleepHours",
-      "value": 7.9,
-      "schemaVersion": 4,
-      "time": "06:40"
-    },
-    {
-      "id": "elfmvxnnj",
-      "date": "2026-06-09",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfmw8vzu",
-      "date": "2026-06-09",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfmx87ef",
-      "date": "2026-06-09",
-      "type": "steps",
-      "value": 5100,
-      "schemaVersion": 4,
-      "time": "07:37"
-    },
-    {
-      "id": "elfmytdr1",
-      "date": "2026-06-09",
-      "type": "steps",
-      "value": 2300,
-      "schemaVersion": 4,
-      "time": "18:35"
-    },
-    {
-      "id": "elfmzpsvu",
-      "date": "2026-06-09",
-      "type": "water",
-      "value": 0.63,
-      "schemaVersion": 4,
-      "time": "08:26"
-    },
-    {
-      "id": "elfn0dzxt",
-      "date": "2026-06-09",
-      "type": "water",
-      "value": 0.68,
-      "schemaVersion": 4,
-      "time": "12:22"
-    },
-    {
-      "id": "elfn1bce8",
-      "date": "2026-06-09",
-      "type": "water",
-      "value": 0.54,
-      "schemaVersion": 4,
-      "time": "14:18"
-    },
-    {
-      "id": "elfn2si01",
-      "date": "2026-06-09",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "19:18"
-    },
-    {
-      "id": "elfn3q23z",
-      "date": "2026-06-10",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:35"
-    },
-    {
-      "id": "elfn4lhvq",
-      "date": "2026-06-10",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
       "time": "06:23"
     },
     {
-      "id": "elfn5ikqw",
-      "date": "2026-06-10",
-      "type": "wake",
-      "value": "06:35",
-      "schemaVersion": 4,
-      "time": "06:44"
-    },
-    {
-      "id": "elfn6176u",
-      "date": "2026-06-10",
-      "type": "sleepHours",
-      "value": 7.6,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfn7f6yz",
-      "date": "2026-06-10",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:46"
-    },
-    {
-      "id": "elfn8279y",
-      "date": "2026-06-10",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:50"
-    },
-    {
-      "id": "elfn95ulx",
-      "date": "2026-06-10",
-      "type": "steps",
-      "value": 5700,
-      "schemaVersion": 4,
-      "time": "07:03"
-    },
-    {
-      "id": "elfnaa3wx",
-      "date": "2026-06-10",
-      "type": "steps",
-      "value": 2200,
-      "schemaVersion": 4,
-      "time": "18:14"
-    },
-    {
-      "id": "elfnbzmfe",
-      "date": "2026-06-10",
-      "type": "water",
-      "value": 0.46,
-      "schemaVersion": 4,
-      "time": "08:11"
-    },
-    {
-      "id": "elfncknc8",
-      "date": "2026-06-10",
-      "type": "water",
-      "value": 0.46,
-      "schemaVersion": 4,
-      "time": "10:09"
-    },
-    {
-      "id": "elfndewof",
-      "date": "2026-06-10",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "14:58"
-    },
-    {
-      "id": "elfnerwhr",
-      "date": "2026-06-10",
-      "type": "water",
-      "value": 0.37,
-      "schemaVersion": 4,
-      "time": "19:56"
-    },
-    {
-      "id": "elfnfm7t2",
-      "date": "2026-06-13",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:21"
-    },
-    {
-      "id": "elfngcp4a",
-      "date": "2026-06-13",
-      "type": "wake",
-      "value": "06:44",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfnhux87",
-      "date": "2026-06-13",
-      "type": "bed",
-      "value": "22:05",
-      "schemaVersion": 4,
-      "time": "06:46"
-    },
-    {
-      "id": "elfnil89k",
-      "date": "2026-06-13",
-      "type": "sleepHours",
-      "value": 7,
-      "schemaVersion": 4,
-      "time": "06:32"
-    },
-    {
-      "id": "elfnjjc39",
-      "date": "2026-06-13",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfnklgsa",
-      "date": "2026-06-13",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:45"
-    },
-    {
-      "id": "elfnlpjl0",
-      "date": "2026-06-13",
-      "type": "steps",
-      "value": 5200,
-      "schemaVersion": 4,
-      "time": "07:43"
-    },
-    {
-      "id": "elfnmhqag",
-      "date": "2026-06-13",
-      "type": "steps",
-      "value": 1900,
-      "schemaVersion": 4,
-      "time": "18:34"
-    },
-    {
-      "id": "elfnnsevy",
-      "date": "2026-06-13",
-      "type": "water",
-      "value": 0.58,
-      "schemaVersion": 4,
-      "time": "10:24"
-    },
-    {
-      "id": "elfno7pue",
-      "date": "2026-06-13",
-      "type": "water",
-      "value": 0.47,
-      "schemaVersion": 4,
-      "time": "12:34"
-    },
-    {
-      "id": "elfnphftv",
-      "date": "2026-06-13",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "14:37"
-    },
-    {
-      "id": "elfnqhis3",
-      "date": "2026-06-13",
-      "type": "water",
-      "value": 0.56,
-      "schemaVersion": 4,
-      "time": "16:29"
-    },
-    {
-      "id": "elfnryayv",
-      "date": "2026-06-13",
-      "type": "water",
-      "value": 0.51,
-      "schemaVersion": 4,
-      "time": "19:39"
-    },
-    {
-      "id": "elfnscjxi",
-      "date": "2026-06-14",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:22"
-    },
-    {
-      "id": "elfntcshd",
-      "date": "2026-06-14",
+      "id": "elfluo1jm",
+      "date": "2026-06-06",
       "type": "exercise",
+      "schemaVersion": 4,
       "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elfnu26fh",
-      "date": "2026-06-14",
-      "type": "wake",
-      "value": "06:40",
-      "schemaVersion": 4,
-      "time": "06:34"
-    },
-    {
-      "id": "elfnvfzmf",
-      "date": "2026-06-14",
-      "type": "bed",
-      "value": "22:46",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfnw3hoo",
-      "date": "2026-06-14",
-      "type": "sleepHours",
-      "value": 8,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfnxosc1",
-      "date": "2026-06-14",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:53"
-    },
-    {
-      "id": "elfnyiwv3",
-      "date": "2026-06-14",
-      "type": "steps",
-      "value": 4500,
-      "schemaVersion": 4,
-      "time": "07:42"
-    },
-    {
-      "id": "elfnzwaip",
-      "date": "2026-06-14",
-      "type": "water",
-      "value": 0.53,
-      "schemaVersion": 4,
-      "time": "10:29"
-    },
-    {
-      "id": "elfo0spjp",
-      "date": "2026-06-14",
-      "type": "water",
-      "value": 0.54,
-      "schemaVersion": 4,
-      "time": "12:43"
-    },
-    {
-      "id": "elfo1n7ts",
-      "date": "2026-06-14",
-      "type": "water",
-      "value": 0.37,
-      "schemaVersion": 4,
-      "time": "14:39"
-    },
-    {
-      "id": "elfo2aidy",
-      "date": "2026-06-14",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "19:10"
-    },
-    {
-      "id": "elfo3hsb0",
-      "date": "2026-06-14",
-      "type": "weight",
-      "value": 197.1,
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfo4wcx7",
-      "date": "2026-06-14",
-      "type": "circumference",
-      "value": 35.3,
-      "schemaVersion": 4,
-      "time": "06:40",
-      "site": "waist"
-    },
-    {
-      "id": "elfo53lms",
-      "date": "2026-06-14",
-      "type": "circumference",
-      "value": 42.2,
-      "schemaVersion": 4,
-      "time": "06:41",
-      "site": "chest"
-    },
-    {
-      "id": "elfo63lq8",
-      "date": "2026-06-15",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:41"
-    },
-    {
-      "id": "elfo70ddk",
-      "date": "2026-06-15",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:26"
-    },
-    {
-      "id": "elfo8qxvj",
-      "date": "2026-06-15",
-      "type": "wake",
-      "value": "06:40",
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elfo957u1",
-      "date": "2026-06-15",
-      "type": "sleepHours",
-      "value": 8,
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfoadcw7",
-      "date": "2026-06-15",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
       "time": "06:42"
     },
     {
-      "id": "elfobvt7w",
-      "date": "2026-06-15",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:43"
-    },
-    {
-      "id": "elfoct6c6",
-      "date": "2026-06-15",
-      "type": "steps",
-      "value": 5200,
-      "schemaVersion": 4,
-      "time": "07:02"
-    },
-    {
-      "id": "elfoddeop",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "08:42"
-    },
-    {
-      "id": "elfoeswlv",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "10:29"
-    },
-    {
-      "id": "elfofe3w8",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.38,
-      "schemaVersion": 4,
-      "time": "12:49"
-    },
-    {
-      "id": "elfognqj0",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "14:53"
-    },
-    {
-      "id": "elfohobjv",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "16:46"
-    },
-    {
-      "id": "elfoixy8b",
-      "date": "2026-06-15",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "19:54"
-    },
-    {
-      "id": "elfoju5pc",
-      "date": "2026-06-16",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:20"
-    },
-    {
-      "id": "elfokfhkr",
-      "date": "2026-06-16",
+      "id": "elflvfe17",
+      "date": "2026-06-06",
       "type": "wake",
-      "value": "06:43",
       "schemaVersion": 4,
-      "time": "06:55"
+      "value": "06:48",
+      "time": "06:42"
     },
     {
-      "id": "elfol5lgz",
-      "date": "2026-06-16",
-      "type": "sleepHours",
-      "value": 7.6,
-      "schemaVersion": 4,
-      "time": "06:51"
-    },
-    {
-      "id": "elfompobx",
-      "date": "2026-06-16",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfonsfbn",
-      "date": "2026-06-16",
-      "type": "steps",
-      "value": 4700,
-      "schemaVersion": 4,
-      "time": "07:32"
-    },
-    {
-      "id": "elfooul2i",
-      "date": "2026-06-16",
-      "type": "steps",
-      "value": 2400,
-      "schemaVersion": 4,
-      "time": "18:02"
-    },
-    {
-      "id": "elfopos5n",
-      "date": "2026-06-16",
-      "type": "water",
-      "value": 0.53,
-      "schemaVersion": 4,
-      "time": "08:09"
-    },
-    {
-      "id": "elfoqe0ly",
-      "date": "2026-06-16",
-      "type": "water",
-      "value": 0.43,
-      "schemaVersion": 4,
-      "time": "10:38"
-    },
-    {
-      "id": "elforfn6m",
-      "date": "2026-06-16",
-      "type": "water",
-      "value": 0.57,
-      "schemaVersion": 4,
-      "time": "19:40"
-    },
-    {
-      "id": "elfos3ko1",
-      "date": "2026-06-17",
-      "type": "protein",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:28"
-    },
-    {
-      "id": "elfot7jk6",
-      "date": "2026-06-17",
-      "type": "exercise",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfouhax4",
-      "date": "2026-06-17",
-      "type": "wake",
-      "value": "06:41",
-      "schemaVersion": 4,
-      "time": "06:32"
-    },
-    {
-      "id": "elfovngvx",
-      "date": "2026-06-17",
-      "type": "sleepHours",
-      "value": 6.3,
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfowhuxy",
-      "date": "2026-06-17",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfox8xkp",
-      "date": "2026-06-17",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elfoyfwml",
-      "date": "2026-06-17",
-      "type": "steps",
-      "value": 6000,
-      "schemaVersion": 4,
-      "time": "07:06"
-    },
-    {
-      "id": "elfozd8dl",
-      "date": "2026-06-17",
-      "type": "water",
-      "value": 0.56,
-      "schemaVersion": 4,
-      "time": "08:16"
-    },
-    {
-      "id": "elfp0iowt",
-      "date": "2026-06-17",
-      "type": "water",
-      "value": 0.66,
-      "schemaVersion": 4,
-      "time": "10:41"
-    },
-    {
-      "id": "elfp1h4zj",
-      "date": "2026-06-17",
-      "type": "water",
-      "value": 0.58,
-      "schemaVersion": 4,
-      "time": "12:51"
-    },
-    {
-      "id": "elfp23qb6",
-      "date": "2026-06-17",
-      "type": "water",
-      "value": 0.41,
-      "schemaVersion": 4,
-      "time": "16:15"
-    },
-    {
-      "id": "elfp31yyx",
-      "date": "2026-06-17",
-      "type": "water",
-      "value": 0.38,
-      "schemaVersion": 4,
-      "time": "19:49"
-    },
-    {
-      "id": "elfp4ciwj",
-      "date": "2026-06-17",
-      "type": "weight",
-      "value": 196.6,
-      "schemaVersion": 4,
-      "time": "06:46"
-    },
-    {
-      "id": "elfp5um3u",
-      "date": "2026-06-18",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:54"
-    },
-    {
-      "id": "elfp60kkk",
-      "date": "2026-06-18",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:53"
-    },
-    {
-      "id": "elfp7zo0h",
-      "date": "2026-06-18",
-      "type": "wake",
-      "value": "06:45",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfp8793v",
-      "date": "2026-06-18",
+      "id": "elflw939r",
+      "date": "2026-06-06",
       "type": "bed",
-      "value": "22:29",
       "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elfp9rfbt",
-      "date": "2026-06-18",
-      "type": "sleepHours",
-      "value": 6.5,
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elfpad2lm",
-      "date": "2026-06-18",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:47"
-    },
-    {
-      "id": "elfpbmaxm",
-      "date": "2026-06-18",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:47"
-    },
-    {
-      "id": "elfpc2bdn",
-      "date": "2026-06-18",
-      "type": "steps",
-      "value": 5200,
-      "schemaVersion": 4,
-      "time": "07:31"
-    },
-    {
-      "id": "elfpdtuea",
-      "date": "2026-06-18",
-      "type": "steps",
-      "value": 2400,
-      "schemaVersion": 4,
-      "time": "18:05"
-    },
-    {
-      "id": "elfpeesgq",
-      "date": "2026-06-18",
-      "type": "water",
-      "value": 0.46,
-      "schemaVersion": 4,
-      "time": "08:29"
-    },
-    {
-      "id": "elfpfkz3h",
-      "date": "2026-06-18",
-      "type": "water",
-      "value": 0.43,
-      "schemaVersion": 4,
-      "time": "10:07"
-    },
-    {
-      "id": "elfpg47uk",
-      "date": "2026-06-18",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "14:50"
-    },
-    {
-      "id": "elfphp1vl",
-      "date": "2026-06-18",
-      "type": "water",
-      "value": 0.68,
-      "schemaVersion": 4,
-      "time": "16:08"
-    },
-    {
-      "id": "elfpioina",
-      "date": "2026-06-19",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:37"
-    },
-    {
-      "id": "elfpjeue7",
-      "date": "2026-06-19",
-      "type": "wake",
-      "value": "06:30",
-      "schemaVersion": 4,
-      "time": "06:51"
-    },
-    {
-      "id": "elfpk1mwu",
-      "date": "2026-06-19",
-      "type": "sleepHours",
-      "value": 6.5,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfplyln2",
-      "date": "2026-06-19",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elfpm4wke",
-      "date": "2026-06-19",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfpnt3ix",
-      "date": "2026-06-19",
-      "type": "steps",
-      "value": 4600,
-      "schemaVersion": 4,
-      "time": "07:12"
-    },
-    {
-      "id": "elfpoebjj",
-      "date": "2026-06-19",
-      "type": "steps",
-      "value": 3300,
-      "schemaVersion": 4,
-      "time": "18:00"
-    },
-    {
-      "id": "elfpph4ai",
-      "date": "2026-06-19",
-      "type": "water",
-      "value": 0.58,
-      "schemaVersion": 4,
-      "time": "08:08"
-    },
-    {
-      "id": "elfpqvwgf",
-      "date": "2026-06-19",
-      "type": "water",
-      "value": 0.48,
-      "schemaVersion": 4,
-      "time": "10:48"
-    },
-    {
-      "id": "elfprsvt3",
-      "date": "2026-06-19",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "12:25"
-    },
-    {
-      "id": "elfpsur3t",
-      "date": "2026-06-19",
-      "type": "water",
-      "value": 0.42,
-      "schemaVersion": 4,
-      "time": "16:17"
-    },
-    {
-      "id": "elfptow9d",
-      "date": "2026-06-19",
-      "type": "water",
-      "value": 0.35,
-      "schemaVersion": 4,
-      "time": "19:46"
-    },
-    {
-      "id": "elfpu8afr",
-      "date": "2026-06-20",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfpvgbtj",
-      "date": "2026-06-20",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:54"
-    },
-    {
-      "id": "elfpw0p9e",
-      "date": "2026-06-20",
-      "type": "wake",
-      "value": "06:36",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfpxry7e",
-      "date": "2026-06-20",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:44"
-    },
-    {
-      "id": "elfpye6ri",
-      "date": "2026-06-20",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:50"
-    },
-    {
-      "id": "elfpzp8y1",
-      "date": "2026-06-20",
-      "type": "steps",
-      "value": 6100,
-      "schemaVersion": 4,
-      "time": "07:31"
-    },
-    {
-      "id": "elfq0lxqb",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.43,
-      "schemaVersion": 4,
-      "time": "08:46"
-    },
-    {
-      "id": "elfq1jb3p",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.55,
-      "schemaVersion": 4,
-      "time": "10:03"
-    },
-    {
-      "id": "elfq242ek",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.69,
-      "schemaVersion": 4,
-      "time": "12:36"
-    },
-    {
-      "id": "elfq3oclq",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.53,
-      "schemaVersion": 4,
-      "time": "14:00"
-    },
-    {
-      "id": "elfq4h06f",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.55,
-      "schemaVersion": 4,
-      "time": "16:51"
-    },
-    {
-      "id": "elfq5kh5b",
-      "date": "2026-06-20",
-      "type": "water",
-      "value": 0.48,
-      "schemaVersion": 4,
-      "time": "19:27"
-    },
-    {
-      "id": "elfq6nlq1",
-      "date": "2026-06-20",
-      "type": "weight",
-      "value": 195.7,
-      "schemaVersion": 4,
-      "time": "06:54"
-    },
-    {
-      "id": "elfq7ihrs",
-      "date": "2026-06-21",
-      "type": "protein",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:32"
-    },
-    {
-      "id": "elfq8iaj1",
-      "date": "2026-06-21",
-      "type": "exercise",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfq9qwyx",
-      "date": "2026-06-21",
-      "type": "wake",
-      "value": "06:27",
-      "schemaVersion": 4,
-      "time": "06:51"
-    },
-    {
-      "id": "elfqa549p",
-      "date": "2026-06-21",
-      "type": "sleepHours",
-      "value": 6.4,
-      "schemaVersion": 4,
-      "time": "06:57"
-    },
-    {
-      "id": "elfqbhipb",
-      "date": "2026-06-21",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:37"
-    },
-    {
-      "id": "elfqc4zy4",
-      "date": "2026-06-21",
-      "type": "steps",
-      "value": 5000,
-      "schemaVersion": 4,
-      "time": "07:23"
-    },
-    {
-      "id": "elfqdevvn",
-      "date": "2026-06-21",
-      "type": "water",
-      "value": 0.63,
-      "schemaVersion": 4,
-      "time": "08:44"
-    },
-    {
-      "id": "elfqejqnw",
-      "date": "2026-06-21",
-      "type": "water",
-      "value": 0.62,
-      "schemaVersion": 4,
-      "time": "10:31"
-    },
-    {
-      "id": "elfqftyhn",
-      "date": "2026-06-21",
-      "type": "water",
-      "value": 0.6,
-      "schemaVersion": 4,
-      "time": "14:57"
-    },
-    {
-      "id": "elfqgss6p",
-      "date": "2026-06-21",
-      "type": "water",
-      "value": 0.36,
-      "schemaVersion": 4,
-      "time": "19:02"
-    },
-    {
-      "id": "elfqh2omg",
-      "date": "2026-06-21",
-      "type": "circumference",
-      "value": 35.1,
-      "schemaVersion": 4,
-      "time": "06:40",
-      "site": "waist"
-    },
-    {
-      "id": "elfqifayp",
-      "date": "2026-06-21",
-      "type": "circumference",
-      "value": 14.1,
-      "schemaVersion": 4,
-      "time": "06:42",
-      "site": "arm"
-    },
-    {
-      "id": "elfqjbm3e",
-      "date": "2026-06-22",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:34"
-    },
-    {
-      "id": "elfqkphou",
-      "date": "2026-06-22",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfqlay3o",
-      "date": "2026-06-22",
-      "type": "wake",
-      "value": "06:47",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfqmopk1",
-      "date": "2026-06-22",
-      "type": "bed",
-      "value": "22:08",
-      "schemaVersion": 4,
-      "time": "06:53"
-    },
-    {
-      "id": "elfqnl7co",
-      "date": "2026-06-22",
-      "type": "sleepHours",
-      "value": 7.9,
-      "schemaVersion": 4,
-      "time": "06:41"
-    },
-    {
-      "id": "elfqoo5z6",
-      "date": "2026-06-22",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:44"
-    },
-    {
-      "id": "elfqppnax",
-      "date": "2026-06-22",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfqqq2xg",
-      "date": "2026-06-22",
-      "type": "steps",
-      "value": 5600,
-      "schemaVersion": 4,
-      "time": "07:28"
-    },
-    {
-      "id": "elfqr5iih",
-      "date": "2026-06-22",
-      "type": "water",
-      "value": 0.46,
-      "schemaVersion": 4,
-      "time": "08:34"
-    },
-    {
-      "id": "elfqsbhcu",
-      "date": "2026-06-22",
-      "type": "water",
-      "value": 0.57,
-      "schemaVersion": 4,
-      "time": "10:16"
-    },
-    {
-      "id": "elfqtz7ve",
-      "date": "2026-06-22",
-      "type": "water",
-      "value": 0.54,
-      "schemaVersion": 4,
-      "time": "12:33"
-    },
-    {
-      "id": "elfqukmqf",
-      "date": "2026-06-22",
-      "type": "water",
-      "value": 0.7,
-      "schemaVersion": 4,
-      "time": "14:42"
-    },
-    {
-      "id": "elfqve8mh",
-      "date": "2026-06-22",
-      "type": "water",
-      "value": 0.41,
-      "schemaVersion": 4,
-      "time": "19:42"
-    },
-    {
-      "id": "elfqwtp3m",
-      "date": "2026-06-23",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfqx6zs7",
-      "date": "2026-06-23",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:21"
-    },
-    {
-      "id": "elfqyllrp",
-      "date": "2026-06-23",
-      "type": "wake",
-      "value": "06:37",
-      "schemaVersion": 4,
-      "time": "06:58"
-    },
-    {
-      "id": "elfqzish9",
-      "date": "2026-06-23",
-      "type": "bed",
-      "value": "22:07",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfr0l9k6",
-      "date": "2026-06-23",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:34"
-    },
-    {
-      "id": "elfr128lm",
-      "date": "2026-06-23",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:31"
-    },
-    {
-      "id": "elfr207m8",
-      "date": "2026-06-23",
-      "type": "steps",
-      "value": 6200,
-      "schemaVersion": 4,
-      "time": "07:17"
-    },
-    {
-      "id": "elfr36v3s",
-      "date": "2026-06-23",
-      "type": "steps",
-      "value": 3100,
-      "schemaVersion": 4,
-      "time": "18:02"
-    },
-    {
-      "id": "elfr4xt5o",
-      "date": "2026-06-23",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "08:38"
-    },
-    {
-      "id": "elfr5ro12",
-      "date": "2026-06-23",
-      "type": "water",
-      "value": 0.56,
-      "schemaVersion": 4,
-      "time": "10:31"
-    },
-    {
-      "id": "elfr629qn",
-      "date": "2026-06-23",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "14:51"
-    },
-    {
-      "id": "elfr7rnjy",
-      "date": "2026-06-23",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "16:36"
-    },
-    {
-      "id": "elfr800uk",
-      "date": "2026-06-23",
-      "type": "water",
-      "value": 0.35,
-      "schemaVersion": 4,
-      "time": "19:51"
-    },
-    {
-      "id": "elfr9nh6p",
-      "date": "2026-06-23",
-      "type": "weight",
-      "value": 195.6,
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elfra5ob0",
-      "date": "2026-06-24",
-      "type": "protein",
-      "value": "N",
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfrbxfzt",
-      "date": "2026-06-24",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:20"
-    },
-    {
-      "id": "elfrcpxif",
-      "date": "2026-06-24",
-      "type": "wake",
-      "value": "06:47",
-      "schemaVersion": 4,
-      "time": "06:41"
-    },
-    {
-      "id": "elfrdafrn",
-      "date": "2026-06-24",
-      "type": "bed",
-      "value": "22:45",
-      "schemaVersion": 4,
-      "time": "06:39"
-    },
-    {
-      "id": "elfreid9t",
-      "date": "2026-06-24",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:44"
-    },
-    {
-      "id": "elfrf55vg",
-      "date": "2026-06-24",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfrgz10e",
-      "date": "2026-06-24",
-      "type": "steps",
-      "value": 6100,
-      "schemaVersion": 4,
-      "time": "07:39"
-    },
-    {
-      "id": "elfrhgy1c",
-      "date": "2026-06-24",
-      "type": "water",
-      "value": 0.46,
-      "schemaVersion": 4,
-      "time": "08:38"
-    },
-    {
-      "id": "elfri9rhf",
-      "date": "2026-06-24",
-      "type": "water",
-      "value": 0.55,
-      "schemaVersion": 4,
-      "time": "10:19"
-    },
-    {
-      "id": "elfrjwvsv",
-      "date": "2026-06-24",
-      "type": "water",
-      "value": 0.36,
-      "schemaVersion": 4,
-      "time": "12:22"
-    },
-    {
-      "id": "elfrkj247",
-      "date": "2026-06-24",
-      "type": "water",
-      "value": 0.49,
-      "schemaVersion": 4,
-      "time": "16:55"
-    },
-    {
-      "id": "elfrl212y",
-      "date": "2026-06-24",
-      "type": "water",
-      "value": 0.51,
-      "schemaVersion": 4,
-      "time": "19:02"
-    },
-    {
-      "id": "elfrmm4sw",
-      "date": "2026-06-25",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:45"
-    },
-    {
-      "id": "elfrnrr3r",
-      "date": "2026-06-25",
-      "type": "wake",
-      "value": "06:16",
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elfroctzn",
-      "date": "2026-06-25",
-      "type": "sleepHours",
-      "value": 6.3,
-      "schemaVersion": 4,
-      "time": "06:40"
-    },
-    {
-      "id": "elfrpzhjf",
-      "date": "2026-06-25",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfrqf47h",
-      "date": "2026-06-25",
-      "type": "steps",
-      "value": 5900,
-      "schemaVersion": 4,
-      "time": "07:39"
-    },
-    {
-      "id": "elfrrc39v",
-      "date": "2026-06-25",
-      "type": "water",
-      "value": 0.37,
-      "schemaVersion": 4,
-      "time": "10:22"
-    },
-    {
-      "id": "elfrsirls",
-      "date": "2026-06-25",
-      "type": "water",
-      "value": 0.57,
-      "schemaVersion": 4,
-      "time": "12:21"
-    },
-    {
-      "id": "elfrtjeh4",
-      "date": "2026-06-25",
-      "type": "water",
-      "value": 0.67,
-      "schemaVersion": 4,
-      "time": "19:28"
-    },
-    {
-      "id": "elfru1xi3",
-      "date": "2026-06-26",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfrvsh7i",
-      "date": "2026-06-26",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:44"
-    },
-    {
-      "id": "elfrwrcpz",
-      "date": "2026-06-26",
-      "type": "wake",
-      "value": "06:41",
-      "schemaVersion": 4,
-      "time": "06:46"
-    },
-    {
-      "id": "elfrxflty",
-      "date": "2026-06-26",
-      "type": "bed",
       "value": "22:27",
-      "schemaVersion": 4,
-      "time": "06:53"
+      "time": "06:30"
     },
     {
-      "id": "elfryjbjx",
-      "date": "2026-06-26",
+      "id": "elflximch",
+      "date": "2026-06-06",
       "type": "sleepHours",
-      "value": 7.6,
       "schemaVersion": 4,
-      "time": "06:38"
+      "value": 7.8,
+      "time": "06:44"
     },
     {
-      "id": "elfrzx25n",
-      "date": "2026-06-26",
-      "type": "energy",
-      "value": 4,
+      "id": "elfly0358",
+      "date": "2026-06-06",
+      "type": "sleepQuality",
       "schemaVersion": 4,
-      "time": "06:39"
+      "value": 3,
+      "time": "06:33"
     },
     {
-      "id": "elfs0gbty",
-      "date": "2026-06-26",
+      "id": "elflzjpy7",
+      "date": "2026-06-06",
       "type": "steps",
-      "value": 4700,
       "schemaVersion": 4,
-      "time": "07:13"
-    },
-    {
-      "id": "elfs1spzx",
-      "date": "2026-06-26",
-      "type": "steps",
-      "value": 3000,
-      "schemaVersion": 4,
-      "time": "18:20"
-    },
-    {
-      "id": "elfs2miy9",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.39,
-      "schemaVersion": 4,
-      "time": "08:23"
-    },
-    {
-      "id": "elfs3hv4c",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.47,
-      "schemaVersion": 4,
-      "time": "10:05"
-    },
-    {
-      "id": "elfs45hml",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.66,
-      "schemaVersion": 4,
-      "time": "12:15"
-    },
-    {
-      "id": "elfs5o9h6",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.38,
-      "schemaVersion": 4,
-      "time": "14:12"
-    },
-    {
-      "id": "elfs6zm8o",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
-      "time": "16:42"
-    },
-    {
-      "id": "elfs7a2ny",
-      "date": "2026-06-26",
-      "type": "water",
-      "value": 0.59,
-      "schemaVersion": 4,
-      "time": "19:27"
-    },
-    {
-      "id": "elfs83u70",
-      "date": "2026-06-26",
-      "type": "weight",
-      "value": 195,
-      "schemaVersion": 4,
-      "time": "06:35"
-    },
-    {
-      "id": "elfs9ir85",
-      "date": "2026-06-27",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:23"
-    },
-    {
-      "id": "elfsafi8r",
-      "date": "2026-06-27",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:43"
-    },
-    {
-      "id": "elfsba1ti",
-      "date": "2026-06-27",
-      "type": "wake",
-      "value": "06:26",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfscgve1",
-      "date": "2026-06-27",
-      "type": "sleepHours",
-      "value": 6.7,
-      "schemaVersion": 4,
-      "time": "06:35"
-    },
-    {
-      "id": "elfsds1sc",
-      "date": "2026-06-27",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:40"
-    },
-    {
-      "id": "elfseco9y",
-      "date": "2026-06-27",
-      "type": "steps",
       "value": 4200,
-      "schemaVersion": 4,
       "time": "07:21"
     },
     {
-      "id": "elfsf666d",
-      "date": "2026-06-27",
+      "id": "elfm0985p",
+      "date": "2026-06-06",
       "type": "steps",
-      "value": 2200,
       "schemaVersion": 4,
-      "time": "18:36"
+      "value": 3200,
+      "time": "18:03"
     },
     {
-      "id": "elfsgkegm",
-      "date": "2026-06-27",
+      "id": "elfm121ab",
+      "date": "2026-06-06",
       "type": "water",
-      "value": 0.65,
       "schemaVersion": 4,
-      "time": "08:35"
+      "value": 0.36,
+      "time": "10:08"
     },
     {
-      "id": "elfsh6xhi",
-      "date": "2026-06-27",
+      "id": "elfm2cz6e",
+      "date": "2026-06-06",
       "type": "water",
-      "value": 0.65,
       "schemaVersion": 4,
-      "time": "10:05"
-    },
-    {
-      "id": "elfsinx58",
-      "date": "2026-06-27",
-      "type": "water",
-      "value": 0.53,
-      "schemaVersion": 4,
-      "time": "12:52"
-    },
-    {
-      "id": "elfsjx87g",
-      "date": "2026-06-27",
-      "type": "water",
-      "value": 0.52,
-      "schemaVersion": 4,
-      "time": "14:40"
-    },
-    {
-      "id": "elfskfmc6",
-      "date": "2026-06-28",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:46"
-    },
-    {
-      "id": "elfslipcf",
-      "date": "2026-06-28",
-      "type": "wake",
-      "value": "06:34",
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfsmgpi6",
-      "date": "2026-06-28",
-      "type": "sleepHours",
-      "value": 6.6,
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elfsnoao6",
-      "date": "2026-06-28",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:37"
-    },
-    {
-      "id": "elfsoar89",
-      "date": "2026-06-28",
-      "type": "energy",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfspwic3",
-      "date": "2026-06-28",
-      "type": "steps",
-      "value": 5100,
-      "schemaVersion": 4,
-      "time": "07:31"
-    },
-    {
-      "id": "elfsq3l76",
-      "date": "2026-06-28",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "08:51"
-    },
-    {
-      "id": "elfsr24lg",
-      "date": "2026-06-28",
-      "type": "water",
-      "value": 0.4,
-      "schemaVersion": 4,
+      "value": 0.38,
       "time": "12:47"
     },
     {
-      "id": "elfss1bk2",
-      "date": "2026-06-28",
+      "id": "elfm3cpxu",
+      "date": "2026-06-06",
       "type": "water",
-      "value": 0.63,
       "schemaVersion": 4,
-      "time": "14:00"
+      "value": 0.48,
+      "time": "16:27"
     },
     {
-      "id": "elfst9apo",
-      "date": "2026-06-28",
+      "id": "elfm4npnb",
+      "date": "2026-06-06",
       "type": "water",
-      "value": 0.39,
       "schemaVersion": 4,
-      "time": "19:38"
+      "value": 0.69,
+      "time": "19:52"
     },
     {
-      "id": "elfsuzhhc",
-      "date": "2026-06-28",
-      "type": "circumference",
-      "value": 34.8,
-      "schemaVersion": 4,
-      "time": "06:40",
-      "site": "waist"
+      "id": "elfm5c18z",
+      "date": "2026-06-06",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:46",
+      "schemaVersion": 4
     },
     {
-      "id": "elfsv7s5p",
-      "date": "2026-06-29",
-      "type": "exercise",
+      "id": "elfm6h3i3",
+      "date": "2026-06-06",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:21",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfm7ua0l",
+      "date": "2026-06-06",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:33",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfm83151",
+      "date": "2026-06-07",
+      "type": "protein",
+      "schemaVersion": 4,
       "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:28"
+      "time": "06:47"
     },
     {
-      "id": "elfswerch",
-      "date": "2026-06-29",
-      "type": "wake",
-      "value": "06:27",
-      "schemaVersion": 4,
-      "time": "06:42"
-    },
-    {
-      "id": "elfsxizpg",
-      "date": "2026-06-29",
-      "type": "sleepHours",
-      "value": 7.4,
-      "schemaVersion": 4,
-      "time": "06:33"
-    },
-    {
-      "id": "elfsy02g7",
-      "date": "2026-06-29",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:32"
-    },
-    {
-      "id": "elfsz9qr5",
-      "date": "2026-06-29",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elft0uwqp",
-      "date": "2026-06-29",
-      "type": "steps",
-      "value": 5100,
-      "schemaVersion": 4,
-      "time": "07:21"
-    },
-    {
-      "id": "elft1ej37",
-      "date": "2026-06-29",
-      "type": "water",
-      "value": 0.45,
-      "schemaVersion": 4,
-      "time": "08:31"
-    },
-    {
-      "id": "elft2hfff",
-      "date": "2026-06-29",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "10:31"
-    },
-    {
-      "id": "elft3j2p6",
-      "date": "2026-06-29",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "14:25"
-    },
-    {
-      "id": "elft4qlj7",
-      "date": "2026-06-29",
-      "type": "water",
-      "value": 0.35,
-      "schemaVersion": 4,
-      "time": "19:09"
-    },
-    {
-      "id": "elft5yu7q",
-      "date": "2026-06-29",
-      "type": "weight",
-      "value": 195.2,
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elft60avw",
-      "date": "2026-06-30",
+      "id": "elfm92o42",
+      "date": "2026-06-07",
       "type": "exercise",
+      "schemaVersion": 4,
       "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elft7501e",
-      "date": "2026-06-30",
-      "type": "wake",
-      "value": "06:39",
-      "schemaVersion": 4,
-      "time": "06:51"
-    },
-    {
-      "id": "elft8cp87",
-      "date": "2026-06-30",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:56"
-    },
-    {
-      "id": "elft9iw9f",
-      "date": "2026-06-30",
-      "type": "energy",
-      "value": 3,
-      "schemaVersion": 4,
       "time": "06:55"
     },
     {
-      "id": "elftacajl",
-      "date": "2026-06-30",
-      "type": "steps",
-      "value": 6100,
-      "schemaVersion": 4,
-      "time": "07:14"
-    },
-    {
-      "id": "elftbbkgq",
-      "date": "2026-06-30",
-      "type": "water",
-      "value": 0.5,
-      "schemaVersion": 4,
-      "time": "10:06"
-    },
-    {
-      "id": "elftcjyet",
-      "date": "2026-06-30",
-      "type": "water",
-      "value": 0.67,
-      "schemaVersion": 4,
-      "time": "12:09"
-    },
-    {
-      "id": "elftdnrjn",
-      "date": "2026-06-30",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "14:50"
-    },
-    {
-      "id": "elftedw8g",
-      "date": "2026-06-30",
-      "type": "water",
-      "value": 0.62,
-      "schemaVersion": 4,
-      "time": "19:46"
-    },
-    {
-      "id": "elftftuuk",
-      "date": "2026-07-01",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elftg2og0",
-      "date": "2026-07-01",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:49"
-    },
-    {
-      "id": "elfthxzcr",
-      "date": "2026-07-01",
+      "id": "elfmargux",
+      "date": "2026-06-07",
       "type": "wake",
-      "value": "06:36",
       "schemaVersion": 4,
-      "time": "06:58"
+      "value": "06:21",
+      "time": "06:40"
     },
     {
-      "id": "elftixcic",
-      "date": "2026-07-01",
+      "id": "elfmbaqwl",
+      "date": "2026-06-07",
       "type": "sleepHours",
-      "value": 7.1,
       "schemaVersion": 4,
-      "time": "06:35"
-    },
-    {
-      "id": "elftjreik",
-      "date": "2026-07-01",
-      "type": "sleepQuality",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:42"
-    },
-    {
-      "id": "elftkwf42",
-      "date": "2026-07-01",
-      "type": "energy",
-      "value": 3,
-      "schemaVersion": 4,
-      "time": "06:45"
-    },
-    {
-      "id": "elftl4oyh",
-      "date": "2026-07-01",
-      "type": "steps",
-      "value": 5300,
-      "schemaVersion": 4,
-      "time": "07:05"
-    },
-    {
-      "id": "elftmlrb1",
-      "date": "2026-07-01",
-      "type": "water",
-      "value": 0.56,
-      "schemaVersion": 4,
-      "time": "08:51"
-    },
-    {
-      "id": "elftn7lbq",
-      "date": "2026-07-01",
-      "type": "water",
-      "value": 0.68,
-      "schemaVersion": 4,
-      "time": "16:01"
-    },
-    {
-      "id": "elftozbjw",
-      "date": "2026-07-01",
-      "type": "water",
-      "value": 0.52,
-      "schemaVersion": 4,
-      "time": "19:34"
-    },
-    {
-      "id": "elftpppw0",
-      "date": "2026-07-02",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:19"
-    },
-    {
-      "id": "elftqkggx",
-      "date": "2026-07-02",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elftruky6",
-      "date": "2026-07-02",
-      "type": "wake",
-      "value": "06:40",
-      "schemaVersion": 4,
-      "time": "06:52"
-    },
-    {
-      "id": "elfts44yt",
-      "date": "2026-07-02",
-      "type": "bed",
-      "value": "22:06",
-      "schemaVersion": 4,
+      "value": 7.8,
       "time": "06:39"
     },
     {
-      "id": "elfttviop",
-      "date": "2026-07-02",
-      "type": "sleepHours",
-      "value": 7.2,
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elftuube5",
-      "date": "2026-07-02",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:55"
-    },
-    {
-      "id": "elftvaix7",
-      "date": "2026-07-02",
-      "type": "steps",
-      "value": 6000,
-      "schemaVersion": 4,
-      "time": "07:26"
-    },
-    {
-      "id": "elftw6ebl",
-      "date": "2026-07-02",
-      "type": "steps",
-      "value": 2800,
-      "schemaVersion": 4,
-      "time": "18:26"
-    },
-    {
-      "id": "elftx7vdh",
-      "date": "2026-07-02",
-      "type": "water",
-      "value": 0.68,
-      "schemaVersion": 4,
-      "time": "10:03"
-    },
-    {
-      "id": "elftyyz8e",
-      "date": "2026-07-02",
-      "type": "water",
-      "value": 0.52,
-      "schemaVersion": 4,
-      "time": "12:03"
-    },
-    {
-      "id": "elftzgdv4",
-      "date": "2026-07-02",
-      "type": "water",
-      "value": 0.66,
-      "schemaVersion": 4,
-      "time": "14:20"
-    },
-    {
-      "id": "elfu01o03",
-      "date": "2026-07-02",
-      "type": "water",
-      "value": 0.59,
-      "schemaVersion": 4,
-      "time": "16:31"
-    },
-    {
-      "id": "elfu1fiys",
-      "date": "2026-07-02",
-      "type": "water",
-      "value": 0.68,
-      "schemaVersion": 4,
-      "time": "19:00"
-    },
-    {
-      "id": "elfu27zg1",
-      "date": "2026-07-02",
-      "type": "weight",
-      "value": 194.5,
-      "schemaVersion": 4,
-      "time": "06:42"
-    },
-    {
-      "id": "elfu3uaew",
-      "date": "2026-07-03",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:29"
-    },
-    {
-      "id": "elfu4lbow",
-      "date": "2026-07-03",
-      "type": "exercise",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elfu55vrf",
-      "date": "2026-07-03",
-      "type": "wake",
-      "value": "06:17",
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfu6rq0q",
-      "date": "2026-07-03",
-      "type": "sleepHours",
-      "value": 6.9,
-      "schemaVersion": 4,
-      "time": "06:57"
-    },
-    {
-      "id": "elfu7xbhf",
-      "date": "2026-07-03",
-      "type": "sleepQuality",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elfu8ume6",
-      "date": "2026-07-03",
+      "id": "elfmcjpgj",
+      "date": "2026-06-07",
       "type": "energy",
-      "value": 5,
       "schemaVersion": 4,
-      "time": "06:34"
-    },
-    {
-      "id": "elfu9k8ra",
-      "date": "2026-07-03",
-      "type": "steps",
-      "value": 5100,
-      "schemaVersion": 4,
-      "time": "07:26"
-    },
-    {
-      "id": "elfuamd87",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.6,
-      "schemaVersion": 4,
-      "time": "08:48"
-    },
-    {
-      "id": "elfubyhvr",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.66,
-      "schemaVersion": 4,
-      "time": "10:51"
-    },
-    {
-      "id": "elfucv1kr",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "12:52"
-    },
-    {
-      "id": "elfuda0u1",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.65,
-      "schemaVersion": 4,
-      "time": "14:46"
-    },
-    {
-      "id": "elfue8dog",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.41,
-      "schemaVersion": 4,
-      "time": "16:40"
-    },
-    {
-      "id": "elfufoulz",
-      "date": "2026-07-03",
-      "type": "water",
-      "value": 0.44,
-      "schemaVersion": 4,
-      "time": "19:35"
-    },
-    {
-      "id": "elfughguk",
-      "date": "2026-07-04",
-      "type": "protein",
-      "value": "Y",
-      "schemaVersion": 4,
-      "time": "06:36"
-    },
-    {
-      "id": "elfuh2g5k",
-      "date": "2026-07-04",
-      "type": "wake",
-      "value": "06:46",
-      "schemaVersion": 4,
-      "time": "06:55"
-    },
-    {
-      "id": "elfui4qv8",
-      "date": "2026-07-04",
-      "type": "bed",
-      "value": "22:35",
-      "schemaVersion": 4,
-      "time": "06:54"
-    },
-    {
-      "id": "elfujpw32",
-      "date": "2026-07-04",
-      "type": "sleepHours",
-      "value": 6.3,
-      "schemaVersion": 4,
-      "time": "06:53"
-    },
-    {
-      "id": "elfuk1ju3",
-      "date": "2026-07-04",
-      "type": "sleepQuality",
       "value": 4,
-      "schemaVersion": 4,
       "time": "06:58"
     },
     {
-      "id": "elfula9rt",
-      "date": "2026-07-04",
+      "id": "elfmdp2zj",
+      "date": "2026-06-07",
       "type": "steps",
+      "schemaVersion": 4,
       "value": 5600,
-      "schemaVersion": 4,
-      "time": "07:42"
+      "time": "07:44"
     },
     {
-      "id": "elfum7idl",
-      "date": "2026-07-04",
+      "id": "elfmeo6fx",
+      "date": "2026-06-07",
       "type": "water",
+      "schemaVersion": 4,
+      "value": 0.51,
+      "time": "10:38"
+    },
+    {
+      "id": "elfmfp7os",
+      "date": "2026-06-07",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.49,
+      "time": "14:41"
+    },
+    {
+      "id": "elfmgztxg",
+      "date": "2026-06-07",
+      "type": "water",
+      "schemaVersion": 4,
       "value": 0.43,
-      "schemaVersion": 4,
-      "time": "08:05"
+      "time": "19:44"
     },
     {
-      "id": "elfuna05l",
-      "date": "2026-07-04",
-      "type": "water",
-      "value": 0.52,
-      "schemaVersion": 4,
-      "time": "10:58"
+      "id": "elfmh74k1",
+      "date": "2026-06-07",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:25",
+      "schemaVersion": 4
     },
     {
-      "id": "elfuox27q",
-      "date": "2026-07-04",
-      "type": "water",
-      "value": 0.61,
-      "schemaVersion": 4,
-      "time": "12:27"
+      "id": "elfmi0sem",
+      "date": "2026-06-07",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:34",
+      "schemaVersion": 4
     },
     {
-      "id": "elfupzgfj",
-      "date": "2026-07-04",
-      "type": "water",
-      "value": 0.64,
-      "schemaVersion": 4,
-      "time": "14:06"
-    },
-    {
-      "id": "elfuqienw",
-      "date": "2026-07-04",
-      "type": "water",
-      "value": 0.52,
-      "schemaVersion": 4,
-      "time": "19:47"
-    },
-    {
-      "id": "elfurdtxn",
-      "date": "2026-07-05",
-      "type": "wake",
-      "value": "06:32",
-      "schemaVersion": 4,
-      "time": "06:45"
-    },
-    {
-      "id": "elfuskch9",
-      "date": "2026-07-05",
-      "type": "bed",
-      "value": "22:39",
-      "schemaVersion": 4,
-      "time": "06:54"
-    },
-    {
-      "id": "elfutm3h9",
-      "date": "2026-07-05",
-      "type": "sleepHours",
-      "value": 7.3,
-      "schemaVersion": 4,
-      "time": "06:30"
-    },
-    {
-      "id": "elfuuma80",
-      "date": "2026-07-05",
-      "type": "sleepQuality",
-      "value": 5,
-      "schemaVersion": 4,
-      "time": "06:38"
-    },
-    {
-      "id": "elfuvqu3y",
-      "date": "2026-07-05",
-      "type": "energy",
-      "value": 4,
-      "schemaVersion": 4,
-      "time": "06:48"
-    },
-    {
-      "id": "elfuwu8hi",
-      "date": "2026-07-05",
-      "type": "steps",
-      "value": 5400,
-      "schemaVersion": 4,
-      "time": "07:02"
-    },
-    {
-      "id": "elfuxy8gj",
-      "date": "2026-07-05",
-      "type": "steps",
-      "value": 2300,
-      "schemaVersion": 4,
-      "time": "18:27"
-    },
-    {
-      "id": "elfuyfcub",
-      "date": "2026-07-05",
-      "type": "water",
-      "value": 0.7,
-      "schemaVersion": 4,
-      "time": "08:37"
-    },
-    {
-      "id": "elfuznmk8",
-      "date": "2026-07-05",
-      "type": "water",
-      "value": 0.7,
-      "schemaVersion": 4,
-      "time": "12:37"
-    },
-    {
-      "id": "elfv0lt62",
-      "date": "2026-07-05",
-      "type": "water",
-      "value": 0.54,
-      "schemaVersion": 4,
-      "time": "14:34"
-    },
-    {
-      "id": "elfv1w63t",
-      "date": "2026-07-05",
-      "type": "water",
-      "value": 0.56,
-      "schemaVersion": 4,
-      "time": "16:55"
-    },
-    {
-      "id": "elfv2y6ri",
-      "date": "2026-07-05",
-      "type": "weight",
-      "value": 194.3,
-      "schemaVersion": 4,
-      "time": "06:42"
-    },
-    {
-      "id": "elfv30z9j",
-      "date": "2026-07-05",
+      "id": "elfmj72jn",
+      "date": "2026-06-07",
       "type": "circumference",
-      "value": 34.6,
       "schemaVersion": 4,
+      "value": 35.5,
       "time": "06:40",
       "site": "waist"
     },
     {
-      "id": "elfv4r5lc",
-      "date": "2026-07-05",
+      "id": "elfmks42b",
+      "date": "2026-06-07",
       "type": "circumference",
-      "value": 41.3,
       "schemaVersion": 4,
+      "value": 41.5,
       "time": "06:41",
       "site": "chest"
+    },
+    {
+      "id": "elfmll3eb",
+      "date": "2026-06-07",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 14.5,
+      "time": "06:42",
+      "site": "arm"
+    },
+    {
+      "id": "elfmmncct",
+      "date": "2026-06-08",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:35"
+    },
+    {
+      "id": "elfmn2y73",
+      "date": "2026-06-08",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:57"
+    },
+    {
+      "id": "elfmofnbr",
+      "date": "2026-06-08",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:31",
+      "time": "06:43"
+    },
+    {
+      "id": "elfmp3dde",
+      "date": "2026-06-08",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:32",
+      "time": "06:44"
+    },
+    {
+      "id": "elfmqwx14",
+      "date": "2026-06-08",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.7,
+      "time": "06:36"
+    },
+    {
+      "id": "elfmrzkrj",
+      "date": "2026-06-08",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:33"
+    },
+    {
+      "id": "elfmszjsz",
+      "date": "2026-06-08",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:40"
+    },
+    {
+      "id": "elfmt2r1z",
+      "date": "2026-06-08",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4900,
+      "time": "07:42"
+    },
+    {
+      "id": "elfmuqg5w",
+      "date": "2026-06-08",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 3200,
+      "time": "18:24"
+    },
+    {
+      "id": "elfmvbts9",
+      "date": "2026-06-08",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.43,
+      "time": "08:20"
+    },
+    {
+      "id": "elfmwiv5p",
+      "date": "2026-06-08",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.39,
+      "time": "16:04"
+    },
+    {
+      "id": "elfmxxg71",
+      "date": "2026-06-08",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.66,
+      "time": "19:25"
+    },
+    {
+      "id": "elfmy1vf2",
+      "date": "2026-06-08",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:50",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfmzjzyz",
+      "date": "2026-06-08",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:37",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfn0j6rg",
+      "date": "2026-06-08",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfn1r8bj",
+      "date": "2026-06-08",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 198.1,
+      "time": "06:47"
+    },
+    {
+      "id": "elfn2on18",
+      "date": "2026-06-09",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:20"
+    },
+    {
+      "id": "elfn3uuro",
+      "date": "2026-06-09",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:57"
+    },
+    {
+      "id": "elfn4qi72",
+      "date": "2026-06-09",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:37",
+      "time": "06:34"
+    },
+    {
+      "id": "elfn5bj5s",
+      "date": "2026-06-09",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:27",
+      "time": "06:34"
+    },
+    {
+      "id": "elfn6kwjb",
+      "date": "2026-06-09",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.3,
+      "time": "06:39"
+    },
+    {
+      "id": "elfn7wnqa",
+      "date": "2026-06-09",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:41"
+    },
+    {
+      "id": "elfn81ejc",
+      "date": "2026-06-09",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5300,
+      "time": "07:12"
+    },
+    {
+      "id": "elfn93cr7",
+      "date": "2026-06-09",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.64,
+      "time": "08:04"
+    },
+    {
+      "id": "elfna5yqh",
+      "date": "2026-06-09",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.5,
+      "time": "10:40"
+    },
+    {
+      "id": "elfnbcxjd",
+      "date": "2026-06-09",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.53,
+      "time": "14:50"
+    },
+    {
+      "id": "elfncsdsy",
+      "date": "2026-06-09",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.56,
+      "time": "16:44"
+    },
+    {
+      "id": "elfndzo7i",
+      "date": "2026-06-09",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "19:38"
+    },
+    {
+      "id": "elfnesgqe",
+      "date": "2026-06-09",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:33",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfnf8t5p",
+      "date": "2026-06-09",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:26",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfngw32s",
+      "date": "2026-06-09",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfnhdysh",
+      "date": "2026-06-09",
+      "type": "meal",
+      "slot": "S",
+      "name": "Protein bar",
+      "calories": 210,
+      "protein": 20,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 5,
+      "time": "15:12",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfnidtwl",
+      "date": "2026-06-10",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:41"
+    },
+    {
+      "id": "elfnjahj7",
+      "date": "2026-06-10",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:38"
+    },
+    {
+      "id": "elfnkpjhq",
+      "date": "2026-06-10",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7,
+      "time": "06:52"
+    },
+    {
+      "id": "elfnlldj7",
+      "date": "2026-06-10",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:51"
+    },
+    {
+      "id": "elfnm02kb",
+      "date": "2026-06-10",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5300,
+      "time": "07:36"
+    },
+    {
+      "id": "elfnn6ae1",
+      "date": "2026-06-10",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 3100,
+      "time": "18:46"
+    },
+    {
+      "id": "elfnocq75",
+      "date": "2026-06-10",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.46,
+      "time": "12:47"
+    },
+    {
+      "id": "elfnp9vtt",
+      "date": "2026-06-10",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "14:37"
+    },
+    {
+      "id": "elfnq9xvv",
+      "date": "2026-06-10",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.69,
+      "time": "16:28"
+    },
+    {
+      "id": "elfnr068i",
+      "date": "2026-06-10",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.59,
+      "time": "19:35"
+    },
+    {
+      "id": "elfns83pa",
+      "date": "2026-06-10",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfntmpjd",
+      "date": "2026-06-10",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:55",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfnusky3",
+      "date": "2026-06-11",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:32"
+    },
+    {
+      "id": "elfnvq45b",
+      "date": "2026-06-11",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:49"
+    },
+    {
+      "id": "elfnwlxre",
+      "date": "2026-06-11",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:36",
+      "time": "06:56"
+    },
+    {
+      "id": "elfnxh40f",
+      "date": "2026-06-11",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:02",
+      "time": "06:47"
+    },
+    {
+      "id": "elfnyy9ax",
+      "date": "2026-06-11",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.8,
+      "time": "06:41"
+    },
+    {
+      "id": "elfnz80e4",
+      "date": "2026-06-11",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:44"
+    },
+    {
+      "id": "elfo0lh8r",
+      "date": "2026-06-11",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:48"
+    },
+    {
+      "id": "elfo1jccj",
+      "date": "2026-06-11",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4000,
+      "time": "07:01"
+    },
+    {
+      "id": "elfo2dkr4",
+      "date": "2026-06-11",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2200,
+      "time": "18:27"
+    },
+    {
+      "id": "elfo3beir",
+      "date": "2026-06-11",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.51,
+      "time": "10:34"
+    },
+    {
+      "id": "elfo40s0j",
+      "date": "2026-06-11",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.67,
+      "time": "12:09"
+    },
+    {
+      "id": "elfo5m1ix",
+      "date": "2026-06-11",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.4,
+      "time": "14:23"
+    },
+    {
+      "id": "elfo62i72",
+      "date": "2026-06-11",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.44,
+      "time": "16:12"
+    },
+    {
+      "id": "elfo7lyji",
+      "date": "2026-06-11",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:20",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfo86895",
+      "date": "2026-06-11",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:52",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfo9pat7",
+      "date": "2026-06-11",
+      "type": "meal",
+      "slot": "S",
+      "name": "Protein bar",
+      "calories": 210,
+      "protein": 20,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 5,
+      "time": "15:08",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfoavzoj",
+      "date": "2026-06-11",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 197.2,
+      "time": "06:30"
+    },
+    {
+      "id": "elfob5coo",
+      "date": "2026-06-12",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:57"
+    },
+    {
+      "id": "elfochir5",
+      "date": "2026-06-12",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:32",
+      "time": "06:34"
+    },
+    {
+      "id": "elfod8tne",
+      "date": "2026-06-12",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.9,
+      "time": "06:31"
+    },
+    {
+      "id": "elfoegzrk",
+      "date": "2026-06-12",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:41"
+    },
+    {
+      "id": "elfofi60q",
+      "date": "2026-06-12",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:52"
+    },
+    {
+      "id": "elfogtcx8",
+      "date": "2026-06-12",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 3900,
+      "time": "07:19"
+    },
+    {
+      "id": "elfohzkw1",
+      "date": "2026-06-12",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2000,
+      "time": "18:22"
+    },
+    {
+      "id": "elfoizyrx",
+      "date": "2026-06-12",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.61,
+      "time": "08:02"
+    },
+    {
+      "id": "elfojenix",
+      "date": "2026-06-12",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.5,
+      "time": "10:41"
+    },
+    {
+      "id": "elfok2c8s",
+      "date": "2026-06-12",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.56,
+      "time": "12:32"
+    },
+    {
+      "id": "elfol54f1",
+      "date": "2026-06-12",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.64,
+      "time": "16:13"
+    },
+    {
+      "id": "elfomnloa",
+      "date": "2026-06-12",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.59,
+      "time": "19:39"
+    },
+    {
+      "id": "elfonyx4a",
+      "date": "2026-06-12",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:30",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfoo5kv0",
+      "date": "2026-06-12",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:20",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfops6zu",
+      "date": "2026-06-12",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:35",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfoqu6tt",
+      "date": "2026-06-12",
+      "type": "meal",
+      "slot": "S",
+      "name": "Cottage cheese",
+      "calories": 180,
+      "protein": 24,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 0,
+      "time": "15:13",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfor45gg",
+      "date": "2026-06-13",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:23"
+    },
+    {
+      "id": "elfosao7c",
+      "date": "2026-06-13",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:23",
+      "time": "06:31"
+    },
+    {
+      "id": "elfotvy7w",
+      "date": "2026-06-13",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:16",
+      "time": "06:39"
+    },
+    {
+      "id": "elfouyp92",
+      "date": "2026-06-13",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:52"
+    },
+    {
+      "id": "elfovn580",
+      "date": "2026-06-13",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5100,
+      "time": "07:26"
+    },
+    {
+      "id": "elfowcalb",
+      "date": "2026-06-13",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.4,
+      "time": "10:33"
+    },
+    {
+      "id": "elfoxs0s2",
+      "date": "2026-06-13",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.63,
+      "time": "12:00"
+    },
+    {
+      "id": "elfoyydjs",
+      "date": "2026-06-13",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.58,
+      "time": "16:01"
+    },
+    {
+      "id": "elfozf2nz",
+      "date": "2026-06-13",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.61,
+      "time": "19:00"
+    },
+    {
+      "id": "elfp01vmu",
+      "date": "2026-06-13",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:44",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfp173u3",
+      "date": "2026-06-13",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:50",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfp2g9yw",
+      "date": "2026-06-13",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:47",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfp3a7mj",
+      "date": "2026-06-13",
+      "type": "meal",
+      "slot": "S",
+      "name": "Cottage cheese",
+      "calories": 180,
+      "protein": 24,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 0,
+      "time": "15:48",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfp4941r",
+      "date": "2026-06-14",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:40"
+    },
+    {
+      "id": "elfp5bmso",
+      "date": "2026-06-14",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:26"
+    },
+    {
+      "id": "elfp6n9xc",
+      "date": "2026-06-14",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:27",
+      "time": "06:44"
+    },
+    {
+      "id": "elfp7zsgo",
+      "date": "2026-06-14",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:29",
+      "time": "06:49"
+    },
+    {
+      "id": "elfp8x0yt",
+      "date": "2026-06-14",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:30"
+    },
+    {
+      "id": "elfp95gnv",
+      "date": "2026-06-14",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5200,
+      "time": "07:06"
+    },
+    {
+      "id": "elfpan4ar",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.59,
+      "time": "08:56"
+    },
+    {
+      "id": "elfpbx4ax",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.67,
+      "time": "10:47"
+    },
+    {
+      "id": "elfpclm1x",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.68,
+      "time": "12:19"
+    },
+    {
+      "id": "elfpdeku6",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.42,
+      "time": "14:24"
+    },
+    {
+      "id": "elfperkl0",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.37,
+      "time": "16:37"
+    },
+    {
+      "id": "elfpfdh71",
+      "date": "2026-06-14",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.53,
+      "time": "19:44"
+    },
+    {
+      "id": "elfpgpjqq",
+      "date": "2026-06-14",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:33",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfphurrw",
+      "date": "2026-06-14",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:35",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfpil7ud",
+      "date": "2026-06-14",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:36",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfpjwosc",
+      "date": "2026-06-14",
+      "type": "meal",
+      "slot": "S",
+      "name": "Apple + peanut butter",
+      "calories": 260,
+      "protein": 8,
+      "carbs": 30,
+      "fat": 12,
+      "fiber": 6,
+      "time": "15:19",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfpka352",
+      "date": "2026-06-14",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 197.2,
+      "time": "06:31"
+    },
+    {
+      "id": "elfplk8xa",
+      "date": "2026-06-14",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 35.3,
+      "time": "06:40",
+      "site": "waist"
+    },
+    {
+      "id": "elfpm0xxw",
+      "date": "2026-06-14",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 14.5,
+      "time": "06:42",
+      "site": "arm"
+    },
+    {
+      "id": "elfpnh4uv",
+      "date": "2026-06-15",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:51"
+    },
+    {
+      "id": "elfpo49js",
+      "date": "2026-06-15",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:49",
+      "time": "06:44"
+    },
+    {
+      "id": "elfpp02n2",
+      "date": "2026-06-15",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:00",
+      "time": "06:39"
+    },
+    {
+      "id": "elfpq785e",
+      "date": "2026-06-15",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.7,
+      "time": "06:45"
+    },
+    {
+      "id": "elfpr0kss",
+      "date": "2026-06-15",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:58"
+    },
+    {
+      "id": "elfpsldkv",
+      "date": "2026-06-15",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:44"
+    },
+    {
+      "id": "elfpt4h2p",
+      "date": "2026-06-15",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 3900,
+      "time": "07:11"
+    },
+    {
+      "id": "elfpumk6e",
+      "date": "2026-06-15",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.53,
+      "time": "08:40"
+    },
+    {
+      "id": "elfpve8df",
+      "date": "2026-06-15",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.48,
+      "time": "10:47"
+    },
+    {
+      "id": "elfpw1puj",
+      "date": "2026-06-15",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.68,
+      "time": "14:20"
+    },
+    {
+      "id": "elfpxgweu",
+      "date": "2026-06-15",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfpy5jb8",
+      "date": "2026-06-15",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:24",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfpzzsqd",
+      "date": "2026-06-15",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:50",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfq07ldi",
+      "date": "2026-06-17",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:21"
+    },
+    {
+      "id": "elfq192pj",
+      "date": "2026-06-17",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:28"
+    },
+    {
+      "id": "elfq26fcy",
+      "date": "2026-06-17",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:30",
+      "time": "06:32"
+    },
+    {
+      "id": "elfq3rkrn",
+      "date": "2026-06-17",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:06",
+      "time": "06:39"
+    },
+    {
+      "id": "elfq4v38u",
+      "date": "2026-06-17",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.3,
+      "time": "06:35"
+    },
+    {
+      "id": "elfq5jyfd",
+      "date": "2026-06-17",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:38"
+    },
+    {
+      "id": "elfq62ilq",
+      "date": "2026-06-17",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5800,
+      "time": "07:37"
+    },
+    {
+      "id": "elfq7h52y",
+      "date": "2026-06-17",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2900,
+      "time": "18:10"
+    },
+    {
+      "id": "elfq8wbwe",
+      "date": "2026-06-17",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "08:11"
+    },
+    {
+      "id": "elfq9kfie",
+      "date": "2026-06-17",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.44,
+      "time": "14:24"
+    },
+    {
+      "id": "elfqax15t",
+      "date": "2026-06-17",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "16:31"
+    },
+    {
+      "id": "elfqbtseg",
+      "date": "2026-06-17",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqc87on",
+      "date": "2026-06-17",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqdkg6m",
+      "date": "2026-06-17",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 196.2,
+      "time": "06:33"
+    },
+    {
+      "id": "elfqerwcj",
+      "date": "2026-06-18",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:38"
+    },
+    {
+      "id": "elfqf1ul5",
+      "date": "2026-06-18",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:28",
+      "time": "06:37"
+    },
+    {
+      "id": "elfqgcun5",
+      "date": "2026-06-18",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.5,
+      "time": "06:47"
+    },
+    {
+      "id": "elfqhemxa",
+      "date": "2026-06-18",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:51"
+    },
+    {
+      "id": "elfqi3bem",
+      "date": "2026-06-18",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:47"
+    },
+    {
+      "id": "elfqjf5b0",
+      "date": "2026-06-18",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5700,
+      "time": "07:28"
+    },
+    {
+      "id": "elfqky0cp",
+      "date": "2026-06-18",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2700,
+      "time": "18:46"
+    },
+    {
+      "id": "elfqljb80",
+      "date": "2026-06-18",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.6,
+      "time": "08:18"
+    },
+    {
+      "id": "elfqmvfg4",
+      "date": "2026-06-18",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "12:28"
+    },
+    {
+      "id": "elfqn08j4",
+      "date": "2026-06-18",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.48,
+      "time": "16:09"
+    },
+    {
+      "id": "elfqobfji",
+      "date": "2026-06-18",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.45,
+      "time": "19:15"
+    },
+    {
+      "id": "elfqputoz",
+      "date": "2026-06-18",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:48",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqql7lq",
+      "date": "2026-06-18",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:24",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqr4vzb",
+      "date": "2026-06-18",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:32",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqs71y6",
+      "date": "2026-06-18",
+      "type": "meal",
+      "slot": "S",
+      "name": "Protein bar",
+      "calories": 210,
+      "protein": 20,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 5,
+      "time": "15:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfqt5pky",
+      "date": "2026-06-19",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:52"
+    },
+    {
+      "id": "elfqu0r6p",
+      "date": "2026-06-19",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:24"
+    },
+    {
+      "id": "elfqvvane",
+      "date": "2026-06-19",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:30",
+      "time": "06:31"
+    },
+    {
+      "id": "elfqw8hkh",
+      "date": "2026-06-19",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:29",
+      "time": "06:37"
+    },
+    {
+      "id": "elfqxdkyp",
+      "date": "2026-06-19",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.3,
+      "time": "06:52"
+    },
+    {
+      "id": "elfqyrdo1",
+      "date": "2026-06-19",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:50"
+    },
+    {
+      "id": "elfqzaf4w",
+      "date": "2026-06-19",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:46"
+    },
+    {
+      "id": "elfr08no3",
+      "date": "2026-06-19",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 6000,
+      "time": "07:28"
+    },
+    {
+      "id": "elfr1fk29",
+      "date": "2026-06-19",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.65,
+      "time": "08:29"
+    },
+    {
+      "id": "elfr2lww0",
+      "date": "2026-06-19",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.4,
+      "time": "10:56"
+    },
+    {
+      "id": "elfr36fse",
+      "date": "2026-06-19",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.46,
+      "time": "16:44"
+    },
+    {
+      "id": "elfr4g4dd",
+      "date": "2026-06-19",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.56,
+      "time": "19:36"
+    },
+    {
+      "id": "elfr5asd0",
+      "date": "2026-06-19",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:33",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfr6bidf",
+      "date": "2026-06-19",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:18",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfr7ryv7",
+      "date": "2026-06-19",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:42",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfr8b4dl",
+      "date": "2026-06-20",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:21"
+    },
+    {
+      "id": "elfr9p0bv",
+      "date": "2026-06-20",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:19",
+      "time": "06:34"
+    },
+    {
+      "id": "elfram1ae",
+      "date": "2026-06-20",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:46"
+    },
+    {
+      "id": "elfrb6ylx",
+      "date": "2026-06-20",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:45"
+    },
+    {
+      "id": "elfrc009y",
+      "date": "2026-06-20",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4200,
+      "time": "07:33"
+    },
+    {
+      "id": "elfrdlfo0",
+      "date": "2026-06-20",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2000,
+      "time": "18:14"
+    },
+    {
+      "id": "elfre45qu",
+      "date": "2026-06-20",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.38,
+      "time": "08:37"
+    },
+    {
+      "id": "elfrf2c2t",
+      "date": "2026-06-20",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.5,
+      "time": "12:13"
+    },
+    {
+      "id": "elfrgt41h",
+      "date": "2026-06-20",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.41,
+      "time": "14:40"
+    },
+    {
+      "id": "elfrh5c7f",
+      "date": "2026-06-20",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.47,
+      "time": "16:16"
+    },
+    {
+      "id": "elfriawwj",
+      "date": "2026-06-20",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.42,
+      "time": "19:21"
+    },
+    {
+      "id": "elfrju7kt",
+      "date": "2026-06-20",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfrk1lx1",
+      "date": "2026-06-20",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:33",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfrl49hh",
+      "date": "2026-06-20",
+      "type": "meal",
+      "slot": "S",
+      "name": "Protein bar",
+      "calories": 210,
+      "protein": 20,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 5,
+      "time": "15:38",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfrmljkr",
+      "date": "2026-06-20",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 196.6,
+      "time": "06:32"
+    },
+    {
+      "id": "elfrnrkvq",
+      "date": "2026-06-21",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:33"
+    },
+    {
+      "id": "elfroag43",
+      "date": "2026-06-21",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:29"
+    },
+    {
+      "id": "elfrpwsd4",
+      "date": "2026-06-21",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:27",
+      "time": "06:38"
+    },
+    {
+      "id": "elfrq4ph8",
+      "date": "2026-06-21",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:11",
+      "time": "06:46"
+    },
+    {
+      "id": "elfrrs109",
+      "date": "2026-06-21",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.4,
+      "time": "06:30"
+    },
+    {
+      "id": "elfrsd577",
+      "date": "2026-06-21",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:51"
+    },
+    {
+      "id": "elfrtorwh",
+      "date": "2026-06-21",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:47"
+    },
+    {
+      "id": "elfrunaex",
+      "date": "2026-06-21",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5700,
+      "time": "07:28"
+    },
+    {
+      "id": "elfrvzgm0",
+      "date": "2026-06-21",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.41,
+      "time": "08:22"
+    },
+    {
+      "id": "elfrwarw7",
+      "date": "2026-06-21",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.68,
+      "time": "12:01"
+    },
+    {
+      "id": "elfrxpe3s",
+      "date": "2026-06-21",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.51,
+      "time": "14:39"
+    },
+    {
+      "id": "elfry3k2c",
+      "date": "2026-06-21",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.69,
+      "time": "16:13"
+    },
+    {
+      "id": "elfrz8vkg",
+      "date": "2026-06-21",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:38",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfs0ukw4",
+      "date": "2026-06-21",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:52",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfs1je09",
+      "date": "2026-06-21",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:54",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfs2p3jb",
+      "date": "2026-06-21",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 35.1,
+      "time": "06:40",
+      "site": "waist"
+    },
+    {
+      "id": "elfs3o0x2",
+      "date": "2026-06-21",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 14.7,
+      "time": "06:42",
+      "site": "arm"
+    },
+    {
+      "id": "elfs456xp",
+      "date": "2026-06-22",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:34"
+    },
+    {
+      "id": "elfs50b85",
+      "date": "2026-06-22",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:35"
+    },
+    {
+      "id": "elfs62hia",
+      "date": "2026-06-22",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:16",
+      "time": "06:32"
+    },
+    {
+      "id": "elfs77f4m",
+      "date": "2026-06-22",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:31",
+      "time": "06:37"
+    },
+    {
+      "id": "elfs84huz",
+      "date": "2026-06-22",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.5,
+      "time": "06:55"
+    },
+    {
+      "id": "elfs959lx",
+      "date": "2026-06-22",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:41"
+    },
+    {
+      "id": "elfsardvk",
+      "date": "2026-06-22",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:35"
+    },
+    {
+      "id": "elfsbonv8",
+      "date": "2026-06-22",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5400,
+      "time": "07:13"
+    },
+    {
+      "id": "elfscestm",
+      "date": "2026-06-22",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.62,
+      "time": "10:15"
+    },
+    {
+      "id": "elfsdfoz9",
+      "date": "2026-06-22",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.53,
+      "time": "12:28"
+    },
+    {
+      "id": "elfseymfu",
+      "date": "2026-06-22",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.52,
+      "time": "16:39"
+    },
+    {
+      "id": "elfsf42af",
+      "date": "2026-06-22",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.52,
+      "time": "19:32"
+    },
+    {
+      "id": "elfsgbh5w",
+      "date": "2026-06-22",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfsh636q",
+      "date": "2026-06-22",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfsi1bxu",
+      "date": "2026-06-23",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:29",
+      "time": "06:37"
+    },
+    {
+      "id": "elfsj1r7g",
+      "date": "2026-06-23",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:40",
+      "time": "06:37"
+    },
+    {
+      "id": "elfskf7g8",
+      "date": "2026-06-23",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.6,
+      "time": "06:53"
+    },
+    {
+      "id": "elfslrfzy",
+      "date": "2026-06-23",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:39"
+    },
+    {
+      "id": "elfsm426l",
+      "date": "2026-06-23",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:30"
+    },
+    {
+      "id": "elfsnpc5s",
+      "date": "2026-06-23",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5400,
+      "time": "07:36"
+    },
+    {
+      "id": "elfsodeyc",
+      "date": "2026-06-23",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.4,
+      "time": "10:07"
+    },
+    {
+      "id": "elfspysrr",
+      "date": "2026-06-23",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.38,
+      "time": "12:36"
+    },
+    {
+      "id": "elfsqid9l",
+      "date": "2026-06-23",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.69,
+      "time": "14:48"
+    },
+    {
+      "id": "elfsrpudl",
+      "date": "2026-06-23",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.5,
+      "time": "16:15"
+    },
+    {
+      "id": "elfssgx47",
+      "date": "2026-06-23",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.41,
+      "time": "19:53"
+    },
+    {
+      "id": "elfstzb7x",
+      "date": "2026-06-23",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:50",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfsug4kt",
+      "date": "2026-06-23",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:52",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfsv9aqi",
+      "date": "2026-06-23",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 195.3,
+      "time": "06:45"
+    },
+    {
+      "id": "elfswuf7e",
+      "date": "2026-06-24",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:16"
+    },
+    {
+      "id": "elfsxfhrw",
+      "date": "2026-06-24",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:26"
+    },
+    {
+      "id": "elfsypxka",
+      "date": "2026-06-24",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.8,
+      "time": "06:57"
+    },
+    {
+      "id": "elfszwwal",
+      "date": "2026-06-24",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:58"
+    },
+    {
+      "id": "elft0qk9m",
+      "date": "2026-06-24",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:52"
+    },
+    {
+      "id": "elft1hf34",
+      "date": "2026-06-24",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4900,
+      "time": "07:13"
+    },
+    {
+      "id": "elft2zc8c",
+      "date": "2026-06-24",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2800,
+      "time": "18:53"
+    },
+    {
+      "id": "elft3ajds",
+      "date": "2026-06-24",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.43,
+      "time": "10:38"
+    },
+    {
+      "id": "elft4u912",
+      "date": "2026-06-24",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.35,
+      "time": "12:00"
+    },
+    {
+      "id": "elft5hofy",
+      "date": "2026-06-24",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.48,
+      "time": "14:36"
+    },
+    {
+      "id": "elft6s573",
+      "date": "2026-06-24",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.41,
+      "time": "16:38"
+    },
+    {
+      "id": "elft79y60",
+      "date": "2026-06-24",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.61,
+      "time": "19:55"
+    },
+    {
+      "id": "elft8mzi0",
+      "date": "2026-06-24",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:42",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elft900zs",
+      "date": "2026-06-24",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:42",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftai8ig",
+      "date": "2026-06-24",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:41",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftbfi5h",
+      "date": "2026-06-24",
+      "type": "meal",
+      "slot": "S",
+      "name": "Cottage cheese",
+      "calories": 180,
+      "protein": 24,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 0,
+      "time": "15:55",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftcc5br",
+      "date": "2026-06-25",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:26"
+    },
+    {
+      "id": "elftdm8gq",
+      "date": "2026-06-25",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:31"
+    },
+    {
+      "id": "elfteam8l",
+      "date": "2026-06-25",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:16",
+      "time": "06:31"
+    },
+    {
+      "id": "elftfo3e5",
+      "date": "2026-06-25",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:40",
+      "time": "06:47"
+    },
+    {
+      "id": "elftgxk7a",
+      "date": "2026-06-25",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:36"
+    },
+    {
+      "id": "elfth1u14",
+      "date": "2026-06-25",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:56"
+    },
+    {
+      "id": "elftickyg",
+      "date": "2026-06-25",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4100,
+      "time": "07:28"
+    },
+    {
+      "id": "elftj7dap",
+      "date": "2026-06-25",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.56,
+      "time": "08:31"
+    },
+    {
+      "id": "elftki4ye",
+      "date": "2026-06-25",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.56,
+      "time": "10:17"
+    },
+    {
+      "id": "elftlni1u",
+      "date": "2026-06-25",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.36,
+      "time": "12:37"
+    },
+    {
+      "id": "elftmrc8l",
+      "date": "2026-06-25",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.38,
+      "time": "14:23"
+    },
+    {
+      "id": "elftnbyuf",
+      "date": "2026-06-25",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.36,
+      "time": "16:23"
+    },
+    {
+      "id": "elfto3pvy",
+      "date": "2026-06-25",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:43",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftpnw1u",
+      "date": "2026-06-25",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:19",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftqp65p",
+      "date": "2026-06-25",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:55",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elftr87qi",
+      "date": "2026-06-26",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:22"
+    },
+    {
+      "id": "elftsyvfk",
+      "date": "2026-06-26",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:41"
+    },
+    {
+      "id": "elfttzw15",
+      "date": "2026-06-26",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:19",
+      "time": "06:50"
+    },
+    {
+      "id": "elftu5vp9",
+      "date": "2026-06-26",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.4,
+      "time": "06:35"
+    },
+    {
+      "id": "elftvqaia",
+      "date": "2026-06-26",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:33"
+    },
+    {
+      "id": "elftw0cbz",
+      "date": "2026-06-26",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:41"
+    },
+    {
+      "id": "elftxcwjz",
+      "date": "2026-06-26",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5400,
+      "time": "07:27"
+    },
+    {
+      "id": "elftycm5s",
+      "date": "2026-06-26",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2200,
+      "time": "18:38"
+    },
+    {
+      "id": "elftzrntm",
+      "date": "2026-06-26",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.5,
+      "time": "08:26"
+    },
+    {
+      "id": "elfu0b5jk",
+      "date": "2026-06-26",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.63,
+      "time": "12:53"
+    },
+    {
+      "id": "elfu1lyic",
+      "date": "2026-06-26",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.46,
+      "time": "14:39"
+    },
+    {
+      "id": "elfu2rj54",
+      "date": "2026-06-26",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.6,
+      "time": "16:38"
+    },
+    {
+      "id": "elfu3l4q6",
+      "date": "2026-06-26",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.4,
+      "time": "19:10"
+    },
+    {
+      "id": "elfu4x85t",
+      "date": "2026-06-26",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:53",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfu54mki",
+      "date": "2026-06-26",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:22",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfu6kaiv",
+      "date": "2026-06-26",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:44",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfu7fxts",
+      "date": "2026-06-26",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 195.3,
+      "time": "06:38"
+    },
+    {
+      "id": "elfu86k11",
+      "date": "2026-06-27",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:23"
+    },
+    {
+      "id": "elfu9x28h",
+      "date": "2026-06-27",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:42",
+      "time": "06:42"
+    },
+    {
+      "id": "elfua9bvs",
+      "date": "2026-06-27",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:03",
+      "time": "06:34"
+    },
+    {
+      "id": "elfub60h8",
+      "date": "2026-06-27",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:34"
+    },
+    {
+      "id": "elfucz80l",
+      "date": "2026-06-27",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:58"
+    },
+    {
+      "id": "elfuderha",
+      "date": "2026-06-27",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4900,
+      "time": "07:01"
+    },
+    {
+      "id": "elfues2q3",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.64,
+      "time": "08:18"
+    },
+    {
+      "id": "elfufjk76",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.48,
+      "time": "10:57"
+    },
+    {
+      "id": "elfugwrq7",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "12:42"
+    },
+    {
+      "id": "elfuhjq2i",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.62,
+      "time": "14:35"
+    },
+    {
+      "id": "elfuia1lm",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.64,
+      "time": "16:49"
+    },
+    {
+      "id": "elfuj9pht",
+      "date": "2026-06-27",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.48,
+      "time": "19:25"
+    },
+    {
+      "id": "elfukxp86",
+      "date": "2026-06-27",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:37",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfulrwz9",
+      "date": "2026-06-27",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:52",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfumqgk6",
+      "date": "2026-06-27",
+      "type": "meal",
+      "slot": "S",
+      "name": "Cottage cheese",
+      "calories": 180,
+      "protein": 24,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 0,
+      "time": "15:31",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfun3anj",
+      "date": "2026-06-28",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:54"
+    },
+    {
+      "id": "elfuonnba",
+      "date": "2026-06-28",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:41",
+      "time": "06:51"
+    },
+    {
+      "id": "elfupozch",
+      "date": "2026-06-28",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:21",
+      "time": "06:43"
+    },
+    {
+      "id": "elfuqtn18",
+      "date": "2026-06-28",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 7.4,
+      "time": "06:31"
+    },
+    {
+      "id": "elfurcqsg",
+      "date": "2026-06-28",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:32"
+    },
+    {
+      "id": "elfusl3xv",
+      "date": "2026-06-28",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5500,
+      "time": "07:40"
+    },
+    {
+      "id": "elfutfafb",
+      "date": "2026-06-28",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.61,
+      "time": "08:09"
+    },
+    {
+      "id": "elfuutuyy",
+      "date": "2026-06-28",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.61,
+      "time": "10:37"
+    },
+    {
+      "id": "elfuvdgh7",
+      "date": "2026-06-28",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.69,
+      "time": "12:18"
+    },
+    {
+      "id": "elfuw2vf3",
+      "date": "2026-06-28",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.51,
+      "time": "16:37"
+    },
+    {
+      "id": "elfuxkfup",
+      "date": "2026-06-28",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.6,
+      "time": "19:54"
+    },
+    {
+      "id": "elfuyu9yn",
+      "date": "2026-06-28",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:32",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfuzzfyr",
+      "date": "2026-06-28",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:45",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfv03mjb",
+      "date": "2026-06-28",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 34.8,
+      "time": "06:40",
+      "site": "waist"
+    },
+    {
+      "id": "elfv1876y",
+      "date": "2026-06-28",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 42.2,
+      "time": "06:41",
+      "site": "chest"
+    },
+    {
+      "id": "elfv2fn86",
+      "date": "2026-06-29",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:18"
+    },
+    {
+      "id": "elfv30aln",
+      "date": "2026-06-29",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:37",
+      "time": "06:34"
+    },
+    {
+      "id": "elfv4m1zn",
+      "date": "2026-06-29",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:15",
+      "time": "06:54"
+    },
+    {
+      "id": "elfv5wr7f",
+      "date": "2026-06-29",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.4,
+      "time": "06:50"
+    },
+    {
+      "id": "elfv6w309",
+      "date": "2026-06-29",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:56"
+    },
+    {
+      "id": "elfv73sal",
+      "date": "2026-06-29",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4600,
+      "time": "07:41"
+    },
+    {
+      "id": "elfv82b6o",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.66,
+      "time": "08:33"
+    },
+    {
+      "id": "elfv93re9",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.45,
+      "time": "10:48"
+    },
+    {
+      "id": "elfvarzob",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.36,
+      "time": "12:53"
+    },
+    {
+      "id": "elfvbs4jq",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.66,
+      "time": "14:24"
+    },
+    {
+      "id": "elfvc4cjk",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.64,
+      "time": "16:26"
+    },
+    {
+      "id": "elfvdk2ro",
+      "date": "2026-06-29",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.37,
+      "time": "19:48"
+    },
+    {
+      "id": "elfvem4qb",
+      "date": "2026-06-29",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:30",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvfkg2z",
+      "date": "2026-06-29",
+      "type": "meal",
+      "slot": "L",
+      "name": "Turkey wrap + side salad",
+      "calories": 560,
+      "protein": 40,
+      "carbs": 55,
+      "fat": 20,
+      "fiber": 7,
+      "time": "12:45",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvg0m2j",
+      "date": "2026-06-29",
+      "type": "meal",
+      "slot": "D",
+      "name": "Tofu curry + rice",
+      "calories": 640,
+      "protein": 32,
+      "carbs": 85,
+      "fat": 18,
+      "fiber": 12,
+      "time": "18:32",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvhci8p",
+      "date": "2026-06-29",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 195,
+      "time": "06:47"
+    },
+    {
+      "id": "elfvi74sd",
+      "date": "2026-06-30",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:52"
+    },
+    {
+      "id": "elfvjwqm7",
+      "date": "2026-06-30",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:41",
+      "time": "06:34"
+    },
+    {
+      "id": "elfvkpu2z",
+      "date": "2026-06-30",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:34",
+      "time": "06:42"
+    },
+    {
+      "id": "elfvloyuf",
+      "date": "2026-06-30",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.6,
+      "time": "06:39"
+    },
+    {
+      "id": "elfvmrbtg",
+      "date": "2026-06-30",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:50"
+    },
+    {
+      "id": "elfvn9mcv",
+      "date": "2026-06-30",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5300,
+      "time": "07:35"
+    },
+    {
+      "id": "elfvosq39",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.42,
+      "time": "08:39"
+    },
+    {
+      "id": "elfvp5thw",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.47,
+      "time": "10:48"
+    },
+    {
+      "id": "elfvq5kh6",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.46,
+      "time": "12:46"
+    },
+    {
+      "id": "elfvrtaks",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.36,
+      "time": "14:19"
+    },
+    {
+      "id": "elfvsxp87",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "16:33"
+    },
+    {
+      "id": "elfvtr9l8",
+      "date": "2026-06-30",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.63,
+      "time": "19:08"
+    },
+    {
+      "id": "elfvuvoeg",
+      "date": "2026-06-30",
+      "type": "meal",
+      "slot": "B",
+      "name": "Greek yogurt + berries",
+      "calories": 330,
+      "protein": 30,
+      "carbs": 35,
+      "fat": 8,
+      "fiber": 6,
+      "time": "07:54",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvvf7wv",
+      "date": "2026-06-30",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:24",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvw4jku",
+      "date": "2026-06-30",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:47",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfvxednt",
+      "date": "2026-07-01",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:32"
+    },
+    {
+      "id": "elfvyh5qy",
+      "date": "2026-07-01",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:34"
+    },
+    {
+      "id": "elfvzh85v",
+      "date": "2026-07-01",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:18",
+      "time": "06:44"
+    },
+    {
+      "id": "elfw0tiig",
+      "date": "2026-07-01",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:42"
+    },
+    {
+      "id": "elfw1t0nx",
+      "date": "2026-07-01",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:46"
+    },
+    {
+      "id": "elfw241kj",
+      "date": "2026-07-01",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 6000,
+      "time": "07:10"
+    },
+    {
+      "id": "elfw3dn2p",
+      "date": "2026-07-01",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2100,
+      "time": "18:00"
+    },
+    {
+      "id": "elfw4he3y",
+      "date": "2026-07-01",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.38,
+      "time": "08:43"
+    },
+    {
+      "id": "elfw5herx",
+      "date": "2026-07-01",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.62,
+      "time": "12:41"
+    },
+    {
+      "id": "elfw6rvu3",
+      "date": "2026-07-01",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.37,
+      "time": "14:53"
+    },
+    {
+      "id": "elfw74k98",
+      "date": "2026-07-01",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "19:46"
+    },
+    {
+      "id": "elfw8hrw8",
+      "date": "2026-07-01",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:44",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfw9qc4u",
+      "date": "2026-07-01",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfwa9cft",
+      "date": "2026-07-01",
+      "type": "meal",
+      "slot": "S",
+      "name": "Apple + peanut butter",
+      "calories": 260,
+      "protein": 8,
+      "carbs": 30,
+      "fat": 12,
+      "fiber": 6,
+      "time": "15:19",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfwbdi27",
+      "date": "2026-07-02",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:51"
+    },
+    {
+      "id": "elfwc37uh",
+      "date": "2026-07-02",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:40"
+    },
+    {
+      "id": "elfwd1ygd",
+      "date": "2026-07-02",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:41",
+      "time": "06:52"
+    },
+    {
+      "id": "elfwezfdr",
+      "date": "2026-07-02",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:02",
+      "time": "06:42"
+    },
+    {
+      "id": "elfwffgfv",
+      "date": "2026-07-02",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.5,
+      "time": "06:58"
+    },
+    {
+      "id": "elfwg52og",
+      "date": "2026-07-02",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:57"
+    },
+    {
+      "id": "elfwhud7t",
+      "date": "2026-07-02",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 4900,
+      "time": "07:04"
+    },
+    {
+      "id": "elfwia9eo",
+      "date": "2026-07-02",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.67,
+      "time": "08:40"
+    },
+    {
+      "id": "elfwj77cw",
+      "date": "2026-07-02",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.37,
+      "time": "10:35"
+    },
+    {
+      "id": "elfwk316t",
+      "date": "2026-07-02",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.41,
+      "time": "12:51"
+    },
+    {
+      "id": "elfwlhr2o",
+      "date": "2026-07-02",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.39,
+      "time": "14:27"
+    },
+    {
+      "id": "elfwm4zrh",
+      "date": "2026-07-02",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.58,
+      "time": "19:19"
+    },
+    {
+      "id": "elfwnbqmt",
+      "date": "2026-07-02",
+      "type": "meal",
+      "slot": "B",
+      "name": "Oatmeal + whey shake",
+      "calories": 480,
+      "protein": 42,
+      "carbs": 55,
+      "fat": 10,
+      "fiber": 9,
+      "time": "07:49",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfwo33wv",
+      "date": "2026-07-02",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:54",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfwprxzv",
+      "date": "2026-07-02",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 194.6,
+      "time": "06:32"
+    },
+    {
+      "id": "elfwqr55m",
+      "date": "2026-07-03",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "N",
+      "time": "06:38"
+    },
+    {
+      "id": "elfwrmyqh",
+      "date": "2026-07-03",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:20",
+      "time": "06:38"
+    },
+    {
+      "id": "elfwseejy",
+      "date": "2026-07-03",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 5,
+      "time": "06:34"
+    },
+    {
+      "id": "elfwtrjrr",
+      "date": "2026-07-03",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:58"
+    },
+    {
+      "id": "elfwuyhie",
+      "date": "2026-07-03",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 6000,
+      "time": "07:40"
+    },
+    {
+      "id": "elfwv8xpn",
+      "date": "2026-07-03",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2000,
+      "time": "18:38"
+    },
+    {
+      "id": "elfwwo8fl",
+      "date": "2026-07-03",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.44,
+      "time": "10:51"
+    },
+    {
+      "id": "elfwxlulz",
+      "date": "2026-07-03",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.36,
+      "time": "12:13"
+    },
+    {
+      "id": "elfwye2ql",
+      "date": "2026-07-03",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.6,
+      "time": "14:44"
+    },
+    {
+      "id": "elfwzhuhs",
+      "date": "2026-07-03",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.44,
+      "time": "19:14"
+    },
+    {
+      "id": "elfx0pd1q",
+      "date": "2026-07-03",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:56",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfx1e6vt",
+      "date": "2026-07-03",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:38",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfx21edq",
+      "date": "2026-07-04",
+      "type": "protein",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:29"
+    },
+    {
+      "id": "elfx3zs5t",
+      "date": "2026-07-04",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:16",
+      "time": "06:42"
+    },
+    {
+      "id": "elfx48ayx",
+      "date": "2026-07-04",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:10",
+      "time": "06:41"
+    },
+    {
+      "id": "elfx5txtj",
+      "date": "2026-07-04",
+      "type": "sleepHours",
+      "schemaVersion": 4,
+      "value": 6.8,
+      "time": "06:37"
+    },
+    {
+      "id": "elfx6yo0x",
+      "date": "2026-07-04",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:31"
+    },
+    {
+      "id": "elfx769nr",
+      "date": "2026-07-04",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 5100,
+      "time": "07:00"
+    },
+    {
+      "id": "elfx8kps0",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.54,
+      "time": "08:40"
+    },
+    {
+      "id": "elfx9m4xd",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.7,
+      "time": "10:26"
+    },
+    {
+      "id": "elfxa7bac",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.57,
+      "time": "12:45"
+    },
+    {
+      "id": "elfxby022",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.49,
+      "time": "14:50"
+    },
+    {
+      "id": "elfxcur09",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.62,
+      "time": "16:30"
+    },
+    {
+      "id": "elfxdcvsf",
+      "date": "2026-07-04",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "19:58"
+    },
+    {
+      "id": "elfxeemm0",
+      "date": "2026-07-04",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:40",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxf21tc",
+      "date": "2026-07-04",
+      "type": "meal",
+      "slot": "L",
+      "name": "Chicken + rice bowl",
+      "calories": 650,
+      "protein": 50,
+      "carbs": 70,
+      "fat": 18,
+      "fiber": 8,
+      "time": "12:17",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxgs4oa",
+      "date": "2026-07-04",
+      "type": "meal",
+      "slot": "D",
+      "name": "Chicken pasta",
+      "calories": 720,
+      "protein": 46,
+      "carbs": 80,
+      "fat": 20,
+      "fiber": 9,
+      "time": "18:45",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxh4tp0",
+      "date": "2026-07-04",
+      "type": "meal",
+      "slot": "S",
+      "name": "Cottage cheese",
+      "calories": 180,
+      "protein": 24,
+      "carbs": 8,
+      "fat": 5,
+      "fiber": 0,
+      "time": "15:39",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxi0ap3",
+      "date": "2026-07-05",
+      "type": "exercise",
+      "schemaVersion": 4,
+      "value": "Y",
+      "time": "06:34"
+    },
+    {
+      "id": "elfxjq85v",
+      "date": "2026-07-05",
+      "type": "wake",
+      "schemaVersion": 4,
+      "value": "06:17",
+      "time": "06:51"
+    },
+    {
+      "id": "elfxk6pez",
+      "date": "2026-07-05",
+      "type": "bed",
+      "schemaVersion": 4,
+      "value": "22:25",
+      "time": "06:48"
+    },
+    {
+      "id": "elfxl6pip",
+      "date": "2026-07-05",
+      "type": "sleepQuality",
+      "schemaVersion": 4,
+      "value": 3,
+      "time": "06:56"
+    },
+    {
+      "id": "elfxm7j8n",
+      "date": "2026-07-05",
+      "type": "energy",
+      "schemaVersion": 4,
+      "value": 4,
+      "time": "06:36"
+    },
+    {
+      "id": "elfxnrfzy",
+      "date": "2026-07-05",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 3900,
+      "time": "07:40"
+    },
+    {
+      "id": "elfxo5dqz",
+      "date": "2026-07-05",
+      "type": "steps",
+      "schemaVersion": 4,
+      "value": 2100,
+      "time": "18:47"
+    },
+    {
+      "id": "elfxproyt",
+      "date": "2026-07-05",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.51,
+      "time": "08:07"
+    },
+    {
+      "id": "elfxqkst0",
+      "date": "2026-07-05",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.39,
+      "time": "10:56"
+    },
+    {
+      "id": "elfxrdvoe",
+      "date": "2026-07-05",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.47,
+      "time": "12:46"
+    },
+    {
+      "id": "elfxss1f0",
+      "date": "2026-07-05",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "14:47"
+    },
+    {
+      "id": "elfxt5cnz",
+      "date": "2026-07-05",
+      "type": "water",
+      "schemaVersion": 4,
+      "value": 0.55,
+      "time": "16:19"
+    },
+    {
+      "id": "elfxu2ith",
+      "date": "2026-07-05",
+      "type": "meal",
+      "slot": "B",
+      "name": "Eggs + toast",
+      "calories": 430,
+      "protein": 28,
+      "carbs": 30,
+      "fat": 22,
+      "fiber": 4,
+      "time": "07:41",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxv73ik",
+      "date": "2026-07-05",
+      "type": "meal",
+      "slot": "L",
+      "name": "Salmon + quinoa",
+      "calories": 620,
+      "protein": 45,
+      "carbs": 50,
+      "fat": 25,
+      "fiber": 9,
+      "time": "12:47",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxwy6k3",
+      "date": "2026-07-05",
+      "type": "meal",
+      "slot": "D",
+      "name": "Beef stir-fry + veg",
+      "calories": 700,
+      "protein": 48,
+      "carbs": 60,
+      "fat": 28,
+      "fiber": 11,
+      "time": "18:30",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxxl8t8",
+      "date": "2026-07-05",
+      "type": "meal",
+      "slot": "S",
+      "name": "Protein bar",
+      "calories": 210,
+      "protein": 20,
+      "carbs": 22,
+      "fat": 7,
+      "fiber": 5,
+      "time": "15:17",
+      "schemaVersion": 4
+    },
+    {
+      "id": "elfxymvnc",
+      "date": "2026-07-05",
+      "type": "weight",
+      "schemaVersion": 4,
+      "value": 193.4,
+      "time": "06:48"
+    },
+    {
+      "id": "elfxz7ou8",
+      "date": "2026-07-05",
+      "type": "circumference",
+      "schemaVersion": 4,
+      "value": 34.6,
+      "time": "06:40",
+      "site": "waist"
     }
   ]
 }
