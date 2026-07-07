@@ -568,6 +568,24 @@
   function circumferenceUnitLabel(unit) { return unit === 'cm' ? 'cm' : 'in'; }
 
   /**
+   * formatTime(hhmm, fmt) → display string for a stored 24h "HH:MM".
+   * fmt '12' → "2:30 PM"; anything else → 24h "14:30". Storage & native time
+   * inputs always stay 24h; this only affects how we render times as text.
+   */
+  function formatTime(hhmm, fmt) {
+    var mins = timeToMinutes(hhmm);
+    if (mins === null) return hhmm || '';
+    var h = Math.floor(mins / 60), m = mins % 60;
+    var mm = String(m).padStart(2, '0');
+    if (fmt === '12') {
+      var ap = h < 12 ? 'AM' : 'PM';
+      var h12 = h % 12; if (h12 === 0) h12 = 12;
+      return h12 + ':' + mm + ' ' + ap;
+    }
+    return String(h).padStart(2, '0') + ':' + mm;
+  }
+
+  /**
    * goalSleepHours(profile) → number|null
    * The nightly sleep target implied by the bed/wake goals (e.g. 22:30 → 06:30
    * = 8h), handling the midnight wrap. null if either goal is unset — then the
@@ -1016,6 +1034,7 @@
     inToDisplay: inToDisplay,
     inFromDisplay: inFromDisplay,
     circumferenceUnitLabel: circumferenceUnitLabel,
+    formatTime: formatTime,
     plotLine: plotLine,
     rangeToDays: rangeToDays,
     // measurements (§6 — periodic body metrics)

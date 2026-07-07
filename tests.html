@@ -313,6 +313,15 @@
   eq('circumferenceUnitLabel: cm', L.circumferenceUnitLabel('cm'), 'cm');
   eq('circumferenceUnitLabel: default in', L.circumferenceUnitLabel('nonsense'), 'in');
 
+  // time-of-day display format (storage/inputs stay 24h; this is display only)
+  eq('formatTime: 24h identity', L.formatTime('14:30', '24'), '14:30');
+  eq('formatTime: 24h pads hour', L.formatTime('6:30', '24'), '06:30');
+  eq('formatTime: 12h afternoon', L.formatTime('14:30', '12'), '2:30 PM');
+  eq('formatTime: 12h midnight', L.formatTime('00:05', '12'), '12:05 AM');
+  eq('formatTime: 12h noon', L.formatTime('12:00', '12'), '12:00 PM');
+  eq('formatTime: 12h morning', L.formatTime('06:05', '12'), '6:05 AM');
+  eq('formatTime: invalid passes through', L.formatTime('', '12'), '');
+
   // ---------------------- validateMeasurement --------------------------
   ok('validateMeasurement: minimal valid', L.validateMeasurement({ date: AS }).valid);
   ok('validateMeasurement: bad date invalid', !L.validateMeasurement({ date: 'nope' }).valid);

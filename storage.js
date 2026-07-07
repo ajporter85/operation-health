@@ -43,6 +43,7 @@
     waterUnit: 'L',     // 'L' | 'oz'
     weightUnit: 'lb',   // 'lb' | 'kg' (existing weight data is canonical pounds)
     circumferenceUnit: 'in', // 'in' | 'cm' (measurements stored canonical inches)
+    timeFormat: '24',   // '24' | '12' — how times are shown (inputs stay 24h)
     // Graded-consistency scoring dials (§9.2). Seeded from the canonical
     // defaults in logic.js (one source of truth); a tuning UI comes in a later
     // Phase-2 slice. NEVER hard-code these in logic/UI — they flow in from the

@@ -536,6 +536,27 @@ input:focus, select:focus, textarea:focus {
 .day-summary .detail-list { margin: 0; }
 .summary-actions { justify-content: space-between; align-items: center; }
 
+/* ---- History day ledger: one row per raw entry, inline edit/delete ---- */
+.ledger-title { margin: 16px 0 6px; font-size: 15px; }
+.ledger { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 4px; }
+.led-row {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--surface);
+}
+.led-row.editing { flex-wrap: wrap; align-items: center; }
+.led-time { flex: 0 0 3.4em; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+.led-body { flex: 1 1 auto; }
+.led-note { color: var(--muted); font-style: italic; }
+.led-actions { flex: 0 0 auto; display: flex; gap: 4px; }
+.btn-sm { padding: 4px 10px; font-size: 13px; }
+
+.led-edit { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.led-edit-line { display: inline-flex; align-items: center; gap: 6px; }
+.led-edit input, .led-edit select { width: auto; }
+.led-edit input[type="text"] { min-width: 11rem; }
+.led-edit-actions { display: inline-flex; gap: 6px; align-items: center; }
+
 /* ---- Trends: hand-rolled inline SVG charts (zero deps) ---- */
 .trends-head {
   display: flex;

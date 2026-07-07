@@ -144,8 +144,11 @@
   function currentWaterUnit() { return S.getProfile().waterUnit === 'oz' ? 'oz' : 'L'; }
   function currentWeightUnit() { return S.getProfile().weightUnit === 'kg' ? 'kg' : 'lb'; }
   function currentCircUnit() { return S.getProfile().circumferenceUnit === 'cm' ? 'cm' : 'in'; }
+  function currentTimeFormat() { return S.getProfile().timeFormat === '12' ? '12' : '24'; }
   // Round a canonical-inches value for display in its unit (both to 0.1).
   function fmtCirc(inches, unit) { return round1(L.inToDisplay(inches, unit)); }
+  // Format a stored 24h "HH:MM" per the user's time-display preference.
+  function fmtTime(hhmm) { return L.formatTime(hhmm, currentTimeFormat()); }
   // Round a canonical-litres value for display in its unit (oz whole, L to 0.1).
   function fmtWater(liters, unit) {
     var v = L.waterToDisplay(liters, unit);
@@ -299,6 +302,10 @@
 
     if (historyLevel === 'month') renderMonth(logs);
     else renderWeek(logs);
+
+    // Redraw an open day-detail so it reflects the latest entries and unit/time
+    // prefs (e.g. after logging via "Add to this day", or changing Settings).
+    if (detailDate && logs.length && !$('#day-detail').hidden) drawDayDetail(detailDate);
   }
 
   function renderMonth(logs) {
@@ -361,8 +368,19 @@
       '<span class="cal-day">' + c.day + '</span></button>';
   }
 
-  // Read-only detail for one day: grades + values + notes, with an Edit jump.
+  // Detail for one day: score + projected summary + an editable per-entry ledger.
+  // `detailDate` is the day on show; `editingEntryId` tracks an in-place row edit
+  // across the re-renders that edit/save/cancel/delete trigger.
+  var detailDate = null;
+  var editingEntryId = null;
+
   function renderDayDetail(date) {
+    editingEntryId = null; // arriving fresh — nothing mid-edit
+    drawDayDetail(date);
+  }
+
+  function drawDayDetail(date) {
+    detailDate = date;
     var panel = $('#day-detail');
     var log = S.getLog(date);
     var profile = S.getProfile();
@@ -370,9 +388,9 @@
     if (!log) {
       panel.innerHTML =
         '<div class="detail-head"><h3>' + escapeHtml(formatLongDate(date)) + '</h3></div>' +
-        '<p class="muted">No log for this day.</p>' +
+        '<p class="muted">Nothing logged this day.</p>' +
         '<div class="form-actions"><button type="button" class="btn btn-primary" ' +
-        'data-edit="' + date + '">Add a log</button></div>';
+        'data-edit="' + date + '">Log this day</button></div>';
       panel.hidden = false;
       return;
     }
@@ -388,10 +406,111 @@
         '<span class="unit">/100</span></span>' +
       '</div>' +
       '<dl class="detail-list">' + rows + '</dl>' +
-      (log.notes ? '<p class="detail-notes">' + escapeHtml(log.notes) + '</p>' : '') +
+      '<h4 class="ledger-title">Entries</h4>' +
+      renderLedger(date) +
       '<div class="form-actions"><button type="button" class="btn btn-primary" ' +
-      'data-edit="' + date + '">Edit this day</button></div>';
+      'data-edit="' + date + '">Add to this day</button></div>';
     panel.hidden = false;
+  }
+
+  // After a ledger edit/delete: the day's grade (and maybe its very existence)
+  // can change, so refresh the calendar + dashboard, then redraw the detail.
+  function refreshAfterLedgerChange() {
+    renderHistory();
+    drawDayDetail(detailDate);
+    renderDashboard();
+  }
+
+  // ---- the ledger: one row per raw entry, with inline edit/delete ----
+  // Per-type metadata: how to label an entry, render its value, and (for editing)
+  // convert between canonical storage and the display unit.
+  var ENTRY_META = {
+    water:        { label: '💧 Water', kind: 'num', unit: function () { return L.waterUnitLabel(currentWaterUnit()); }, toDisp: function (v) { return fmtWater(v, currentWaterUnit()); }, fromDisp: function (v) { return round2(L.waterFromDisplay(v, currentWaterUnit())); }, step: '0.1' },
+    steps:        { label: '👟 Steps', kind: 'num', unit: function () { return ''; }, toDisp: function (v) { return v; }, fromDisp: function (v) { return Math.round(v); }, step: '100' },
+    weight:       { label: '⚖️ Weight', kind: 'num', unit: function () { return L.weightUnitLabel(currentWeightUnit()); }, toDisp: function (v) { return fmtWeight(v, currentWeightUnit()); }, fromDisp: function (v) { return round2(L.weightFromDisplay(v, currentWeightUnit())); }, step: '0.1' },
+    circumference:{ label: '📏', kind: 'num', unit: function () { return L.circumferenceUnitLabel(currentCircUnit()); }, toDisp: function (v) { return fmtCirc(v, currentCircUnit()); }, fromDisp: function (v) { return round2(L.inFromDisplay(v, currentCircUnit())); }, step: '0.1' },
+    protein:      { label: 'Morning protein', kind: 'yn' },
+    exercise:     { label: 'Morning exercise', kind: 'yn' },
+    wake:         { label: 'Wake time', kind: 'time' },
+    bed:          { label: 'Bed time', kind: 'time' },
+    sleepHours:   { label: 'Sleep', kind: 'num', unit: function () { return 'h'; }, toDisp: function (v) { return v; }, fromDisp: function (v) { return Number(v); }, step: '0.25' },
+    sleepQuality: { label: 'Sleep quality', kind: 'num', unit: function () { return '/5'; }, toDisp: function (v) { return v; }, fromDisp: function (v) { return Number(v); }, step: '1' },
+    energy:       { label: 'Morning energy', kind: 'num', unit: function () { return '/5'; }, toDisp: function (v) { return v; }, fromDisp: function (v) { return Number(v); }, step: '1' }
+  };
+
+  function entryLabel(e) {
+    var m = ENTRY_META[e.type];
+    var lab = m ? m.label : e.type;
+    if (e.type === 'circumference') {
+      var site = L.CIRC_SITES.filter(function (s) { return s.key === e.site; })[0];
+      lab += ' ' + (site ? site.label : e.site);
+    }
+    return lab;
+  }
+  function entryValueText(e) {
+    var m = ENTRY_META[e.type];
+    if (!m) return String(e.value);
+    if (m.kind === 'yn') return e.value === 'Y' ? 'Yes' : 'No';
+    if (m.kind === 'time') return fmtTime(e.value);
+    if (e.type === 'steps') return Number(e.value).toLocaleString();
+    var u = m.unit();
+    return m.toDisp(e.value) + (u ? ' ' + u : '');
+  }
+
+  function renderLedger(date) {
+    var entries = S.getDayEntries(date); // chronological
+    if (!entries.length) return '<p class="muted small">No entries.</p>';
+    return '<ul class="ledger">' + entries.map(function (e) {
+      var time = e.time ? escapeHtml(fmtTime(e.time)) : '—';
+      if (e.id === editingEntryId) {
+        return '<li class="led-row editing"><span class="led-time">' + time + '</span>' +
+          '<span class="led-edit">' + ledEditHtml(e) + '</span></li>';
+      }
+      return '<li class="led-row"><span class="led-time">' + time + '</span>' +
+        '<span class="led-body"><strong>' + escapeHtml(entryLabel(e)) + '</strong> ' +
+        escapeHtml(entryValueText(e)) +
+        (e.note ? ' <span class="led-note">— ' + escapeHtml(e.note) + '</span>' : '') + '</span>' +
+        '<span class="led-actions">' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-led-edit="' + e.id + '">Edit</button>' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-led-delete="' + e.id + '">Delete</button>' +
+        '</span></li>';
+    }).join('') + '</ul>';
+  }
+
+  function ledEditHtml(e) {
+    var m = ENTRY_META[e.type];
+    var valInput;
+    if (m.kind === 'yn') {
+      valInput = '<select id="led-val">' +
+        '<option value="Y"' + (e.value === 'Y' ? ' selected' : '') + '>Yes</option>' +
+        '<option value="N"' + (e.value === 'N' ? ' selected' : '') + '>No</option></select>';
+    } else if (m.kind === 'time') {
+      valInput = '<input type="time" id="led-val" value="' + (e.value || '') + '">';
+    } else {
+      valInput = '<input type="number" id="led-val" step="' + m.step + '" min="0" value="' +
+        m.toDisp(e.value) + '">' + (m.unit() ? ' <span class="muted small">' + m.unit() + '</span>' : '');
+    }
+    return '<span class="led-edit-line"><strong>' + escapeHtml(entryLabel(e)) + '</strong> ' + valInput + '</span>' +
+      '<span class="led-edit-line"><label class="muted small" for="led-time">Time</label> ' +
+        '<input type="time" id="led-time" value="' + (e.time || '') + '"></span>' +
+      '<span class="led-edit-line"><input type="text" id="led-note" maxlength="140" placeholder="note (optional)" value="' +
+        escapeHtml(e.note || '') + '"></span>' +
+      '<div class="errors" id="led-err" hidden></div>' +
+      '<span class="led-edit-actions">' +
+        '<button type="button" class="btn btn-primary btn-sm" data-led-save="' + e.id + '">Save</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-led-cancel="1">Cancel</button>' +
+      '</span>';
+  }
+
+  function collectLedEdit(e) {
+    var m = ENTRY_META[e.type];
+    var out = { id: e.id, date: e.date, type: e.type };
+    if (e.site) out.site = e.site;
+    var raw = $('#led-val').value;
+    out.value = (m.kind === 'yn' || m.kind === 'time') ? raw : m.fromDisp(Number(raw));
+    var t = $('#led-time').value; if (t) out.time = t;
+    var n = $('#led-note').value.trim(); if (n) out.note = n;
+    return out;
   }
 
   // The scored signals, each with its grade dot and the value behind the grade.
@@ -408,7 +527,7 @@
         if (!isFiniteNum(log.waterLiters)) return '—';
         var wu = profile.waterUnit === 'oz' ? 'oz' : 'L';
         return fmtWater(log.waterLiters, wu) + ' ' + L.waterUnitLabel(wu);
-      case 'wake': return log.wakeTime || '—';
+      case 'wake': return log.wakeTime ? fmtTime(log.wakeTime) : '—';
       default: return '';
     }
   }
@@ -432,7 +551,7 @@
     row('Sleep', isFiniteNum(log.sleepHours) ? log.sleepHours + ' h' : '');
     row('Sleep quality', isFiniteNum(log.sleepQuality) ? log.sleepQuality + '/5' : '');
     row('Morning energy', isFiniteNum(log.morningEnergy) ? log.morningEnergy + '/5' : '');
-    row('Bed time', log.bedTime);
+    row('Bed time', log.bedTime ? fmtTime(log.bedTime) : '');
     // Weight now comes from that day's measurement, not the daily log.
     var meas = S.getMeasurement(log.date);
     row('Weight', meas && isFiniteNum(meas.weight)
@@ -490,10 +609,40 @@
   $('#week-view').addEventListener('click', onDayPick);
 
   $('#day-detail').addEventListener('click', function (e) {
-    var btn = e.target.closest('button[data-edit]');
-    if (!btn) return;
-    $('#f-date').value = btn.dataset.edit;
-    showView('log');
+    var jump = e.target.closest('button[data-edit]');
+    if (jump) { $('#f-date').value = jump.dataset.edit; showView('log'); return; }
+
+    var ed = e.target.closest('[data-led-edit]');
+    if (ed) { editingEntryId = ed.dataset.ledEdit; drawDayDetail(detailDate); return; }
+
+    var cancel = e.target.closest('[data-led-cancel]');
+    if (cancel) { editingEntryId = null; drawDayDetail(detailDate); return; }
+
+    var del = e.target.closest('[data-led-delete]');
+    if (del) {
+      if (!confirm('Delete this entry? This cannot be undone.')) return;
+      S.deleteEntry(del.dataset.ledDelete);
+      editingEntryId = null;
+      refreshAfterLedgerChange();
+      return;
+    }
+
+    var save = e.target.closest('[data-led-save]');
+    if (save) {
+      var id = save.dataset.ledSave;
+      var entry = S.getDayEntries(detailDate).filter(function (x) { return x.id === id; })[0];
+      if (!entry) return;
+      var edited = collectLedEdit(entry);
+      var check = L.validateEntry(edited);
+      if (!check.valid) {
+        var box = $('#led-err');
+        if (box) { box.textContent = check.errors.value || check.errors.time || 'Please enter a valid value.'; box.hidden = false; }
+        return;
+      }
+      S.saveEntry(edited);
+      editingEntryId = null;
+      refreshAfterLedgerChange();
+    }
   });
 
   // ------------------------------------------------------------- log tab
@@ -779,8 +928,8 @@
     if (isFiniteNum(day.weight)) row('⚖️ Weight', fmtWeight(day.weight, gu) + ' ' + L.weightUnitLabel(gu));
     if (day.proteinWithin30) row('Morning protein', day.proteinWithin30 === 'Y' ? 'Yes' : 'No');
     if (day.morningExercise) row('Morning exercise', day.morningExercise === 'Y' ? 'Yes' : 'No');
-    if (day.wakeTime) row('Wake', escapeHtml(day.wakeTime));
-    if (day.bedTime) row('Bed', escapeHtml(day.bedTime));
+    if (day.wakeTime) row('Wake', escapeHtml(fmtTime(day.wakeTime)));
+    if (day.bedTime) row('Bed', escapeHtml(fmtTime(day.bedTime)));
     if (isFiniteNum(day.sleepHours)) row('Sleep', day.sleepHours + ' h');
     if (isFiniteNum(day.sleepQuality)) row('Sleep quality', day.sleepQuality + '/5');
     if (isFiniteNum(day.morningEnergy)) row('Morning energy', day.morningEnergy + '/5');
@@ -848,6 +997,7 @@
     $('#s-water-label').textContent = 'Water target (' + L.waterUnitLabel(shownWaterUnit) + ')';
     $('#s-weight-unit').value = p.weightUnit === 'kg' ? 'kg' : 'lb';
     $('#s-circ-unit').value = p.circumferenceUnit === 'cm' ? 'cm' : 'in';
+    $('#s-time-format').value = p.timeFormat === '12' ? '12' : '24';
     $('#s-protein').value = valOr(p.proteinTarget);
     $('#s-phase').value = String(p.roadmapPhase || 1);
     $('#settings-saved').hidden = true;
@@ -876,7 +1026,8 @@
       roadmapPhase: Number($('#s-phase').value),
       waterUnit: wunit,
       weightUnit: $('#s-weight-unit').value === 'kg' ? 'kg' : 'lb',
-      circumferenceUnit: $('#s-circ-unit').value === 'cm' ? 'cm' : 'in'
+      circumferenceUnit: $('#s-circ-unit').value === 'cm' ? 'cm' : 'in',
+      timeFormat: $('#s-time-format').value === '12' ? '12' : '24'
     };
     setNum(p, 'stepsTarget', $('#s-steps').value);
     // Water target is entered in the chosen unit; store canonical litres.
