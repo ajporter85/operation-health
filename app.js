@@ -672,7 +672,10 @@
         }
         return;
       }
+      var saveLib = edited.type === 'meal' && wantsSaveToLibrary();
+      var mealFields = saveLib ? collectMealFields() : null;
       S.saveEntry(edited);
+      if (saveLib) saveMealToLibrary(mealFields);
       editingEntryId = null;
       refreshAfterLedgerChange();
     }
@@ -746,7 +749,30 @@
       '<div class="field"><label for="meal-name">Name <span class="muted small">(optional)</span></label>' +
       '<input type="text" id="meal-name" maxlength="80" value="' + escapeHtml(m.name || '') +
       '" placeholder="e.g. Oatmeal + shake"></div>' +
-      '<div class="grid-2">' + macros + '</div>';
+      '<div class="grid-2">' + macros + '</div>' +
+      '<label class="meal-savelib"><input type="checkbox" id="meal-savelib"> ★ Save to library</label>';
+  }
+  function prefillMealForm(m) {
+    $$('#meal-slots .slot-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.slot === m.slot));
+    });
+    $('#meal-name').value = m.name || '';
+    L.MEAL_MACROS.forEach(function (mm) {
+      $('#meal-' + mm.key).value = isFiniteNum(m[mm.key]) ? m[mm.key] : '';
+    });
+  }
+  function wantsSaveToLibrary() { var cb = $('#meal-savelib'); return !!(cb && cb.checked); }
+  // Upsert the current meal-form fields into the library (by name).
+  function saveMealToLibrary(fields) {
+    var item = Object.assign({}, fields);
+    var check = L.validateMealItem(item);
+    if (!check.valid) {
+      alert('Couldn’t save to library: ' + check.errors[Object.keys(check.errors)[0]]);
+      return;
+    }
+    var existing = S.findMealByName(item.name);
+    if (existing) item.id = existing.id;
+    S.saveMealItem(item);
   }
   function collectMealFields() {
     var out = {};
@@ -790,8 +816,15 @@
           '<input type="number" id="sh-water" inputmode="decimal" min="0" step="0.1"></div>' +
           sheetFooter({ saveLabel: 'Add water' });
       }
-      case 'meal':
-        return '<h3>🍽️ Meal</h3>' + mealFieldsHtml({}) + sheetFooter({ saveLabel: 'Save meal' });
+      case 'meal': {
+        var lib = S.getMealLibrary();
+        var picker = lib.length ?
+          '<div class="field"><label for="meal-pick">Log a saved meal</label>' +
+          '<select id="meal-pick"><option value="">— pick from library —</option>' +
+          lib.map(function (it) { return '<option value="' + it.id + '">' + escapeHtml(it.name) + '</option>'; }).join('') +
+          '</select></div>' : '';
+        return '<h3>🍽️ Meal</h3>' + picker + mealFieldsHtml({}) + sheetFooter({ saveLabel: 'Save meal' });
+      }
       case 'steps':
         return '<h3>👟 Steps</h3>' +
           '<p class="muted small">Adds to the day — a morning and an evening walk can be logged separately.</p>' +
@@ -881,6 +914,14 @@
     if (!act) return;
     if (act.dataset.act === 'cancel') closeSheet();
     else if (act.dataset.act === 'save') saveSheet(openType);
+  });
+
+  // Picking a saved meal prefills the meal form (you can still tweak before Save).
+  $('#log-sheet').addEventListener('change', function (e) {
+    var pick = e.target.closest('#meal-pick');
+    if (!pick || !pick.value) return;
+    var it = S.getMealLibrary().filter(function (x) { return x.id === pick.value; })[0];
+    if (it) prefillMealForm(it);
   });
 
   function sheetNote() { var el = $('#sh-note'); return el && el.value.trim() ? el.value.trim() : ''; }
@@ -978,7 +1019,13 @@
       }
     }
     entries.forEach(stamp); // shared top time + this sheet's note onto every entry
-    if (commitEntries(entries)) afterSave(!!ADDITIVE_STAYS_OPEN[type]);
+    // Grab the library intent before commit/afterSave tears the form down.
+    var saveLib = type === 'meal' && wantsSaveToLibrary();
+    var mealFields = saveLib ? collectMealFields() : null;
+    if (commitEntries(entries)) {
+      if (saveLib) saveMealToLibrary(mealFields);
+      afterSave(!!ADDITIVE_STAYS_OPEN[type]);
+    }
   }
 
   function showSheetErrors(errors) {
@@ -1109,8 +1156,34 @@
     $('#s-carbs').value = valOr(p.carbTarget);
     $('#s-fat').value = valOr(p.fatTarget);
     $('#s-fiber').value = valOr(p.fiberTarget);
+    renderMealLibrary();
     $('#settings-saved').hidden = true;
   }
+
+  // Saved-meals manager: list each item with its macros + a Delete.
+  function renderMealLibrary() {
+    var lib = S.getMealLibrary();
+    var host = $('#meal-lib-list');
+    $('#meal-lib-empty').hidden = !!lib.length;
+    host.innerHTML = lib.map(function (it) {
+      var macros = L.MEAL_MACROS.filter(function (mm) { return isFiniteNum(it[mm.key]); })
+        .map(function (mm) { return fmtMacro(it[mm.key], mm); }).join(' · ');
+      var slot = it.slot ? mealSlotLabel(it.slot) + ' · ' : '';
+      return '<div class="meal-lib-row">' +
+        '<span class="meal-lib-name"><strong>' + escapeHtml(it.name) + '</strong> ' +
+        '<span class="muted small">' + escapeHtml(slot) + macros + '</span></span>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-lib-del="' + it.id + '">Delete</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  $('#meal-lib-list').addEventListener('click', function (e) {
+    var del = e.target.closest('[data-lib-del]');
+    if (!del) return;
+    if (!confirm('Remove this meal from your library?')) return;
+    S.deleteMealItem(del.dataset.libDel);
+    renderMealLibrary();
+  });
 
   // Flip the water unit live: reinterpret the shown target into the new unit
   // (via canonical litres) and relabel. Persists only on Save, like the rest.

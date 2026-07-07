@@ -930,6 +930,29 @@
   }
 
   /**
+   * validateMealItem(item) → { valid, errors }
+   * A reusable Meal Library entry. Unlike a logged meal, a library item MUST
+   * have a name (that's how you pick it); slot is optional; ≥1 macro required.
+   */
+  function validateMealItem(item) {
+    var errors = {};
+    item = item || {};
+    if (!item.name || !String(item.name).trim()) errors.name = 'Give the meal a name.';
+    if (item.slot && !MEAL_SLOTS.some(function (s) { return s.key === item.slot; })) {
+      errors.slot = 'Invalid slot.';
+    }
+    var provided = 0;
+    MEAL_MACROS.forEach(function (mm) {
+      var v = item[mm.key];
+      if (v == null || v === '') return;
+      provided++;
+      if (!inRange(Number(v), 0, mm.max)) errors[mm.key] = mm.label + ' looks out of range.';
+    });
+    if (provided === 0) errors.macros = 'Enter at least one macro.';
+    return { valid: Object.keys(errors).length === 0, errors: errors };
+  }
+
+  /**
    * projectDay(entries) → derived DailyLog for a single day.
    * PURE. Rolls one day's entries into the same {waterLiters, steps, weight,
    * proteinWithin30, wakeTime, …} shape the scoring engine already consumes, so
@@ -1003,6 +1026,10 @@
       errors.push(data.dailyLogs
         ? 'This backup predates incremental logging (v4) and can’t be imported.'
         : 'Missing entries array.');
+    }
+    // Meal library is optional (arrived with M2); reject only a malformed one.
+    if (data.mealLibrary !== undefined && !Array.isArray(data.mealLibrary)) {
+      errors.push('mealLibrary must be an array when present.');
     }
     return { valid: errors.length === 0, errors: errors };
   }
@@ -1087,6 +1114,7 @@
     MEAL_SLOTS: MEAL_SLOTS,
     MEAL_MACROS: MEAL_MACROS,
     validateEntry: validateEntry,
+    validateMealItem: validateMealItem,
     projectDay: projectDay,
     projectAll: projectAll,
     // validation & migration

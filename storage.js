@@ -13,6 +13,7 @@
   var L = window.Logic;
   var KEY_PROFILE = 'oh.profile';
   var KEY_ENTRIES = 'oh.entries'; // incremental-logging stream (LogEntry records) — source of truth
+  var KEY_MEAL_LIB = 'oh.mealLibrary'; // reusable saved meals (reference data, not entries)
   var KEY_PREFS = 'oh.prefs'; // lightweight UI prefs (not health data, not exported)
 
   // Entries sort chronologically: by date, then time (time-less first), then id.
@@ -177,6 +178,44 @@
     writeJSON(KEY_ENTRIES, all);
   }
 
+  // ---- Meal Library (reusable saved meals; §7.8) ----
+
+  /** Saved meals, migrated, sorted A→Z by name. */
+  function getMealLibrary() {
+    var m = readJSON(KEY_MEAL_LIB, []);
+    if (!Array.isArray(m)) m = [];
+    return m.map(L.migrateRecord).sort(function (a, b) {
+      var an = String(a.name || '').toLowerCase(), bn = String(b.name || '').toLowerCase();
+      return an < bn ? -1 : an > bn ? 1 : 0;
+    });
+  }
+
+  /** Insert or update a library item (by id). */
+  function saveMealItem(item) {
+    var rec = L.migrateRecord(Object.assign({}, item));
+    if (!rec.id) rec.id = genId();
+    var all = readJSON(KEY_MEAL_LIB, []);
+    if (!Array.isArray(all)) all = [];
+    all = all.filter(function (x) { return x.id !== rec.id; });
+    all.push(rec);
+    writeJSON(KEY_MEAL_LIB, all);
+    return rec;
+  }
+
+  function deleteMealItem(id) {
+    var all = getMealLibrary().filter(function (x) { return x.id !== id; });
+    writeJSON(KEY_MEAL_LIB, all);
+  }
+
+  /** Find a saved meal by name (case-insensitive) — used for upsert-on-save. */
+  function findMealByName(name) {
+    var n = String(name || '').trim().toLowerCase();
+    if (!n) return null;
+    return getMealLibrary().filter(function (x) {
+      return String(x.name || '').trim().toLowerCase() === n;
+    })[0] || null;
+  }
+
   // ---- Export / Import ----
 
   /** The full backup payload — the entries stream plus profile (v4). */
@@ -186,7 +225,8 @@
       schemaVersion: L.SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
       profile: getProfile(),
-      entries: getEntries()
+      entries: getEntries(),
+      mealLibrary: getMealLibrary()
     };
   }
 
@@ -224,6 +264,20 @@
       saveProfile(data.profile);
     }
 
+    // Meal library (optional): replace wholesale, or upsert by id on merge.
+    if (Array.isArray(data.mealLibrary)) {
+      if (mode === 'replace') {
+        writeJSON(KEY_MEAL_LIB, data.mealLibrary.map(L.migrateRecord));
+      } else {
+        var libById = {};
+        getMealLibrary().forEach(function (x) { libById[x.id] = x; });
+        data.mealLibrary.map(L.migrateRecord).forEach(function (x) {
+          if (x.id) libById[x.id] = x;
+        });
+        writeJSON(KEY_MEAL_LIB, Object.keys(libById).map(function (id) { return libById[id]; }));
+      }
+    }
+
     result.total = getEntries().length;
     return result;
   }
@@ -256,6 +310,10 @@
     getDayEntries: getDayEntries,
     saveEntry: saveEntry,
     deleteEntry: deleteEntry,
+    getMealLibrary: getMealLibrary,
+    saveMealItem: saveMealItem,
+    deleteMealItem: deleteMealItem,
+    findMealByName: findMealByName,
     exportData: exportData,
     importData: importData
   };

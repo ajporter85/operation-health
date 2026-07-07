@@ -410,6 +410,21 @@
   eq('MEAL_SLOTS has 4 slots', L.MEAL_SLOTS.length, 4);
   eq('MEAL_MACROS has 5 macros', L.MEAL_MACROS.length, 5);
 
+  // meal library items — name required (that's how you pick one), >=1 macro
+  ok('validateMealItem: valid', L.validateMealItem({ name: 'Oatmeal', slot: 'B', calories: 480, protein: 42 }).valid);
+  ok('validateMealItem: needs a name', !L.validateMealItem({ calories: 480 }).valid);
+  ok('validateMealItem: needs a macro', !L.validateMealItem({ name: 'Empty' }).valid);
+  ok('validateMealItem: slot optional', L.validateMealItem({ name: 'Snack bar', fiber: 5 }).valid);
+  ok('validateMealItem: bad slot invalid', !L.validateMealItem({ name: 'X', slot: 'Q', calories: 100 }).valid);
+  ok('validateMealItem: out-of-range macro invalid', !L.validateMealItem({ name: 'X', calories: 99999 }).valid);
+
+  ok('validateImport: mealLibrary optional',
+     L.validateImport({ app: 'operation-health', schemaVersion: 4, entries: [] }).valid);
+  ok('validateImport: mealLibrary array ok',
+     L.validateImport({ app: 'operation-health', schemaVersion: 4, entries: [], mealLibrary: [] }).valid);
+  ok('validateImport: non-array mealLibrary rejected',
+     !L.validateImport({ app: 'operation-health', schemaVersion: 4, entries: [], mealLibrary: {} }).valid);
+
   // ------------------------------ projectDay ----------------------------
   eq('projectDay: empty → date null', L.projectDay([]).date, null);
   eq('projectDay: additive water sums',
