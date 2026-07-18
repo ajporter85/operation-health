@@ -36,5 +36,6 @@ mayo-based Alabama white) are flagged fridge-only and made fresh.
 - `southwest-hybrid-bowl.html` — Theme 01, Southwest / Tex-Mex (6 builds)
 - `bbq-power-bowl.html` — Theme 02, BBQ Power Bowl (6 builds)
 - `loaded-potato-bowl.html` — Theme 03, Loaded Potato Bowl (6 builds)
+- `burger-bowl.html` — Theme 04, Burger Bowl (6 builds)
 
-Planned: Burger, Italian, Chili.
+Planned: Italian, Chili.
