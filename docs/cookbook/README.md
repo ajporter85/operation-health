@@ -31,6 +31,24 @@ Sauces carry a `freezes` flag: freezable sauces (tomato BBQ, cashew, mustard) ge
 portioned into 2-Tbsp molds; sauces that split/brown frozen (avocado crema,
 mayo-based Alabama white) are flagged fridge-only and made fresh.
 
+## Color language (one color = one meaning)
+
+The chrome uses a deliberate, consistent palette so a glance carries meaning:
+
+- **Chipotle (red-orange)** — structure & the active selection: section/step numbers,
+  the active tab, hero lead. Nothing else "selected"-looking, so the picked tab is the
+  only selection signal (the Protein card is styled like the other components).
+- **Green (cactus)** — freezer-friendly + the goal pills: the "Freeze in 2-Tbsp molds"
+  chip, the Souper Cube graphic, the footer "High protein / High fiber / Freezer-ready".
+- **Amber (corn)** — a keep-fresh caution: the "best fresh — fridge only" chips.
+- **Neutral (ink/outline)** — plain info: method/appliance chips, the REMIX/PLANT badge,
+  amounts, and tip asides.
+
+Macros are a **separate, always-labeled key** used identically on the tab line and in the
+Nutrition panel: **carbs = gold, protein = red, fat = brown, fiber = teal**. The tab shows
+two rows — main macros (C · P · F) then fiber · calories. The Nutrition bar is the
+**calorie split** (protein/carbs 4 kcal/g, fat 9 kcal/g), captioned as such.
+
 ## Cards
 
 - `southwest-hybrid-bowl.html` — Theme 01, Southwest / Tex-Mex (6 builds)
@@ -38,5 +56,6 @@ mayo-based Alabama white) are flagged fridge-only and made fresh.
 - `loaded-potato-bowl.html` — Theme 03, Loaded Potato Bowl (6 builds)
 - `burger-bowl.html` — Theme 04, Burger Bowl (6 builds)
 - `italian-bowl.html` — Theme 05, Italian Bowl (6 builds)
+- `chili-bowl.html` — Theme 06, Chili Bowl (6 builds)
 
-Planned: Chili.
+All six themes complete (36 builds total).

@@ -1,4 +1,4 @@
-<title>Loaded Potato Bowl — Operation Health Meal Library</title>
+<title>Chili Bowl — Operation Health Meal Library</title>
 <style>
   :root {
     --paper: #FBF6EF; --surface: #FFFFFF; --surface-2: #F4ECE0;
@@ -217,13 +217,13 @@
 <div class="wrap">
 
   <header class="hero">
-    <span class="eyebrow">Operation Health · Meal Library · Theme 03</span>
-    <h1>Loaded<span class="lead">Potato Bowl</span></h1>
-    <p class="tagline">Crispy roasted potatoes + veg — comfort food built to carry any protein. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
+    <span class="eyebrow">Operation Health · Meal Library · Theme 06</span>
+    <h1>Chili<span class="lead">Bowl</span></h1>
+    <p class="tagline">A real pot of chili — beans, charred corn &amp; peppers over brown rice, finished with fresh avocado, cheese &amp; lime. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
     <div class="meta">
       <span>Makes <b>4</b> portions</span>
       <span>Prep <b>20</b> min</span>
-      <span>Cook <b>45</b> min</span>
+      <span>Cook <b>40</b> min</span>
       <span>Freezes <b>3</b> mo</span>
       <span>Reheat <b>4–6</b> min</span>
     </div>
@@ -270,7 +270,7 @@
   </details>
 
   <footer>
-    <span>Operation Health Meal Library · Loaded Potato Bowl · v2</span>
+    <span>Operation Health Meal Library · Chili Bowl · v1</span>
     <span class="pills">
       <span class="pill">★ High protein</span>
       <span class="pill">★ High fiber</span>
@@ -289,245 +289,262 @@
 <script type="application/json" id="meal-data">
 {
   "schemaVersion": 3,
-  "id": "loaded-potato-bowl",
-  "theme": "Loaded Potato Bowl",
-  "title": "Loaded Potato Bowl",
+  "id": "chili-bowl",
+  "theme": "Chili Bowl",
+  "title": "Chili Bowl",
   "servings": 4,
   "prepMin": 20,
-  "cookMin": 45,
+  "cookMin": 40,
   "freezeMonths": 3,
   "reheatMin": [4, 6],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
-  "grain": "potatoes",
-  "baseContribution": "~6 g protein & ~8 g fiber before you add your protein",
+  "grain": "rice",
+  "baseContribution": "~9 g protein & ~10 g fiber before you add your protein",
   "molds": {
     "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
+    "component": { "size": "1-cup", "count": 8, "use": "spare rice / chili / beans to swap between bowls" },
     "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
   },
   "prep": [
     { "kind": "grain",
-      "p": "Cut ~2 lb potatoes into 3/4-inch cubes. Toss with 1 Tbsp oil, 1/2 tsp smoked paprika, 1/2 tsp garlic powder, 3/4 tsp salt. Roast until crisp and golden, flipping once.",
-      "chips": [ { "t": "Oven · 425°F · 30–35 min" }, { "t": "Air fryer · 400°F · 18–22 min", "cls": "fast" } ],
-      "tip": "<b>Crispier:</b> soak the cubes 10 min, dry well, and don't crowd the pan." },
-    { "h": "Roast the vegetables",
-      "p": "Toss broccoli florets, sliced peppers, and cauliflower with 1 tsp oil + a pinch of salt. Roast until tender-crisp and lightly charred.",
-      "chips": [ { "t": "Oven · 425°F · 18–22 min" }, { "t": "Air fryer · 400°F · 10–12 min", "cls": "fast" } ],
-      "tip": "<b>Same oven:</b> roast these on a second tray alongside the potatoes." },
+      "p": "Rinse 1 cup dry brown rice and cook with 2 cups water & a pinch of salt. Fluff and spread to cool. (Brown rice holds up to freezing far better than white.)",
+      "chips": [ { "t": "Rice cooker · brown-rice setting" }, { "t": "Instant Pot · 22 min high, natural release", "cls": "fast" } ],
+      "tip": "<b>Swap-friendly:</b> cilantro-lime rice or quinoa work great here too — just cook and cool the same way." },
+    { "h": "Char the corn & peppers, warm the beans",
+      "p": "Dice 2 bell peppers and 1 onion; char with 1 cup corn in a dry-ish hot pan (or roast) until spotty-brown. Drain & rinse your beans and warm them through with a pinch of cumin.",
+      "chips": [ { "t": "Stovetop · 8–10 min" }, { "t": "Air fryer / oven · 400°F · 12–15 min", "cls": "fast" } ],
+      "tip": "<b>Char = depth:</b> a little blister on the corn and peppers gives the bowl a smoky backbone. Beans keep it high-fiber." },
     { "kind": "protein" },
     { "kind": "sauce" }
   ],
   "defaults": {
-    "sauceId": "greek-yogurt-ranch",
+    "sauceId": "red-chili",
     "base": [
-      { "item": "Roasted potatoes", "amt": "1 cup" },
-      { "item": "Roasted broccoli", "amt": "1/4 cup" },
-      { "item": "Roasted peppers", "amt": "1/4 cup" },
-      { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+      { "item": "Brown rice", "amt": "1/2 cup" },
+      { "item": "Black beans", "amt": "1/3 cup" },
+      { "item": "Charred corn", "amt": "1/4 cup" },
+      { "item": "Peppers & onion", "amt": "1/4 cup" }
     ],
-    "fresh": ["Diced tomato", "Green onion", "Optional: pickled jalapeno, chives"],
+    "fresh": ["Diced avocado", "Shredded cheese", "Lime wedge", "Fresh cilantro", "Optional: diced red onion, jalapeño, Greek yogurt, baked tortilla strips"],
     "shopping": {
       "produce": [
-        { "item": "Potatoes", "amt": "~2 lb (Yukon or red)" },
-        { "item": "Broccoli", "amt": "1 head" },
         { "item": "Bell peppers", "amt": "2" },
-        { "item": "Cauliflower", "amt": "1 small head" },
-        { "item": "Tomato", "amt": "2 · fresh topping" },
-        { "item": "Green onions", "amt": "1 bunch · fresh topping" }
+        { "item": "Yellow onion", "amt": "1" },
+        { "item": "Avocado", "amt": "2 · fresh topping" },
+        { "item": "Cilantro", "amt": "1 bunch · fresh topping" },
+        { "item": "Limes", "amt": "2 · fresh topping" }
       ],
-      "pantry": [],
-      "seasoning": ["Olive oil", "Smoked paprika", "Garlic powder", "Onion powder", "Dried dill", "Chili powder", "Cumin", "Salt", "Black pepper"]
+      "pantry": [
+        { "item": "Brown rice", "amt": "1 cup dry" },
+        { "item": "Black beans", "amt": "1 can (15 oz)" },
+        { "item": "Corn", "amt": "1 cup (frozen or can)" },
+        { "item": "Shredded cheese", "amt": "small bag · fresh topping" }
+      ],
+      "seasoning": ["Olive oil", "Chili powder", "Ground cumin", "Smoked paprika", "Garlic powder", "Onion powder", "Dried oregano", "Salt", "Black pepper"]
     }
   },
   "sauces": {
-    "greek-yogurt-ranch": {
-      "name": "Greek yogurt ranch",
-      "tool": "Whisk",
-      "freezes": false,
-      "recipe": "Whisk 1/2 cup Greek yogurt, 2 Tbsp buttermilk (or milk), 1 tsp dried dill, 1/2 tsp each garlic & onion powder, 1 tsp lemon juice, and a pinch of salt. Thin to a drizzle.",
+    "red-chili": {
+      "name": "Classic red chili sauce",
+      "tool": "Saucepan · 15 min",
+      "freezes": true,
+      "recipe": "Simmer one 14-oz can diced tomatoes, 2 Tbsp tomato paste, 2 Tbsp chili powder, 1 Tbsp cumin, 1 tsp smoked paprika, 1 tsp oregano, 1/2 tsp each garlic & onion powder with a splash of water for 15 min. Season to taste.",
       "items": [
-        { "item": "Greek yogurt", "amt": "1/2 cup" },
-        { "item": "Buttermilk or milk", "amt": "2 Tbsp" },
-        { "item": "Dried dill", "amt": "1 tsp" },
-        { "item": "Garlic + onion powder", "amt": "1/2 tsp ea" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
+        { "item": "Diced tomatoes", "amt": "14-oz can" },
+        { "item": "Tomato paste", "amt": "2 Tbsp" },
+        { "item": "Chili powder", "amt": "2 Tbsp" },
+        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
+        { "item": "Oregano + garlic/onion", "amt": "to taste" }
       ],
       "shop": [
-        { "item": "Greek yogurt", "amt": "small tub", "group": "pantry" },
-        { "item": "Buttermilk or milk", "amt": "small", "group": "pantry" }
+        { "item": "Diced tomatoes", "amt": "14-oz can", "group": "pantry" },
+        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" }
       ]
     },
-    "sour-cream-chive": {
-      "name": "Sour cream & chive",
-      "tool": "Whisk",
-      "freezes": false,
-      "recipe": "Stir 1/2 cup Greek yogurt (or light sour cream) with 2 Tbsp chopped chives, 1 tsp lemon juice, and a pinch of salt & pepper.",
-      "items": [
-        { "item": "Greek yogurt or sour cream", "amt": "1/2 cup" },
-        { "item": "Chives", "amt": "2 Tbsp" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
-      ],
-      "shop": [
-        { "item": "Greek yogurt or light sour cream", "amt": "small tub", "group": "pantry" },
-        { "item": "Chives", "amt": "1 bunch", "group": "produce" }
-      ]
-    },
-    "cheese-style": {
-      "name": "Cheese-style sauce",
+    "chipotle-adobo": {
+      "name": "Smoky chipotle sauce",
       "tool": "Blender",
       "freezes": true,
-      "recipe": "Blend 1/2 cup cashews (soaked if not high-speed), 1/2 cup water, 3 Tbsp nutritional yeast, 1 tsp Dijon, 1/2 tsp garlic powder, 1 tsp lemon juice, and 1/2 tsp salt until smooth & pourable.",
+      "recipe": "Blend one 14-oz can fire-roasted tomatoes, 1–2 chipotles in adobo (+1 tsp of the sauce), 2 cloves garlic, 1 Tbsp cumin, 1 tsp smoked paprika & 1/2 tsp salt until smooth. Warm through.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Nutritional yeast", "amt": "3 Tbsp" },
-        { "item": "Dijon mustard", "amt": "1 tsp" },
-        { "item": "Garlic powder", "amt": "1/2 tsp" },
-        { "item": "Lemon + water + salt", "amt": "to blend" }
+        { "item": "Fire-roasted tomatoes", "amt": "14-oz can" },
+        { "item": "Chipotles in adobo", "amt": "1–2 + sauce" },
+        { "item": "Garlic", "amt": "2 cloves" },
+        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
+        { "item": "Salt", "amt": "to taste" }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" },
-        { "item": "Nutritional yeast", "amt": "", "group": "pantry" }
+        { "item": "Fire-roasted tomatoes", "amt": "14-oz can", "group": "pantry" },
+        { "item": "Chipotles in adobo", "amt": "1 small can", "group": "pantry" }
+      ]
+    },
+    "salsa-verde": {
+      "name": "Salsa verde",
+      "tool": "Blender / Saucepan",
+      "freezes": true,
+      "recipe": "Blend 8–10 husked tomatillos (or 1 jar salsa verde) with one 4-oz can green chiles, 2 cloves garlic, 1 tsp cumin, juice of 1 lime & 1/2 tsp salt; simmer 10 min to mellow.",
+      "items": [
+        { "item": "Tomatillos or salsa verde", "amt": "8–10 / 1 jar" },
+        { "item": "Green chiles", "amt": "4-oz can" },
+        { "item": "Garlic + lime", "amt": "2 cloves / 1" },
+        { "item": "Cumin + salt", "amt": "to taste" }
+      ],
+      "shop": [
+        { "item": "Tomatillos", "amt": "8–10 (or 1 jar salsa verde)", "group": "produce" },
+        { "item": "Green chiles", "amt": "4-oz can", "group": "pantry" }
       ]
     }
   },
   "variations": [
     {
-      "id": "ranch-chicken",
-      "name": "Ranch Chicken",
+      "id": "classic-beef-chili",
+      "name": "Classic Beef Chili",
       "kind": "protein-swap",
       "featured": true,
-      "protein": { "name": "Roasted chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, roast or air-fry to 165°F internal, rest 5 min, then dice or slice.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "macros": { "kcal": 500, "protein": 52, "carbs": 53, "fiber": 8, "fat": 12 },
-      "shopping": { "protein": { "item": "Chicken breast", "amt": "~24 oz raw" } },
-      "note": "The lean, crowd-pleasing default — crispy potatoes, roasted veg, cool herby ranch. Highest protein, lowest fat."
+      "sauceId": "red-chili",
+      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with a little chili powder, cumin & garlic; break into fine crumbles and simmer a few minutes in the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
+      "macros": { "kcal": 560, "protein": 44, "carbs": 58, "fiber": 13, "fat": 20 },
+      "shopping": {
+        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
+        "produceAdd": [],
+        "pantryAdd": []
+      },
+      "note": "The one everybody knows — savory beef, beans, corn & peppers in a classic red chili over brown rice. This is the featured build."
     },
     {
-      "id": "turkey-ranch",
-      "name": "Turkey Ranch",
+      "id": "turkey-chili",
+      "name": "Turkey Chili",
       "kind": "protein-swap",
-      "protein": { "name": "Seasoned ground turkey", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 ground turkey with garlic, onion powder & paprika until no pink.", "appliance": ["Stovetop"] },
-      "macros": { "kcal": 520, "protein": 46, "carbs": 53, "fiber": 8, "fat": 18 },
-      "shopping": { "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" } },
-      "note": "The fastest weeknight build — ground turkey browns in one pan."
+      "sauceId": "red-chili",
+      "protein": { "name": "Ground turkey (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 turkey with chili powder, cumin & a splash of Worcestershire; simmer into the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
+      "macros": { "kcal": 525, "protein": 44, "carbs": 58, "fiber": 13, "fat": 15 },
+      "shopping": {
+        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
+        "produceAdd": [],
+        "pantryAdd": []
+      },
+      "note": "The leaner everyday build — all the chili comfort, less fat. Turkey soaks up the spices beautifully."
     },
     {
-      "id": "cheese-bacon",
-      "name": "Cheese & Bacon",
+      "id": "smoky-chipotle-beef",
+      "name": "Smoky Chipotle Beef",
       "kind": "remix",
-      "sauceId": "sour-cream-chive",
-      "protein": { "name": "Chicken + cheddar + bacon", "serving": "5 oz / ~140 g chicken", "method": "Roast chicken to 165°F and dice. Cook 4-6 slices center-cut or turkey bacon crisp and crumble. Shredded sharp cheddar melts over the hot potatoes.", "appliance": ["Oven · 425°F", "Air fryer"] },
+      "sauceId": "chipotle-adobo",
+      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with cumin & garlic; simmer in the smoky chipotle sauce for a deep, spicy-sweet chili.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
       "overrides": {
         "base": [
-          { "item": "Roasted potatoes", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" },
-          { "item": "Sharp cheddar (shredded)", "amt": "1 oz" },
-          { "item": "Bacon (crumbled)", "amt": "1-2 slices" }
+          { "item": "Brown rice", "amt": "1/2 cup" },
+          { "item": "Black beans", "amt": "1/4 cup" },
+          { "item": "Pinto beans", "amt": "1/4 cup" },
+          { "item": "Charred corn", "amt": "1/4 cup" }
         ]
       },
-      "macros": { "kcal": 640, "protein": 63, "carbs": 43, "fiber": 7, "fat": 27 },
+      "macros": { "kcal": 570, "protein": 43, "carbs": 60, "fiber": 14, "fat": 21 },
       "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "pantryAdd": [{ "item": "Sharp cheddar", "amt": "4 oz block" }, { "item": "Bacon (center-cut or turkey)", "amt": "6 slices" }]
+        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
+        "produceAdd": [],
+        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
       },
-      "note": "The indulgent classic — highest protein but also the highest fat. Use center-cut/turkey bacon + ~1 oz sharp cheddar to keep it in check; add the bacon fresh for crunch."
+      "note": "Deep, smoky & a little spicy — chipotle-adobo over beef with a black-and-pinto bean mix. The boldest build; dial the chipotle to your heat."
     },
     {
-      "id": "chili-cheese",
-      "name": "Chili Cheese",
+      "id": "white-chicken-chili",
+      "name": "White Chicken Chili",
       "kind": "remix",
-      "sauceId": "cheese-style",
-      "protein": { "name": "Turkey chili (with beans)", "serving": "3/4 cup / ~185 g", "method": "One-pan chili: brown 1 lb ground turkey (or lean beef) with onion, 1 Tbsp chili powder & 1 tsp cumin; add 1 can kidney beans + 1 can diced tomatoes; simmer 15 min until thick.", "appliance": ["Stovetop · 20 min", "Slow cooker · 4 hr", "Instant Pot · 15 min HP"] },
+      "sauceId": "salsa-verde",
+      "protein": { "name": "Shredded chicken", "serving": "5 oz / ~140 g cooked", "method": "Poach or Instant-Pot chicken breast/thighs, then shred; fold into the salsa verde with the white beans for a tangy green chili.", "appliance": ["Instant Pot · 12 min", "Stovetop poach · 15 min"] },
       "overrides": {
         "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+          { "item": "Brown rice", "amt": "1/2 cup" },
+          { "item": "White beans (cannellini)", "amt": "1/3 cup" },
+          { "item": "Charred corn", "amt": "1/4 cup" },
+          { "item": "Peppers & onion", "amt": "1/4 cup" }
         ]
       },
-      "macros": { "kcal": 465, "protein": 43, "carbs": 51, "fiber": 13, "fat": 17 },
+      "macros": { "kcal": 525, "protein": 46, "carbs": 52, "fiber": 12, "fat": 17 },
       "shopping": {
-        "protein": { "item": "Ground turkey 93/7 (or lean beef)", "amt": "~20 oz" },
-        "pantryAdd": [{ "item": "Kidney beans", "amt": "1 can (15 oz)" }, { "item": "Diced tomatoes", "amt": "1 can (15 oz)" }]
+        "protein": { "item": "Chicken breast or thighs", "amt": "~20 oz" },
+        "produceAdd": [],
+        "pantryAdd": [{ "item": "White beans (cannellini)", "amt": "1 can (15 oz)" }]
       },
-      "note": "The highest-fiber build and the best freezer performer — a quick turkey chili over crispy potatoes under the dairy-free cheese sauce."
+      "note": "Bright and tangy — shredded chicken and white beans in a tomatillo salsa verde. A lighter green take on chili night."
     },
     {
-      "id": "buffalo-tofu",
-      "name": "Buffalo Tofu",
+      "id": "three-bean-veg",
+      "name": "Three-Bean Vegetarian",
       "kind": "remix-plant",
-      "sauceId": "cheese-style",
-      "protein": { "name": "Buffalo tofu + white beans", "serving": "5 oz / ~140 g tofu", "method": "Press & cube tofu, toss with 1 Tbsp oil + 1 Tbsp cornstarch, roast/air-fry crisp, then toss in cayenne hot sauce. White beans add protein & fiber.", "appliance": ["Oven · 425°F · 25 min", "Air fryer · 400°F · 15 min"] },
+      "sauceId": "red-chili",
+      "protein": { "name": "Three-bean mix", "serving": "3/4 cup / ~5 oz", "method": "Simmer a mix of black, kidney & pinto beans in the red chili sauce with the charred veg until thick and stew-like. Mash a scoop of the beans for body.", "appliance": ["Stovetop · 12–15 min", "Instant Pot sauté"] },
       "overrides": {
         "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" }
+          { "item": "Brown rice", "amt": "1/2 cup" },
+          { "item": "Black beans", "amt": "1/4 cup" },
+          { "item": "Kidney beans", "amt": "1/4 cup" },
+          { "item": "Pinto beans", "amt": "1/4 cup" }
         ]
       },
-      "macros": { "kcal": 440, "protein": 30, "carbs": 54, "fiber": 12, "fat": 17 },
+      "macros": { "kcal": 470, "protein": 22, "carbs": 85, "fiber": 20, "fat": 9 },
       "shopping": {
-        "protein": { "item": "Extra-firm tofu", "amt": "14 oz block" },
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }, { "item": "Cornstarch", "amt": "for crisping" }, { "item": "Cayenne hot sauce", "amt": "" }]
+        "protein": { "item": "Kidney & pinto beans", "amt": "1 can each (15 oz)" },
+        "produceAdd": [],
+        "pantryAdd": []
       },
-      "note": "Fully plant-based and high-fiber — crispy buffalo tofu + white beans under the dairy-free cheese-style sauce."
+      "note": "Fully plant-based and the highest-fiber build by far — three beans in a rich red chili. Mashing some of the beans makes it thick and hearty."
     },
     {
-      "id": "broccoli-cheddar",
-      "name": "Broccoli-Cheddar",
+      "id": "chorizo-pinto",
+      "name": "Chorizo & Pinto",
       "kind": "remix",
-      "sauceId": "cheese-style",
-      "protein": { "name": "Roasted chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, roast to 165°F, rest 5 min, then dice.", "appliance": ["Oven · 425°F", "Air fryer"] },
+      "sauceId": "red-chili",
+      "protein": { "name": "Chicken chorizo", "serving": "5 oz / ~140 g cooked", "method": "Brown chicken (or pork) chorizo, breaking it up; its spices season the whole pot. Simmer into the red chili with the pinto beans.", "appliance": ["Stovetop · 8–10 min"] },
       "overrides": {
         "base": [
-          { "item": "Roasted potatoes", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+          { "item": "Brown rice", "amt": "1/2 cup" },
+          { "item": "Pinto beans", "amt": "1/3 cup" },
+          { "item": "Charred corn", "amt": "1/4 cup" },
+          { "item": "Peppers & onion", "amt": "1/4 cup" }
         ]
       },
-      "macros": { "kcal": 495, "protein": 52, "carbs": 47, "fiber": 9, "fat": 14 },
+      "macros": { "kcal": 600, "protein": 40, "carbs": 56, "fiber": 13, "fat": 26 },
       "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "produceAdd": [{ "item": "Broccoli", "amt": "1 extra head" }]
+        "protein": { "item": "Chicken or pork chorizo", "amt": "~20 oz" },
+        "produceAdd": [],
+        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
       },
-      "note": "A broccoli-forward remix drenched in the cheese-style sauce — the healthy answer to broccoli-cheddar."
+      "note": "The indulgent build — smoky, spiced chorizo carries the whole pot. Chicken chorizo keeps it leaner; pork if you want the full richness."
     }
   ],
   "notes": {
     "batch": {
-      "intro": "Cook components once, assemble many bowls. Potatoes and veg share the oven; the protein and sauce are quick.",
+      "intro": "Cook components once, assemble many bowls. Rice cooks hands-off while you char the veg and brown the protein; the sauce simmers alongside.",
       "steps": [
-        "Roast ~2 lb potatoes at 425°F until crisp",
-        "Roast the broccoli, peppers & cauliflower on a second tray",
-        "Cook your protein (or simmer the chili)",
-        "Whisk the ranch or blend the cheese-style sauce",
-        "Assemble the four cubes, cool & freeze"
+        "Cook 1 cup brown rice; fluff & cool",
+        "Char the corn & peppers; drain & warm the beans",
+        "Brown your protein (or simmer the three-bean mix)",
+        "Simmer the red chili, blend the chipotle, or make the salsa verde",
+        "Assemble the four cubes, cool & freeze — keep the fresh toppings for serving"
       ]
     },
     "subs": [
-      "Potatoes → sweet potato or cauliflower (lower-carb)",
-      "Broccoli → green beans or Brussels sprouts",
-      "Cauliflower → extra broccoli or zucchini",
-      "Ranch → cheese-style or sour cream & chive",
+      "Brown rice → cilantro-lime rice, quinoa, or cauliflower rice (lighter)",
+      "Beans → any combo of black / kidney / pinto / white — keep ~2/3 cup total for the fiber",
+      "Beef → turkey, chicken, chorizo, or the three-bean mix",
+      "Red chili → smoky chipotle or salsa verde",
+      "No heat? Skip the chipotle & jalapeño; the red chili is mild",
       "Any protein in the picker drops straight in"
     ],
     "boost": [
-      "Go to a 6 oz protein serving (+8-10 g)",
-      "Add 1/2 cup white beans (+7 g, +fiber)",
-      "Stir extra Greek yogurt into the ranch (+protein)",
-      "Top with a soft-boiled or fried egg",
-      "Add 2 Tbsp hemp hearts"
+      "Go to a 6 oz protein portion (+8–10 g)",
+      "Add another 1/4 cup beans (+fiber, +a little protein)",
+      "Stir in 2 Tbsp Greek yogurt at serving (+protein, creamy)",
+      "Top with a fried or soft-boiled egg",
+      "Sprinkle 2 Tbsp hemp hearts or extra cheese"
     ],
-    "freezeWell": ["Roasted potatoes", "Roasted veg", "Cooked protein / chili"],
-    "addFresh": ["Diced tomato", "Green onion"],
-    "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
+    "freezeWell": ["Brown rice", "The chili (protein + sauce + beans)", "Charred corn & peppers"],
+    "addFresh": ["Diced avocado", "Shredded cheese", "Lime", "Cilantro", "Greek yogurt", "Tortilla strips"],
+    "storeSep": "Toppings stay fresh — add avocado, cheese, lime & cilantro when you serve. All three sauces freeze fine in 2-Tbsp molds."
   }
 }
 </script>

@@ -6,7 +6,7 @@
     --line: #E7DCCC; --line-strong: #D8C9B4;
     --chipotle: #B8431F; --chipotle-deep: #8F3216; --cactus: #3F6B48; --cactus-deep: #2F5138;
     --corn: #C88A1E; --avocado: #6B8F3D;
-    --macro-protein: #3F6B48; --macro-carb: #C88A1E; --macro-fat: #B8431F;
+    --macro-carb: #C88A1E; --macro-protein: #B8431F; --macro-fat: #8C6239; --macro-fiber: #2E7D74;
     --panel-ink: #F5ECDD; --panel-ink-2: #D8C7AE;
     --shadow: 0 1px 2px rgba(33,26,20,.05), 0 6px 18px rgba(33,26,20,.06);
     --radius: 14px; --radius-sm: 9px;
@@ -22,7 +22,7 @@
       --line: #362A1E; --line-strong: #4B3A28;
       --chipotle: #EC7A50; --chipotle-deep: #F19A73; --cactus: #83B889; --cactus-deep: #9BC79F;
       --corn: #E7B34E; --avocado: #ABCD66;
-      --macro-protein: #83B889; --macro-carb: #E7B34E; --macro-fat: #EC7A50;
+      --macro-carb: #E7B34E; --macro-protein: #EC7A50; --macro-fat: #C79A5E; --macro-fiber: #5FB3A8;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.35);
     }
   }
@@ -32,7 +32,7 @@
     --line: #E7DCCC; --line-strong: #D8C9B4;
     --chipotle: #B8431F; --chipotle-deep: #8F3216; --cactus: #3F6B48; --cactus-deep: #2F5138;
     --corn: #C88A1E; --avocado: #6B8F3D;
-    --macro-protein: #3F6B48; --macro-carb: #C88A1E; --macro-fat: #B8431F;
+    --macro-carb: #C88A1E; --macro-protein: #B8431F; --macro-fat: #8C6239; --macro-fiber: #2E7D74;
     --shadow: 0 1px 2px rgba(33,26,20,.05), 0 6px 18px rgba(33,26,20,.06);
   }
   :root[data-theme="dark"] {
@@ -41,7 +41,7 @@
     --line: #362A1E; --line-strong: #4B3A28;
     --chipotle: #EC7A50; --chipotle-deep: #F19A73; --cactus: #83B889; --cactus-deep: #9BC79F;
     --corn: #E7B34E; --avocado: #ABCD66;
-    --macro-protein: #83B889; --macro-carb: #E7B34E; --macro-fat: #EC7A50;
+    --macro-carb: #E7B34E; --macro-protein: #EC7A50; --macro-fat: #C79A5E; --macro-fiber: #5FB3A8;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.35);
   }
 
@@ -75,8 +75,11 @@
   .tab { position: relative; text-align: left; cursor: pointer; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius-sm); padding: 13px 14px; display: grid; gap: 5px; color: var(--ink); transition: border-color .14s ease, transform .14s ease, box-shadow .14s ease; }
   .tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
   .tab .tname { font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: .01em; line-height: 1.1; }
-  .tab .tmac { font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-  .tab .tkind { justify-self: start; font-family: var(--font-ui); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--cactus-deep); border: 1px solid var(--line-strong); border-radius: 5px; padding: 1.5px 7px; }
+  .tab .tmac { font-family: var(--font-mono); font-size: 13.5px; line-height: 1.5; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .tab .tmac.tsub { font-size: 12.5px; margin-top: -1px; }
+  .mc { font-weight: 700; }
+  .mc.carb { color: var(--macro-carb); } .mc.prot { color: var(--macro-protein); } .mc.fat { color: var(--macro-fat); } .mc.fib { color: var(--macro-fiber); }
+  .tab .tkind { justify-self: start; font-family: var(--font-ui); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--line-strong); border-radius: 5px; padding: 1.5px 7px; }
   .tab.active { border-color: var(--chipotle); background: color-mix(in srgb, var(--chipotle) 9%, var(--surface)); box-shadow: inset 0 0 0 1px var(--chipotle); }
   .tab.active .tname { color: var(--chipotle-deep); }
   .tab:focus-visible { outline: 3px solid color-mix(in srgb, var(--chipotle) 45%, transparent); outline-offset: 2px; }
@@ -99,15 +102,15 @@
   .build { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .comp-title { display: flex; align-items: center; gap: 10px; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: .02em; margin-bottom: 12px; }
   .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--chipotle); color: #fff; font-size: 16px; font-weight: 800; flex: none; }
-  .num.g { background: var(--cactus); }
+  .num.g { background: var(--chipotle); }
   .comp-title .sub { font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; letter-spacing: .09em; color: var(--ink-3); text-transform: uppercase; }
   .ing { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   .ing li { display: flex; justify-content: space-between; gap: 12px; font-size: 15.5px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
   .ing li:last-child { border-bottom: 0; padding-bottom: 0; }
   .ing .q { color: var(--ink-2); font-size: 14px; white-space: nowrap; }
-  .picked { background: color-mix(in srgb, var(--chipotle) 8%, var(--surface)); border-color: color-mix(in srgb, var(--chipotle) 30%, var(--line)); }
+  .picked { background: var(--surface); border-color: var(--line); }
   .picked-protein { display: grid; gap: 4px; }
-  .picked-protein .pname { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; color: var(--chipotle-deep); line-height: 1.1; }
+  .picked-protein .pname { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; color: var(--ink); line-height: 1.1; }
   .picked-protein .pserve { font-family: var(--font-mono); font-size: 14px; color: var(--ink-2); }
   .picked-protein .pmethod { font-size: 15.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.5; }
 
@@ -117,16 +120,14 @@
   .step .idx { font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: #fff; background: var(--chipotle); width: 38px; height: 38px; border-radius: 8px; display: grid; place-items: center; }
   .step h3 { margin: 0 0 4px; font-size: 16.5px; text-transform: uppercase; letter-spacing: .02em; }
   .step p { font-size: 15.5px; color: var(--ink-2); line-height: 1.55; }
-  .step .tip { margin-top: 8px; font-family: var(--font-ui); font-size: 13.5px; color: var(--cactus-deep); line-height: 1.45; }
-  .step .tip b { text-transform: uppercase; letter-spacing: .04em; font-size: 12px; }
-  @media (prefers-color-scheme: dark){ .step .tip { color: var(--cactus); } }
-  :root[data-theme="dark"] .step .tip { color: var(--cactus); }
+  .step .tip { margin-top: 8px; font-family: var(--font-ui); font-size: 13.5px; color: var(--ink-3); line-height: 1.45; }
+  .step .tip b { text-transform: uppercase; letter-spacing: .04em; font-size: 12px; color: var(--ink-2); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .chip { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line-strong); color: var(--ink-2); background: var(--surface-2); }
-  .chip.fast { border-color: color-mix(in srgb, var(--cactus) 45%, var(--line)); color: var(--cactus-deep); }
+  .chip.freezes { border-color: color-mix(in srgb, var(--cactus) 45%, var(--line)); color: var(--cactus-deep); }
   .chip.warn { border-color: color-mix(in srgb, var(--corn) 55%, var(--line)); color: var(--corn); }
-  @media (prefers-color-scheme: dark){ .chip.fast { color: var(--cactus); } }
-  :root[data-theme="dark"] .chip.fast { color: var(--cactus); }
+  @media (prefers-color-scheme: dark){ .chip.freezes { color: var(--cactus); } }
+  :root[data-theme="dark"] .chip.freezes { color: var(--cactus); }
 
   /* BAND / CUBE / FREEZE */
   .band { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
@@ -147,23 +148,25 @@
   .freeze-card .big { font-family: var(--font-mono); font-weight: 700; color: var(--ink); }
 
   /* NUTRITION — always-dark panel, fixed light text */
-  .nutri { background: #211A14; color: var(--panel-ink); border-radius: var(--radius); padding: 24px; }
+  .nutri { background: #211A14; color: var(--panel-ink); border-radius: var(--radius); padding: 24px; --macro-carb: #E7B34E; --macro-protein: #EC7A50; --macro-fat: #C79A5E; --macro-fiber: #5FB3A8; }
   @media (prefers-color-scheme: dark){ .nutri { background: #0c0a06; } }
   :root[data-theme="dark"] .nutri { background: #0c0a06; }
   :root[data-theme="light"] .nutri { background: #211A14; }
   .nutri .nlabel { font-family: var(--font-ui); font-size: 14px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #E7B34E; }
   .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0 20px; }
   .stat .v { font-family: var(--font-mono); font-size: clamp(24px, 4.3vw, 33px); font-weight: 700; line-height: 1; color: var(--panel-ink); }
+  .stat .v.carb { color: var(--macro-carb); } .stat .v.prot { color: var(--macro-protein); } .stat .v.fat { color: var(--macro-fat); } .stat .v.fib { color: var(--macro-fiber); }
   .stat .u { font-family: var(--font-mono); font-size: 14px; color: var(--panel-ink-2); }
   .stat-label { display: block; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; margin-top: 7px; color: var(--panel-ink-2); font-family: var(--font-ui); font-weight: 600; }
   .macrobar { display: flex; height: 16px; border-radius: 999px; overflow: hidden; gap: 2px; }
   .macrobar span { display: block; }
+  .barcap { margin-top: 9px; font-family: var(--font-ui); font-size: 12px; color: var(--panel-ink-2); letter-spacing: .01em; }
   .macrolegend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 13px; font-family: var(--font-ui); font-size: 13.5px; color: var(--panel-ink); }
   .macrolegend b { font-family: var(--font-mono); }
   .macrolegend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; margin-right: 6px; vertical-align: middle; }
   .disclaim { margin-top: 17px; font-family: var(--font-ui); font-size: 12.5px; color: var(--panel-ink-2); line-height: 1.5; }
 
-  .buildnote { grid-column: 1 / -1; font-size: 15px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-left: 4px solid var(--cactus); border-radius: var(--radius-sm); padding: 13px 16px; line-height: 1.5; }
+  .buildnote { grid-column: 1 / -1; font-size: 15px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-left: 4px solid var(--chipotle); border-radius: var(--radius-sm); padding: 13px 16px; line-height: 1.5; }
   .buildnote b { color: var(--ink); }
 
   /* SHOPPING / NOTES */
@@ -178,14 +181,9 @@
   .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .note { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 17px; }
   .note ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.45; }
-  .note.fresh { background: color-mix(in srgb, var(--avocado) 10%, var(--surface)); }
-  .note.fresh h3 { color: var(--cactus-deep); }
-  @media (prefers-color-scheme: dark){ .note.fresh h3 { color: var(--cactus); } }
-  :root[data-theme="dark"] .note.fresh h3 { color: var(--cactus); }
-  .batch { margin-bottom: 14px; background: color-mix(in srgb, var(--cactus) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--cactus) 30%, var(--line)); border-radius: var(--radius-sm); padding: 17px 19px; }
-  .batch h3 { margin: 0 0 6px; font-family: var(--font-display); font-size: 15px; text-transform: uppercase; letter-spacing: .03em; color: var(--cactus-deep); }
-  @media (prefers-color-scheme: dark){ .batch h3 { color: var(--cactus); } }
-  :root[data-theme="dark"] .batch h3 { color: var(--cactus); }
+  .note.fresh { background: var(--surface); }
+  .batch { margin-bottom: 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 17px 19px; }
+  .batch h3 { margin: 0 0 6px; font-family: var(--font-display); font-size: 15px; text-transform: uppercase; letter-spacing: .03em; color: var(--chipotle); }
   .batch p { font-size: 15px; color: var(--ink-2); line-height: 1.55; }
   .batch ol { margin: 8px 0 0; padding-left: 20px; font-size: 15px; color: var(--ink-2); display: grid; gap: 5px; line-height: 1.45; }
 
@@ -555,7 +553,8 @@
       return '<button class="tab' + (v.id === state.vid ? " active" : "") + '" role="tab" aria-selected="' + (v.id === state.vid) + '" data-id="' + v.id + '">' +
         (kl ? '<span class="tkind">' + kl + "</span>" : "") +
         '<span class="tname">' + esc(v.name) + "</span>" +
-        '<span class="tmac">' + v.macros.kcal + " kcal · " + v.macros.protein + "g P</span>" +
+        '<span class="tmac"><span class="mc carb">' + v.macros.carbs + 'g C</span> · <span class="mc prot">' + v.macros.protein + 'g P</span> · <span class="mc fat">' + v.macros.fat + 'g F</span></span>' +
+        '<span class="tmac tsub"><span class="mc fib">' + v.macros.fiber + 'g fiber</span> · ' + v.macros.kcal + ' kcal</span>' +
         "</button>";
     }).join("");
     Array.prototype.forEach.call(el.querySelectorAll(".tab"), function (btn) {
@@ -587,7 +586,7 @@
         "</div></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">3</span> Sauce <span class="sub">Store separately</span></div>' +
-        '<div style="font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:14px;color:var(--cactus-deep);margin-bottom:9px">' + esc(sauce.name) + "</div>" +
+        '<div style="font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:14px;color:var(--ink);margin-bottom:9px">' + esc(sauce.name) + "</div>" +
         '<ul class="ing">' + sauceLis + "</ul></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">4</span> Fresh <span class="sub">After reheating</span></div>' +
@@ -600,7 +599,7 @@
   function renderPrep() {
     var v = activeVar(), grain = grainOf(v), sauce = sauceOf(v);
     var isRice = /rice/i.test(grain);
-    var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t, c.cls || ""); }); };
+    var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t); }); };
 
     var steps = MEAL.prep.map(function (st) {
       if (st.kind === "grain") {
@@ -615,7 +614,7 @@
         return {
           h: "Cook &amp; season: " + esc(v.protein.name),
           p: v.protein.method + " Target " + esc(v.protein.serving) + " per bowl.",
-          chips: v.protein.appliance.map(function (a) { return chip(a, /slow cooker|instant pot|air fryer/i.test(a) ? "fast" : ""); }),
+          chips: v.protein.appliance.map(function (a) { return chip(a); }),
           tip: /chicken|turkey/i.test(v.protein.name) ? "<b>Safe temp:</b> poultry to 165°F internal."
              : (/steak|brisket|pork|beef/i.test(v.protein.name) ? "<b>Rest it:</b> 5 min before slicing keeps the juices in." : "")
         };
@@ -624,7 +623,7 @@
         return {
           h: "Make the " + sauce.name.toLowerCase(),
           p: sauce.recipe,
-          chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "fast") : chip("Best fresh — fridge only", "warn")],
+          chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
           tip: sauce.freezes
             ? "<b>Freeze it separately:</b> portion into your 2-Tbsp molds and pop one onto a bowl at serving. Just keep it off the <em>meal</em> cube so it isn't absorbed."
             : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
@@ -685,21 +684,22 @@
     var v = activeVar(), m = v.macros;
     var pk = m.protein * 4, ck = m.carbs * 4, fk = m.fat * 9, tot = pk + ck + fk;
     var pp = Math.round(pk / tot * 100), cp = Math.round(ck / tot * 100), fp = 100 - pp - cp;
-    var stat = function (val, unit, label) {
-      return '<div class="stat"><span class="v">' + val + '</span><span class="u">' + unit + '</span><span class="stat-label">' + label + "</span></div>";
+    var stat = function (val, unit, label, cls) {
+      return '<div class="stat"><span class="v ' + (cls || "") + '">' + val + '</span><span class="u">' + unit + '</span><span class="stat-label">' + label + "</span></div>";
     };
     document.getElementById("body-nutri").innerHTML =
       '<div class="nutri">' +
         '<span class="nlabel">Estimated macros — ' + esc(v.name) + " bowl</span>" +
         '<div class="stat-row">' +
-          stat(m.kcal, " kcal", "Calories") + stat(m.protein, "g", "Protein") +
-          stat(m.carbs, "g", "Carbs") + stat(m.fiber, "g", "Fiber") + stat(m.fat, "g", "Fat") +
+          stat(m.kcal, " kcal", "Calories") + stat(m.protein, "g", "Protein", "prot") +
+          stat(m.carbs, "g", "Carbs", "carb") + stat(m.fiber, "g", "Fiber", "fib") + stat(m.fat, "g", "Fat", "fat") +
         "</div>" +
         '<div class="macrobar" role="img" aria-label="Calorie split: ' + pp + '% protein, ' + cp + '% carbs, ' + fp + '% fat">' +
           '<span style="width:' + pp + '%;background:var(--macro-protein)"></span>' +
           '<span style="width:' + cp + '%;background:var(--macro-carb)"></span>' +
           '<span style="width:' + fp + '%;background:var(--macro-fat)"></span>' +
         "</div>" +
+        '<div class="barcap">Share of calories from each macro · protein &amp; carbs 4 kcal/g, fat 9</div>' +
         '<div class="macrolegend">' +
           '<span><i style="background:var(--macro-protein)"></i>Protein <b>' + m.protein + "g · " + pp + '%</b></span>' +
           '<span><i style="background:var(--macro-carb)"></i>Carbs <b>' + m.carbs + "g · " + cp + '%</b></span>' +
