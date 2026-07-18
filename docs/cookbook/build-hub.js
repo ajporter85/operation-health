@@ -129,7 +129,16 @@ const hubCss = `
   .scol h3 .sub { display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-3); margin-top: 2px; }
   .saucelist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; color: var(--ink-2); }
   .saucelist .mtag { font-size: 14px; }
+  .saucelist .opt { color: var(--ink-3); }
   @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
+
+  /* BREAKFAST & SNACKS — day table */
+  .daytable { width: 100%; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
+  .daytable th, .daytable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+  .daytable th:first-child, .daytable td:first-child { text-align: left; }
+  .daytable thead th { font-family: var(--font-display); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+  .daytable .tot td { font-weight: 800; border-top: 2px solid var(--line-strong); border-bottom: 0; }
+  .daytable .tgt td { color: var(--ink-3); font-size: 13px; }
 `;
 
 // --- body ---
@@ -144,6 +153,7 @@ const body = `<div class="wrap">
     <button class="navbtn active" type="button" data-view="meals">Meals</button>
     <button class="navbtn" type="button" data-view="staples">Prep-Ahead Staples</button>
     <button class="navbtn" type="button" data-view="freeze">Freeze &amp; Reheat</button>
+    <button class="navbtn" type="button" data-view="fuel">Round Out the Day</button>
   </nav>
 
   <div class="view" id="view-meals">
@@ -169,6 +179,7 @@ ${detailSections}
 
   <div class="view" id="view-staples" hidden><div id="staples-body"></div></div>
   <div class="view" id="view-freeze" hidden><div id="freeze-body"></div></div>
+  <div class="view" id="view-fuel" hidden><div id="fuel-body"></div></div>
 
   <footer>
     <span>Operation Health Meal Library · 6 meals · 36 builds</span>
@@ -346,17 +357,62 @@ const hubJs = `
       '</div>';
   }
 
+  // ---------- Breakfast & Snacks ----------
+  function renderFuel() {
+    function mc(v, cls) { return '<span class="mc ' + cls + '">' + v + "</span>"; }
+    function row(label, kcal, p, fib, cls) {
+      return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td>" + label + "</td><td>" + kcal +
+        "</td><td>" + mc(p, "prot") + "</td><td>" + mc(fib, "fib") + "</td></tr>";
+    }
+    var table = '<table class="daytable"><thead><tr><th>Meal</th><th>kcal</th><th>protein</th><th>fiber</th></tr></thead><tbody>' +
+      row("Breakfast — light", "~450", "~48 g", "~10 g") +
+      row("Lunch — 3-cup cube", "~800", "~56 g", "~16 g") +
+      row("Dinner — 3-cup cube", "~800", "~56 g", "~16 g") +
+      row("Snack", "~300", "~15 g", "~5 g") +
+      row("Psyllium — 2 scoops, pre-lunch &amp; dinner", "~35", "—", "~7 g") +
+      row("<b>Day total</b>", "<b>~2,385</b>", "<b>~175 g</b>", "<b>~54 g</b>", "tot") +
+      row("Your target", "~2,400", "~170 g", "high", "tgt") +
+      "</tbody></table>";
+    var breakfast = '<div class="scol"><h3>Build-your-own breakfast <span class="sub">~450 kcal · ~48g protein · covers the 30–40g morning rule</span></h3><ul class="saucelist">' +
+      "<li><b>Protein shake</b> — 1 scoop (24g protein, 120 kcal) with milk or water</li>" +
+      "<li><b>+ Greek yogurt</b> ¾ cup (~15g P) — or cottage cheese</li>" +
+      "<li><b>+ Fruit</b> — berries or half a banana</li>" +
+      "<li><b>+ Chia or ground flax</b> 1 Tbsp — fiber &amp; omega-3</li>" +
+      '<li class="opt">Optional: a little oats or granola for more staying power</li>' +
+      "</ul></div>";
+    var snacks = '<div class="scol"><h3>Snacks <span class="sub">~150–300 kcal, protein-forward — pick one or two</span></h3><ul class="saucelist">' +
+      "<li>Edamame, 1 cup — ~17g protein, high fiber</li>" +
+      "<li>Cottage cheese + fruit</li>" +
+      "<li>Turkey stick or jerky</li>" +
+      "<li>Roasted chickpeas</li>" +
+      "<li>A second protein shake</li>" +
+      "<li>Two hard-boiled eggs</li>" +
+      "<li>Apple + 1 Tbsp peanut butter</li>" +
+      "<li>Small handful of almonds</li>" +
+      "</ul></div>";
+    document.getElementById("fuel-body").innerHTML =
+      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
+        '<h1 style="font-size:clamp(28px,5vw,44px)">Round out <span class="lead">the day</span></h1>' +
+        '<p class="tagline">Your two cube meals cover lunch and dinner. This is everything around them — a light, protein-forward breakfast, a snack or two, and your psyllium — sized to round the day out to your protein, fiber and calorie targets, and to land 30–40g of protein within 30 minutes of waking.</p></header>' +
+      '<div class="kitbox"><b>The plan:</b> two 3-cup cube meals do the heavy lifting; breakfast stays light and a snack or two tops you off.</div>' +
+      table +
+      '<div class="saucecols" style="margin-top:18px">' + breakfast + snacks + "</div>" +
+      '<div class="kitbox" style="margin-top:16px"><b>Psyllium:</b> 1 scoop in water before lunch and before dinner (2 scoops/day) — ~7g fiber for ~35 kcal, plus fullness. &nbsp;<b>Hydration:</b> aim for 3–4 L water across the day.</div>';
+  }
+
   // ---------- view switching ----------
   function showView(v) {
     state.view = v;
     document.getElementById("view-meals").hidden = v !== "meals";
     document.getElementById("view-staples").hidden = v !== "staples";
     document.getElementById("view-freeze").hidden = v !== "freeze";
+    document.getElementById("view-fuel").hidden = v !== "fuel";
     Array.prototype.forEach.call(document.querySelectorAll(".navbtn"), function (b) {
       b.className = "navbtn" + (b.getAttribute("data-view") === v ? " active" : "");
     });
     if (v === "staples") renderStaples();
     else if (v === "freeze") renderFreeze();
+    else if (v === "fuel") renderFuel();
     else showHome();
     if (window.scrollTo) window.scrollTo(0, 0);
   }
