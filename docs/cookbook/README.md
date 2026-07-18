@@ -27,8 +27,13 @@ to import each variation as a preset (macros baked in) with no re-keying — the
 Macros are **estimated** from standard per-ingredient values (~±10–15%, labeled on
 the card). A food-database/API is the planned V2 accuracy upgrade.
 
+Sauces carry a `freezes` flag: freezable sauces (tomato BBQ, cashew, mustard) get
+portioned into 2-Tbsp molds; sauces that split/brown frozen (avocado crema,
+mayo-based Alabama white) are flagged fridge-only and made fresh.
+
 ## Cards
 
 - `southwest-hybrid-bowl.html` — Theme 01, Southwest / Tex-Mex (6 builds)
+- `bbq-power-bowl.html` — Theme 02, BBQ Power Bowl (6 builds)
 
-Planned: BBQ Power Bowl, Loaded Potato, Burger, Italian, Chili.
+Planned: Loaded Potato, Burger, Italian, Chili.
