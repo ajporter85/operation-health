@@ -232,6 +232,40 @@
   .backbtn:hover { border-color: var(--chipotle); color: var(--chipotle); }
   @media (max-width: 720px){ .theme-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 460px){ .theme-grid { grid-template-columns: 1fr; } }
+
+  /* HUB NAV + VIEWS */
+  .hubnav { display: flex; gap: 4px 20px; flex-wrap: wrap; margin-bottom: 26px; border-bottom: 2px solid var(--line-strong); }
+  .navbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 14px; color: var(--ink-3); background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 2px; margin-bottom: -2px; cursor: pointer; }
+  .navbtn:hover { color: var(--ink); }
+  .navbtn.active { color: var(--chipotle); border-bottom-color: var(--chipotle); }
+
+  /* STAPLES */
+  .kitbox { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); background: color-mix(in srgb, var(--cactus) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--cactus) 30%, var(--line)); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.5; margin-bottom: 18px; }
+  .kitbox b { color: var(--cactus-deep); }
+  @media (prefers-color-scheme: dark){ .kitbox b { color: var(--cactus); } }
+  :root[data-theme="dark"] .kitbox b { color: var(--cactus); }
+  .smatrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .smatrix { border-collapse: collapse; width: 100%; min-width: 560px; font-family: var(--font-ui); }
+  .smatrix th, .smatrix td { padding: 9px 8px; text-align: center; border-bottom: 1px solid var(--line); }
+  .smatrix thead th { font-size: 22px; line-height: 1; border-bottom: 2px solid var(--line-strong); }
+  .smatrix thead th.item, .smatrix td.item { text-align: left; }
+  .smatrix thead th.item { font-family: var(--font-display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+  .smatrix thead th.cov, .smatrix td.cov { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+  .smatrix .catrow td { background: var(--surface-2); font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .05em; text-align: left; color: var(--chipotle); }
+  .smatrix td.item b { font-weight: 700; font-size: 14.5px; }
+  .smatrix td.item .sprep { display: block; font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.35; max-width: 40ch; }
+  .smatrix .yes { color: var(--chipotle); font-weight: 800; }
+  .smatrix .no { color: var(--line-strong); }
+  .smatrix-foot { margin-top: 12px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+
+  /* FREEZE — sauce columns */
+  .saucecols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .scol { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px 18px; }
+  .scol h3 { margin: 0 0 10px; font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: var(--chipotle); }
+  .scol h3 .sub { display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-3); margin-top: 2px; }
+  .saucelist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; color: var(--ink-2); }
+  .saucelist .mtag { font-size: 14px; }
+  @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
 </style>
 
 <div class="wrap">
@@ -241,6 +275,13 @@
     <p class="tagline">Six freezer meals · 36 builds. Tap a meal for its full recipe card — ingredients, macros, Souper Cube fill, freeze &amp; reheat, and an exact shopping list, all driven by the build you pick.</p>
   </header>
 
+  <nav class="hubnav" id="hubnav">
+    <button class="navbtn active" type="button" data-view="meals">Meals</button>
+    <button class="navbtn" type="button" data-view="staples">Prep-Ahead Staples</button>
+    <button class="navbtn" type="button" data-view="freeze">Freeze &amp; Reheat</button>
+  </nav>
+
+  <div class="view" id="view-meals">
   <div id="home">
     <div class="theme-grid" id="theme-grid"></div>
   </div>
@@ -287,6 +328,10 @@
     <div class="secbody"><div id="body-notes"></div></div>
   </details>
   </div>
+  </div>
+
+  <div class="view" id="view-staples" hidden><div id="staples-body"></div></div>
+  <div class="view" id="view-freeze" hidden><div id="freeze-body"></div></div>
 
   <footer>
     <span>Operation Health Meal Library · 6 meals · 36 builds</span>
@@ -1811,7 +1856,7 @@
 (function () {
   "use strict";
   var MEAL = null;
-  var state = { themeId: null, vid: null };
+  var state = { view: "meals", themeId: null, vid: null };
 
 function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
   function activeVar() { return MEAL.variations.find(function (v) { return v.id === state.vid; }); }
@@ -2110,6 +2155,124 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
   }
 
   document.getElementById("backbtn").addEventListener("click", showHome);
+
+  // ---------- Prep-Ahead Staples ----------
+  function mealText(d) {
+    var parts = [String(d.grain || "")];
+    (d.defaults.base || []).forEach(function (b) { parts.push(b.item); });
+    d.variations.forEach(function (v) {
+      parts.push(v.protein.name);
+      if (v.overrides && v.overrides.base) v.overrides.base.forEach(function (b) { parts.push(b.item); });
+    });
+    return parts.join(" | ").toLowerCase();
+  }
+  var STAPLES = [
+    { cat: "Grains & starches", items: [
+      { label: "Brown rice", kw: ["rice"], prep: "Cook a big pot; freezes better than white. Portion in 1-cup molds." },
+      { label: "Quinoa", kw: ["quinoa"], prep: "Batch-cook, cool, freeze in 1-cup molds." },
+      { label: "Whole-grain pasta", kw: ["pasta", "penne", "rotini"], prep: "Boil just shy of al dente; oil lightly so it doesn't clump." },
+      { label: "Roast-ahead potatoes", kw: ["potato"], prep: "Cube & roast crisp (white or sweet); re-crisp in the air fryer." }
+    ]},
+    { cat: "Proteins — batch-cook, 1-cup molds", items: [
+      { label: "Chicken (grilled or shredded)", kw: ["chicken"], prep: "Cook a big batch, portion ~5 oz; drops into most meals." },
+      { label: "Beef (ground or brisket)", kw: ["beef"], prep: "Brown seasoned crumbles or slow-cook brisket; freeze flat in portions." },
+      { label: "Turkey (ground or sliced)", kw: ["turkey"], prep: "Brown ground turkey, roll meatballs, or roast/smoke a breast; freeze ~5 oz portions." },
+      { label: "Plant protein (beans / lentils / tofu)", kw: ["black bean burger", "lentil", "tofu", "tempeh", "three-bean", "edamame"], prep: "Cook & freeze bean or lentil mixes, or crisp tofu." }
+    ]},
+    { cat: "Beans & legumes — freeze great", items: [
+      { label: "White beans (cannellini)", kw: ["white bean", "cannellini"], prep: "Drain, rinse; freeze in 1/3-cup scoops for instant fiber." },
+      { label: "Black beans", kw: ["black bean"], prep: "Drain, rinse, season; freeze in scoops." },
+      { label: "Pinto beans", kw: ["pinto"], prep: "Great mashed for body in a chili." },
+      { label: "Chickpeas", kw: ["chickpea"], prep: "Roast or keep soft; they soften a little in the freezer." },
+      { label: "Edamame", kw: ["edamame"], prep: "Keep a bag frozen — no prep, high protein." }
+    ]},
+    { cat: "Roasted vegetables", items: [
+      { label: "Bell peppers", kw: ["pepper"], prep: "Roast or char in bulk; freeze in 1/2-cup portions." },
+      { label: "Onions", kw: ["onion"], prep: "Caramelize a big batch; freezes beautifully." },
+      { label: "Broccoli", kw: ["broccoli"], prep: "Roast firm so it reheats without going mushy." },
+      { label: "Corn", kw: ["corn"], prep: "Char and freeze; adds smoky sweetness." },
+      { label: "Zucchini", kw: ["zucchini"], prep: "Roast with a char (holds up better than raw)." },
+      { label: "Mushrooms", kw: ["mushroom"], prep: "Sauté deeply browned before freezing." }
+    ]}
+  ];
+  function renderStaples() {
+    var texts = {};
+    THEMES.forEach(function (t) { texts[t.id] = mealText(t.data); });
+    function has(t, kw) { var x = texts[t.id]; return kw.some(function (k) { return x.indexOf(k) >= 0; }); }
+    var headCells = THEMES.map(function (t) { return '<th title="' + esc(t.title) + '">' + t.emoji + '</th>'; }).join("");
+    var rows = "", kit = [];
+    STAPLES.forEach(function (cat) {
+      rows += '<tr class="catrow"><td colspan="' + (THEMES.length + 2) + '">' + esc(cat.cat) + '</td></tr>';
+      var items = cat.items.map(function (it) {
+        return { it: it, cov: THEMES.filter(function (t) { return has(t, it.kw); }) };
+      }).sort(function (a, b) { return b.cov.length - a.cov.length; });
+      items.forEach(function (o) {
+        if (o.cov.length >= 3) kit.push(o.it.label);
+        rows += '<tr><td class="item"><b>' + esc(o.it.label) + '</b><span class="sprep">' + esc(o.it.prep) + '</span></td>' +
+          THEMES.map(function (t) { return has(t, o.it.kw) ? '<td class="yes">✓</td>' : '<td class="no">·</td>'; }).join("") +
+          '<td class="cov">' + o.cov.length + '</td></tr>';
+      });
+    });
+    document.getElementById("staples-body").innerHTML =
+      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Prep-Ahead Staples</span>' +
+        '<h1 style="font-size:clamp(28px,5vw,44px)">Cook once, <span class="lead">eat all month</span></h1>' +
+        '<p class="tagline">The components that repeat across the six meals. Batch-cook and freeze these and most bowls become assemble-only — no cooking from scratch.</p></header>' +
+      '<div class="kitbox"><b>Freezer starter kit</b> — the highest-leverage staples (used in 3+ meals): ' +
+        (kit.length ? esc(kit.join(", ")) : "—") + '. Keep these on hand and you’ve got the backbone of every meal in the library.</div>' +
+      '<div class="smatrix-wrap"><table class="smatrix"><thead><tr><th class="item">Staple</th>' + headCells + '<th class="cov">#</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="smatrix-foot">✓ = used in that meal (across its builds). Freeze components in your <b>1-cup molds</b> so you can mix &amp; match into any bowl without re-cooking.</p>';
+  }
+
+  // ---------- Freeze & Reheat ----------
+  function renderFreeze() {
+    var m = THEMES[0].data.molds;
+    var freeze = [], fresh = [];
+    THEMES.forEach(function (t) {
+      var s = t.data.sauces || {};
+      Object.keys(s).forEach(function (k) {
+        var o = s[k], row = "<li>" + esc(o.name) + ' <span class="mtag" title="' + esc(t.title) + '">' + t.emoji + "</span></li>";
+        (o.freezes ? freeze : fresh).push(row);
+      });
+    });
+    function fcard(h, p) { return '<div class="freeze-card"><h3>' + h + "</h3><p>" + p + "</p></div>"; }
+    document.getElementById("freeze-body").innerHTML =
+      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Freeze &amp; Reheat</span>' +
+        '<h1 style="font-size:clamp(28px,5vw,44px)">Fill · freeze · <span class="lead">reheat</span></h1>' +
+        '<p class="tagline">One system for the whole library — every meal freezes ~3 months and reheats in 4–6 minutes.</p></header>' +
+      '<div class="freeze-strip">' +
+        '<div class="freeze-card"><h3>The mold system</h3><ul class="fill-list" style="margin-top:6px">' +
+          '<li><span class="q amt">' + m.assembled.count + '× 2-cup</span> ' + esc(m.assembled.use) + '</li>' +
+          '<li><span class="q amt">' + m.component.count + '× 1-cup</span> ' + esc(m.component.use) + '</li>' +
+          '<li><span class="q amt">' + m.sauce.count + '× 2-Tbsp</span> ' + esc(m.sauce.use) + '</li>' +
+        '</ul></div>' +
+        fcard("Freeze", 'Cool cubes completely (fridge ~1 hr) <b>before</b> the freezer so they don’t ice-crystal. Fill warm-not-hot to the line, press out air, pop out when solid, then bag and label <b>protein + date</b>. Keep up to <span class="big">3 months</span>; oldest first.') +
+        fcard("Reheat", 'Reheat a meal cube <span class="big">4–6 min</span> from frozen — microwave stirring halfway, or a covered pan. Then add the sauce and fresh toppings.') +
+        fcard("Add fresh, not frozen", 'Avocado, cheese, herbs, pickles, greens & citrus go on <b>after</b> reheating — they keep the bowl bright and stop the frozen portion going soggy.') +
+      '</div>' +
+      '<div class="saucecols">' +
+        '<div class="scol"><h3>Sauces that freeze <span class="sub">portion in 2-Tbsp molds</span></h3><ul class="saucelist">' + (freeze.length ? freeze.join("") : "<li>—</li>") + '</ul></div>' +
+        '<div class="scol"><h3>Make fresh <span class="sub">fridge ~1 week, add at serving</span></h3><ul class="saucelist">' + (fresh.length ? fresh.join("") : "<li>—</li>") + '</ul></div>' +
+      '</div>';
+  }
+
+  // ---------- view switching ----------
+  function showView(v) {
+    state.view = v;
+    document.getElementById("view-meals").hidden = v !== "meals";
+    document.getElementById("view-staples").hidden = v !== "staples";
+    document.getElementById("view-freeze").hidden = v !== "freeze";
+    Array.prototype.forEach.call(document.querySelectorAll(".navbtn"), function (b) {
+      b.className = "navbtn" + (b.getAttribute("data-view") === v ? " active" : "");
+    });
+    if (v === "staples") renderStaples();
+    else if (v === "freeze") renderFreeze();
+    else showHome();
+    if (window.scrollTo) window.scrollTo(0, 0);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".navbtn"), function (b) {
+    b.addEventListener("click", function () { showView(b.getAttribute("data-view")); });
+  });
+
   renderHome();
 
 })();
