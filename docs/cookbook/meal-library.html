@@ -368,67 +368,195 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "quinoa",
-  "baseContribution": "~15 g protein & ~14 g fiber before you add your protein",
+  "baseContribution": "~17 g protein & ~14 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Rinse 1 cup dry quinoa under cold water (cuts bitterness). Combine with 2 cups water + 1/2 tsp salt. Stovetop: boil, cover, simmer 15 min, rest 5 min off heat, then fluff. Yields ~3 cups — enough for all 4 bowls.",
       "pRice": "Cook the brown rice (rice cooker, or 1 cup rice : 2 cups water, simmer ~30 min). While warm, fold in 2 Tbsp chopped cilantro + juice of 1/2 lime. Yields ~3 cups.",
-      "chips": [ { "t": "Rice cooker", "cls": "fast" }, { "t": "Stovetop · 15 min" }, { "t": "Instant Pot for a double batch", "cls": "fast" } ],
-      "tip": "<b>Make-ahead:</b> cooked grain keeps 4 days in the fridge — do it up to 2 days before assembly." },
-    { "h": "Roast the vegetables",
+      "chips": [
+        {
+          "t": "Rice cooker",
+          "cls": "fast"
+        },
+        {
+          "t": "Stovetop · 15 min"
+        },
+        {
+          "t": "Instant Pot for a double batch",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Make-ahead:</b> cooked grain keeps 4 days in the fridge — do it up to 2 days before assembly."
+    },
+    {
+      "h": "Roast the vegetables",
       "p": "Cut sweet potato into 1/2-inch cubes and peppers + red onion (plus zucchini in the Cilantro-Lime build) into 1-inch pieces. Toss with 1 Tbsp oil, 1 tsp each smoked paprika/cumin/chili powder, 1/2 tsp garlic powder, 3/4 tsp salt. Spread in a single layer; roast until the sweet potato is fork-tender and edges caramelize.",
-      "chips": [ { "t": "Oven · 425°F · 25–30 min" }, { "t": "Air fryer · 400°F · 15–18 min", "cls": "fast" } ],
-      "tip": "<b>Don't crowd the pan</b> — steamed veg won't brown. Use two trays if it's tight." },
-    { "h": "Crisp the chickpeas",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 25–30 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 15–18 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Don't crowd the pan</b> — steamed veg won't brown. Use two trays if it's tight."
+    },
+    {
+      "h": "Crisp the chickpeas",
       "p": "Drain, rinse and pat 1 can chickpeas very dry (drier = crispier). Toss with 1 tsp oil, 1/2 tsp smoked paprika, 1/2 tsp garlic powder, pinch salt. Roast until deep golden and crisp.",
-      "chips": [ { "t": "Oven · 425°F · 20–25 min" }, { "t": "Air fryer · 390°F · 12–15 min", "cls": "fast" } ],
-      "tip": "<b>Note:</b> they soften once frozen — that's expected; they still bring protein &amp; fiber." },
-    { "kind": "protein" },
-    { "h": "Warm beans &amp; corn",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 20–25 min"
+        },
+        {
+          "t": "Air fryer · 390°F · 12–15 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Note:</b> they soften once frozen — that's expected; they still bring protein &amp; fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "h": "Warm beans &amp; corn",
       "p": "Heat drained black beans + corn with 1/2 tsp cumin, 1/2 tsp chili powder, pinch salt and a splash of water. Keep them a little saucy — they firm up when frozen.",
-      "chips": [ { "t": "Stovetop · 5 min" } ],
-      "tip": "<b>Extra flavor:</b> char the corn in a dry skillet first for a smoky note." },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 5 min"
+        }
+      ],
+      "tip": "<b>Extra flavor:</b> char the corn in a dry skillet first for a smoky note."
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "chipotle-cashew",
     "base": [
-      { "item": "Quinoa (cooked)", "amt": "1/2 cup" },
-      { "item": "Black beans", "amt": "1/4 cup" },
-      { "item": "Roasted chickpeas", "amt": "1/4 cup" },
-      { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-      { "item": "Roasted peppers + red onion", "amt": "1/4 cup" },
-      { "item": "Corn", "amt": "2 Tbsp" }
+      {
+        "item": "Quinoa (cooked)",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Black beans",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Roasted chickpeas",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Roasted sweet potato",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Roasted peppers + red onion",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Corn",
+        "amt": "2 Tbsp"
+      }
     ],
-    "fresh": ["Avocado (1/4 fruit)", "Cilantro", "Lime wedge", "Green onion", "Optional: jalapeno, tomato, lettuce"],
+    "fresh": [
+      "Avocado (1/4 fruit)",
+      "Cilantro",
+      "Lime wedge",
+      "Green onion",
+      "Optional: jalapeno, tomato, lettuce"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Sweet potato", "amt": "1 large (~12 oz)" },
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Red onion", "amt": "1" },
-        { "item": "Garlic", "amt": "1 head" },
-        { "item": "Avocado", "amt": "1 · fresh topping" },
-        { "item": "Cilantro", "amt": "1 bunch · fresh topping" },
-        { "item": "Green onions", "amt": "1 bunch · fresh topping" },
-        { "item": "Limes", "amt": "3 · sauce + toppings" }
+        {
+          "item": "Sweet potato",
+          "amt": "1 large (~12 oz)"
+        },
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Red onion",
+          "amt": "1"
+        },
+        {
+          "item": "Garlic",
+          "amt": "1 head"
+        },
+        {
+          "item": "Avocado",
+          "amt": "1 · fresh topping"
+        },
+        {
+          "item": "Cilantro",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Green onions",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Limes",
+          "amt": "3 · sauce + toppings"
+        }
       ],
       "pantry": [
-        { "item": "Quinoa", "amt": "1 cup dry", "grain": true },
-        { "item": "Black beans", "amt": "1 can (15 oz)" },
-        { "item": "Chickpeas", "amt": "1 can (15 oz)" },
-        { "item": "Corn", "amt": "1 cup (frozen)" }
+        {
+          "item": "Quinoa",
+          "amt": "1 cup dry",
+          "grain": true
+        },
+        {
+          "item": "Black beans",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Chickpeas",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Corn",
+          "amt": "1 cup (frozen)"
+        }
       ],
-      "seasoning": ["Olive oil", "Cumin", "Chili powder", "Smoked paprika", "Garlic powder", "Oregano", "Salt & pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Cumin",
+        "Chili powder",
+        "Smoked paprika",
+        "Garlic powder",
+        "Oregano",
+        "Salt & pepper"
+      ]
     }
   },
   "sauces": {
@@ -438,17 +566,47 @@
       "freezes": true,
       "recipe": "Blend 1/2 cup cashews (soak 20-30 min in hot water if not high-speed), 1/2 cup water, 2 chipotle peppers in adobo + 1 tsp of the sauce, 2 garlic cloves, juice of 1 lime, 1 Tbsp nutritional yeast, 1/2 tsp salt until completely smooth. Thin with water to a pourable drizzle.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Chipotle in adobo", "amt": "2 peppers" },
-        { "item": "Lime juice", "amt": "1 lime" },
-        { "item": "Garlic", "amt": "2 cloves" },
-        { "item": "Nutritional yeast (opt.)", "amt": "1 Tbsp" },
-        { "item": "Water + salt", "amt": "to blend" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Chipotle in adobo",
+          "amt": "2 peppers"
+        },
+        {
+          "item": "Lime juice",
+          "amt": "1 lime"
+        },
+        {
+          "item": "Garlic",
+          "amt": "2 cloves"
+        },
+        {
+          "item": "Nutritional yeast (opt.)",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" },
-        { "item": "Chipotle in adobo", "amt": "1 small can", "group": "pantry" },
-        { "item": "Nutritional yeast (opt)", "amt": "1 Tbsp", "group": "pantry" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup",
+          "group": "pantry"
+        },
+        {
+          "item": "Chipotle in adobo",
+          "amt": "1 small can",
+          "group": "pantry"
+        },
+        {
+          "item": "Nutritional yeast (opt)",
+          "amt": "1 Tbsp",
+          "group": "pantry"
+        }
       ]
     },
     "cashew-lime": {
@@ -457,14 +615,33 @@
       "freezes": true,
       "recipe": "Blend 1/2 cup cashews (soaked if needed), 1/2 cup water, juice of 1 lime, 1 garlic clove, 1/2 tsp salt until smooth. Add 1 chipotle pepper if you want a little heat.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Lime juice", "amt": "1 lime" },
-        { "item": "Garlic", "amt": "1 clove" },
-        { "item": "Chipotle (opt.)", "amt": "1 pepper" },
-        { "item": "Water + salt", "amt": "to blend" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Lime juice",
+          "amt": "1 lime"
+        },
+        {
+          "item": "Garlic",
+          "amt": "1 clove"
+        },
+        {
+          "item": "Chipotle (opt.)",
+          "amt": "1 pepper"
+        },
+        {
+          "item": "Water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup",
+          "group": "pantry"
+        }
       ]
     },
     "avocado-lime-crema": {
@@ -473,15 +650,38 @@
       "freezes": false,
       "recipe": "Blend 1 ripe avocado, 1/4 cup Greek yogurt, juice of 1 lime, 1 garlic clove, a splash of water and 1/4 tsp salt until smooth and pourable. Best made fresh — it browns after a day.",
       "items": [
-        { "item": "Avocado", "amt": "1" },
-        { "item": "Greek yogurt", "amt": "1/4 cup" },
-        { "item": "Lime juice", "amt": "1 lime" },
-        { "item": "Garlic", "amt": "1 clove" },
-        { "item": "Water + salt", "amt": "to blend" }
+        {
+          "item": "Avocado",
+          "amt": "1"
+        },
+        {
+          "item": "Greek yogurt",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Lime juice",
+          "amt": "1 lime"
+        },
+        {
+          "item": "Garlic",
+          "amt": "1 clove"
+        },
+        {
+          "item": "Water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Avocado (for crema)", "amt": "1", "group": "produce" },
-        { "item": "Greek yogurt", "amt": "small tub", "group": "pantry" }
+        {
+          "item": "Avocado (for crema)",
+          "amt": "1",
+          "group": "produce"
+        },
+        {
+          "item": "Greek yogurt",
+          "amt": "small tub",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -491,86 +691,511 @@
       "name": "Fajita Chicken",
       "kind": "protein-swap",
       "featured": true,
-      "protein": { "name": "Fajita chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season with fajita spices (chili, cumin, smoked paprika, garlic, oregano) + a little oil. Sear 4–5 min/side or roast at 425°F ~18–20 min to 165°F internal. Rest 5 min, then slice.", "appliance": ["Stovetop", "Oven · 425°F"] },
-      "macros": { "kcal": 680, "protein": 61, "carbs": 70, "fiber": 15, "fat": 18 },
-      "shopping": { "protein": { "item": "Chicken breast", "amt": "~24 oz raw" } },
-      "note": "The all-rounder — lean, highest protein, classic Southwest flavor. This is the featured build."
+      "protein": {
+        "name": "Fajita chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season with fajita spices (chili, cumin, smoked paprika, garlic, oregano) + a little oil. Sear 4–5 min/side or roast at 425°F ~18–20 min to 165°F internal. Rest 5 min, then slice.",
+        "appliance": [
+          "Stovetop",
+          "Oven · 425°F"
+        ]
+      },
+      "macros": {
+        "kcal": 690,
+        "protein": 62,
+        "carbs": 73,
+        "fiber": 15,
+        "fat": 18
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        }
+      },
+      "note": "The all-rounder — lean, highest protein, classic Southwest flavor. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Fajita chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Quinoa (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 8,
+            "carbs": 39,
+            "fiber": 5,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 9,
+            "carbs": 31,
+            "fiber": 9,
+            "fat": 4
+          }
+        },
+        "sauce": {
+          "label": "Chipotle-cashew sauce",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "steak-fajita",
       "name": "Steak Fajita",
       "kind": "protein-swap",
-      "protein": { "name": "Steak fajita (sirloin/flank)", "serving": "5 oz / ~140 g cooked", "method": "Season and sear hot 2–3 min/side to 130–135°F for medium. Rest 5 min, then slice thin against the grain (key for tenderness).", "appliance": ["Stovetop / cast iron"] },
-      "macros": { "kcal": 700, "protein": 60, "carbs": 70, "fiber": 15, "fat": 22 },
-      "shopping": { "protein": { "item": "Sirloin or flank steak", "amt": "~22 oz raw" } },
-      "note": "Richer and a little higher fat — great when you want it to feel like a treat."
+      "protein": {
+        "name": "Steak fajita (sirloin/flank)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season and sear hot 2–3 min/side to 130–135°F for medium. Rest 5 min, then slice thin against the grain (key for tenderness).",
+        "appliance": [
+          "Stovetop / cast iron"
+        ]
+      },
+      "macros": {
+        "kcal": 700,
+        "protein": 58,
+        "carbs": 73,
+        "fiber": 15,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Sirloin or flank steak",
+          "amt": "~22 oz raw"
+        }
+      },
+      "note": "Richer and a little higher fat — great when you want it to feel like a treat.",
+      "pucks": {
+        "protein": {
+          "label": "Steak fajita (sirloin/flank)",
+          "macros": {
+            "kcal": 240,
+            "protein": 39,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Quinoa (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 8,
+            "carbs": 39,
+            "fiber": 5,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 9,
+            "carbs": 31,
+            "fiber": 9,
+            "fat": 4
+          }
+        },
+        "sauce": {
+          "label": "Chipotle-cashew sauce",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "taco-turkey",
       "name": "Taco Turkey",
       "kind": "protein-swap",
-      "protein": { "name": "Taco turkey (93/7 ground)", "serving": "4 oz / ~115 g cooked", "method": "Brown over medium-high, breaking it up, with 2 Tbsp taco seasoning + a splash of water. Cook until no pink and the liquid reduces, ~8 min.", "appliance": ["Stovetop"] },
-      "macros": { "kcal": 650, "protein": 48, "carbs": 70, "fiber": 15, "fat": 22 },
-      "shopping": { "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" } },
-      "note": "Fastest weeknight batch. Lightest calories — pairs well with salsa if you want to skip the cashew sauce."
+      "protein": {
+        "name": "Taco turkey (93/7 ground)",
+        "serving": "4 oz / ~115 g cooked",
+        "method": "Brown over medium-high, breaking it up, with 2 Tbsp taco seasoning + a splash of water. Cook until no pink and the liquid reduces, ~8 min.",
+        "appliance": [
+          "Stovetop"
+        ]
+      },
+      "macros": {
+        "kcal": 680,
+        "protein": 59,
+        "carbs": 73,
+        "fiber": 15,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        }
+      },
+      "note": "Fastest weeknight batch. Lightest calories — pairs well with salsa if you want to skip the cashew sauce.",
+      "pucks": {
+        "protein": {
+          "label": "Taco turkey (93/7 ground)",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Quinoa (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 8,
+            "carbs": 39,
+            "fiber": 5,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 9,
+            "carbs": 31,
+            "fiber": 9,
+            "fat": 4
+          }
+        },
+        "sauce": {
+          "label": "Chipotle-cashew sauce",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "smoky-pulled-chicken",
       "name": "Smoky Pulled Chicken",
       "kind": "protein-swap",
-      "protein": { "name": "Smoky pulled chicken", "serving": "5 oz / ~140 g cooked", "method": "Slow cooker 4–6 hr on low, or Instant Pot 15 min high pressure + natural release. Shred, then toss with 1/4 cup low-sugar BBQ + 1 tsp adobo.", "appliance": ["Slow cooker · 4–6 hr", "Instant Pot · 15 min HP"] },
-      "macros": { "kcal": 665, "protein": 56, "carbs": 76, "fiber": 15, "fat": 18 },
-      "shopping": { "protein": { "item": "Chicken breast or thighs", "amt": "~24 oz" }, "pantryAdd": [{ "item": "Low-sugar BBQ sauce", "amt": "1/4 cup" }] },
-      "note": "Hands-off and shreds beautifully — freezes exceptionally well. Best use of the slow cooker / Instant Pot."
+      "protein": {
+        "name": "Smoky pulled chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Slow cooker 4–6 hr on low, or Instant Pot 15 min high pressure + natural release. Shred, then toss with 1/4 cup low-sugar BBQ + 1 tsp adobo.",
+        "appliance": [
+          "Slow cooker · 4–6 hr",
+          "Instant Pot · 15 min HP"
+        ]
+      },
+      "macros": {
+        "kcal": 690,
+        "protein": 62,
+        "carbs": 73,
+        "fiber": 15,
+        "fat": 18
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast or thighs",
+          "amt": "~24 oz"
+        },
+        "pantryAdd": [
+          {
+            "item": "Low-sugar BBQ sauce",
+            "amt": "1/4 cup"
+          }
+        ]
+      },
+      "note": "Hands-off and shreds beautifully — freezes exceptionally well. Best use of the slow cooker / Instant Pot.",
+      "pucks": {
+        "protein": {
+          "label": "Smoky pulled chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Quinoa (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 8,
+            "carbs": 39,
+            "fiber": 5,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 9,
+            "carbs": 31,
+            "fiber": 9,
+            "fat": 4
+          }
+        },
+        "sauce": {
+          "label": "Chipotle-cashew sauce",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "plant-powered",
       "name": "Plant-Powered",
       "kind": "remix-plant",
-      "protein": { "name": "Roasted tofu + legumes", "serving": "6 oz / ~170 g tofu", "method": "Press tofu 15 min, cut into 3/4-inch cubes, toss with 1 Tbsp oil + 1 Tbsp cornstarch + Southwest spices. Roast at 425°F ~25 min (or air-fry 400°F ~15 min) until crisp on all sides. Legumes carry the protein & fiber here.", "appliance": ["Oven · 425°F · 25 min", "Air fryer · 400°F · 15 min"] },
+      "protein": {
+        "name": "Roasted tofu + legumes",
+        "serving": "6 oz / ~170 g tofu",
+        "method": "Press tofu 15 min, cut into 3/4-inch cubes, toss with 1 Tbsp oil + 1 Tbsp cornstarch + Southwest spices. Roast at 425°F ~25 min (or air-fry 400°F ~15 min) until crisp on all sides. Legumes carry the protein & fiber here.",
+        "appliance": [
+          "Oven · 425°F · 25 min",
+          "Air fryer · 400°F · 15 min"
+        ]
+      },
       "sauceId": "cashew-lime",
       "overrides": {
         "base": [
-          { "item": "Quinoa (cooked)", "amt": "1/3 cup" },
-          { "item": "Black beans", "amt": "1/3 cup" },
-          { "item": "Roasted chickpeas", "amt": "1/3 cup" },
-          { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-          { "item": "Roasted peppers + red onion", "amt": "1/4 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" },
-          { "item": "Pepitas", "amt": "1 Tbsp" }
+          {
+            "item": "Quinoa (cooked)",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Roasted chickpeas",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Roasted sweet potato",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted peppers + red onion",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          },
+          {
+            "item": "Pepitas",
+            "amt": "1 Tbsp"
+          }
         ]
       },
-      "macros": { "kcal": 660, "protein": 38, "carbs": 78, "fiber": 19, "fat": 26 },
-      "shopping": {
-        "protein": { "item": "Extra-firm tofu", "amt": "14 oz block" },
-        "pantryAdd": [{ "item": "Pepitas", "amt": "1/4 cup" }, { "item": "Cornstarch", "amt": "for crisping" }]
+      "macros": {
+        "kcal": 710,
+        "protein": 41,
+        "carbs": 81,
+        "fiber": 18,
+        "fat": 29
       },
-      "note": "Fully plant-based and the highest-fiber build. Tofu + doubled legumes + pepitas keep it satisfying without meat."
+      "shopping": {
+        "protein": {
+          "item": "Extra-firm tofu",
+          "amt": "14 oz block"
+        },
+        "pantryAdd": [
+          {
+            "item": "Pepitas",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Cornstarch",
+            "amt": "for crisping"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build. Tofu + doubled legumes + pepitas keep it satisfying without meat.",
+      "pucks": {
+        "protein": {
+          "label": "Roasted tofu + legumes",
+          "macros": {
+            "kcal": 200,
+            "protein": 20,
+            "carbs": 5,
+            "fiber": 1,
+            "fat": 12
+          }
+        },
+        "grain": {
+          "label": "Quinoa (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 8,
+            "carbs": 39,
+            "fiber": 5,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 230,
+            "protein": 11,
+            "carbs": 34,
+            "fiber": 11,
+            "fat": 8
+          }
+        },
+        "sauce": {
+          "label": "Cashew-lime sauce",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "cilantro-lime-rice",
       "name": "Cilantro-Lime Rice",
       "kind": "remix",
-      "protein": { "name": "Fajita chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season with fajita spices; sear or roast to 165°F internal, rest 5 min, then slice.", "appliance": ["Stovetop", "Oven · 425°F"] },
+      "protein": {
+        "name": "Fajita chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season with fajita spices; sear or roast to 165°F internal, rest 5 min, then slice.",
+        "appliance": [
+          "Stovetop",
+          "Oven · 425°F"
+        ]
+      },
       "sauceId": "avocado-lime-crema",
       "overrides": {
         "grain": "cilantro-lime brown rice",
         "base": [
-          { "item": "Cilantro-lime brown rice", "amt": "1/2 cup" },
-          { "item": "Black beans", "amt": "1/4 cup" },
-          { "item": "Roasted chickpeas", "amt": "1/4 cup" },
-          { "item": "Roasted zucchini", "amt": "1/4 cup" },
-          { "item": "Roasted peppers + red onion", "amt": "1/4 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" }
+          {
+            "item": "Cilantro-lime brown rice",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted chickpeas",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted zucchini",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted peppers + red onion",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          }
         ]
       },
-      "macros": { "kcal": 630, "protein": 57, "carbs": 62, "fiber": 15, "fat": 16 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "pantrySwap": { "from": "Quinoa", "to": { "item": "Brown rice", "amt": "1 cup dry" } },
-        "produceAdd": [{ "item": "Zucchini", "amt": "1" }]
+      "macros": {
+        "kcal": 690,
+        "protein": 59,
+        "carbs": 80,
+        "fiber": 14,
+        "fat": 16
       },
-      "note": "A milder, brighter remix: swaps quinoa for cilantro-lime rice, adds zucchini, and finishes with avocado-lime crema instead of chipotle-cashew."
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        },
+        "pantrySwap": {
+          "from": "Quinoa",
+          "to": {
+            "item": "Brown rice",
+            "amt": "1 cup dry"
+          }
+        },
+        "produceAdd": [
+          {
+            "item": "Zucchini",
+            "amt": "1"
+          }
+        ]
+      },
+      "note": "A milder, brighter remix: swaps quinoa for cilantro-lime rice, adds zucchini, and finishes with avocado-lime crema instead of chipotle-cashew.",
+      "pucks": {
+        "protein": {
+          "label": "Fajita chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "quinoa",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 9,
+            "carbs": 31,
+            "fiber": 9,
+            "fat": 4
+          }
+        },
+        "sauce": {
+          "label": "Avocado-lime crema",
+          "macros": {
+            "kcal": 60,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -598,8 +1223,19 @@
       "Top with 2 Tbsp hemp hearts or pepitas (+5–6 g)",
       "Add a sprinkle of cotija / queso fresco"
     ],
-    "freezeWell": ["Quinoa / rice", "Beans & chickpeas", "Roasted veg", "Corn", "Cooked protein"],
-    "addFresh": ["Avocado", "Cilantro", "Lime", "Green onion"],
+    "freezeWell": [
+      "Quinoa / rice",
+      "Beans & chickpeas",
+      "Roasted veg",
+      "Corn",
+      "Cooked protein"
+    ],
+    "addFresh": [
+      "Avocado",
+      "Cilantro",
+      "Lime",
+      "Green onion"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -614,56 +1250,154 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "brown rice",
-  "baseContribution": "~7 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~9 g protein & ~10 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Cook 1 cup brown rice (rice cooker, or 1 cup rice : 2 cups water — boil, cover, simmer ~30 min, rest 10 min). Fluff. Yields ~3 cups — enough for all 4 bowls.",
-      "chips": [ { "t": "Rice cooker", "cls": "fast" }, { "t": "Stovetop · 30 min" }, { "t": "Instant Pot · 22 min", "cls": "fast" } ],
-      "tip": "<b>Make-ahead:</b> cooked rice keeps 4 days chilled — cook it up to 2 days before assembly." },
-    { "h": "Roast the vegetables",
+      "chips": [
+        {
+          "t": "Rice cooker",
+          "cls": "fast"
+        },
+        {
+          "t": "Stovetop · 30 min"
+        },
+        {
+          "t": "Instant Pot · 22 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Make-ahead:</b> cooked rice keeps 4 days chilled — cook it up to 2 days before assembly."
+    },
+    {
+      "h": "Roast the vegetables",
       "p": "Cut sweet potato into 1/2-inch cubes, break broccoli into florets, slice carrots. Toss with 1 Tbsp oil, 1 tsp smoked paprika, 1/2 tsp garlic powder, 3/4 tsp salt. Roast in a single layer until tender and caramelized.",
-      "chips": [ { "t": "Oven · 425°F · 25–30 min" }, { "t": "Air fryer · 400°F · 12–16 min", "cls": "fast" } ],
-      "tip": "<b>Stagger it:</b> sweet potato + carrots first, add broccoli for the last 12–15 min so it doesn't burn." },
-    { "kind": "protein" },
-    { "h": "Char the corn",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 25–30 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 12–16 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Stagger it:</b> sweet potato + carrots first, add broccoli for the last 12–15 min so it doesn't burn."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "h": "Char the corn",
       "p": "Blister 1 cup corn in a dry hot skillet 3–4 min for a smoky, roadside note; season with a pinch of salt.",
-      "chips": [ { "t": "Stovetop · 4 min" } ],
-      "tip": "<b>Optional:</b> toss the warm corn with a squeeze of lime + a pinch of chili powder." },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 4 min"
+        }
+      ],
+      "tip": "<b>Optional:</b> toss the warm corn with a squeeze of lime + a pinch of chili powder."
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "low-sugar-bbq",
     "base": [
-      { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-      { "item": "Roasted sweet potato", "amt": "1/2 cup" },
-      { "item": "Roasted broccoli", "amt": "1/3 cup" },
-      { "item": "Roasted carrots", "amt": "1/4 cup" },
-      { "item": "Corn", "amt": "2 Tbsp" }
+      {
+        "item": "Brown rice (cooked)",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Roasted sweet potato",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Roasted broccoli",
+        "amt": "1/3 cup"
+      },
+      {
+        "item": "Roasted carrots",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Corn",
+        "amt": "2 Tbsp"
+      }
     ],
-    "fresh": ["Pickled onions", "Green onion", "Optional: fresh jalapeno, extra BBQ drizzle"],
+    "fresh": [
+      "Pickled onions",
+      "Green onion",
+      "Optional: fresh jalapeno, extra BBQ drizzle"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Sweet potato", "amt": "2 large (~1.5 lb)" },
-        { "item": "Broccoli", "amt": "1 head" },
-        { "item": "Carrots", "amt": "4" },
-        { "item": "Green onions", "amt": "1 bunch · fresh topping" }
+        {
+          "item": "Sweet potato",
+          "amt": "2 large (~1.5 lb)"
+        },
+        {
+          "item": "Broccoli",
+          "amt": "1 head"
+        },
+        {
+          "item": "Carrots",
+          "amt": "4"
+        },
+        {
+          "item": "Green onions",
+          "amt": "1 bunch · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Brown rice", "amt": "1 cup dry", "grain": true },
-        { "item": "Corn", "amt": "1 cup (frozen)" },
-        { "item": "Pickled onions", "amt": "1 jar · fresh topping" }
+        {
+          "item": "Brown rice",
+          "amt": "1 cup dry",
+          "grain": true
+        },
+        {
+          "item": "Corn",
+          "amt": "1 cup (frozen)"
+        },
+        {
+          "item": "Pickled onions",
+          "amt": "1 jar · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Smoked paprika", "Garlic powder", "Yellow mustard", "Apple cider vinegar", "Black pepper", "Salt"]
+      "seasoning": [
+        "Olive oil",
+        "Smoked paprika",
+        "Garlic powder",
+        "Yellow mustard",
+        "Apple cider vinegar",
+        "Black pepper",
+        "Salt"
+      ]
     }
   },
   "sauces": {
@@ -673,16 +1407,42 @@
       "freezes": true,
       "recipe": "Simmer 1/4 cup tomato paste, 2 Tbsp cider vinegar, 1 Tbsp yellow mustard, 1 tsp smoked paprika, 1/2 tsp garlic powder, and 1-2 tsp sweetener with a splash of water for 5 min. (Or use a bottled low-sugar BBQ.)",
       "items": [
-        { "item": "Tomato paste", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Yellow mustard", "amt": "1 Tbsp" },
-        { "item": "Smoked paprika", "amt": "1 tsp" },
-        { "item": "Garlic powder", "amt": "1/2 tsp" },
-        { "item": "Sweetener", "amt": "1-2 tsp" }
+        {
+          "item": "Tomato paste",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic powder",
+          "amt": "1/2 tsp"
+        },
+        {
+          "item": "Sweetener",
+          "amt": "1-2 tsp"
+        }
       ],
       "shop": [
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" },
-        { "item": "Low-sugar sweetener", "amt": "", "group": "pantry" }
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        },
+        {
+          "item": "Low-sugar sweetener",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "mustard-bbq": {
@@ -691,15 +1451,38 @@
       "freezes": true,
       "recipe": "Whisk 1/4 cup yellow mustard, 2 Tbsp cider vinegar, 1 Tbsp honey, 1 tsp Worcestershire, and a pinch of cayenne until smooth.",
       "items": [
-        { "item": "Yellow mustard", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Honey", "amt": "1 Tbsp" },
-        { "item": "Worcestershire", "amt": "1 tsp" },
-        { "item": "Cayenne", "amt": "pinch" }
+        {
+          "item": "Yellow mustard",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Honey",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Worcestershire",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Cayenne",
+          "amt": "pinch"
+        }
       ],
       "shop": [
-        { "item": "Honey", "amt": "", "group": "pantry" },
-        { "item": "Worcestershire", "amt": "", "group": "pantry" }
+        {
+          "item": "Honey",
+          "amt": "",
+          "group": "pantry"
+        },
+        {
+          "item": "Worcestershire",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "alabama-white": {
@@ -708,15 +1491,38 @@
       "freezes": false,
       "recipe": "Whisk 1/4 cup light mayo (or Greek yogurt), 1 Tbsp cider vinegar, 1 tsp horseradish, 1/2 tsp black pepper, and 1 tsp lemon juice.",
       "items": [
-        { "item": "Light mayo or Greek yogurt", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "1 Tbsp" },
-        { "item": "Horseradish", "amt": "1 tsp" },
-        { "item": "Black pepper", "amt": "1/2 tsp" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
+        {
+          "item": "Light mayo or Greek yogurt",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Horseradish",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Black pepper",
+          "amt": "1/2 tsp"
+        },
+        {
+          "item": "Lemon juice",
+          "amt": "1 tsp"
+        }
       ],
       "shop": [
-        { "item": "Light mayo or Greek yogurt", "amt": "small", "group": "pantry" },
-        { "item": "Horseradish", "amt": "", "group": "pantry" }
+        {
+          "item": "Light mayo or Greek yogurt",
+          "amt": "small",
+          "group": "pantry"
+        },
+        {
+          "item": "Horseradish",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -726,84 +1532,493 @@
       "name": "BBQ Chicken",
       "kind": "protein-swap",
       "featured": true,
-      "protein": { "name": "BBQ chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, grill or bake to 165°F internal, brush with sauce, then slice or shred.", "appliance": ["Oven · 425°F", "Air fryer", "Slow cooker (shredded)"] },
-      "macros": { "kcal": 550, "protein": 50, "carbs": 67, "fiber": 9, "fat": 11 },
-      "shopping": { "protein": { "item": "Chicken breast", "amt": "~24 oz raw" } },
-      "note": "The lean all-rounder — highest protein, lowest fat. Good with any of the three sauces. This is the featured build."
+      "protein": {
+        "name": "BBQ chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, grill or bake to 165°F internal, brush with sauce, then slice or shred.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer",
+          "Slow cooker (shredded)"
+        ]
+      },
+      "macros": {
+        "kcal": 610,
+        "protein": 52,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 10
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        }
+      },
+      "note": "The lean all-rounder — highest protein, lowest fat. Good with any of the three sauces. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "smoked-turkey",
       "name": "Smoked Turkey",
       "kind": "protein-swap",
-      "protein": { "name": "Smoked turkey breast", "serving": "5 oz / ~140 g cooked", "method": "Use pre-smoked turkey breast, or roast seasoned turkey to 165°F internal. Slice.", "appliance": ["Oven · 400°F", "Pre-smoked"] },
-      "macros": { "kcal": 530, "protein": 47, "carbs": 67, "fiber": 9, "fat": 10 },
-      "shopping": { "protein": { "item": "Smoked turkey breast", "amt": "~22 oz" } },
-      "note": "Smoky and lean, and the fastest if you buy it pre-smoked."
+      "protein": {
+        "name": "Smoked turkey breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Use pre-smoked turkey breast, or roast seasoned turkey to 165°F internal. Slice.",
+        "appliance": [
+          "Oven · 400°F",
+          "Pre-smoked"
+        ]
+      },
+      "macros": {
+        "kcal": 570,
+        "protein": 49,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 8
+      },
+      "shopping": {
+        "protein": {
+          "item": "Smoked turkey breast",
+          "amt": "~22 oz"
+        }
+      },
+      "note": "Smoky and lean, and the fastest if you buy it pre-smoked.",
+      "pucks": {
+        "protein": {
+          "label": "Smoked turkey breast",
+          "macros": {
+            "kcal": 190,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 3
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "pulled-pork",
       "name": "Pulled Pork",
       "kind": "protein-swap",
       "sauceId": "mustard-bbq",
-      "protein": { "name": "Lean pulled pork", "serving": "5 oz / ~140 g cooked", "method": "Slow cooker 8 hr on low (or Instant Pot 60 min high pressure + natural release); shred and toss with the mustard BBQ.", "appliance": ["Slow cooker · 8 hr", "Instant Pot · 60 min HP"] },
-      "macros": { "kcal": 585, "protein": 46, "carbs": 66, "fiber": 10, "fat": 18 },
-      "shopping": { "protein": { "item": "Pork shoulder or loin", "amt": "~26 oz raw" } },
-      "note": "Hands-off and shreds beautifully — the best use of the slow cooker, and it freezes exceptionally well."
+      "protein": {
+        "name": "Lean pulled pork",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Slow cooker 8 hr on low (or Instant Pot 60 min high pressure + natural release); shred and toss with the mustard BBQ.",
+        "appliance": [
+          "Slow cooker · 8 hr",
+          "Instant Pot · 60 min HP"
+        ]
+      },
+      "macros": {
+        "kcal": 660,
+        "protein": 43,
+        "carbs": 83,
+        "fiber": 10,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Pork shoulder or loin",
+          "amt": "~26 oz raw"
+        }
+      },
+      "note": "Hands-off and shreds beautifully — the best use of the slow cooker, and it freezes exceptionally well.",
+      "pucks": {
+        "protein": {
+          "label": "Lean pulled pork",
+          "macros": {
+            "kcal": 280,
+            "protein": 34,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Carolina mustard BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "brisket",
       "name": "Brisket",
       "kind": "protein-swap",
-      "protein": { "name": "Lean beef brisket", "serving": "5 oz / ~140 g cooked", "method": "Low-and-slow in the oven or smoker to fork-tender (or Instant Pot 70 min high pressure). Slice thin against the grain.", "appliance": ["Oven · low & slow", "Instant Pot · 70 min HP"] },
-      "macros": { "kcal": 610, "protein": 48, "carbs": 67, "fiber": 9, "fat": 20 },
-      "shopping": { "protein": { "item": "Lean beef brisket", "amt": "~26 oz raw" } },
-      "note": "The richest, most indulgent build — trim well and keep the portion to 5 oz."
+      "protein": {
+        "name": "Lean beef brisket",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Low-and-slow in the oven or smoker to fork-tender (or Instant Pot 70 min high pressure). Slice thin against the grain.",
+        "appliance": [
+          "Oven · low & slow",
+          "Instant Pot · 70 min HP"
+        ]
+      },
+      "macros": {
+        "kcal": 680,
+        "protein": 43,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean beef brisket",
+          "amt": "~26 oz raw"
+        }
+      },
+      "note": "The richest, most indulgent build — trim well and keep the portion to 5 oz.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef brisket",
+          "macros": {
+            "kcal": 300,
+            "protein": 34,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "bbq-tempeh",
       "name": "BBQ Tempeh",
       "kind": "remix-plant",
       "sauceId": "mustard-bbq",
-      "protein": { "name": "BBQ tempeh + white beans", "serving": "4 oz / ~115 g tempeh", "method": "Steam tempeh 10 min (mellows bitterness), cube, toss with mustard BBQ, then bake or air-fry until caramelized. White beans add protein & fiber.", "appliance": ["Oven · 425°F · 20 min", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-          { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/3 cup" },
-          { "item": "Roasted carrots", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" }
+      "protein": {
+        "name": "BBQ tempeh + white beans",
+        "serving": "4 oz / ~115 g tempeh",
+        "method": "Steam tempeh 10 min (mellows bitterness), cube, toss with mustard BBQ, then bake or air-fry until caramelized. White beans add protein & fiber.",
+        "appliance": [
+          "Oven · 425°F · 20 min",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 565, "protein": 33, "carbs": 77, "fiber": 18, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Tempeh", "amt": "8 oz (2 blocks)" },
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice (cooked)",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted sweet potato",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Roasted carrots",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — tempeh + white beans keep the protein up without meat."
+      "macros": {
+        "kcal": 740,
+        "protein": 44,
+        "carbs": 100,
+        "fiber": 19,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Tempeh",
+          "amt": "8 oz (2 blocks)"
+        },
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — tempeh + white beans keep the protein up without meat.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ tempeh + white beans",
+          "macros": {
+            "kcal": 320,
+            "protein": 31,
+            "carbs": 16,
+            "fiber": 7,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 26,
+            "fiber": 8,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Carolina mustard BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "alabama-white-bowl",
       "name": "Alabama White",
       "kind": "remix",
       "sauceId": "alabama-white",
-      "protein": { "name": "BBQ chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, bake or grill to 165°F internal, brush lightly with sauce, then slice.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-          { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted carrots", "amt": "1/4 cup" },
-          { "item": "Roasted green beans", "amt": "1/4 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" }
+      "protein": {
+        "name": "BBQ chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, bake or grill to 165°F internal, brush lightly with sauce, then slice.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer"
         ]
       },
-      "macros": { "kcal": 560, "protein": 50, "carbs": 52, "fiber": 9, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "produceAdd": [{ "item": "Green beans", "amt": "8 oz" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice (cooked)",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted sweet potato",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted carrots",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted green beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          }
+        ]
       },
-      "note": "A tangy, garden-heavy remix: extra roasted green beans and the creamy, peppery Alabama white sauce instead of tomato BBQ."
+      "macros": {
+        "kcal": 610,
+        "protein": 54,
+        "carbs": 72,
+        "fiber": 10,
+        "fat": 13
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        },
+        "produceAdd": [
+          {
+            "item": "Green beans",
+            "amt": "8 oz"
+          }
+        ]
+      },
+      "note": "A tangy, garden-heavy remix: extra roasted green beans and the creamy, peppery Alabama white sauce instead of tomato BBQ.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Alabama white sauce",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -831,8 +2046,16 @@
       "Top with 2 Tbsp hemp hearts",
       "Add a soft-boiled or fried egg"
     ],
-    "freezeWell": ["Rice", "Roasted sweet potato & veg", "Corn", "Cooked / pulled protein"],
-    "addFresh": ["Pickled onions", "Green onions"],
+    "freezeWell": [
+      "Rice",
+      "Roasted sweet potato & veg",
+      "Corn",
+      "Cooked / pulled protein"
+    ],
+    "addFresh": [
+      "Pickled onions",
+      "Green onions"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -847,49 +2070,132 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "potatoes",
-  "baseContribution": "~6 g protein & ~8 g fiber before you add your protein",
+  "baseContribution": "~8 g protein & ~9 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Cut ~2 lb potatoes into 3/4-inch cubes. Toss with 1 Tbsp oil, 1/2 tsp smoked paprika, 1/2 tsp garlic powder, 3/4 tsp salt. Roast until crisp and golden, flipping once.",
-      "chips": [ { "t": "Oven · 425°F · 30–35 min" }, { "t": "Air fryer · 400°F · 18–22 min", "cls": "fast" } ],
-      "tip": "<b>Crispier:</b> soak the cubes 10 min, dry well, and don't crowd the pan." },
-    { "h": "Roast the vegetables",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 30–35 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 18–22 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Crispier:</b> soak the cubes 10 min, dry well, and don't crowd the pan."
+    },
+    {
+      "h": "Roast the vegetables",
       "p": "Toss broccoli florets, sliced peppers, and cauliflower with 1 tsp oil + a pinch of salt. Roast until tender-crisp and lightly charred.",
-      "chips": [ { "t": "Oven · 425°F · 18–22 min" }, { "t": "Air fryer · 400°F · 10–12 min", "cls": "fast" } ],
-      "tip": "<b>Same oven:</b> roast these on a second tray alongside the potatoes." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Oven · 425°F · 18–22 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 10–12 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Same oven:</b> roast these on a second tray alongside the potatoes."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "greek-yogurt-ranch",
     "base": [
-      { "item": "Roasted potatoes", "amt": "1 cup" },
-      { "item": "Roasted broccoli", "amt": "1/4 cup" },
-      { "item": "Roasted peppers", "amt": "1/4 cup" },
-      { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+      {
+        "item": "Roasted potatoes",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Roasted broccoli",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Roasted peppers",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Roasted cauliflower",
+        "amt": "1/4 cup"
+      }
     ],
-    "fresh": ["Diced tomato", "Green onion", "Optional: pickled jalapeno, chives"],
+    "fresh": [
+      "Diced tomato",
+      "Green onion",
+      "Optional: pickled jalapeno, chives"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Potatoes", "amt": "~2 lb (Yukon or red)" },
-        { "item": "Broccoli", "amt": "1 head" },
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Cauliflower", "amt": "1 small head" },
-        { "item": "Tomato", "amt": "2 · fresh topping" },
-        { "item": "Green onions", "amt": "1 bunch · fresh topping" }
+        {
+          "item": "Potatoes",
+          "amt": "~2 lb (Yukon or red)"
+        },
+        {
+          "item": "Broccoli",
+          "amt": "1 head"
+        },
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Cauliflower",
+          "amt": "1 small head"
+        },
+        {
+          "item": "Tomato",
+          "amt": "2 · fresh topping"
+        },
+        {
+          "item": "Green onions",
+          "amt": "1 bunch · fresh topping"
+        }
       ],
       "pantry": [],
-      "seasoning": ["Olive oil", "Smoked paprika", "Garlic powder", "Onion powder", "Dried dill", "Chili powder", "Cumin", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Smoked paprika",
+        "Garlic powder",
+        "Onion powder",
+        "Dried dill",
+        "Chili powder",
+        "Cumin",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -899,15 +2205,38 @@
       "freezes": false,
       "recipe": "Whisk 1/2 cup Greek yogurt, 2 Tbsp buttermilk (or milk), 1 tsp dried dill, 1/2 tsp each garlic & onion powder, 1 tsp lemon juice, and a pinch of salt. Thin to a drizzle.",
       "items": [
-        { "item": "Greek yogurt", "amt": "1/2 cup" },
-        { "item": "Buttermilk or milk", "amt": "2 Tbsp" },
-        { "item": "Dried dill", "amt": "1 tsp" },
-        { "item": "Garlic + onion powder", "amt": "1/2 tsp ea" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
+        {
+          "item": "Greek yogurt",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Buttermilk or milk",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Dried dill",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic + onion powder",
+          "amt": "1/2 tsp ea"
+        },
+        {
+          "item": "Lemon juice",
+          "amt": "1 tsp"
+        }
       ],
       "shop": [
-        { "item": "Greek yogurt", "amt": "small tub", "group": "pantry" },
-        { "item": "Buttermilk or milk", "amt": "small", "group": "pantry" }
+        {
+          "item": "Greek yogurt",
+          "amt": "small tub",
+          "group": "pantry"
+        },
+        {
+          "item": "Buttermilk or milk",
+          "amt": "small",
+          "group": "pantry"
+        }
       ]
     },
     "sour-cream-chive": {
@@ -916,13 +2245,30 @@
       "freezes": false,
       "recipe": "Stir 1/2 cup Greek yogurt (or light sour cream) with 2 Tbsp chopped chives, 1 tsp lemon juice, and a pinch of salt & pepper.",
       "items": [
-        { "item": "Greek yogurt or sour cream", "amt": "1/2 cup" },
-        { "item": "Chives", "amt": "2 Tbsp" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
+        {
+          "item": "Greek yogurt or sour cream",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Chives",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Lemon juice",
+          "amt": "1 tsp"
+        }
       ],
       "shop": [
-        { "item": "Greek yogurt or light sour cream", "amt": "small tub", "group": "pantry" },
-        { "item": "Chives", "amt": "1 bunch", "group": "produce" }
+        {
+          "item": "Greek yogurt or light sour cream",
+          "amt": "small tub",
+          "group": "pantry"
+        },
+        {
+          "item": "Chives",
+          "amt": "1 bunch",
+          "group": "produce"
+        }
       ]
     },
     "cheese-style": {
@@ -931,15 +2277,38 @@
       "freezes": true,
       "recipe": "Blend 1/2 cup cashews (soaked if not high-speed), 1/2 cup water, 3 Tbsp nutritional yeast, 1 tsp Dijon, 1/2 tsp garlic powder, 1 tsp lemon juice, and 1/2 tsp salt until smooth & pourable.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Nutritional yeast", "amt": "3 Tbsp" },
-        { "item": "Dijon mustard", "amt": "1 tsp" },
-        { "item": "Garlic powder", "amt": "1/2 tsp" },
-        { "item": "Lemon + water + salt", "amt": "to blend" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "3 Tbsp"
+        },
+        {
+          "item": "Dijon mustard",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic powder",
+          "amt": "1/2 tsp"
+        },
+        {
+          "item": "Lemon + water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" },
-        { "item": "Nutritional yeast", "amt": "", "group": "pantry" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup",
+          "group": "pantry"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -949,106 +2318,557 @@
       "name": "Ranch Chicken",
       "kind": "protein-swap",
       "featured": true,
-      "protein": { "name": "Roasted chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, roast or air-fry to 165°F internal, rest 5 min, then dice or slice.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "macros": { "kcal": 500, "protein": 52, "carbs": 53, "fiber": 8, "fat": 12 },
-      "shopping": { "protein": { "item": "Chicken breast", "amt": "~24 oz raw" } },
-      "note": "The lean, crowd-pleasing default — crispy potatoes, roasted veg, cool herby ranch. Highest protein, lowest fat."
+      "protein": {
+        "name": "Roasted chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, roast or air-fry to 165°F internal, rest 5 min, then dice or slice.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer"
+        ]
+      },
+      "macros": {
+        "kcal": 530,
+        "protein": 53,
+        "carbs": 48,
+        "fiber": 9,
+        "fat": 15
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        }
+      },
+      "note": "The lean, crowd-pleasing default — crispy potatoes, roasted veg, cool herby ranch. Highest protein, lowest fat.",
+      "pucks": {
+        "protein": {
+          "label": "Roasted chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 70,
+            "protein": 4,
+            "carbs": 12,
+            "fiber": 5,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Greek yogurt ranch",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     },
     {
       "id": "turkey-ranch",
       "name": "Turkey Ranch",
       "kind": "protein-swap",
-      "protein": { "name": "Seasoned ground turkey", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 ground turkey with garlic, onion powder & paprika until no pink.", "appliance": ["Stovetop"] },
-      "macros": { "kcal": 520, "protein": 46, "carbs": 53, "fiber": 8, "fat": 18 },
-      "shopping": { "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" } },
-      "note": "The fastest weeknight build — ground turkey browns in one pan."
+      "protein": {
+        "name": "Seasoned ground turkey",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 ground turkey with garlic, onion powder & paprika until no pink.",
+        "appliance": [
+          "Stovetop"
+        ]
+      },
+      "macros": {
+        "kcal": 520,
+        "protein": 50,
+        "carbs": 48,
+        "fiber": 9,
+        "fat": 19
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        }
+      },
+      "note": "The fastest weeknight build — ground turkey browns in one pan.",
+      "pucks": {
+        "protein": {
+          "label": "Seasoned ground turkey",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 70,
+            "protein": 4,
+            "carbs": 12,
+            "fiber": 5,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Greek yogurt ranch",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     },
     {
       "id": "cheese-bacon",
       "name": "Cheese & Bacon",
       "kind": "remix",
       "sauceId": "sour-cream-chive",
-      "protein": { "name": "Chicken + cheddar + bacon", "serving": "5 oz / ~140 g chicken", "method": "Roast chicken to 165°F and dice. Cook 4-6 slices center-cut or turkey bacon crisp and crumble. Shredded sharp cheddar melts over the hot potatoes.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" },
-          { "item": "Sharp cheddar (shredded)", "amt": "1 oz" },
-          { "item": "Bacon (crumbled)", "amt": "1-2 slices" }
+      "protein": {
+        "name": "Chicken + cheddar + bacon",
+        "serving": "5 oz / ~140 g chicken",
+        "method": "Roast chicken to 165°F and dice. Cook 4-6 slices center-cut or turkey bacon crisp and crumble. Shredded sharp cheddar melts over the hot potatoes.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer"
         ]
       },
-      "macros": { "kcal": 640, "protein": 63, "carbs": 43, "fiber": 7, "fat": 27 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "pantryAdd": [{ "item": "Sharp cheddar", "amt": "4 oz block" }, { "item": "Bacon (center-cut or turkey)", "amt": "6 slices" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted cauliflower",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Sharp cheddar (shredded)",
+            "amt": "1 oz"
+          },
+          {
+            "item": "Bacon (crumbled)",
+            "amt": "1-2 slices"
+          }
+        ]
       },
-      "note": "The indulgent classic — highest protein but also the highest fat. Use center-cut/turkey bacon + ~1 oz sharp cheddar to keep it in check; add the bacon fresh for crunch."
+      "macros": {
+        "kcal": 720,
+        "protein": 67,
+        "carbs": 50,
+        "fiber": 9,
+        "fat": 28
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        },
+        "pantryAdd": [
+          {
+            "item": "Sharp cheddar",
+            "amt": "4 oz block"
+          },
+          {
+            "item": "Bacon (center-cut or turkey)",
+            "amt": "6 slices"
+          }
+        ]
+      },
+      "note": "The indulgent classic — highest protein but also the highest fat. Use center-cut/turkey bacon + ~1 oz sharp cheddar to keep it in check; add the bacon fresh for crunch.",
+      "pucks": {
+        "protein": {
+          "label": "Chicken + cheddar + bacon",
+          "macros": {
+            "kcal": 420,
+            "protein": 57,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 70,
+            "protein": 4,
+            "carbs": 12,
+            "fiber": 5,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Sour cream & chive",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     },
     {
       "id": "chili-cheese",
       "name": "Chili Cheese",
       "kind": "remix",
       "sauceId": "cheese-style",
-      "protein": { "name": "Turkey chili (with beans)", "serving": "3/4 cup / ~185 g", "method": "One-pan chili: brown 1 lb ground turkey (or lean beef) with onion, 1 Tbsp chili powder & 1 tsp cumin; add 1 can kidney beans + 1 can diced tomatoes; simmer 15 min until thick.", "appliance": ["Stovetop · 20 min", "Slow cooker · 4 hr", "Instant Pot · 15 min HP"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Turkey chili (with beans)",
+        "serving": "3/4 cup / ~185 g",
+        "method": "One-pan chili: brown 1 lb ground turkey (or lean beef) with onion, 1 Tbsp chili powder & 1 tsp cumin; add 1 can kidney beans + 1 can diced tomatoes; simmer 15 min until thick.",
+        "appliance": [
+          "Stovetop · 20 min",
+          "Slow cooker · 4 hr",
+          "Instant Pot · 15 min HP"
         ]
       },
-      "macros": { "kcal": 465, "protein": 43, "carbs": 51, "fiber": 13, "fat": 17 },
-      "shopping": {
-        "protein": { "item": "Ground turkey 93/7 (or lean beef)", "amt": "~20 oz" },
-        "pantryAdd": [{ "item": "Kidney beans", "amt": "1 can (15 oz)" }, { "item": "Diced tomatoes", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted cauliflower",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "The highest-fiber build and the best freezer performer — a quick turkey chili over crispy potatoes under the dairy-free cheese sauce."
+      "macros": {
+        "kcal": 710,
+        "protein": 62,
+        "carbs": 61,
+        "fiber": 13,
+        "fat": 27
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7 (or lean beef)",
+          "amt": "~20 oz"
+        },
+        "pantryAdd": [
+          {
+            "item": "Kidney beans",
+            "amt": "1 can (15 oz)"
+          },
+          {
+            "item": "Diced tomatoes",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "The highest-fiber build and the best freezer performer — a quick turkey chili over crispy potatoes under the dairy-free cheese sauce.",
+      "pucks": {
+        "protein": {
+          "label": "Turkey chili (with beans)",
+          "macros": {
+            "kcal": 330,
+            "protein": 47,
+            "carbs": 1,
+            "fiber": 0,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 9,
+            "carbs": 24,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese-style sauce",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     },
     {
       "id": "buffalo-tofu",
       "name": "Buffalo Tofu",
       "kind": "remix-plant",
       "sauceId": "cheese-style",
-      "protein": { "name": "Buffalo tofu + white beans", "serving": "5 oz / ~140 g tofu", "method": "Press & cube tofu, toss with 1 Tbsp oil + 1 Tbsp cornstarch, roast/air-fry crisp, then toss in cayenne hot sauce. White beans add protein & fiber.", "appliance": ["Oven · 425°F · 25 min", "Air fryer · 400°F · 15 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Buffalo tofu + white beans",
+        "serving": "5 oz / ~140 g tofu",
+        "method": "Press & cube tofu, toss with 1 Tbsp oil + 1 Tbsp cornstarch, roast/air-fry crisp, then toss in cayenne hot sauce. White beans add protein & fiber.",
+        "appliance": [
+          "Oven · 425°F · 25 min",
+          "Air fryer · 400°F · 15 min"
         ]
       },
-      "macros": { "kcal": 440, "protein": 30, "carbs": 54, "fiber": 12, "fat": 17 },
-      "shopping": {
-        "protein": { "item": "Extra-firm tofu", "amt": "14 oz block" },
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }, { "item": "Cornstarch", "amt": "for crisping" }, { "item": "Cayenne hot sauce", "amt": "" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted cauliflower",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          }
+        ]
       },
-      "note": "Fully plant-based and high-fiber — crispy buffalo tofu + white beans under the dairy-free cheese-style sauce."
+      "macros": {
+        "kcal": 580,
+        "protein": 35,
+        "carbs": 64,
+        "fiber": 14,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Extra-firm tofu",
+          "amt": "14 oz block"
+        },
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          },
+          {
+            "item": "Cornstarch",
+            "amt": "for crisping"
+          },
+          {
+            "item": "Cayenne hot sauce",
+            "amt": ""
+          }
+        ]
+      },
+      "note": "Fully plant-based and high-fiber — crispy buffalo tofu + white beans under the dairy-free cheese-style sauce.",
+      "pucks": {
+        "protein": {
+          "label": "Buffalo tofu + white beans",
+          "macros": {
+            "kcal": 200,
+            "protein": 20,
+            "carbs": 5,
+            "fiber": 1,
+            "fat": 12
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 9,
+            "carbs": 23,
+            "fiber": 9,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Cheese-style sauce",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     },
     {
       "id": "broccoli-cheddar",
       "name": "Broccoli-Cheddar",
       "kind": "remix",
       "sauceId": "cheese-style",
-      "protein": { "name": "Roasted chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, roast to 165°F, rest 5 min, then dice.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "Roasted cauliflower", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Roasted chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, roast to 165°F, rest 5 min, then dice.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer"
         ]
       },
-      "macros": { "kcal": 495, "protein": 52, "carbs": 47, "fiber": 9, "fat": 14 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "produceAdd": [{ "item": "Broccoli", "amt": "1 extra head" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted cauliflower",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "A broccoli-forward remix drenched in the cheese-style sauce — the healthy answer to broccoli-cheddar."
+      "macros": {
+        "kcal": 640,
+        "protein": 60,
+        "carbs": 49,
+        "fiber": 9,
+        "fat": 24
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        },
+        "produceAdd": [
+          {
+            "item": "Broccoli",
+            "amt": "1 extra head"
+          }
+        ]
+      },
+      "note": "A broccoli-forward remix drenched in the cheese-style sauce — the healthy answer to broccoli-cheddar.",
+      "pucks": {
+        "protein": {
+          "label": "Roasted chicken breast",
+          "macros": {
+            "kcal": 340,
+            "protein": 50,
+            "carbs": 1,
+            "fiber": 0,
+            "fat": 14
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 70,
+            "protein": 4,
+            "carbs": 12,
+            "fiber": 5,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Cheese-style sauce",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -1076,8 +2896,15 @@
       "Top with a soft-boiled or fried egg",
       "Add 2 Tbsp hemp hearts"
     ],
-    "freezeWell": ["Roasted potatoes", "Roasted veg", "Cooked protein / chili"],
-    "addFresh": ["Diced tomato", "Green onion"],
+    "freezeWell": [
+      "Roasted potatoes",
+      "Roasted veg",
+      "Cooked protein / chili"
+    ],
+    "addFresh": [
+      "Diced tomato",
+      "Green onion"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -1092,49 +2919,129 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "potatoes",
-  "baseContribution": "~9 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~12 g protein & ~12 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Cut ~1.5 lb potatoes into 1/2-inch cubes or thin wedges. Toss with 1 Tbsp oil, 1/2 tsp garlic powder, 3/4 tsp salt. Roast crisp, flipping once.",
-      "chips": [ { "t": "Oven · 425°F · 30–35 min" }, { "t": "Air fryer · 400°F · 18–22 min", "cls": "fast" } ],
-      "tip": "<b>Fry-style:</b> cut into thin wedges for a burger-and-fries feel." },
-    { "h": "Cook the mushrooms & onions",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 30–35 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 18–22 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Fry-style:</b> cut into thin wedges for a burger-and-fries feel."
+    },
+    {
+      "h": "Cook the mushrooms & onions",
       "p": "Sauté sliced mushrooms and onions in 1 tsp oil over medium-high until deeply browned; deglaze with a splash of Worcestershire, then season. Drain & rinse a can of white beans to fold into the base. (No mushrooms? See the substitutions.)",
-      "chips": [ { "t": "Stovetop · 10–12 min" }, { "t": "Low & slow for sweeter onions" } ],
-      "tip": "<b>Get color:</b> don't stir too often — browning is the flavor. The white beans keep the bowl high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 10–12 min"
+        },
+        {
+          "t": "Low & slow for sweeter onions"
+        }
+      ],
+      "tip": "<b>Get color:</b> don't stir too often — browning is the flavor. The white beans keep the bowl high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "burger-sauce",
     "base": [
-      { "item": "Roasted potatoes", "amt": "1/2 cup" },
-      { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-      { "item": "Caramelized onions", "amt": "1/4 cup" },
-      { "item": "White beans", "amt": "1/3 cup" }
+      {
+        "item": "Roasted potatoes",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Sautéed mushrooms",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Caramelized onions",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "White beans",
+        "amt": "1/3 cup"
+      }
     ],
-    "fresh": ["Shredded lettuce", "Pickles", "Diced tomato", "Optional: raw onion, extra sauce"],
+    "fresh": [
+      "Shredded lettuce",
+      "Pickles",
+      "Diced tomato",
+      "Optional: raw onion, extra sauce"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Potatoes", "amt": "~1.5 lb" },
-        { "item": "Yellow onions", "amt": "2" },
-        { "item": "Lettuce", "amt": "1 head · fresh topping" },
-        { "item": "Tomato", "amt": "2 · fresh topping" }
+        {
+          "item": "Potatoes",
+          "amt": "~1.5 lb"
+        },
+        {
+          "item": "Yellow onions",
+          "amt": "2"
+        },
+        {
+          "item": "Lettuce",
+          "amt": "1 head · fresh topping"
+        },
+        {
+          "item": "Tomato",
+          "amt": "2 · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Pickles", "amt": "1 jar · fresh topping" }
+        {
+          "item": "Pickles",
+          "amt": "1 jar · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Garlic powder", "Onion powder", "Smoked paprika", "Dijon mustard", "Apple cider vinegar", "Worcestershire", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Garlic powder",
+        "Onion powder",
+        "Smoked paprika",
+        "Dijon mustard",
+        "Apple cider vinegar",
+        "Worcestershire",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -1144,16 +3051,43 @@
       "freezes": false,
       "recipe": "Whisk 1/4 cup Greek yogurt (or mayo), 1 Tbsp ketchup, 1 Tbsp dill relish, 1 tsp yellow mustard, 1/2 tsp smoked paprika, and a pinch of salt.",
       "items": [
-        { "item": "Greek yogurt or mayo", "amt": "1/4 cup" },
-        { "item": "Ketchup", "amt": "1 Tbsp" },
-        { "item": "Dill relish", "amt": "1 Tbsp" },
-        { "item": "Yellow mustard", "amt": "1 tsp" },
-        { "item": "Smoked paprika", "amt": "1/2 tsp" }
+        {
+          "item": "Greek yogurt or mayo",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Ketchup",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Dill relish",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1/2 tsp"
+        }
       ],
       "shop": [
-        { "item": "Greek yogurt or mayo", "amt": "small tub", "group": "pantry" },
-        { "item": "Ketchup", "amt": "", "group": "pantry" },
-        { "item": "Dill relish", "amt": "small jar", "group": "pantry" }
+        {
+          "item": "Greek yogurt or mayo",
+          "amt": "small tub",
+          "group": "pantry"
+        },
+        {
+          "item": "Ketchup",
+          "amt": "",
+          "group": "pantry"
+        },
+        {
+          "item": "Dill relish",
+          "amt": "small jar",
+          "group": "pantry"
+        }
       ]
     },
     "cheese-sauce": {
@@ -1162,15 +3096,38 @@
       "freezes": true,
       "recipe": "Blend 1/2 cup cashews (soaked if not high-speed), 1/2 cup water, 3 Tbsp nutritional yeast, 1 tsp Dijon, 1/2 tsp smoked paprika, 1/2 tsp garlic powder, 1 tsp lemon juice, and 1/2 tsp salt until smooth & pourable.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Nutritional yeast", "amt": "3 Tbsp" },
-        { "item": "Dijon mustard", "amt": "1 tsp" },
-        { "item": "Smoked paprika + garlic powder", "amt": "1/2 tsp ea" },
-        { "item": "Lemon + water + salt", "amt": "to blend" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "3 Tbsp"
+        },
+        {
+          "item": "Dijon mustard",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Smoked paprika + garlic powder",
+          "amt": "1/2 tsp ea"
+        },
+        {
+          "item": "Lemon + water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" },
-        { "item": "Nutritional yeast", "amt": "", "group": "pantry" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup",
+          "group": "pantry"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "western-bbq": {
@@ -1179,15 +3136,38 @@
       "freezes": true,
       "recipe": "Simmer 1/4 cup tomato paste, 2 Tbsp cider vinegar, 1-2 tsp molasses (or sweetener), 1 tsp smoked paprika, and 1/2 tsp each garlic & onion powder with a splash of water for 5 min. (Or use a bottled low-sugar BBQ.)",
       "items": [
-        { "item": "Tomato paste", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Molasses or sweetener", "amt": "1-2 tsp" },
-        { "item": "Smoked paprika", "amt": "1 tsp" },
-        { "item": "Garlic + onion powder", "amt": "1/2 tsp ea" }
+        {
+          "item": "Tomato paste",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Molasses or sweetener",
+          "amt": "1-2 tsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic + onion powder",
+          "amt": "1/2 tsp ea"
+        }
       ],
       "shop": [
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" },
-        { "item": "Molasses or sweetener", "amt": "", "group": "pantry" }
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        },
+        {
+          "item": "Molasses or sweetener",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -1198,115 +3178,586 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Form 93/7 beef into thin smash-style patties; sear hard 2-3 min/side to 160°F, then chop into the bowl (or brown as seasoned crumbles).", "appliance": ["Stovetop / cast iron", "Griddle"] },
-      "macros": { "kcal": 585, "protein": 49, "carbs": 48, "fiber": 11, "fat": 25 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Form 93/7 beef into thin smash-style patties; sear hard 2-3 min/side to 160°F, then chop into the bowl (or brown as seasoned crumbles).",
+        "appliance": [
+          "Stovetop / cast iron",
+          "Griddle"
+        ]
       },
-      "note": "The classic — smashed beef, crispy potatoes, mushrooms, onions & white beans under a melty dairy-free cheese sauce. This is the featured build."
+      "macros": {
+        "kcal": 630,
+        "protein": 52,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "The classic — smashed beef, crispy potatoes, mushrooms, onions & white beans under a melty dairy-free cheese sauce. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "turkey-burger",
       "name": "Turkey Burger",
       "kind": "protein-swap",
-      "protein": { "name": "Turkey burger (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Form 93/7 turkey into patties with a little Worcestershire & garlic; cook to 165°F, then chop.", "appliance": ["Stovetop", "Griddle"] },
-      "macros": { "kcal": 535, "protein": 48, "carbs": 49, "fiber": 10, "fat": 19 },
-      "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "protein": {
+        "name": "Turkey burger (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Form 93/7 turkey into patties with a little Worcestershire & garlic; cook to 165°F, then chop.",
+        "appliance": [
+          "Stovetop",
+          "Griddle"
+        ]
       },
-      "note": "Leaner than beef, dressed in the tangy special sauce — the lighter everyday build."
+      "macros": {
+        "kcal": 600,
+        "protein": 55,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Leaner than beef, dressed in the tangy special sauce — the lighter everyday build.",
+      "pucks": {
+        "protein": {
+          "label": "Turkey burger (93/7)",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Special burger sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "western-bbq",
       "name": "Western BBQ",
       "kind": "remix",
       "sauceId": "western-bbq",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Sear 93/7 beef patties to 160°F and chop. Pile on the smoky BBQ, jammy onions & roasted peppers.", "appliance": ["Stovetop / cast iron", "Griddle"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Pile on the smoky BBQ, jammy onions & roasted peppers.",
+        "appliance": [
+          "Stovetop / cast iron",
+          "Griddle"
         ]
       },
-      "macros": { "kcal": 580, "protein": 45, "carbs": 60, "fiber": 10, "fat": 22 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Bell peppers", "amt": "2" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          }
+        ]
       },
-      "note": "Smoky-sweet and mushroom-free — tangy Western BBQ with jammy onions, roasted peppers & white beans over beef and potatoes."
+      "macros": {
+        "kcal": 610,
+        "protein": 49,
+        "carbs": 67,
+        "fiber": 12,
+        "fat": 17
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Bell peppers",
+            "amt": "2"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Smoky-sweet and mushroom-free — tangy Western BBQ with jammy onions, roasted peppers & white beans over beef and potatoes.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Western BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "bacon-cheeseburger",
       "name": "Bacon Cheeseburger",
       "kind": "remix",
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Beef + bacon", "serving": "5 oz / ~140 g beef", "method": "Sear 93/7 beef patties to 160°F and chop. Cook 4-6 slices center-cut or turkey bacon crisp and crumble on top.", "appliance": ["Stovetop / cast iron"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" },
-          { "item": "Bacon (crumbled)", "amt": "1-2 slices" }
+      "protein": {
+        "name": "Beef + bacon",
+        "serving": "5 oz / ~140 g beef",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Cook 4-6 slices center-cut or turkey bacon crisp and crumble on top.",
+        "appliance": [
+          "Stovetop / cast iron"
         ]
       },
-      "macros": { "kcal": 655, "protein": 54, "carbs": 48, "fiber": 11, "fat": 30 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }, { "item": "Bacon (center-cut or turkey)", "amt": "6 slices" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Bacon (crumbled)",
+            "amt": "1-2 slices"
+          }
+        ]
       },
-      "note": "The indulgent build — highest fat. Center-cut or turkey bacon keeps it saner; add the bacon fresh for crunch."
+      "macros": {
+        "kcal": 710,
+        "protein": 58,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 28
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          },
+          {
+            "item": "Bacon (center-cut or turkey)",
+            "amt": "6 slices"
+          }
+        ]
+      },
+      "note": "The indulgent build — highest fat. Center-cut or turkey bacon keeps it saner; add the bacon fresh for crunch.",
+      "pucks": {
+        "protein": {
+          "label": "Beef + bacon",
+          "macros": {
+            "kcal": 330,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 17
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "black-bean-burger",
       "name": "Black Bean Burger",
       "kind": "remix-plant",
-      "protein": { "name": "Black bean burger + edamame", "serving": "1 patty + 1/4 cup edamame", "method": "Pan-sear black bean patties until crisp both sides, then break into the bowl. Warm edamame in with the base for extra protein & fiber.", "appliance": ["Stovetop", "Air fryer · 400°F · 10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "Edamame", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Black bean burger + edamame",
+        "serving": "1 patty + 1/4 cup edamame",
+        "method": "Pan-sear black bean patties until crisp both sides, then break into the bowl. Warm edamame in with the base for extra protein & fiber.",
+        "appliance": [
+          "Stovetop",
+          "Air fryer · 400°F · 10 min"
         ]
       },
-      "macros": { "kcal": 475, "protein": 26, "carbs": 81, "fiber": 18, "fat": 15 },
-      "shopping": {
-        "protein": { "item": "Black bean burger patties", "amt": "4 (or 1 can beans + oats)" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "Frozen edamame", "amt": "1 cup" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Edamame",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — a crispy black bean patty plus edamame keep the protein respectable."
+      "macros": {
+        "kcal": 650,
+        "protein": 33,
+        "carbs": 84,
+        "fiber": 22,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Black bean burger patties",
+          "amt": "4 (or 1 can beans + oats)"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Frozen edamame",
+            "amt": "1 cup"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — a crispy black bean patty plus edamame keep the protein respectable.",
+      "pucks": {
+        "protein": {
+          "label": "Black bean burger + edamame",
+          "macros": {
+            "kcal": 230,
+            "protein": 15,
+            "carbs": 32,
+            "fiber": 10,
+            "fat": 7
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 170,
+            "protein": 11,
+            "carbs": 15,
+            "fiber": 7,
+            "fat": 7
+          }
+        },
+        "sauce": {
+          "label": "Special burger sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "patty-melt",
       "name": "Patty Melt",
       "kind": "remix",
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Sear 93/7 beef patties to 160°F and chop. Lean into deeply caramelized onions.", "appliance": ["Stovetop / cast iron"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions (double)", "amt": "1/2 cup" },
-          { "item": "White beans", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Lean into deeply caramelized onions.",
+        "appliance": [
+          "Stovetop / cast iron"
         ]
       },
-      "macros": { "kcal": 610, "protein": 47, "carbs": 62, "fiber": 10, "fat": 26 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }, { "item": "Yellow onion", "amt": "1 extra" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions (double)",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Diner patty-melt energy — jammy caramelized onions and cheese sauce over beef and potatoes."
+      "macros": {
+        "kcal": 630,
+        "protein": 52,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          },
+          {
+            "item": "Yellow onion",
+            "amt": "1 extra"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Diner patty-melt energy — jammy caramelized onions and cheese sauce over beef and potatoes.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -1335,8 +3786,17 @@
       "Top with a fried egg (animal-style)",
       "Add 2 Tbsp hemp hearts"
     ],
-    "freezeWell": ["Roasted potatoes", "Mushrooms & onions", "White beans", "Cooked patties / crumbles"],
-    "addFresh": ["Shredded lettuce", "Pickles", "Diced tomato"],
+    "freezeWell": [
+      "Roasted potatoes",
+      "Mushrooms & onions",
+      "White beans",
+      "Cooked patties / crumbles"
+    ],
+    "addFresh": [
+      "Shredded lettuce",
+      "Pickles",
+      "Diced tomato"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -1351,51 +3811,137 @@
   "prepMin": 20,
   "cookMin": 40,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "pasta",
-  "baseContribution": "~10 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~15 g protein & ~13 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare pasta / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare pasta / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Boil ~8 oz whole-wheat penne (or rotini) in salted water to just-al-dente — 1 min shy of the box, since it finishes when reheated. Drain, toss with a drizzle of olive oil so it doesn't clump.",
-      "chips": [ { "t": "Stovetop · 8–10 min" }, { "t": "Instant Pot · 4 min high, quick release", "cls": "fast" } ],
-      "tip": "<b>Al dente matters:</b> slightly firm pasta survives the freeze-and-reheat far better than soft." },
-    { "h": "Roast the vegetables & warm the beans",
+      "chips": [
+        {
+          "t": "Stovetop · 8–10 min"
+        },
+        {
+          "t": "Instant Pot · 4 min high, quick release",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Al dente matters:</b> slightly firm pasta survives the freeze-and-reheat far better than soft."
+    },
+    {
+      "h": "Roast the vegetables & warm the beans",
       "p": "Cut 2 zucchini and 2 bell peppers into 1/2-inch pieces. Toss with 1 Tbsp oil, 1/2 tsp Italian seasoning & salt; roast until charred at the edges. Drain & rinse a can of white (cannellini) beans and fold into the base.",
-      "chips": [ { "t": "Oven · 425°F · 20–25 min" }, { "t": "Air fryer · 400°F · 12–15 min", "cls": "fast" } ],
-      "tip": "<b>Char = flavor:</b> spread the veg out so it roasts, not steams. The cannellini beans keep every bowl high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Oven · 425°F · 20–25 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 12–15 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Char = flavor:</b> spread the veg out so it roasts, not steams. The cannellini beans keep every bowl high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "marinara",
     "base": [
-      { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-      { "item": "Roasted zucchini", "amt": "1/2 cup" },
-      { "item": "Roasted peppers", "amt": "1/4 cup" },
-      { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      {
+        "item": "Whole-wheat penne",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Roasted zucchini",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Roasted peppers",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "White beans (cannellini)",
+        "amt": "1/3 cup"
+      }
     ],
-    "fresh": ["Fresh basil", "Grated parmesan", "Red pepper flakes", "Optional: fresh mozzarella pearls, arugula"],
+    "fresh": [
+      "Fresh basil",
+      "Grated parmesan",
+      "Red pepper flakes",
+      "Optional: fresh mozzarella pearls, arugula"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Zucchini", "amt": "2" },
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Fresh basil", "amt": "1 bunch · fresh topping" },
-        { "item": "Arugula", "amt": "small bag · optional topping" }
+        {
+          "item": "Zucchini",
+          "amt": "2"
+        },
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Fresh basil",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Arugula",
+          "amt": "small bag · optional topping"
+        }
       ],
       "pantry": [
-        { "item": "Whole-wheat penne", "amt": "8 oz" },
-        { "item": "White beans (cannellini)", "amt": "1 can (15 oz)" },
-        { "item": "Grated parmesan", "amt": "small wedge · fresh topping" }
+        {
+          "item": "Whole-wheat penne",
+          "amt": "8 oz"
+        },
+        {
+          "item": "White beans (cannellini)",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "small wedge · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Italian seasoning", "Garlic", "Dried oregano", "Dried basil", "Crushed red pepper", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Italian seasoning",
+        "Garlic",
+        "Dried oregano",
+        "Dried basil",
+        "Crushed red pepper",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -1405,14 +3951,33 @@
       "freezes": true,
       "recipe": "Sauté 3 cloves minced garlic in 1 Tbsp olive oil 30 sec; add one 28-oz can crushed tomatoes, 1 tsp dried oregano, 1 tsp dried basil, 1/2 tsp salt & a pinch of red pepper. Simmer 15 min. (Or use a good jarred marinara.)",
       "items": [
-        { "item": "Crushed tomatoes", "amt": "28-oz can" },
-        { "item": "Garlic", "amt": "3 cloves" },
-        { "item": "Dried oregano + basil", "amt": "1 tsp ea" },
-        { "item": "Olive oil + salt", "amt": "to taste" },
-        { "item": "Red pepper flakes", "amt": "pinch" }
+        {
+          "item": "Crushed tomatoes",
+          "amt": "28-oz can"
+        },
+        {
+          "item": "Garlic",
+          "amt": "3 cloves"
+        },
+        {
+          "item": "Dried oregano + basil",
+          "amt": "1 tsp ea"
+        },
+        {
+          "item": "Olive oil + salt",
+          "amt": "to taste"
+        },
+        {
+          "item": "Red pepper flakes",
+          "amt": "pinch"
+        }
       ],
       "shop": [
-        { "item": "Crushed tomatoes", "amt": "28-oz can", "group": "pantry" }
+        {
+          "item": "Crushed tomatoes",
+          "amt": "28-oz can",
+          "group": "pantry"
+        }
       ]
     },
     "pesto": {
@@ -1421,15 +3986,38 @@
       "freezes": true,
       "recipe": "Blend 2 cups packed basil, 1/3 cup toasted pine nuts (or walnuts), 2 cloves garlic, 1/3 cup grated parmesan, 1/3 cup olive oil, 1 Tbsp lemon juice & 1/2 tsp salt until it forms a loose paste. Thin with a splash of water.",
       "items": [
-        { "item": "Fresh basil", "amt": "2 cups packed" },
-        { "item": "Pine nuts or walnuts", "amt": "1/3 cup" },
-        { "item": "Garlic", "amt": "2 cloves" },
-        { "item": "Grated parmesan", "amt": "1/3 cup" },
-        { "item": "Olive oil + lemon", "amt": "to blend" }
+        {
+          "item": "Fresh basil",
+          "amt": "2 cups packed"
+        },
+        {
+          "item": "Pine nuts or walnuts",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Garlic",
+          "amt": "2 cloves"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Olive oil + lemon",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Fresh basil (extra)", "amt": "2 large bunches", "group": "produce" },
-        { "item": "Pine nuts or walnuts", "amt": "1/3 cup", "group": "pantry" }
+        {
+          "item": "Fresh basil (extra)",
+          "amt": "2 large bunches",
+          "group": "produce"
+        },
+        {
+          "item": "Pine nuts or walnuts",
+          "amt": "1/3 cup",
+          "group": "pantry"
+        }
       ]
     },
     "alfredo": {
@@ -1438,14 +4026,33 @@
       "freezes": false,
       "recipe": "Blend 3/4 cup cottage cheese (or soaked cashews), 1/3 cup milk, 1/3 cup grated parmesan, 4 cloves roasted garlic, 1 tsp lemon, 1/2 tsp salt & black pepper until silky. Warm gently — don't boil.",
       "items": [
-        { "item": "Cottage cheese or cashews", "amt": "3/4 cup" },
-        { "item": "Grated parmesan", "amt": "1/3 cup" },
-        { "item": "Roasted garlic", "amt": "4 cloves" },
-        { "item": "Milk", "amt": "1/3 cup" },
-        { "item": "Lemon + salt + pepper", "amt": "to blend" }
+        {
+          "item": "Cottage cheese or cashews",
+          "amt": "3/4 cup"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Roasted garlic",
+          "amt": "4 cloves"
+        },
+        {
+          "item": "Milk",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Lemon + salt + pepper",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Cottage cheese", "amt": "small tub", "group": "pantry" }
+        {
+          "item": "Cottage cheese",
+          "amt": "small tub",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -1456,116 +4063,566 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "marinara",
-      "protein": { "name": "Baked parmesan chicken", "serving": "5 oz / ~140 g cooked", "method": "Dredge chicken cutlets in a little egg then whole-wheat breadcrumbs + parmesan; bake or air-fry until 165°F & crisp, then slice into the bowl. Top with a little melty mozzarella.", "appliance": ["Oven · 425°F · 18–22 min", "Air fryer · 400°F · 12–14 min"] },
-      "macros": { "kcal": 580, "protein": 49, "carbs": 56, "fiber": 10, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Chicken breast / cutlets", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Whole-wheat breadcrumbs", "amt": "1 cup" }, { "item": "Part-skim mozzarella", "amt": "4 oz" }]
+      "protein": {
+        "name": "Baked parmesan chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Dredge chicken cutlets in a little egg then whole-wheat breadcrumbs + parmesan; bake or air-fry until 165°F & crisp, then slice into the bowl. Top with a little melty mozzarella.",
+        "appliance": [
+          "Oven · 425°F · 18–22 min",
+          "Air fryer · 400°F · 12–14 min"
+        ]
       },
-      "note": "The classic — crispy parmesan-crusted chicken over penne, roasted veg & marinara with a little melty mozz. This is the featured build."
+      "macros": {
+        "kcal": 730,
+        "protein": 66,
+        "carbs": 79,
+        "fiber": 15,
+        "fat": 19
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast / cutlets",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Whole-wheat breadcrumbs",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Part-skim mozzarella",
+            "amt": "4 oz"
+          }
+        ]
+      },
+      "note": "The classic — crispy parmesan-crusted chicken over penne, roasted veg & marinara with a little melty mozz. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Baked parmesan chicken",
+          "macros": {
+            "kcal": 370,
+            "protein": 50,
+            "carbs": 12,
+            "fiber": 1,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "turkey-meatball",
       "name": "Turkey Meatball",
       "kind": "protein-swap",
       "sauceId": "marinara",
-      "protein": { "name": "Turkey meatballs", "serving": "4–5 meatballs / ~5 oz", "method": "Mix 93/7 turkey with egg, breadcrumbs, parmesan, garlic & Italian herbs; roll into meatballs and bake or air-fry to 165°F. Simmer briefly in the marinara.", "appliance": ["Oven · 400°F · 18–20 min", "Air fryer · 380°F · 12 min"] },
-      "macros": { "kcal": 545, "protein": 46, "carbs": 54, "fiber": 10, "fat": 19 },
-      "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Whole-wheat breadcrumbs", "amt": "1/2 cup" }]
+      "protein": {
+        "name": "Turkey meatballs",
+        "serving": "4–5 meatballs / ~5 oz",
+        "method": "Mix 93/7 turkey with egg, breadcrumbs, parmesan, garlic & Italian herbs; roll into meatballs and bake or air-fry to 165°F. Simmer briefly in the marinara.",
+        "appliance": [
+          "Oven · 400°F · 18–20 min",
+          "Air fryer · 380°F · 12 min"
+        ]
       },
-      "note": "Comfort in a cube — tender herby turkey meatballs simmered in marinara over penne and roasted veg."
+      "macros": {
+        "kcal": 610,
+        "protein": 49,
+        "carbs": 75,
+        "fiber": 15,
+        "fat": 15
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Whole-wheat breadcrumbs",
+            "amt": "1/2 cup"
+          }
+        ]
+      },
+      "note": "Comfort in a cube — tender herby turkey meatballs simmered in marinara over penne and roasted veg.",
+      "pucks": {
+        "protein": {
+          "label": "Turkey meatballs",
+          "macros": {
+            "kcal": 250,
+            "protein": 33,
+            "carbs": 8,
+            "fiber": 1,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "sausage-peppers",
       "name": "Sausage & Peppers",
       "kind": "remix",
       "sauceId": "marinara",
-      "protein": { "name": "Italian chicken sausage", "serving": "5 oz / ~140 g cooked", "method": "Brown sliced lean chicken or turkey Italian sausage until caramelized; toss with the extra onions & peppers.", "appliance": ["Stovetop · 8–10 min", "Air fryer · 400°F · 10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Italian chicken sausage",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown sliced lean chicken or turkey Italian sausage until caramelized; toss with the extra onions & peppers.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Air fryer · 400°F · 10 min"
         ]
       },
-      "macros": { "kcal": 560, "protein": 41, "carbs": 55, "fiber": 11, "fat": 22 },
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          }
+        ]
+      },
+      "macros": {
+        "kcal": 610,
+        "protein": 44,
+        "carbs": 71,
+        "fiber": 14,
+        "fat": 19
+      },
       "shopping": {
-        "protein": { "item": "Italian chicken/turkey sausage", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Bell peppers", "amt": "2 extra" }, { "item": "Yellow onion", "amt": "2" }],
+        "protein": {
+          "item": "Italian chicken/turkey sausage",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Bell peppers",
+            "amt": "2 extra"
+          },
+          {
+            "item": "Yellow onion",
+            "amt": "2"
+          }
+        ],
         "pantryAdd": []
       },
-      "note": "Sunday-market energy — caramelized Italian sausage with sweet peppers & onions in marinara. Extra peppers push the fiber highest of the meat builds."
+      "note": "Sunday-market energy — caramelized Italian sausage with sweet peppers & onions in marinara. Extra peppers push the fiber highest of the meat builds.",
+      "pucks": {
+        "protein": {
+          "label": "Italian chicken sausage",
+          "macros": {
+            "kcal": 250,
+            "protein": 28,
+            "carbs": 4,
+            "fiber": 0,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "pesto-chicken",
       "name": "Pesto Chicken",
       "kind": "remix",
       "sauceId": "pesto",
-      "protein": { "name": "Grilled pesto chicken", "serving": "5 oz / ~140 g cooked", "method": "Season chicken with salt, pepper & garlic; grill or sear to 165°F and slice. Toss with the basil pesto and a few chopped sun-dried tomatoes.", "appliance": ["Stovetop / grill pan", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted zucchini", "amt": "1/2 cup" },
-          { "item": "Sun-dried tomatoes", "amt": "2 Tbsp" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Grilled pesto chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season chicken with salt, pepper & garlic; grill or sear to 165°F and slice. Toss with the basil pesto and a few chopped sun-dried tomatoes.",
+        "appliance": [
+          "Stovetop / grill pan",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 605, "protein": 47, "carbs": 49, "fiber": 10, "fat": 28 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Sun-dried tomatoes", "amt": "1 small jar" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted zucchini",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Sun-dried tomatoes",
+            "amt": "2 Tbsp"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          }
+        ]
       },
-      "note": "Bright and herby — grilled chicken in basil pesto with sun-dried tomatoes. Richest of the builds (pesto brings the good fats)."
+      "macros": {
+        "kcal": 670,
+        "protein": 60,
+        "carbs": 63,
+        "fiber": 14,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Sun-dried tomatoes",
+            "amt": "1 small jar"
+          }
+        ]
+      },
+      "note": "Bright and herby — grilled chicken in basil pesto with sun-dried tomatoes. Richest of the builds (pesto brings the good fats).",
+      "pucks": {
+        "protein": {
+          "label": "Grilled pesto chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Basil pesto",
+          "macros": {
+            "kcal": 120,
+            "protein": 2,
+            "carbs": 2,
+            "fiber": 1,
+            "fat": 12
+          }
+        }
+      }
     },
     {
       "id": "lentil-bolognese",
       "name": "Lentil Bolognese",
       "kind": "remix-plant",
       "sauceId": "marinara",
-      "protein": { "name": "Lentil & mushroom bolognese", "serving": "3/4 cup / ~5 oz", "method": "Sauté finely chopped mushrooms until browned; add 1.5 cups cooked brown/green lentils and simmer into the marinara with a splash of balsamic until thick and meaty.", "appliance": ["Stovetop · 12–15 min", "Instant Pot for the lentils"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted zucchini", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Lentil & mushroom bolognese",
+        "serving": "3/4 cup / ~5 oz",
+        "method": "Sauté finely chopped mushrooms until browned; add 1.5 cups cooked brown/green lentils and simmer into the marinara with a splash of balsamic until thick and meaty.",
+        "appliance": [
+          "Stovetop · 12–15 min",
+          "Instant Pot for the lentils"
         ]
       },
-      "macros": { "kcal": 475, "protein": 25, "carbs": 80, "fiber": 18, "fat": 8 },
-      "shopping": {
-        "protein": { "item": "Brown/green lentils", "amt": "1 cup dry (or 2 cans)" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "Balsamic vinegar", "amt": "splash" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted zucchini",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — a rich lentil & mushroom bolognese that eats like the real thing."
+      "macros": {
+        "kcal": 590,
+        "protein": 34,
+        "carbs": 103,
+        "fiber": 29,
+        "fat": 7
+      },
+      "shopping": {
+        "protein": {
+          "item": "Brown/green lentils",
+          "amt": "1 cup dry (or 2 cans)"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Balsamic vinegar",
+            "amt": "splash"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — a rich lentil & mushroom bolognese that eats like the real thing.",
+      "pucks": {
+        "protein": {
+          "label": "Lentil & mushroom bolognese",
+          "macros": {
+            "kcal": 230,
+            "protein": 18,
+            "carbs": 36,
+            "fiber": 15,
+            "fat": 3
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "chicken-alfredo",
       "name": "Chicken Alfredo Primavera",
       "kind": "remix",
       "sauceId": "alfredo",
-      "protein": { "name": "Grilled chicken", "serving": "5 oz / ~140 g cooked", "method": "Season & sear chicken to 165°F and slice. Fold in extra roasted broccoli & peas for a lighter, veg-forward alfredo.", "appliance": ["Stovetop", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/2 cup" },
-          { "item": "Peas", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Grilled chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season & sear chicken to 165°F and slice. Fold in extra roasted broccoli & peas for a lighter, veg-forward alfredo.",
+        "appliance": [
+          "Stovetop",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 590, "protein": 48, "carbs": 51, "fiber": 10, "fat": 24 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Broccoli", "amt": "1 large head" }],
-        "pantryAdd": [{ "item": "Frozen peas", "amt": "1 cup" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Peas",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Lightened-up alfredo — a cottage-cheese roasted-garlic sauce over chicken, broccoli & peas. Add the sauce fresh; it's fridge-best, not a freezer sauce."
+      "macros": {
+        "kcal": 620,
+        "protein": 64,
+        "carbs": 62,
+        "fiber": 13,
+        "fat": 11
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Broccoli",
+            "amt": "1 large head"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Frozen peas",
+            "amt": "1 cup"
+          }
+        ]
+      },
+      "note": "Lightened-up alfredo — a cottage-cheese roasted-garlic sauce over chicken, broccoli & peas. Add the sauce fresh; it's fridge-best, not a freezer sauce.",
+      "pucks": {
+        "protein": {
+          "label": "Grilled chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 9,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Roasted-garlic alfredo",
+          "macros": {
+            "kcal": 60,
+            "protein": 5,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -1594,8 +4651,19 @@
       "Add another 1/4 cup white beans or lentils (+fiber)",
       "Top with 2 Tbsp hemp hearts or extra parmesan"
     ],
-    "freezeWell": ["Whole-wheat penne (al dente)", "Roasted zucchini & peppers", "White beans", "Marinara", "Cooked chicken / meatballs / bolognese"],
-    "addFresh": ["Fresh basil", "Grated parmesan", "Arugula", "Fresh mozzarella"],
+    "freezeWell": [
+      "Whole-wheat penne (al dente)",
+      "Roasted zucchini & peppers",
+      "White beans",
+      "Marinara",
+      "Cooked chicken / meatballs / bolognese"
+    ],
+    "addFresh": [
+      "Fresh basil",
+      "Grated parmesan",
+      "Arugula",
+      "Fresh mozzarella"
+    ],
     "storeSep": "Alfredo sauce — fridge ~1 week (cream sauces split when frozen); marinara & pesto freeze fine in 2-Tbsp molds"
   }
 }
@@ -1610,53 +4678,147 @@
   "prepMin": 20,
   "cookMin": 40,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "rice",
-  "baseContribution": "~9 g protein & ~10 g fiber before you add your protein",
+  "baseContribution": "~13 g protein & ~13 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare rice / chili / beans to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare rice / chili / beans to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Rinse 1 cup dry brown rice and cook with 2 cups water & a pinch of salt. Fluff and spread to cool. (Brown rice holds up to freezing far better than white.)",
-      "chips": [ { "t": "Rice cooker · brown-rice setting" }, { "t": "Instant Pot · 22 min high, natural release", "cls": "fast" } ],
-      "tip": "<b>Swap-friendly:</b> cilantro-lime rice or quinoa work great here too — just cook and cool the same way." },
-    { "h": "Char the corn & peppers, warm the beans",
+      "chips": [
+        {
+          "t": "Rice cooker · brown-rice setting"
+        },
+        {
+          "t": "Instant Pot · 22 min high, natural release",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Swap-friendly:</b> cilantro-lime rice or quinoa work great here too — just cook and cool the same way."
+    },
+    {
+      "h": "Char the corn & peppers, warm the beans",
       "p": "Dice 2 bell peppers and 1 onion; char with 1 cup corn in a dry-ish hot pan (or roast) until spotty-brown. Drain & rinse your beans and warm them through with a pinch of cumin.",
-      "chips": [ { "t": "Stovetop · 8–10 min" }, { "t": "Air fryer / oven · 400°F · 12–15 min", "cls": "fast" } ],
-      "tip": "<b>Char = depth:</b> a little blister on the corn and peppers gives the bowl a smoky backbone. Beans keep it high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 8–10 min"
+        },
+        {
+          "t": "Air fryer / oven · 400°F · 12–15 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Char = depth:</b> a little blister on the corn and peppers gives the bowl a smoky backbone. Beans keep it high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "red-chili",
     "base": [
-      { "item": "Brown rice", "amt": "1/2 cup" },
-      { "item": "Black beans", "amt": "1/3 cup" },
-      { "item": "Charred corn", "amt": "1/4 cup" },
-      { "item": "Peppers & onion", "amt": "1/4 cup" }
+      {
+        "item": "Brown rice",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Black beans",
+        "amt": "1/3 cup"
+      },
+      {
+        "item": "Charred corn",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Peppers & onion",
+        "amt": "1/4 cup"
+      }
     ],
-    "fresh": ["Diced avocado", "Shredded cheese", "Lime wedge", "Fresh cilantro", "Optional: diced red onion, jalapeño, Greek yogurt, baked tortilla strips"],
+    "fresh": [
+      "Diced avocado",
+      "Shredded cheese",
+      "Lime wedge",
+      "Fresh cilantro",
+      "Optional: diced red onion, jalapeño, Greek yogurt, baked tortilla strips"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Yellow onion", "amt": "1" },
-        { "item": "Avocado", "amt": "2 · fresh topping" },
-        { "item": "Cilantro", "amt": "1 bunch · fresh topping" },
-        { "item": "Limes", "amt": "2 · fresh topping" }
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Yellow onion",
+          "amt": "1"
+        },
+        {
+          "item": "Avocado",
+          "amt": "2 · fresh topping"
+        },
+        {
+          "item": "Cilantro",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Limes",
+          "amt": "2 · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Brown rice", "amt": "1 cup dry" },
-        { "item": "Black beans", "amt": "1 can (15 oz)" },
-        { "item": "Corn", "amt": "1 cup (frozen or can)" },
-        { "item": "Shredded cheese", "amt": "small bag · fresh topping" }
+        {
+          "item": "Brown rice",
+          "amt": "1 cup dry"
+        },
+        {
+          "item": "Black beans",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Corn",
+          "amt": "1 cup (frozen or can)"
+        },
+        {
+          "item": "Shredded cheese",
+          "amt": "small bag · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Chili powder", "Ground cumin", "Smoked paprika", "Garlic powder", "Onion powder", "Dried oregano", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Chili powder",
+        "Ground cumin",
+        "Smoked paprika",
+        "Garlic powder",
+        "Onion powder",
+        "Dried oregano",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -1666,15 +4828,38 @@
       "freezes": true,
       "recipe": "Simmer one 14-oz can diced tomatoes, 2 Tbsp tomato paste, 2 Tbsp chili powder, 1 Tbsp cumin, 1 tsp smoked paprika, 1 tsp oregano, 1/2 tsp each garlic & onion powder with a splash of water for 15 min. Season to taste.",
       "items": [
-        { "item": "Diced tomatoes", "amt": "14-oz can" },
-        { "item": "Tomato paste", "amt": "2 Tbsp" },
-        { "item": "Chili powder", "amt": "2 Tbsp" },
-        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
-        { "item": "Oregano + garlic/onion", "amt": "to taste" }
+        {
+          "item": "Diced tomatoes",
+          "amt": "14-oz can"
+        },
+        {
+          "item": "Tomato paste",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Chili powder",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Cumin + smoked paprika",
+          "amt": "1 Tbsp / 1 tsp"
+        },
+        {
+          "item": "Oregano + garlic/onion",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Diced tomatoes", "amt": "14-oz can", "group": "pantry" },
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" }
+        {
+          "item": "Diced tomatoes",
+          "amt": "14-oz can",
+          "group": "pantry"
+        },
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        }
       ]
     },
     "chipotle-adobo": {
@@ -1683,15 +4868,38 @@
       "freezes": true,
       "recipe": "Blend one 14-oz can fire-roasted tomatoes, 1–2 chipotles in adobo (+1 tsp of the sauce), 2 cloves garlic, 1 Tbsp cumin, 1 tsp smoked paprika & 1/2 tsp salt until smooth. Warm through.",
       "items": [
-        { "item": "Fire-roasted tomatoes", "amt": "14-oz can" },
-        { "item": "Chipotles in adobo", "amt": "1–2 + sauce" },
-        { "item": "Garlic", "amt": "2 cloves" },
-        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
-        { "item": "Salt", "amt": "to taste" }
+        {
+          "item": "Fire-roasted tomatoes",
+          "amt": "14-oz can"
+        },
+        {
+          "item": "Chipotles in adobo",
+          "amt": "1–2 + sauce"
+        },
+        {
+          "item": "Garlic",
+          "amt": "2 cloves"
+        },
+        {
+          "item": "Cumin + smoked paprika",
+          "amt": "1 Tbsp / 1 tsp"
+        },
+        {
+          "item": "Salt",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Fire-roasted tomatoes", "amt": "14-oz can", "group": "pantry" },
-        { "item": "Chipotles in adobo", "amt": "1 small can", "group": "pantry" }
+        {
+          "item": "Fire-roasted tomatoes",
+          "amt": "14-oz can",
+          "group": "pantry"
+        },
+        {
+          "item": "Chipotles in adobo",
+          "amt": "1 small can",
+          "group": "pantry"
+        }
       ]
     },
     "salsa-verde": {
@@ -1700,14 +4908,34 @@
       "freezes": true,
       "recipe": "Blend 8–10 husked tomatillos (or 1 jar salsa verde) with one 4-oz can green chiles, 2 cloves garlic, 1 tsp cumin, juice of 1 lime & 1/2 tsp salt; simmer 10 min to mellow.",
       "items": [
-        { "item": "Tomatillos or salsa verde", "amt": "8–10 / 1 jar" },
-        { "item": "Green chiles", "amt": "4-oz can" },
-        { "item": "Garlic + lime", "amt": "2 cloves / 1" },
-        { "item": "Cumin + salt", "amt": "to taste" }
+        {
+          "item": "Tomatillos or salsa verde",
+          "amt": "8–10 / 1 jar"
+        },
+        {
+          "item": "Green chiles",
+          "amt": "4-oz can"
+        },
+        {
+          "item": "Garlic + lime",
+          "amt": "2 cloves / 1"
+        },
+        {
+          "item": "Cumin + salt",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Tomatillos", "amt": "8–10 (or 1 jar salsa verde)", "group": "produce" },
-        { "item": "Green chiles", "amt": "4-oz can", "group": "pantry" }
+        {
+          "item": "Tomatillos",
+          "amt": "8–10 (or 1 jar salsa verde)",
+          "group": "produce"
+        },
+        {
+          "item": "Green chiles",
+          "amt": "4-oz can",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -1718,116 +4946,532 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "red-chili",
-      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with a little chili powder, cumin & garlic; break into fine crumbles and simmer a few minutes in the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "macros": { "kcal": 560, "protein": 44, "carbs": 58, "fiber": 13, "fat": 20 },
+      "protein": {
+        "name": "Seasoned ground beef (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 beef with a little chili powder, cumin & garlic; break into fine crumbles and simmer a few minutes in the red chili sauce.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
+        ]
+      },
+      "macros": {
+        "kcal": 660,
+        "protein": 51,
+        "carbs": 80,
+        "fiber": 14,
+        "fat": 16
+      },
       "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "The one everybody knows — savory beef, beans, corn & peppers in a classic red chili over brown rice. This is the featured build."
+      "note": "The one everybody knows — savory beef, beans, corn & peppers in a classic red chili over brown rice. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Seasoned ground beef (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "turkey-chili",
       "name": "Turkey Chili",
       "kind": "protein-swap",
       "sauceId": "red-chili",
-      "protein": { "name": "Ground turkey (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 turkey with chili powder, cumin & a splash of Worcestershire; simmer into the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "macros": { "kcal": 525, "protein": 44, "carbs": 58, "fiber": 13, "fat": 15 },
+      "protein": {
+        "name": "Ground turkey (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 turkey with chili powder, cumin & a splash of Worcestershire; simmer into the red chili sauce.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
+        ]
+      },
+      "macros": {
+        "kcal": 630,
+        "protein": 54,
+        "carbs": 80,
+        "fiber": 14,
+        "fat": 14
+      },
       "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "The leaner everyday build — all the chili comfort, less fat. Turkey soaks up the spices beautifully."
+      "note": "The leaner everyday build — all the chili comfort, less fat. Turkey soaks up the spices beautifully.",
+      "pucks": {
+        "protein": {
+          "label": "Ground turkey (93/7)",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "smoky-chipotle-beef",
       "name": "Smoky Chipotle Beef",
       "kind": "remix",
       "sauceId": "chipotle-adobo",
-      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with cumin & garlic; simmer in the smoky chipotle sauce for a deep, spicy-sweet chili.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Black beans", "amt": "1/4 cup" },
-          { "item": "Pinto beans", "amt": "1/4 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Seasoned ground beef (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 beef with cumin & garlic; simmer in the smoky chipotle sauce for a deep, spicy-sweet chili.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
         ]
       },
-      "macros": { "kcal": 570, "protein": 43, "carbs": 60, "fiber": 14, "fat": 21 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Deep, smoky & a little spicy — chipotle-adobo over beef with a black-and-pinto bean mix. The boldest build; dial the chipotle to your heat."
+      "macros": {
+        "kcal": 695,
+        "protein": 54,
+        "carbs": 86,
+        "fiber": 17,
+        "fat": 16
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Pinto beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Deep, smoky & a little spicy — chipotle-adobo over beef with a black-and-pinto bean mix. The boldest build; dial the chipotle to your heat.",
+      "pucks": {
+        "protein": {
+          "label": "Seasoned ground beef (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 185,
+            "protein": 11,
+            "carbs": 33,
+            "fiber": 12,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Smoky chipotle sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "white-chicken-chili",
       "name": "White Chicken Chili",
       "kind": "remix",
       "sauceId": "salsa-verde",
-      "protein": { "name": "Shredded chicken", "serving": "5 oz / ~140 g cooked", "method": "Poach or Instant-Pot chicken breast/thighs, then shred; fold into the salsa verde with the white beans for a tangy green chili.", "appliance": ["Instant Pot · 12 min", "Stovetop poach · 15 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" },
-          { "item": "Peppers & onion", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Shredded chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Poach or Instant-Pot chicken breast/thighs, then shred; fold into the salsa verde with the white beans for a tangy green chili.",
+        "appliance": [
+          "Instant Pot · 12 min",
+          "Stovetop poach · 15 min"
         ]
       },
-      "macros": { "kcal": 525, "protein": 46, "carbs": 52, "fiber": 12, "fat": 17 },
-      "shopping": {
-        "protein": { "item": "Chicken breast or thighs", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "White beans (cannellini)", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Peppers & onion",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Bright and tangy — shredded chicken and white beans in a tomatillo salsa verde. A lighter green take on chili night."
+      "macros": {
+        "kcal": 630,
+        "protein": 57,
+        "carbs": 77,
+        "fiber": 13,
+        "fat": 10
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast or thighs",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Bright and tangy — shredded chicken and white beans in a tomatillo salsa verde. A lighter green take on chili night.",
+      "pucks": {
+        "protein": {
+          "label": "Shredded chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Salsa verde",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "three-bean-veg",
       "name": "Three-Bean Vegetarian",
       "kind": "remix-plant",
       "sauceId": "red-chili",
-      "protein": { "name": "Three-bean mix", "serving": "3/4 cup / ~5 oz", "method": "Simmer a mix of black, kidney & pinto beans in the red chili sauce with the charred veg until thick and stew-like. Mash a scoop of the beans for body.", "appliance": ["Stovetop · 12–15 min", "Instant Pot sauté"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Black beans", "amt": "1/4 cup" },
-          { "item": "Kidney beans", "amt": "1/4 cup" },
-          { "item": "Pinto beans", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Three-bean mix",
+        "serving": "3/4 cup / ~5 oz",
+        "method": "Simmer a mix of black, kidney & pinto beans in the red chili sauce with the charred veg until thick and stew-like. Mash a scoop of the beans for body.",
+        "appliance": [
+          "Stovetop · 12–15 min",
+          "Instant Pot sauté"
         ]
       },
-      "macros": { "kcal": 470, "protein": 22, "carbs": 85, "fiber": 20, "fat": 9 },
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Kidney beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/4 cup"
+          }
+        ]
+      },
+      "macros": {
+        "kcal": 700,
+        "protein": 36,
+        "carbs": 133,
+        "fiber": 35,
+        "fat": 5
+      },
       "shopping": {
-        "protein": { "item": "Kidney & pinto beans", "amt": "1 can each (15 oz)" },
+        "protein": {
+          "item": "Kidney & pinto beans",
+          "amt": "1 can each (15 oz)"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "Fully plant-based and the highest-fiber build by far — three beans in a rich red chili. Mashing some of the beans makes it thick and hearty."
+      "note": "Fully plant-based and the highest-fiber build by far — three beans in a rich red chili. Mashing some of the beans makes it thick and hearty.",
+      "pucks": {
+        "protein": {
+          "label": "Three-bean mix",
+          "macros": {
+            "kcal": 220,
+            "protein": 15,
+            "carbs": 40,
+            "fiber": 15,
+            "fat": 1
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 220,
+            "protein": 15,
+            "carbs": 40,
+            "fiber": 15,
+            "fat": 1
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "chorizo-pinto",
       "name": "Chorizo & Pinto",
       "kind": "remix",
       "sauceId": "red-chili",
-      "protein": { "name": "Chicken chorizo", "serving": "5 oz / ~140 g cooked", "method": "Brown chicken (or pork) chorizo, breaking it up; its spices season the whole pot. Simmer into the red chili with the pinto beans.", "appliance": ["Stovetop · 8–10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Pinto beans", "amt": "1/3 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" },
-          { "item": "Peppers & onion", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Chicken chorizo",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown chicken (or pork) chorizo, breaking it up; its spices season the whole pot. Simmer into the red chili with the pinto beans.",
+        "appliance": [
+          "Stovetop · 8–10 min"
         ]
       },
-      "macros": { "kcal": 600, "protein": 40, "carbs": 56, "fiber": 13, "fat": 26 },
-      "shopping": {
-        "protein": { "item": "Chicken or pork chorizo", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Peppers & onion",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "The indulgent build — smoky, spiced chorizo carries the whole pot. Chicken chorizo keeps it leaner; pork if you want the full richness."
+      "macros": {
+        "kcal": 710,
+        "protein": 42,
+        "carbs": 82,
+        "fiber": 14,
+        "fat": 25
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken or pork chorizo",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Pinto beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "The indulgent build — smoky, spiced chorizo carries the whole pot. Chicken chorizo keeps it leaner; pork if you want the full richness.",
+      "pucks": {
+        "protein": {
+          "label": "Chicken chorizo",
+          "macros": {
+            "kcal": 300,
+            "protein": 28,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 20
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -1856,8 +5500,19 @@
       "Top with a fried or soft-boiled egg",
       "Sprinkle 2 Tbsp hemp hearts or extra cheese"
     ],
-    "freezeWell": ["Brown rice", "The chili (protein + sauce + beans)", "Charred corn & peppers"],
-    "addFresh": ["Diced avocado", "Shredded cheese", "Lime", "Cilantro", "Greek yogurt", "Tortilla strips"],
+    "freezeWell": [
+      "Brown rice",
+      "The chili (protein + sauce + beans)",
+      "Charred corn & peppers"
+    ],
+    "addFresh": [
+      "Diced avocado",
+      "Shredded cheese",
+      "Lime",
+      "Cilantro",
+      "Greek yogurt",
+      "Tortilla strips"
+    ],
     "storeSep": "Toppings stay fresh — add avocado, cheese, lime & cilantro when you serve. All three sauces freeze fine in 2-Tbsp molds."
   }
 }
@@ -1993,11 +5648,11 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
 
     document.getElementById("body-cube").innerHTML =
       '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · 2-cup mold</div>' +
+        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
         '<div class="cubes">' + cubes + "</div>" +
         '<ul class="fill-list">' + fill + "</ul>" +
         '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Fills to ~2 cups → uses all four of your 2-cup molds = 4 complete meals. Fill warm-not-hot to the line and press gently to remove air.</div></div>' +
+        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
           moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +
@@ -2138,7 +5793,7 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       '<h1>' + esc(t.title) + '<span class="lead">' + esc(t.lead) + '</span></h1>' +
       '<p class="tagline">' + t.tagline + '</p>' +
       '<div class="meta">' +
-        '<span>Makes <b>' + d.servings + '</b> portions</span>' +
+        '<span>Makes <b>' + d.servings + '</b> meals · <b>~3</b> cups</span>' +
         '<span>Prep <b>' + d.prepMin + '</b> min</span>' +
         '<span>Cook <b>' + d.cookMin + '</b> min</span>' +
         '<span>Freezes <b>' + d.freezeMonths + '</b> mo</span>' +

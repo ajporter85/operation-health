@@ -221,11 +221,11 @@
     <h1>Chili<span class="lead">Bowl</span></h1>
     <p class="tagline">A real pot of chili — beans, charred corn &amp; peppers over brown rice, finished with fresh avocado, cheese &amp; lime. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
     <div class="meta">
-      <span>Makes <b>4</b> portions</span>
+      <span>Makes <b>4</b> meals · <b>~3</b> cups</span>
       <span>Prep <b>20</b> min</span>
       <span>Cook <b>40</b> min</span>
       <span>Freezes <b>3</b> mo</span>
-      <span>Reheat <b>4–6</b> min</span>
+      <span>Reheat <b>6–9</b> min</span>
     </div>
     <span class="thesis">Build it · Freeze it · Fuel your goals</span>
   </header>
@@ -296,53 +296,147 @@
   "prepMin": 20,
   "cookMin": 40,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "rice",
-  "baseContribution": "~9 g protein & ~10 g fiber before you add your protein",
+  "baseContribution": "~13 g protein & ~13 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare rice / chili / beans to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare rice / chili / beans to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Rinse 1 cup dry brown rice and cook with 2 cups water & a pinch of salt. Fluff and spread to cool. (Brown rice holds up to freezing far better than white.)",
-      "chips": [ { "t": "Rice cooker · brown-rice setting" }, { "t": "Instant Pot · 22 min high, natural release", "cls": "fast" } ],
-      "tip": "<b>Swap-friendly:</b> cilantro-lime rice or quinoa work great here too — just cook and cool the same way." },
-    { "h": "Char the corn & peppers, warm the beans",
+      "chips": [
+        {
+          "t": "Rice cooker · brown-rice setting"
+        },
+        {
+          "t": "Instant Pot · 22 min high, natural release",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Swap-friendly:</b> cilantro-lime rice or quinoa work great here too — just cook and cool the same way."
+    },
+    {
+      "h": "Char the corn & peppers, warm the beans",
       "p": "Dice 2 bell peppers and 1 onion; char with 1 cup corn in a dry-ish hot pan (or roast) until spotty-brown. Drain & rinse your beans and warm them through with a pinch of cumin.",
-      "chips": [ { "t": "Stovetop · 8–10 min" }, { "t": "Air fryer / oven · 400°F · 12–15 min", "cls": "fast" } ],
-      "tip": "<b>Char = depth:</b> a little blister on the corn and peppers gives the bowl a smoky backbone. Beans keep it high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 8–10 min"
+        },
+        {
+          "t": "Air fryer / oven · 400°F · 12–15 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Char = depth:</b> a little blister on the corn and peppers gives the bowl a smoky backbone. Beans keep it high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "red-chili",
     "base": [
-      { "item": "Brown rice", "amt": "1/2 cup" },
-      { "item": "Black beans", "amt": "1/3 cup" },
-      { "item": "Charred corn", "amt": "1/4 cup" },
-      { "item": "Peppers & onion", "amt": "1/4 cup" }
+      {
+        "item": "Brown rice",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Black beans",
+        "amt": "1/3 cup"
+      },
+      {
+        "item": "Charred corn",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Peppers & onion",
+        "amt": "1/4 cup"
+      }
     ],
-    "fresh": ["Diced avocado", "Shredded cheese", "Lime wedge", "Fresh cilantro", "Optional: diced red onion, jalapeño, Greek yogurt, baked tortilla strips"],
+    "fresh": [
+      "Diced avocado",
+      "Shredded cheese",
+      "Lime wedge",
+      "Fresh cilantro",
+      "Optional: diced red onion, jalapeño, Greek yogurt, baked tortilla strips"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Yellow onion", "amt": "1" },
-        { "item": "Avocado", "amt": "2 · fresh topping" },
-        { "item": "Cilantro", "amt": "1 bunch · fresh topping" },
-        { "item": "Limes", "amt": "2 · fresh topping" }
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Yellow onion",
+          "amt": "1"
+        },
+        {
+          "item": "Avocado",
+          "amt": "2 · fresh topping"
+        },
+        {
+          "item": "Cilantro",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Limes",
+          "amt": "2 · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Brown rice", "amt": "1 cup dry" },
-        { "item": "Black beans", "amt": "1 can (15 oz)" },
-        { "item": "Corn", "amt": "1 cup (frozen or can)" },
-        { "item": "Shredded cheese", "amt": "small bag · fresh topping" }
+        {
+          "item": "Brown rice",
+          "amt": "1 cup dry"
+        },
+        {
+          "item": "Black beans",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Corn",
+          "amt": "1 cup (frozen or can)"
+        },
+        {
+          "item": "Shredded cheese",
+          "amt": "small bag · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Chili powder", "Ground cumin", "Smoked paprika", "Garlic powder", "Onion powder", "Dried oregano", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Chili powder",
+        "Ground cumin",
+        "Smoked paprika",
+        "Garlic powder",
+        "Onion powder",
+        "Dried oregano",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -352,15 +446,38 @@
       "freezes": true,
       "recipe": "Simmer one 14-oz can diced tomatoes, 2 Tbsp tomato paste, 2 Tbsp chili powder, 1 Tbsp cumin, 1 tsp smoked paprika, 1 tsp oregano, 1/2 tsp each garlic & onion powder with a splash of water for 15 min. Season to taste.",
       "items": [
-        { "item": "Diced tomatoes", "amt": "14-oz can" },
-        { "item": "Tomato paste", "amt": "2 Tbsp" },
-        { "item": "Chili powder", "amt": "2 Tbsp" },
-        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
-        { "item": "Oregano + garlic/onion", "amt": "to taste" }
+        {
+          "item": "Diced tomatoes",
+          "amt": "14-oz can"
+        },
+        {
+          "item": "Tomato paste",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Chili powder",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Cumin + smoked paprika",
+          "amt": "1 Tbsp / 1 tsp"
+        },
+        {
+          "item": "Oregano + garlic/onion",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Diced tomatoes", "amt": "14-oz can", "group": "pantry" },
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" }
+        {
+          "item": "Diced tomatoes",
+          "amt": "14-oz can",
+          "group": "pantry"
+        },
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        }
       ]
     },
     "chipotle-adobo": {
@@ -369,15 +486,38 @@
       "freezes": true,
       "recipe": "Blend one 14-oz can fire-roasted tomatoes, 1–2 chipotles in adobo (+1 tsp of the sauce), 2 cloves garlic, 1 Tbsp cumin, 1 tsp smoked paprika & 1/2 tsp salt until smooth. Warm through.",
       "items": [
-        { "item": "Fire-roasted tomatoes", "amt": "14-oz can" },
-        { "item": "Chipotles in adobo", "amt": "1–2 + sauce" },
-        { "item": "Garlic", "amt": "2 cloves" },
-        { "item": "Cumin + smoked paprika", "amt": "1 Tbsp / 1 tsp" },
-        { "item": "Salt", "amt": "to taste" }
+        {
+          "item": "Fire-roasted tomatoes",
+          "amt": "14-oz can"
+        },
+        {
+          "item": "Chipotles in adobo",
+          "amt": "1–2 + sauce"
+        },
+        {
+          "item": "Garlic",
+          "amt": "2 cloves"
+        },
+        {
+          "item": "Cumin + smoked paprika",
+          "amt": "1 Tbsp / 1 tsp"
+        },
+        {
+          "item": "Salt",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Fire-roasted tomatoes", "amt": "14-oz can", "group": "pantry" },
-        { "item": "Chipotles in adobo", "amt": "1 small can", "group": "pantry" }
+        {
+          "item": "Fire-roasted tomatoes",
+          "amt": "14-oz can",
+          "group": "pantry"
+        },
+        {
+          "item": "Chipotles in adobo",
+          "amt": "1 small can",
+          "group": "pantry"
+        }
       ]
     },
     "salsa-verde": {
@@ -386,14 +526,34 @@
       "freezes": true,
       "recipe": "Blend 8–10 husked tomatillos (or 1 jar salsa verde) with one 4-oz can green chiles, 2 cloves garlic, 1 tsp cumin, juice of 1 lime & 1/2 tsp salt; simmer 10 min to mellow.",
       "items": [
-        { "item": "Tomatillos or salsa verde", "amt": "8–10 / 1 jar" },
-        { "item": "Green chiles", "amt": "4-oz can" },
-        { "item": "Garlic + lime", "amt": "2 cloves / 1" },
-        { "item": "Cumin + salt", "amt": "to taste" }
+        {
+          "item": "Tomatillos or salsa verde",
+          "amt": "8–10 / 1 jar"
+        },
+        {
+          "item": "Green chiles",
+          "amt": "4-oz can"
+        },
+        {
+          "item": "Garlic + lime",
+          "amt": "2 cloves / 1"
+        },
+        {
+          "item": "Cumin + salt",
+          "amt": "to taste"
+        }
       ],
       "shop": [
-        { "item": "Tomatillos", "amt": "8–10 (or 1 jar salsa verde)", "group": "produce" },
-        { "item": "Green chiles", "amt": "4-oz can", "group": "pantry" }
+        {
+          "item": "Tomatillos",
+          "amt": "8–10 (or 1 jar salsa verde)",
+          "group": "produce"
+        },
+        {
+          "item": "Green chiles",
+          "amt": "4-oz can",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -404,116 +564,532 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "red-chili",
-      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with a little chili powder, cumin & garlic; break into fine crumbles and simmer a few minutes in the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "macros": { "kcal": 560, "protein": 44, "carbs": 58, "fiber": 13, "fat": 20 },
+      "protein": {
+        "name": "Seasoned ground beef (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 beef with a little chili powder, cumin & garlic; break into fine crumbles and simmer a few minutes in the red chili sauce.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
+        ]
+      },
+      "macros": {
+        "kcal": 660,
+        "protein": 51,
+        "carbs": 80,
+        "fiber": 14,
+        "fat": 16
+      },
       "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "The one everybody knows — savory beef, beans, corn & peppers in a classic red chili over brown rice. This is the featured build."
+      "note": "The one everybody knows — savory beef, beans, corn & peppers in a classic red chili over brown rice. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Seasoned ground beef (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "turkey-chili",
       "name": "Turkey Chili",
       "kind": "protein-swap",
       "sauceId": "red-chili",
-      "protein": { "name": "Ground turkey (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 turkey with chili powder, cumin & a splash of Worcestershire; simmer into the red chili sauce.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "macros": { "kcal": 525, "protein": 44, "carbs": 58, "fiber": 13, "fat": 15 },
+      "protein": {
+        "name": "Ground turkey (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 turkey with chili powder, cumin & a splash of Worcestershire; simmer into the red chili sauce.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
+        ]
+      },
+      "macros": {
+        "kcal": 630,
+        "protein": 54,
+        "carbs": 80,
+        "fiber": 14,
+        "fat": 14
+      },
       "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "The leaner everyday build — all the chili comfort, less fat. Turkey soaks up the spices beautifully."
+      "note": "The leaner everyday build — all the chili comfort, less fat. Turkey soaks up the spices beautifully.",
+      "pucks": {
+        "protein": {
+          "label": "Ground turkey (93/7)",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "smoky-chipotle-beef",
       "name": "Smoky Chipotle Beef",
       "kind": "remix",
       "sauceId": "chipotle-adobo",
-      "protein": { "name": "Seasoned ground beef (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Brown 93/7 beef with cumin & garlic; simmer in the smoky chipotle sauce for a deep, spicy-sweet chili.", "appliance": ["Stovetop · 8–10 min", "Instant Pot sauté"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Black beans", "amt": "1/4 cup" },
-          { "item": "Pinto beans", "amt": "1/4 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Seasoned ground beef (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown 93/7 beef with cumin & garlic; simmer in the smoky chipotle sauce for a deep, spicy-sweet chili.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Instant Pot sauté"
         ]
       },
-      "macros": { "kcal": 570, "protein": 43, "carbs": 60, "fiber": 14, "fat": 21 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Deep, smoky & a little spicy — chipotle-adobo over beef with a black-and-pinto bean mix. The boldest build; dial the chipotle to your heat."
+      "macros": {
+        "kcal": 695,
+        "protein": 54,
+        "carbs": 86,
+        "fiber": 17,
+        "fat": 16
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Pinto beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Deep, smoky & a little spicy — chipotle-adobo over beef with a black-and-pinto bean mix. The boldest build; dial the chipotle to your heat.",
+      "pucks": {
+        "protein": {
+          "label": "Seasoned ground beef (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 185,
+            "protein": 11,
+            "carbs": 33,
+            "fiber": 12,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Smoky chipotle sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "white-chicken-chili",
       "name": "White Chicken Chili",
       "kind": "remix",
       "sauceId": "salsa-verde",
-      "protein": { "name": "Shredded chicken", "serving": "5 oz / ~140 g cooked", "method": "Poach or Instant-Pot chicken breast/thighs, then shred; fold into the salsa verde with the white beans for a tangy green chili.", "appliance": ["Instant Pot · 12 min", "Stovetop poach · 15 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" },
-          { "item": "Peppers & onion", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Shredded chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Poach or Instant-Pot chicken breast/thighs, then shred; fold into the salsa verde with the white beans for a tangy green chili.",
+        "appliance": [
+          "Instant Pot · 12 min",
+          "Stovetop poach · 15 min"
         ]
       },
-      "macros": { "kcal": 525, "protein": 46, "carbs": 52, "fiber": 12, "fat": 17 },
-      "shopping": {
-        "protein": { "item": "Chicken breast or thighs", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "White beans (cannellini)", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Peppers & onion",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Bright and tangy — shredded chicken and white beans in a tomatillo salsa verde. A lighter green take on chili night."
+      "macros": {
+        "kcal": 630,
+        "protein": 57,
+        "carbs": 77,
+        "fiber": 13,
+        "fat": 10
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast or thighs",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Bright and tangy — shredded chicken and white beans in a tomatillo salsa verde. A lighter green take on chili night.",
+      "pucks": {
+        "protein": {
+          "label": "Shredded chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Salsa verde",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "three-bean-veg",
       "name": "Three-Bean Vegetarian",
       "kind": "remix-plant",
       "sauceId": "red-chili",
-      "protein": { "name": "Three-bean mix", "serving": "3/4 cup / ~5 oz", "method": "Simmer a mix of black, kidney & pinto beans in the red chili sauce with the charred veg until thick and stew-like. Mash a scoop of the beans for body.", "appliance": ["Stovetop · 12–15 min", "Instant Pot sauté"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Black beans", "amt": "1/4 cup" },
-          { "item": "Kidney beans", "amt": "1/4 cup" },
-          { "item": "Pinto beans", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Three-bean mix",
+        "serving": "3/4 cup / ~5 oz",
+        "method": "Simmer a mix of black, kidney & pinto beans in the red chili sauce with the charred veg until thick and stew-like. Mash a scoop of the beans for body.",
+        "appliance": [
+          "Stovetop · 12–15 min",
+          "Instant Pot sauté"
         ]
       },
-      "macros": { "kcal": 470, "protein": 22, "carbs": 85, "fiber": 20, "fat": 9 },
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Black beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Kidney beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/4 cup"
+          }
+        ]
+      },
+      "macros": {
+        "kcal": 700,
+        "protein": 36,
+        "carbs": 133,
+        "fiber": 35,
+        "fat": 5
+      },
       "shopping": {
-        "protein": { "item": "Kidney & pinto beans", "amt": "1 can each (15 oz)" },
+        "protein": {
+          "item": "Kidney & pinto beans",
+          "amt": "1 can each (15 oz)"
+        },
         "produceAdd": [],
         "pantryAdd": []
       },
-      "note": "Fully plant-based and the highest-fiber build by far — three beans in a rich red chili. Mashing some of the beans makes it thick and hearty."
+      "note": "Fully plant-based and the highest-fiber build by far — three beans in a rich red chili. Mashing some of the beans makes it thick and hearty.",
+      "pucks": {
+        "protein": {
+          "label": "Three-bean mix",
+          "macros": {
+            "kcal": 220,
+            "protein": 15,
+            "carbs": 40,
+            "fiber": 15,
+            "fat": 1
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 220,
+            "protein": 15,
+            "carbs": 40,
+            "fiber": 15,
+            "fat": 1
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "chorizo-pinto",
       "name": "Chorizo & Pinto",
       "kind": "remix",
       "sauceId": "red-chili",
-      "protein": { "name": "Chicken chorizo", "serving": "5 oz / ~140 g cooked", "method": "Brown chicken (or pork) chorizo, breaking it up; its spices season the whole pot. Simmer into the red chili with the pinto beans.", "appliance": ["Stovetop · 8–10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice", "amt": "1/2 cup" },
-          { "item": "Pinto beans", "amt": "1/3 cup" },
-          { "item": "Charred corn", "amt": "1/4 cup" },
-          { "item": "Peppers & onion", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Chicken chorizo",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown chicken (or pork) chorizo, breaking it up; its spices season the whole pot. Simmer into the red chili with the pinto beans.",
+        "appliance": [
+          "Stovetop · 8–10 min"
         ]
       },
-      "macros": { "kcal": 600, "protein": 40, "carbs": 56, "fiber": 13, "fat": 26 },
-      "shopping": {
-        "protein": { "item": "Chicken or pork chorizo", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Pinto beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Pinto beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Charred corn",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Peppers & onion",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "The indulgent build — smoky, spiced chorizo carries the whole pot. Chicken chorizo keeps it leaner; pork if you want the full richness."
+      "macros": {
+        "kcal": 710,
+        "protein": 42,
+        "carbs": 82,
+        "fiber": 14,
+        "fat": 25
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken or pork chorizo",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Pinto beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "The indulgent build — smoky, spiced chorizo carries the whole pot. Chicken chorizo keeps it leaner; pork if you want the full richness.",
+      "pucks": {
+        "protein": {
+          "label": "Chicken chorizo",
+          "macros": {
+            "kcal": 300,
+            "protein": 28,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 20
+          }
+        },
+        "grain": {
+          "label": "Brown rice",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 27,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Classic red chili sauce",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 7,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -542,8 +1118,19 @@
       "Top with a fried or soft-boiled egg",
       "Sprinkle 2 Tbsp hemp hearts or extra cheese"
     ],
-    "freezeWell": ["Brown rice", "The chili (protein + sauce + beans)", "Charred corn & peppers"],
-    "addFresh": ["Diced avocado", "Shredded cheese", "Lime", "Cilantro", "Greek yogurt", "Tortilla strips"],
+    "freezeWell": [
+      "Brown rice",
+      "The chili (protein + sauce + beans)",
+      "Charred corn & peppers"
+    ],
+    "addFresh": [
+      "Diced avocado",
+      "Shredded cheese",
+      "Lime",
+      "Cilantro",
+      "Greek yogurt",
+      "Tortilla strips"
+    ],
     "storeSep": "Toppings stay fresh — add avocado, cheese, lime & cilantro when you serve. All three sauces freeze fine in 2-Tbsp molds."
   }
 }
@@ -679,11 +1266,11 @@
 
     document.getElementById("body-cube").innerHTML =
       '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · 2-cup mold</div>' +
+        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
         '<div class="cubes">' + cubes + "</div>" +
         '<ul class="fill-list">' + fill + "</ul>" +
         '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Fills to ~2 cups → uses all four of your 2-cup molds = 4 complete meals. Fill warm-not-hot to the line and press gently to remove air.</div></div>' +
+        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
           moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +

@@ -229,7 +229,7 @@ const hubJs = `
       '<h1>' + esc(t.title) + '<span class="lead">' + esc(t.lead) + '</span></h1>' +
       '<p class="tagline">' + t.tagline + '</p>' +
       '<div class="meta">' +
-        '<span>Makes <b>' + d.servings + '</b> portions</span>' +
+        '<span>Makes <b>' + d.servings + '</b> meals · <b>~3</b> cups</span>' +
         '<span>Prep <b>' + d.prepMin + '</b> min</span>' +
         '<span>Cook <b>' + d.cookMin + '</b> min</span>' +
         '<span>Freezes <b>' + d.freezeMonths + '</b> mo</span>' +

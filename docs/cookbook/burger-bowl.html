@@ -221,11 +221,11 @@
     <h1>Burger<span class="lead">Bowl</span></h1>
     <p class="tagline">Crispy potatoes, seared patties, mushrooms, onions &amp; white beans — a burger you eat with a fork. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
     <div class="meta">
-      <span>Makes <b>4</b> portions</span>
+      <span>Makes <b>4</b> meals · <b>~3</b> cups</span>
       <span>Prep <b>20</b> min</span>
       <span>Cook <b>45</b> min</span>
       <span>Freezes <b>3</b> mo</span>
-      <span>Reheat <b>4–6</b> min</span>
+      <span>Reheat <b>6–9</b> min</span>
     </div>
     <span class="thesis">Build it · Freeze it · Fuel your goals</span>
   </header>
@@ -296,49 +296,129 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "potatoes",
-  "baseContribution": "~9 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~12 g protein & ~12 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Cut ~1.5 lb potatoes into 1/2-inch cubes or thin wedges. Toss with 1 Tbsp oil, 1/2 tsp garlic powder, 3/4 tsp salt. Roast crisp, flipping once.",
-      "chips": [ { "t": "Oven · 425°F · 30–35 min" }, { "t": "Air fryer · 400°F · 18–22 min", "cls": "fast" } ],
-      "tip": "<b>Fry-style:</b> cut into thin wedges for a burger-and-fries feel." },
-    { "h": "Cook the mushrooms & onions",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 30–35 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 18–22 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Fry-style:</b> cut into thin wedges for a burger-and-fries feel."
+    },
+    {
+      "h": "Cook the mushrooms & onions",
       "p": "Sauté sliced mushrooms and onions in 1 tsp oil over medium-high until deeply browned; deglaze with a splash of Worcestershire, then season. Drain & rinse a can of white beans to fold into the base. (No mushrooms? See the substitutions.)",
-      "chips": [ { "t": "Stovetop · 10–12 min" }, { "t": "Low & slow for sweeter onions" } ],
-      "tip": "<b>Get color:</b> don't stir too often — browning is the flavor. The white beans keep the bowl high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 10–12 min"
+        },
+        {
+          "t": "Low & slow for sweeter onions"
+        }
+      ],
+      "tip": "<b>Get color:</b> don't stir too often — browning is the flavor. The white beans keep the bowl high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "burger-sauce",
     "base": [
-      { "item": "Roasted potatoes", "amt": "1/2 cup" },
-      { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-      { "item": "Caramelized onions", "amt": "1/4 cup" },
-      { "item": "White beans", "amt": "1/3 cup" }
+      {
+        "item": "Roasted potatoes",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Sautéed mushrooms",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Caramelized onions",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "White beans",
+        "amt": "1/3 cup"
+      }
     ],
-    "fresh": ["Shredded lettuce", "Pickles", "Diced tomato", "Optional: raw onion, extra sauce"],
+    "fresh": [
+      "Shredded lettuce",
+      "Pickles",
+      "Diced tomato",
+      "Optional: raw onion, extra sauce"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Potatoes", "amt": "~1.5 lb" },
-        { "item": "Yellow onions", "amt": "2" },
-        { "item": "Lettuce", "amt": "1 head · fresh topping" },
-        { "item": "Tomato", "amt": "2 · fresh topping" }
+        {
+          "item": "Potatoes",
+          "amt": "~1.5 lb"
+        },
+        {
+          "item": "Yellow onions",
+          "amt": "2"
+        },
+        {
+          "item": "Lettuce",
+          "amt": "1 head · fresh topping"
+        },
+        {
+          "item": "Tomato",
+          "amt": "2 · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Pickles", "amt": "1 jar · fresh topping" }
+        {
+          "item": "Pickles",
+          "amt": "1 jar · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Garlic powder", "Onion powder", "Smoked paprika", "Dijon mustard", "Apple cider vinegar", "Worcestershire", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Garlic powder",
+        "Onion powder",
+        "Smoked paprika",
+        "Dijon mustard",
+        "Apple cider vinegar",
+        "Worcestershire",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -348,16 +428,43 @@
       "freezes": false,
       "recipe": "Whisk 1/4 cup Greek yogurt (or mayo), 1 Tbsp ketchup, 1 Tbsp dill relish, 1 tsp yellow mustard, 1/2 tsp smoked paprika, and a pinch of salt.",
       "items": [
-        { "item": "Greek yogurt or mayo", "amt": "1/4 cup" },
-        { "item": "Ketchup", "amt": "1 Tbsp" },
-        { "item": "Dill relish", "amt": "1 Tbsp" },
-        { "item": "Yellow mustard", "amt": "1 tsp" },
-        { "item": "Smoked paprika", "amt": "1/2 tsp" }
+        {
+          "item": "Greek yogurt or mayo",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Ketchup",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Dill relish",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1/2 tsp"
+        }
       ],
       "shop": [
-        { "item": "Greek yogurt or mayo", "amt": "small tub", "group": "pantry" },
-        { "item": "Ketchup", "amt": "", "group": "pantry" },
-        { "item": "Dill relish", "amt": "small jar", "group": "pantry" }
+        {
+          "item": "Greek yogurt or mayo",
+          "amt": "small tub",
+          "group": "pantry"
+        },
+        {
+          "item": "Ketchup",
+          "amt": "",
+          "group": "pantry"
+        },
+        {
+          "item": "Dill relish",
+          "amt": "small jar",
+          "group": "pantry"
+        }
       ]
     },
     "cheese-sauce": {
@@ -366,15 +473,38 @@
       "freezes": true,
       "recipe": "Blend 1/2 cup cashews (soaked if not high-speed), 1/2 cup water, 3 Tbsp nutritional yeast, 1 tsp Dijon, 1/2 tsp smoked paprika, 1/2 tsp garlic powder, 1 tsp lemon juice, and 1/2 tsp salt until smooth & pourable.",
       "items": [
-        { "item": "Raw cashews", "amt": "1/2 cup" },
-        { "item": "Nutritional yeast", "amt": "3 Tbsp" },
-        { "item": "Dijon mustard", "amt": "1 tsp" },
-        { "item": "Smoked paprika + garlic powder", "amt": "1/2 tsp ea" },
-        { "item": "Lemon + water + salt", "amt": "to blend" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "3 Tbsp"
+        },
+        {
+          "item": "Dijon mustard",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Smoked paprika + garlic powder",
+          "amt": "1/2 tsp ea"
+        },
+        {
+          "item": "Lemon + water + salt",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Raw cashews", "amt": "1/2 cup", "group": "pantry" },
-        { "item": "Nutritional yeast", "amt": "", "group": "pantry" }
+        {
+          "item": "Raw cashews",
+          "amt": "1/2 cup",
+          "group": "pantry"
+        },
+        {
+          "item": "Nutritional yeast",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "western-bbq": {
@@ -383,15 +513,38 @@
       "freezes": true,
       "recipe": "Simmer 1/4 cup tomato paste, 2 Tbsp cider vinegar, 1-2 tsp molasses (or sweetener), 1 tsp smoked paprika, and 1/2 tsp each garlic & onion powder with a splash of water for 5 min. (Or use a bottled low-sugar BBQ.)",
       "items": [
-        { "item": "Tomato paste", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Molasses or sweetener", "amt": "1-2 tsp" },
-        { "item": "Smoked paprika", "amt": "1 tsp" },
-        { "item": "Garlic + onion powder", "amt": "1/2 tsp ea" }
+        {
+          "item": "Tomato paste",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Molasses or sweetener",
+          "amt": "1-2 tsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic + onion powder",
+          "amt": "1/2 tsp ea"
+        }
       ],
       "shop": [
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" },
-        { "item": "Molasses or sweetener", "amt": "", "group": "pantry" }
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        },
+        {
+          "item": "Molasses or sweetener",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -402,115 +555,586 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Form 93/7 beef into thin smash-style patties; sear hard 2-3 min/side to 160°F, then chop into the bowl (or brown as seasoned crumbles).", "appliance": ["Stovetop / cast iron", "Griddle"] },
-      "macros": { "kcal": 585, "protein": 49, "carbs": 48, "fiber": 11, "fat": 25 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Form 93/7 beef into thin smash-style patties; sear hard 2-3 min/side to 160°F, then chop into the bowl (or brown as seasoned crumbles).",
+        "appliance": [
+          "Stovetop / cast iron",
+          "Griddle"
+        ]
       },
-      "note": "The classic — smashed beef, crispy potatoes, mushrooms, onions & white beans under a melty dairy-free cheese sauce. This is the featured build."
+      "macros": {
+        "kcal": 630,
+        "protein": 52,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "The classic — smashed beef, crispy potatoes, mushrooms, onions & white beans under a melty dairy-free cheese sauce. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "turkey-burger",
       "name": "Turkey Burger",
       "kind": "protein-swap",
-      "protein": { "name": "Turkey burger (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Form 93/7 turkey into patties with a little Worcestershire & garlic; cook to 165°F, then chop.", "appliance": ["Stovetop", "Griddle"] },
-      "macros": { "kcal": 535, "protein": 48, "carbs": 49, "fiber": 10, "fat": 19 },
-      "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "protein": {
+        "name": "Turkey burger (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Form 93/7 turkey into patties with a little Worcestershire & garlic; cook to 165°F, then chop.",
+        "appliance": [
+          "Stovetop",
+          "Griddle"
+        ]
       },
-      "note": "Leaner than beef, dressed in the tangy special sauce — the lighter everyday build."
+      "macros": {
+        "kcal": 600,
+        "protein": 55,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Leaner than beef, dressed in the tangy special sauce — the lighter everyday build.",
+      "pucks": {
+        "protein": {
+          "label": "Turkey burger (93/7)",
+          "macros": {
+            "kcal": 220,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 9
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Special burger sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "western-bbq",
       "name": "Western BBQ",
       "kind": "remix",
       "sauceId": "western-bbq",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Sear 93/7 beef patties to 160°F and chop. Pile on the smoky BBQ, jammy onions & roasted peppers.", "appliance": ["Stovetop / cast iron", "Griddle"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Pile on the smoky BBQ, jammy onions & roasted peppers.",
+        "appliance": [
+          "Stovetop / cast iron",
+          "Griddle"
         ]
       },
-      "macros": { "kcal": 580, "protein": 45, "carbs": 60, "fiber": 10, "fat": 22 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Bell peppers", "amt": "2" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          }
+        ]
       },
-      "note": "Smoky-sweet and mushroom-free — tangy Western BBQ with jammy onions, roasted peppers & white beans over beef and potatoes."
+      "macros": {
+        "kcal": 610,
+        "protein": 49,
+        "carbs": 67,
+        "fiber": 12,
+        "fat": 17
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Bell peppers",
+            "amt": "2"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Smoky-sweet and mushroom-free — tangy Western BBQ with jammy onions, roasted peppers & white beans over beef and potatoes.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Western BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "bacon-cheeseburger",
       "name": "Bacon Cheeseburger",
       "kind": "remix",
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Beef + bacon", "serving": "5 oz / ~140 g beef", "method": "Sear 93/7 beef patties to 160°F and chop. Cook 4-6 slices center-cut or turkey bacon crisp and crumble on top.", "appliance": ["Stovetop / cast iron"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" },
-          { "item": "Bacon (crumbled)", "amt": "1-2 slices" }
+      "protein": {
+        "name": "Beef + bacon",
+        "serving": "5 oz / ~140 g beef",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Cook 4-6 slices center-cut or turkey bacon crisp and crumble on top.",
+        "appliance": [
+          "Stovetop / cast iron"
         ]
       },
-      "macros": { "kcal": 655, "protein": 54, "carbs": 48, "fiber": 11, "fat": 30 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }, { "item": "Bacon (center-cut or turkey)", "amt": "6 slices" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Bacon (crumbled)",
+            "amt": "1-2 slices"
+          }
+        ]
       },
-      "note": "The indulgent build — highest fat. Center-cut or turkey bacon keeps it saner; add the bacon fresh for crunch."
+      "macros": {
+        "kcal": 710,
+        "protein": 58,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 28
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          },
+          {
+            "item": "Bacon (center-cut or turkey)",
+            "amt": "6 slices"
+          }
+        ]
+      },
+      "note": "The indulgent build — highest fat. Center-cut or turkey bacon keeps it saner; add the bacon fresh for crunch.",
+      "pucks": {
+        "protein": {
+          "label": "Beef + bacon",
+          "macros": {
+            "kcal": 330,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 17
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "black-bean-burger",
       "name": "Black Bean Burger",
       "kind": "remix-plant",
-      "protein": { "name": "Black bean burger + edamame", "serving": "1 patty + 1/4 cup edamame", "method": "Pan-sear black bean patties until crisp both sides, then break into the bowl. Warm edamame in with the base for extra protein & fiber.", "appliance": ["Stovetop", "Air fryer · 400°F · 10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "Edamame", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Black bean burger + edamame",
+        "serving": "1 patty + 1/4 cup edamame",
+        "method": "Pan-sear black bean patties until crisp both sides, then break into the bowl. Warm edamame in with the base for extra protein & fiber.",
+        "appliance": [
+          "Stovetop",
+          "Air fryer · 400°F · 10 min"
         ]
       },
-      "macros": { "kcal": 475, "protein": 26, "carbs": 81, "fiber": 18, "fat": 15 },
-      "shopping": {
-        "protein": { "item": "Black bean burger patties", "amt": "4 (or 1 can beans + oats)" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "Frozen edamame", "amt": "1 cup" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Edamame",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — a crispy black bean patty plus edamame keep the protein respectable."
+      "macros": {
+        "kcal": 650,
+        "protein": 33,
+        "carbs": 84,
+        "fiber": 22,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Black bean burger patties",
+          "amt": "4 (or 1 can beans + oats)"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Frozen edamame",
+            "amt": "1 cup"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — a crispy black bean patty plus edamame keep the protein respectable.",
+      "pucks": {
+        "protein": {
+          "label": "Black bean burger + edamame",
+          "macros": {
+            "kcal": 230,
+            "protein": 15,
+            "carbs": 32,
+            "fiber": 10,
+            "fat": 7
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 170,
+            "protein": 11,
+            "carbs": 15,
+            "fiber": 7,
+            "fat": 7
+          }
+        },
+        "sauce": {
+          "label": "Special burger sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     },
     {
       "id": "patty-melt",
       "name": "Patty Melt",
       "kind": "remix",
       "sauceId": "cheese-sauce",
-      "protein": { "name": "Lean beef patty (93/7)", "serving": "5 oz / ~140 g cooked", "method": "Sear 93/7 beef patties to 160°F and chop. Lean into deeply caramelized onions.", "appliance": ["Stovetop / cast iron"] },
-      "overrides": {
-        "base": [
-          { "item": "Roasted potatoes", "amt": "1/2 cup" },
-          { "item": "Sautéed mushrooms", "amt": "1/2 cup" },
-          { "item": "Caramelized onions (double)", "amt": "1/2 cup" },
-          { "item": "White beans", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Lean beef patty (93/7)",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Sear 93/7 beef patties to 160°F and chop. Lean into deeply caramelized onions.",
+        "appliance": [
+          "Stovetop / cast iron"
         ]
       },
-      "macros": { "kcal": 610, "protein": 47, "carbs": 62, "fiber": 10, "fat": 26 },
-      "shopping": {
-        "protein": { "item": "Lean ground beef 93/7", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }, { "item": "Yellow onion", "amt": "1 extra" }],
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Sautéed mushrooms",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions (double)",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Diner patty-melt energy — jammy caramelized onions and cheese sauce over beef and potatoes."
+      "macros": {
+        "kcal": 630,
+        "protein": 52,
+        "carbs": 59,
+        "fiber": 13,
+        "fat": 22
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          },
+          {
+            "item": "Yellow onion",
+            "amt": "1 extra"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Diner patty-melt energy — jammy caramelized onions and cheese sauce over beef and potatoes.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef patty (93/7)",
+          "macros": {
+            "kcal": 250,
+            "protein": 37,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 130,
+            "protein": 8,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Cheese sauce",
+          "macros": {
+            "kcal": 70,
+            "protein": 3,
+            "carbs": 4,
+            "fiber": 1,
+            "fat": 5
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -539,8 +1163,17 @@
       "Top with a fried egg (animal-style)",
       "Add 2 Tbsp hemp hearts"
     ],
-    "freezeWell": ["Roasted potatoes", "Mushrooms & onions", "White beans", "Cooked patties / crumbles"],
-    "addFresh": ["Shredded lettuce", "Pickles", "Diced tomato"],
+    "freezeWell": [
+      "Roasted potatoes",
+      "Mushrooms & onions",
+      "White beans",
+      "Cooked patties / crumbles"
+    ],
+    "addFresh": [
+      "Shredded lettuce",
+      "Pickles",
+      "Diced tomato"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -676,11 +1309,11 @@
 
     document.getElementById("body-cube").innerHTML =
       '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · 2-cup mold</div>' +
+        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
         '<div class="cubes">' + cubes + "</div>" +
         '<ul class="fill-list">' + fill + "</ul>" +
         '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Fills to ~2 cups → uses all four of your 2-cup molds = 4 complete meals. Fill warm-not-hot to the line and press gently to remove air.</div></div>' +
+        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
           moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +

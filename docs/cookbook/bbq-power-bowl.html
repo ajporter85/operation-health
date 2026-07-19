@@ -221,11 +221,11 @@
     <h1>BBQ<span class="lead">Power Bowl</span></h1>
     <p class="tagline">A smoky BBQ base — brown rice, roasted sweet potato &amp; veg — built to carry any barbecue protein. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
     <div class="meta">
-      <span>Makes <b>4</b> portions</span>
+      <span>Makes <b>4</b> meals · <b>~3</b> cups</span>
       <span>Prep <b>20</b> min</span>
       <span>Cook <b>45</b> min</span>
       <span>Freezes <b>3</b> mo</span>
-      <span>Reheat <b>4–6</b> min</span>
+      <span>Reheat <b>6–9</b> min</span>
     </div>
     <span class="thesis">Build it · Freeze it · Fuel your goals</span>
   </header>
@@ -296,56 +296,154 @@
   "prepMin": 20,
   "cookMin": 45,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "brown rice",
-  "baseContribution": "~7 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~9 g protein & ~10 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare grain / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare grain / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Cook 1 cup brown rice (rice cooker, or 1 cup rice : 2 cups water — boil, cover, simmer ~30 min, rest 10 min). Fluff. Yields ~3 cups — enough for all 4 bowls.",
-      "chips": [ { "t": "Rice cooker", "cls": "fast" }, { "t": "Stovetop · 30 min" }, { "t": "Instant Pot · 22 min", "cls": "fast" } ],
-      "tip": "<b>Make-ahead:</b> cooked rice keeps 4 days chilled — cook it up to 2 days before assembly." },
-    { "h": "Roast the vegetables",
+      "chips": [
+        {
+          "t": "Rice cooker",
+          "cls": "fast"
+        },
+        {
+          "t": "Stovetop · 30 min"
+        },
+        {
+          "t": "Instant Pot · 22 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Make-ahead:</b> cooked rice keeps 4 days chilled — cook it up to 2 days before assembly."
+    },
+    {
+      "h": "Roast the vegetables",
       "p": "Cut sweet potato into 1/2-inch cubes, break broccoli into florets, slice carrots. Toss with 1 Tbsp oil, 1 tsp smoked paprika, 1/2 tsp garlic powder, 3/4 tsp salt. Roast in a single layer until tender and caramelized.",
-      "chips": [ { "t": "Oven · 425°F · 25–30 min" }, { "t": "Air fryer · 400°F · 12–16 min", "cls": "fast" } ],
-      "tip": "<b>Stagger it:</b> sweet potato + carrots first, add broccoli for the last 12–15 min so it doesn't burn." },
-    { "kind": "protein" },
-    { "h": "Char the corn",
+      "chips": [
+        {
+          "t": "Oven · 425°F · 25–30 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 12–16 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Stagger it:</b> sweet potato + carrots first, add broccoli for the last 12–15 min so it doesn't burn."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "h": "Char the corn",
       "p": "Blister 1 cup corn in a dry hot skillet 3–4 min for a smoky, roadside note; season with a pinch of salt.",
-      "chips": [ { "t": "Stovetop · 4 min" } ],
-      "tip": "<b>Optional:</b> toss the warm corn with a squeeze of lime + a pinch of chili powder." },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Stovetop · 4 min"
+        }
+      ],
+      "tip": "<b>Optional:</b> toss the warm corn with a squeeze of lime + a pinch of chili powder."
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "low-sugar-bbq",
     "base": [
-      { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-      { "item": "Roasted sweet potato", "amt": "1/2 cup" },
-      { "item": "Roasted broccoli", "amt": "1/3 cup" },
-      { "item": "Roasted carrots", "amt": "1/4 cup" },
-      { "item": "Corn", "amt": "2 Tbsp" }
+      {
+        "item": "Brown rice (cooked)",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Roasted sweet potato",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Roasted broccoli",
+        "amt": "1/3 cup"
+      },
+      {
+        "item": "Roasted carrots",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "Corn",
+        "amt": "2 Tbsp"
+      }
     ],
-    "fresh": ["Pickled onions", "Green onion", "Optional: fresh jalapeno, extra BBQ drizzle"],
+    "fresh": [
+      "Pickled onions",
+      "Green onion",
+      "Optional: fresh jalapeno, extra BBQ drizzle"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Sweet potato", "amt": "2 large (~1.5 lb)" },
-        { "item": "Broccoli", "amt": "1 head" },
-        { "item": "Carrots", "amt": "4" },
-        { "item": "Green onions", "amt": "1 bunch · fresh topping" }
+        {
+          "item": "Sweet potato",
+          "amt": "2 large (~1.5 lb)"
+        },
+        {
+          "item": "Broccoli",
+          "amt": "1 head"
+        },
+        {
+          "item": "Carrots",
+          "amt": "4"
+        },
+        {
+          "item": "Green onions",
+          "amt": "1 bunch · fresh topping"
+        }
       ],
       "pantry": [
-        { "item": "Brown rice", "amt": "1 cup dry", "grain": true },
-        { "item": "Corn", "amt": "1 cup (frozen)" },
-        { "item": "Pickled onions", "amt": "1 jar · fresh topping" }
+        {
+          "item": "Brown rice",
+          "amt": "1 cup dry",
+          "grain": true
+        },
+        {
+          "item": "Corn",
+          "amt": "1 cup (frozen)"
+        },
+        {
+          "item": "Pickled onions",
+          "amt": "1 jar · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Smoked paprika", "Garlic powder", "Yellow mustard", "Apple cider vinegar", "Black pepper", "Salt"]
+      "seasoning": [
+        "Olive oil",
+        "Smoked paprika",
+        "Garlic powder",
+        "Yellow mustard",
+        "Apple cider vinegar",
+        "Black pepper",
+        "Salt"
+      ]
     }
   },
   "sauces": {
@@ -355,16 +453,42 @@
       "freezes": true,
       "recipe": "Simmer 1/4 cup tomato paste, 2 Tbsp cider vinegar, 1 Tbsp yellow mustard, 1 tsp smoked paprika, 1/2 tsp garlic powder, and 1-2 tsp sweetener with a splash of water for 5 min. (Or use a bottled low-sugar BBQ.)",
       "items": [
-        { "item": "Tomato paste", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Yellow mustard", "amt": "1 Tbsp" },
-        { "item": "Smoked paprika", "amt": "1 tsp" },
-        { "item": "Garlic powder", "amt": "1/2 tsp" },
-        { "item": "Sweetener", "amt": "1-2 tsp" }
+        {
+          "item": "Tomato paste",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Smoked paprika",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Garlic powder",
+          "amt": "1/2 tsp"
+        },
+        {
+          "item": "Sweetener",
+          "amt": "1-2 tsp"
+        }
       ],
       "shop": [
-        { "item": "Tomato paste", "amt": "1 small can", "group": "pantry" },
-        { "item": "Low-sugar sweetener", "amt": "", "group": "pantry" }
+        {
+          "item": "Tomato paste",
+          "amt": "1 small can",
+          "group": "pantry"
+        },
+        {
+          "item": "Low-sugar sweetener",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "mustard-bbq": {
@@ -373,15 +497,38 @@
       "freezes": true,
       "recipe": "Whisk 1/4 cup yellow mustard, 2 Tbsp cider vinegar, 1 Tbsp honey, 1 tsp Worcestershire, and a pinch of cayenne until smooth.",
       "items": [
-        { "item": "Yellow mustard", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "2 Tbsp" },
-        { "item": "Honey", "amt": "1 Tbsp" },
-        { "item": "Worcestershire", "amt": "1 tsp" },
-        { "item": "Cayenne", "amt": "pinch" }
+        {
+          "item": "Yellow mustard",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Honey",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Worcestershire",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Cayenne",
+          "amt": "pinch"
+        }
       ],
       "shop": [
-        { "item": "Honey", "amt": "", "group": "pantry" },
-        { "item": "Worcestershire", "amt": "", "group": "pantry" }
+        {
+          "item": "Honey",
+          "amt": "",
+          "group": "pantry"
+        },
+        {
+          "item": "Worcestershire",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     },
     "alabama-white": {
@@ -390,15 +537,38 @@
       "freezes": false,
       "recipe": "Whisk 1/4 cup light mayo (or Greek yogurt), 1 Tbsp cider vinegar, 1 tsp horseradish, 1/2 tsp black pepper, and 1 tsp lemon juice.",
       "items": [
-        { "item": "Light mayo or Greek yogurt", "amt": "1/4 cup" },
-        { "item": "Cider vinegar", "amt": "1 Tbsp" },
-        { "item": "Horseradish", "amt": "1 tsp" },
-        { "item": "Black pepper", "amt": "1/2 tsp" },
-        { "item": "Lemon juice", "amt": "1 tsp" }
+        {
+          "item": "Light mayo or Greek yogurt",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Cider vinegar",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Horseradish",
+          "amt": "1 tsp"
+        },
+        {
+          "item": "Black pepper",
+          "amt": "1/2 tsp"
+        },
+        {
+          "item": "Lemon juice",
+          "amt": "1 tsp"
+        }
       ],
       "shop": [
-        { "item": "Light mayo or Greek yogurt", "amt": "small", "group": "pantry" },
-        { "item": "Horseradish", "amt": "", "group": "pantry" }
+        {
+          "item": "Light mayo or Greek yogurt",
+          "amt": "small",
+          "group": "pantry"
+        },
+        {
+          "item": "Horseradish",
+          "amt": "",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -408,84 +578,493 @@
       "name": "BBQ Chicken",
       "kind": "protein-swap",
       "featured": true,
-      "protein": { "name": "BBQ chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, grill or bake to 165°F internal, brush with sauce, then slice or shred.", "appliance": ["Oven · 425°F", "Air fryer", "Slow cooker (shredded)"] },
-      "macros": { "kcal": 550, "protein": 50, "carbs": 67, "fiber": 9, "fat": 11 },
-      "shopping": { "protein": { "item": "Chicken breast", "amt": "~24 oz raw" } },
-      "note": "The lean all-rounder — highest protein, lowest fat. Good with any of the three sauces. This is the featured build."
+      "protein": {
+        "name": "BBQ chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, grill or bake to 165°F internal, brush with sauce, then slice or shred.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer",
+          "Slow cooker (shredded)"
+        ]
+      },
+      "macros": {
+        "kcal": 610,
+        "protein": 52,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 10
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        }
+      },
+      "note": "The lean all-rounder — highest protein, lowest fat. Good with any of the three sauces. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "smoked-turkey",
       "name": "Smoked Turkey",
       "kind": "protein-swap",
-      "protein": { "name": "Smoked turkey breast", "serving": "5 oz / ~140 g cooked", "method": "Use pre-smoked turkey breast, or roast seasoned turkey to 165°F internal. Slice.", "appliance": ["Oven · 400°F", "Pre-smoked"] },
-      "macros": { "kcal": 530, "protein": 47, "carbs": 67, "fiber": 9, "fat": 10 },
-      "shopping": { "protein": { "item": "Smoked turkey breast", "amt": "~22 oz" } },
-      "note": "Smoky and lean, and the fastest if you buy it pre-smoked."
+      "protein": {
+        "name": "Smoked turkey breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Use pre-smoked turkey breast, or roast seasoned turkey to 165°F internal. Slice.",
+        "appliance": [
+          "Oven · 400°F",
+          "Pre-smoked"
+        ]
+      },
+      "macros": {
+        "kcal": 570,
+        "protein": 49,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 8
+      },
+      "shopping": {
+        "protein": {
+          "item": "Smoked turkey breast",
+          "amt": "~22 oz"
+        }
+      },
+      "note": "Smoky and lean, and the fastest if you buy it pre-smoked.",
+      "pucks": {
+        "protein": {
+          "label": "Smoked turkey breast",
+          "macros": {
+            "kcal": 190,
+            "protein": 40,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 3
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "pulled-pork",
       "name": "Pulled Pork",
       "kind": "protein-swap",
       "sauceId": "mustard-bbq",
-      "protein": { "name": "Lean pulled pork", "serving": "5 oz / ~140 g cooked", "method": "Slow cooker 8 hr on low (or Instant Pot 60 min high pressure + natural release); shred and toss with the mustard BBQ.", "appliance": ["Slow cooker · 8 hr", "Instant Pot · 60 min HP"] },
-      "macros": { "kcal": 585, "protein": 46, "carbs": 66, "fiber": 10, "fat": 18 },
-      "shopping": { "protein": { "item": "Pork shoulder or loin", "amt": "~26 oz raw" } },
-      "note": "Hands-off and shreds beautifully — the best use of the slow cooker, and it freezes exceptionally well."
+      "protein": {
+        "name": "Lean pulled pork",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Slow cooker 8 hr on low (or Instant Pot 60 min high pressure + natural release); shred and toss with the mustard BBQ.",
+        "appliance": [
+          "Slow cooker · 8 hr",
+          "Instant Pot · 60 min HP"
+        ]
+      },
+      "macros": {
+        "kcal": 660,
+        "protein": 43,
+        "carbs": 83,
+        "fiber": 10,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Pork shoulder or loin",
+          "amt": "~26 oz raw"
+        }
+      },
+      "note": "Hands-off and shreds beautifully — the best use of the slow cooker, and it freezes exceptionally well.",
+      "pucks": {
+        "protein": {
+          "label": "Lean pulled pork",
+          "macros": {
+            "kcal": 280,
+            "protein": 34,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Carolina mustard BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "brisket",
       "name": "Brisket",
       "kind": "protein-swap",
-      "protein": { "name": "Lean beef brisket", "serving": "5 oz / ~140 g cooked", "method": "Low-and-slow in the oven or smoker to fork-tender (or Instant Pot 70 min high pressure). Slice thin against the grain.", "appliance": ["Oven · low & slow", "Instant Pot · 70 min HP"] },
-      "macros": { "kcal": 610, "protein": 48, "carbs": 67, "fiber": 9, "fat": 20 },
-      "shopping": { "protein": { "item": "Lean beef brisket", "amt": "~26 oz raw" } },
-      "note": "The richest, most indulgent build — trim well and keep the portion to 5 oz."
+      "protein": {
+        "name": "Lean beef brisket",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Low-and-slow in the oven or smoker to fork-tender (or Instant Pot 70 min high pressure). Slice thin against the grain.",
+        "appliance": [
+          "Oven · low & slow",
+          "Instant Pot · 70 min HP"
+        ]
+      },
+      "macros": {
+        "kcal": 680,
+        "protein": 43,
+        "carbs": 81,
+        "fiber": 10,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean beef brisket",
+          "amt": "~26 oz raw"
+        }
+      },
+      "note": "The richest, most indulgent build — trim well and keep the portion to 5 oz.",
+      "pucks": {
+        "protein": {
+          "label": "Lean beef brisket",
+          "macros": {
+            "kcal": 300,
+            "protein": 34,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Low-sugar BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "bbq-tempeh",
       "name": "BBQ Tempeh",
       "kind": "remix-plant",
       "sauceId": "mustard-bbq",
-      "protein": { "name": "BBQ tempeh + white beans", "serving": "4 oz / ~115 g tempeh", "method": "Steam tempeh 10 min (mellows bitterness), cube, toss with mustard BBQ, then bake or air-fry until caramelized. White beans add protein & fiber.", "appliance": ["Oven · 425°F · 20 min", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-          { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/3 cup" },
-          { "item": "Roasted carrots", "amt": "1/4 cup" },
-          { "item": "White beans", "amt": "1/3 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" }
+      "protein": {
+        "name": "BBQ tempeh + white beans",
+        "serving": "4 oz / ~115 g tempeh",
+        "method": "Steam tempeh 10 min (mellows bitterness), cube, toss with mustard BBQ, then bake or air-fry until caramelized. White beans add protein & fiber.",
+        "appliance": [
+          "Oven · 425°F · 20 min",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 565, "protein": 33, "carbs": 77, "fiber": 18, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Tempeh", "amt": "8 oz (2 blocks)" },
-        "pantryAdd": [{ "item": "White beans", "amt": "1 can (15 oz)" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice (cooked)",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted sweet potato",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Roasted carrots",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — tempeh + white beans keep the protein up without meat."
+      "macros": {
+        "kcal": 740,
+        "protein": 44,
+        "carbs": 100,
+        "fiber": 19,
+        "fat": 23
+      },
+      "shopping": {
+        "protein": {
+          "item": "Tempeh",
+          "amt": "8 oz (2 blocks)"
+        },
+        "pantryAdd": [
+          {
+            "item": "White beans",
+            "amt": "1 can (15 oz)"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — tempeh + white beans keep the protein up without meat.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ tempeh + white beans",
+          "macros": {
+            "kcal": 320,
+            "protein": 31,
+            "carbs": 16,
+            "fiber": 7,
+            "fat": 18
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 8,
+            "carbs": 26,
+            "fiber": 8,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Carolina mustard BBQ",
+          "macros": {
+            "kcal": 50,
+            "protein": 0,
+            "carbs": 12,
+            "fiber": 0,
+            "fat": 0
+          }
+        }
+      }
     },
     {
       "id": "alabama-white-bowl",
       "name": "Alabama White",
       "kind": "remix",
       "sauceId": "alabama-white",
-      "protein": { "name": "BBQ chicken breast", "serving": "5 oz / ~140 g cooked", "method": "Season, bake or grill to 165°F internal, brush lightly with sauce, then slice.", "appliance": ["Oven · 425°F", "Air fryer"] },
-      "overrides": {
-        "base": [
-          { "item": "Brown rice (cooked)", "amt": "1/2 cup" },
-          { "item": "Roasted sweet potato", "amt": "1/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/4 cup" },
-          { "item": "Roasted carrots", "amt": "1/4 cup" },
-          { "item": "Roasted green beans", "amt": "1/4 cup" },
-          { "item": "Corn", "amt": "2 Tbsp" }
+      "protein": {
+        "name": "BBQ chicken breast",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season, bake or grill to 165°F internal, brush lightly with sauce, then slice.",
+        "appliance": [
+          "Oven · 425°F",
+          "Air fryer"
         ]
       },
-      "macros": { "kcal": 560, "protein": 50, "carbs": 52, "fiber": 9, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~24 oz raw" },
-        "produceAdd": [{ "item": "Green beans", "amt": "8 oz" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Brown rice (cooked)",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted sweet potato",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted carrots",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Roasted green beans",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "Corn",
+            "amt": "2 Tbsp"
+          }
+        ]
       },
-      "note": "A tangy, garden-heavy remix: extra roasted green beans and the creamy, peppery Alabama white sauce instead of tomato BBQ."
+      "macros": {
+        "kcal": 610,
+        "protein": 54,
+        "carbs": 72,
+        "fiber": 10,
+        "fat": 13
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~24 oz raw"
+        },
+        "produceAdd": [
+          {
+            "item": "Green beans",
+            "amt": "8 oz"
+          }
+        ]
+      },
+      "note": "A tangy, garden-heavy remix: extra roasted green beans and the creamy, peppery Alabama white sauce instead of tomato BBQ.",
+      "pucks": {
+        "protein": {
+          "label": "BBQ chicken breast",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Brown rice (cooked)",
+          "macros": {
+            "kcal": 220,
+            "protein": 5,
+            "carbs": 46,
+            "fiber": 4,
+            "fat": 2
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 110,
+            "protein": 4,
+            "carbs": 23,
+            "fiber": 6,
+            "fat": 3
+          }
+        },
+        "sauce": {
+          "label": "Alabama white sauce",
+          "macros": {
+            "kcal": 50,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -513,8 +1092,16 @@
       "Top with 2 Tbsp hemp hearts",
       "Add a soft-boiled or fried egg"
     ],
-    "freezeWell": ["Rice", "Roasted sweet potato & veg", "Corn", "Cooked / pulled protein"],
-    "addFresh": ["Pickled onions", "Green onions"],
+    "freezeWell": [
+      "Rice",
+      "Roasted sweet potato & veg",
+      "Corn",
+      "Cooked / pulled protein"
+    ],
+    "addFresh": [
+      "Pickled onions",
+      "Green onions"
+    ],
     "storeSep": "Sauce — fridge ~1 week, or freeze one serving per 2-Tbsp mold"
   }
 }
@@ -650,11 +1237,11 @@
 
     document.getElementById("body-cube").innerHTML =
       '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · 2-cup mold</div>' +
+        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
         '<div class="cubes">' + cubes + "</div>" +
         '<ul class="fill-list">' + fill + "</ul>" +
         '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Fills to ~2 cups → uses all four of your 2-cup molds = 4 complete meals. Fill warm-not-hot to the line and press gently to remove air.</div></div>' +
+        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
           moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +

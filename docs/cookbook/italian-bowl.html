@@ -221,11 +221,11 @@
     <h1>Italian<span class="lead">Bowl</span></h1>
     <p class="tagline">Al dente whole-wheat penne, roasted zucchini &amp; peppers, white beans &amp; a real marinara — trattoria comfort you freeze in a cube. Pick a build below and the whole card follows it: ingredients, macros, cube fill &amp; shopping list.</p>
     <div class="meta">
-      <span>Makes <b>4</b> portions</span>
+      <span>Makes <b>4</b> meals · <b>~3</b> cups</span>
       <span>Prep <b>20</b> min</span>
       <span>Cook <b>40</b> min</span>
       <span>Freezes <b>3</b> mo</span>
-      <span>Reheat <b>4–6</b> min</span>
+      <span>Reheat <b>6–9</b> min</span>
     </div>
     <span class="thesis">Build it · Freeze it · Fuel your goals</span>
   </header>
@@ -296,51 +296,137 @@
   "prepMin": 20,
   "cookMin": 40,
   "freezeMonths": 3,
-  "reheatMin": [4, 6],
+  "reheatMin": [
+    6,
+    9
+  ],
   "slot": "L/D",
   "macrosEstimated": true,
   "macroSource": "standard-per-ingredient-v1",
   "grain": "pasta",
-  "baseContribution": "~10 g protein & ~9 g fiber before you add your protein",
+  "baseContribution": "~15 g protein & ~13 g fiber before you add your protein",
   "molds": {
-    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each" },
-    "component": { "size": "1-cup", "count": 8, "use": "spare pasta / protein / veg to swap between bowls" },
-    "sauce": { "size": "2-Tbsp", "count": 16, "use": "one sauce serving each" }
+    "assembled": {
+      "size": "2-cup",
+      "count": 4,
+      "use": "one complete meal each"
+    },
+    "component": {
+      "size": "1-cup",
+      "count": 8,
+      "use": "spare pasta / protein / veg to swap between bowls"
+    },
+    "sauce": {
+      "size": "2-Tbsp",
+      "count": 16,
+      "use": "one sauce serving each"
+    }
   },
   "prep": [
-    { "kind": "grain",
+    {
+      "kind": "grain",
       "p": "Boil ~8 oz whole-wheat penne (or rotini) in salted water to just-al-dente — 1 min shy of the box, since it finishes when reheated. Drain, toss with a drizzle of olive oil so it doesn't clump.",
-      "chips": [ { "t": "Stovetop · 8–10 min" }, { "t": "Instant Pot · 4 min high, quick release", "cls": "fast" } ],
-      "tip": "<b>Al dente matters:</b> slightly firm pasta survives the freeze-and-reheat far better than soft." },
-    { "h": "Roast the vegetables & warm the beans",
+      "chips": [
+        {
+          "t": "Stovetop · 8–10 min"
+        },
+        {
+          "t": "Instant Pot · 4 min high, quick release",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Al dente matters:</b> slightly firm pasta survives the freeze-and-reheat far better than soft."
+    },
+    {
+      "h": "Roast the vegetables & warm the beans",
       "p": "Cut 2 zucchini and 2 bell peppers into 1/2-inch pieces. Toss with 1 Tbsp oil, 1/2 tsp Italian seasoning & salt; roast until charred at the edges. Drain & rinse a can of white (cannellini) beans and fold into the base.",
-      "chips": [ { "t": "Oven · 425°F · 20–25 min" }, { "t": "Air fryer · 400°F · 12–15 min", "cls": "fast" } ],
-      "tip": "<b>Char = flavor:</b> spread the veg out so it roasts, not steams. The cannellini beans keep every bowl high-fiber." },
-    { "kind": "protein" },
-    { "kind": "sauce" }
+      "chips": [
+        {
+          "t": "Oven · 425°F · 20–25 min"
+        },
+        {
+          "t": "Air fryer · 400°F · 12–15 min",
+          "cls": "fast"
+        }
+      ],
+      "tip": "<b>Char = flavor:</b> spread the veg out so it roasts, not steams. The cannellini beans keep every bowl high-fiber."
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "kind": "sauce"
+    }
   ],
   "defaults": {
     "sauceId": "marinara",
     "base": [
-      { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-      { "item": "Roasted zucchini", "amt": "1/2 cup" },
-      { "item": "Roasted peppers", "amt": "1/4 cup" },
-      { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      {
+        "item": "Whole-wheat penne",
+        "amt": "1 cup"
+      },
+      {
+        "item": "Roasted zucchini",
+        "amt": "1/2 cup"
+      },
+      {
+        "item": "Roasted peppers",
+        "amt": "1/4 cup"
+      },
+      {
+        "item": "White beans (cannellini)",
+        "amt": "1/3 cup"
+      }
     ],
-    "fresh": ["Fresh basil", "Grated parmesan", "Red pepper flakes", "Optional: fresh mozzarella pearls, arugula"],
+    "fresh": [
+      "Fresh basil",
+      "Grated parmesan",
+      "Red pepper flakes",
+      "Optional: fresh mozzarella pearls, arugula"
+    ],
     "shopping": {
       "produce": [
-        { "item": "Zucchini", "amt": "2" },
-        { "item": "Bell peppers", "amt": "2" },
-        { "item": "Fresh basil", "amt": "1 bunch · fresh topping" },
-        { "item": "Arugula", "amt": "small bag · optional topping" }
+        {
+          "item": "Zucchini",
+          "amt": "2"
+        },
+        {
+          "item": "Bell peppers",
+          "amt": "2"
+        },
+        {
+          "item": "Fresh basil",
+          "amt": "1 bunch · fresh topping"
+        },
+        {
+          "item": "Arugula",
+          "amt": "small bag · optional topping"
+        }
       ],
       "pantry": [
-        { "item": "Whole-wheat penne", "amt": "8 oz" },
-        { "item": "White beans (cannellini)", "amt": "1 can (15 oz)" },
-        { "item": "Grated parmesan", "amt": "small wedge · fresh topping" }
+        {
+          "item": "Whole-wheat penne",
+          "amt": "8 oz"
+        },
+        {
+          "item": "White beans (cannellini)",
+          "amt": "1 can (15 oz)"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "small wedge · fresh topping"
+        }
       ],
-      "seasoning": ["Olive oil", "Italian seasoning", "Garlic", "Dried oregano", "Dried basil", "Crushed red pepper", "Salt", "Black pepper"]
+      "seasoning": [
+        "Olive oil",
+        "Italian seasoning",
+        "Garlic",
+        "Dried oregano",
+        "Dried basil",
+        "Crushed red pepper",
+        "Salt",
+        "Black pepper"
+      ]
     }
   },
   "sauces": {
@@ -350,14 +436,33 @@
       "freezes": true,
       "recipe": "Sauté 3 cloves minced garlic in 1 Tbsp olive oil 30 sec; add one 28-oz can crushed tomatoes, 1 tsp dried oregano, 1 tsp dried basil, 1/2 tsp salt & a pinch of red pepper. Simmer 15 min. (Or use a good jarred marinara.)",
       "items": [
-        { "item": "Crushed tomatoes", "amt": "28-oz can" },
-        { "item": "Garlic", "amt": "3 cloves" },
-        { "item": "Dried oregano + basil", "amt": "1 tsp ea" },
-        { "item": "Olive oil + salt", "amt": "to taste" },
-        { "item": "Red pepper flakes", "amt": "pinch" }
+        {
+          "item": "Crushed tomatoes",
+          "amt": "28-oz can"
+        },
+        {
+          "item": "Garlic",
+          "amt": "3 cloves"
+        },
+        {
+          "item": "Dried oregano + basil",
+          "amt": "1 tsp ea"
+        },
+        {
+          "item": "Olive oil + salt",
+          "amt": "to taste"
+        },
+        {
+          "item": "Red pepper flakes",
+          "amt": "pinch"
+        }
       ],
       "shop": [
-        { "item": "Crushed tomatoes", "amt": "28-oz can", "group": "pantry" }
+        {
+          "item": "Crushed tomatoes",
+          "amt": "28-oz can",
+          "group": "pantry"
+        }
       ]
     },
     "pesto": {
@@ -366,15 +471,38 @@
       "freezes": true,
       "recipe": "Blend 2 cups packed basil, 1/3 cup toasted pine nuts (or walnuts), 2 cloves garlic, 1/3 cup grated parmesan, 1/3 cup olive oil, 1 Tbsp lemon juice & 1/2 tsp salt until it forms a loose paste. Thin with a splash of water.",
       "items": [
-        { "item": "Fresh basil", "amt": "2 cups packed" },
-        { "item": "Pine nuts or walnuts", "amt": "1/3 cup" },
-        { "item": "Garlic", "amt": "2 cloves" },
-        { "item": "Grated parmesan", "amt": "1/3 cup" },
-        { "item": "Olive oil + lemon", "amt": "to blend" }
+        {
+          "item": "Fresh basil",
+          "amt": "2 cups packed"
+        },
+        {
+          "item": "Pine nuts or walnuts",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Garlic",
+          "amt": "2 cloves"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Olive oil + lemon",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Fresh basil (extra)", "amt": "2 large bunches", "group": "produce" },
-        { "item": "Pine nuts or walnuts", "amt": "1/3 cup", "group": "pantry" }
+        {
+          "item": "Fresh basil (extra)",
+          "amt": "2 large bunches",
+          "group": "produce"
+        },
+        {
+          "item": "Pine nuts or walnuts",
+          "amt": "1/3 cup",
+          "group": "pantry"
+        }
       ]
     },
     "alfredo": {
@@ -383,14 +511,33 @@
       "freezes": false,
       "recipe": "Blend 3/4 cup cottage cheese (or soaked cashews), 1/3 cup milk, 1/3 cup grated parmesan, 4 cloves roasted garlic, 1 tsp lemon, 1/2 tsp salt & black pepper until silky. Warm gently — don't boil.",
       "items": [
-        { "item": "Cottage cheese or cashews", "amt": "3/4 cup" },
-        { "item": "Grated parmesan", "amt": "1/3 cup" },
-        { "item": "Roasted garlic", "amt": "4 cloves" },
-        { "item": "Milk", "amt": "1/3 cup" },
-        { "item": "Lemon + salt + pepper", "amt": "to blend" }
+        {
+          "item": "Cottage cheese or cashews",
+          "amt": "3/4 cup"
+        },
+        {
+          "item": "Grated parmesan",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Roasted garlic",
+          "amt": "4 cloves"
+        },
+        {
+          "item": "Milk",
+          "amt": "1/3 cup"
+        },
+        {
+          "item": "Lemon + salt + pepper",
+          "amt": "to blend"
+        }
       ],
       "shop": [
-        { "item": "Cottage cheese", "amt": "small tub", "group": "pantry" }
+        {
+          "item": "Cottage cheese",
+          "amt": "small tub",
+          "group": "pantry"
+        }
       ]
     }
   },
@@ -401,116 +548,566 @@
       "kind": "protein-swap",
       "featured": true,
       "sauceId": "marinara",
-      "protein": { "name": "Baked parmesan chicken", "serving": "5 oz / ~140 g cooked", "method": "Dredge chicken cutlets in a little egg then whole-wheat breadcrumbs + parmesan; bake or air-fry until 165°F & crisp, then slice into the bowl. Top with a little melty mozzarella.", "appliance": ["Oven · 425°F · 18–22 min", "Air fryer · 400°F · 12–14 min"] },
-      "macros": { "kcal": 580, "protein": 49, "carbs": 56, "fiber": 10, "fat": 18 },
-      "shopping": {
-        "protein": { "item": "Chicken breast / cutlets", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Whole-wheat breadcrumbs", "amt": "1 cup" }, { "item": "Part-skim mozzarella", "amt": "4 oz" }]
+      "protein": {
+        "name": "Baked parmesan chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Dredge chicken cutlets in a little egg then whole-wheat breadcrumbs + parmesan; bake or air-fry until 165°F & crisp, then slice into the bowl. Top with a little melty mozzarella.",
+        "appliance": [
+          "Oven · 425°F · 18–22 min",
+          "Air fryer · 400°F · 12–14 min"
+        ]
       },
-      "note": "The classic — crispy parmesan-crusted chicken over penne, roasted veg & marinara with a little melty mozz. This is the featured build."
+      "macros": {
+        "kcal": 730,
+        "protein": 66,
+        "carbs": 79,
+        "fiber": 15,
+        "fat": 19
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast / cutlets",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Whole-wheat breadcrumbs",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Part-skim mozzarella",
+            "amt": "4 oz"
+          }
+        ]
+      },
+      "note": "The classic — crispy parmesan-crusted chicken over penne, roasted veg & marinara with a little melty mozz. This is the featured build.",
+      "pucks": {
+        "protein": {
+          "label": "Baked parmesan chicken",
+          "macros": {
+            "kcal": 370,
+            "protein": 50,
+            "carbs": 12,
+            "fiber": 1,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "turkey-meatball",
       "name": "Turkey Meatball",
       "kind": "protein-swap",
       "sauceId": "marinara",
-      "protein": { "name": "Turkey meatballs", "serving": "4–5 meatballs / ~5 oz", "method": "Mix 93/7 turkey with egg, breadcrumbs, parmesan, garlic & Italian herbs; roll into meatballs and bake or air-fry to 165°F. Simmer briefly in the marinara.", "appliance": ["Oven · 400°F · 18–20 min", "Air fryer · 380°F · 12 min"] },
-      "macros": { "kcal": 545, "protein": 46, "carbs": 54, "fiber": 10, "fat": 19 },
-      "shopping": {
-        "protein": { "item": "Ground turkey 93/7", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Whole-wheat breadcrumbs", "amt": "1/2 cup" }]
+      "protein": {
+        "name": "Turkey meatballs",
+        "serving": "4–5 meatballs / ~5 oz",
+        "method": "Mix 93/7 turkey with egg, breadcrumbs, parmesan, garlic & Italian herbs; roll into meatballs and bake or air-fry to 165°F. Simmer briefly in the marinara.",
+        "appliance": [
+          "Oven · 400°F · 18–20 min",
+          "Air fryer · 380°F · 12 min"
+        ]
       },
-      "note": "Comfort in a cube — tender herby turkey meatballs simmered in marinara over penne and roasted veg."
+      "macros": {
+        "kcal": 610,
+        "protein": 49,
+        "carbs": 75,
+        "fiber": 15,
+        "fat": 15
+      },
+      "shopping": {
+        "protein": {
+          "item": "Ground turkey 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Whole-wheat breadcrumbs",
+            "amt": "1/2 cup"
+          }
+        ]
+      },
+      "note": "Comfort in a cube — tender herby turkey meatballs simmered in marinara over penne and roasted veg.",
+      "pucks": {
+        "protein": {
+          "label": "Turkey meatballs",
+          "macros": {
+            "kcal": 250,
+            "protein": 33,
+            "carbs": 8,
+            "fiber": 1,
+            "fat": 11
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "sausage-peppers",
       "name": "Sausage & Peppers",
       "kind": "remix",
       "sauceId": "marinara",
-      "protein": { "name": "Italian chicken sausage", "serving": "5 oz / ~140 g cooked", "method": "Brown sliced lean chicken or turkey Italian sausage until caramelized; toss with the extra onions & peppers.", "appliance": ["Stovetop · 8–10 min", "Air fryer · 400°F · 10 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted peppers", "amt": "1/2 cup" },
-          { "item": "Caramelized onions", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Italian chicken sausage",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Brown sliced lean chicken or turkey Italian sausage until caramelized; toss with the extra onions & peppers.",
+        "appliance": [
+          "Stovetop · 8–10 min",
+          "Air fryer · 400°F · 10 min"
         ]
       },
-      "macros": { "kcal": 560, "protein": 41, "carbs": 55, "fiber": 11, "fat": 22 },
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Caramelized onions",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          }
+        ]
+      },
+      "macros": {
+        "kcal": 610,
+        "protein": 44,
+        "carbs": 71,
+        "fiber": 14,
+        "fat": 19
+      },
       "shopping": {
-        "protein": { "item": "Italian chicken/turkey sausage", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Bell peppers", "amt": "2 extra" }, { "item": "Yellow onion", "amt": "2" }],
+        "protein": {
+          "item": "Italian chicken/turkey sausage",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Bell peppers",
+            "amt": "2 extra"
+          },
+          {
+            "item": "Yellow onion",
+            "amt": "2"
+          }
+        ],
         "pantryAdd": []
       },
-      "note": "Sunday-market energy — caramelized Italian sausage with sweet peppers & onions in marinara. Extra peppers push the fiber highest of the meat builds."
+      "note": "Sunday-market energy — caramelized Italian sausage with sweet peppers & onions in marinara. Extra peppers push the fiber highest of the meat builds.",
+      "pucks": {
+        "protein": {
+          "label": "Italian chicken sausage",
+          "macros": {
+            "kcal": 250,
+            "protein": 28,
+            "carbs": 4,
+            "fiber": 0,
+            "fat": 15
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "pesto-chicken",
       "name": "Pesto Chicken",
       "kind": "remix",
       "sauceId": "pesto",
-      "protein": { "name": "Grilled pesto chicken", "serving": "5 oz / ~140 g cooked", "method": "Season chicken with salt, pepper & garlic; grill or sear to 165°F and slice. Toss with the basil pesto and a few chopped sun-dried tomatoes.", "appliance": ["Stovetop / grill pan", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted zucchini", "amt": "1/2 cup" },
-          { "item": "Sun-dried tomatoes", "amt": "2 Tbsp" },
-          { "item": "White beans (cannellini)", "amt": "1/3 cup" }
+      "protein": {
+        "name": "Grilled pesto chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season chicken with salt, pepper & garlic; grill or sear to 165°F and slice. Toss with the basil pesto and a few chopped sun-dried tomatoes.",
+        "appliance": [
+          "Stovetop / grill pan",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 605, "protein": 47, "carbs": 49, "fiber": 10, "fat": 28 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~20 oz" },
-        "produceAdd": [],
-        "pantryAdd": [{ "item": "Sun-dried tomatoes", "amt": "1 small jar" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted zucchini",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Sun-dried tomatoes",
+            "amt": "2 Tbsp"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/3 cup"
+          }
+        ]
       },
-      "note": "Bright and herby — grilled chicken in basil pesto with sun-dried tomatoes. Richest of the builds (pesto brings the good fats)."
+      "macros": {
+        "kcal": 670,
+        "protein": 60,
+        "carbs": 63,
+        "fiber": 14,
+        "fat": 20
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "Sun-dried tomatoes",
+            "amt": "1 small jar"
+          }
+        ]
+      },
+      "note": "Bright and herby — grilled chicken in basil pesto with sun-dried tomatoes. Richest of the builds (pesto brings the good fats).",
+      "pucks": {
+        "protein": {
+          "label": "Grilled pesto chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Basil pesto",
+          "macros": {
+            "kcal": 120,
+            "protein": 2,
+            "carbs": 2,
+            "fiber": 1,
+            "fat": 12
+          }
+        }
+      }
     },
     {
       "id": "lentil-bolognese",
       "name": "Lentil Bolognese",
       "kind": "remix-plant",
       "sauceId": "marinara",
-      "protein": { "name": "Lentil & mushroom bolognese", "serving": "3/4 cup / ~5 oz", "method": "Sauté finely chopped mushrooms until browned; add 1.5 cups cooked brown/green lentils and simmer into the marinara with a splash of balsamic until thick and meaty.", "appliance": ["Stovetop · 12–15 min", "Instant Pot for the lentils"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted zucchini", "amt": "1/2 cup" },
-          { "item": "Roasted peppers", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Lentil & mushroom bolognese",
+        "serving": "3/4 cup / ~5 oz",
+        "method": "Sauté finely chopped mushrooms until browned; add 1.5 cups cooked brown/green lentils and simmer into the marinara with a splash of balsamic until thick and meaty.",
+        "appliance": [
+          "Stovetop · 12–15 min",
+          "Instant Pot for the lentils"
         ]
       },
-      "macros": { "kcal": 475, "protein": 25, "carbs": 80, "fiber": 18, "fat": 8 },
-      "shopping": {
-        "protein": { "item": "Brown/green lentils", "amt": "1 cup dry (or 2 cans)" },
-        "produceAdd": [{ "item": "Mushrooms", "amt": "16 oz" }],
-        "pantryAdd": [{ "item": "Balsamic vinegar", "amt": "splash" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted zucchini",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Roasted peppers",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Fully plant-based and the highest-fiber build — a rich lentil & mushroom bolognese that eats like the real thing."
+      "macros": {
+        "kcal": 590,
+        "protein": 34,
+        "carbs": 103,
+        "fiber": 29,
+        "fat": 7
+      },
+      "shopping": {
+        "protein": {
+          "item": "Brown/green lentils",
+          "amt": "1 cup dry (or 2 cans)"
+        },
+        "produceAdd": [
+          {
+            "item": "Mushrooms",
+            "amt": "16 oz"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Balsamic vinegar",
+            "amt": "splash"
+          }
+        ]
+      },
+      "note": "Fully plant-based and the highest-fiber build — a rich lentil & mushroom bolognese that eats like the real thing.",
+      "pucks": {
+        "protein": {
+          "label": "Lentil & mushroom bolognese",
+          "macros": {
+            "kcal": 230,
+            "protein": 18,
+            "carbs": 36,
+            "fiber": 15,
+            "fat": 3
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 140,
+            "protein": 8,
+            "carbs": 24,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Weeknight marinara",
+          "macros": {
+            "kcal": 40,
+            "protein": 1,
+            "carbs": 6,
+            "fiber": 1,
+            "fat": 1
+          }
+        }
+      }
     },
     {
       "id": "chicken-alfredo",
       "name": "Chicken Alfredo Primavera",
       "kind": "remix",
       "sauceId": "alfredo",
-      "protein": { "name": "Grilled chicken", "serving": "5 oz / ~140 g cooked", "method": "Season & sear chicken to 165°F and slice. Fold in extra roasted broccoli & peas for a lighter, veg-forward alfredo.", "appliance": ["Stovetop", "Air fryer · 400°F · 12 min"] },
-      "overrides": {
-        "base": [
-          { "item": "Whole-wheat penne", "amt": "3/4 cup" },
-          { "item": "Roasted broccoli", "amt": "1/2 cup" },
-          { "item": "Peas", "amt": "1/4 cup" },
-          { "item": "White beans (cannellini)", "amt": "1/4 cup" }
+      "protein": {
+        "name": "Grilled chicken",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Season & sear chicken to 165°F and slice. Fold in extra roasted broccoli & peas for a lighter, veg-forward alfredo.",
+        "appliance": [
+          "Stovetop",
+          "Air fryer · 400°F · 12 min"
         ]
       },
-      "macros": { "kcal": 590, "protein": 48, "carbs": 51, "fiber": 10, "fat": 24 },
-      "shopping": {
-        "protein": { "item": "Chicken breast", "amt": "~20 oz" },
-        "produceAdd": [{ "item": "Broccoli", "amt": "1 large head" }],
-        "pantryAdd": [{ "item": "Frozen peas", "amt": "1 cup" }]
+      "overrides": {
+        "base": [
+          {
+            "item": "Whole-wheat penne",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Roasted broccoli",
+            "amt": "1/2 cup"
+          },
+          {
+            "item": "Peas",
+            "amt": "1/4 cup"
+          },
+          {
+            "item": "White beans (cannellini)",
+            "amt": "1/4 cup"
+          }
+        ]
       },
-      "note": "Lightened-up alfredo — a cottage-cheese roasted-garlic sauce over chicken, broccoli & peas. Add the sauce fresh; it's fridge-best, not a freezer sauce."
+      "macros": {
+        "kcal": 620,
+        "protein": 64,
+        "carbs": 62,
+        "fiber": 13,
+        "fat": 11
+      },
+      "shopping": {
+        "protein": {
+          "item": "Chicken breast",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [
+          {
+            "item": "Broccoli",
+            "amt": "1 large head"
+          }
+        ],
+        "pantryAdd": [
+          {
+            "item": "Frozen peas",
+            "amt": "1 cup"
+          }
+        ]
+      },
+      "note": "Lightened-up alfredo — a cottage-cheese roasted-garlic sauce over chicken, broccoli & peas. Add the sauce fresh; it's fridge-best, not a freezer sauce.",
+      "pucks": {
+        "protein": {
+          "label": "Grilled chicken",
+          "macros": {
+            "kcal": 230,
+            "protein": 43,
+            "carbs": 0,
+            "fiber": 0,
+            "fat": 5
+          }
+        },
+        "grain": {
+          "label": "Whole-wheat penne",
+          "macros": {
+            "kcal": 180,
+            "protein": 7,
+            "carbs": 37,
+            "fiber": 5,
+            "fat": 1
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 150,
+            "protein": 9,
+            "carbs": 22,
+            "fiber": 8,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Roasted-garlic alfredo",
+          "macros": {
+            "kcal": 60,
+            "protein": 5,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 3
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -539,8 +1136,19 @@
       "Add another 1/4 cup white beans or lentils (+fiber)",
       "Top with 2 Tbsp hemp hearts or extra parmesan"
     ],
-    "freezeWell": ["Whole-wheat penne (al dente)", "Roasted zucchini & peppers", "White beans", "Marinara", "Cooked chicken / meatballs / bolognese"],
-    "addFresh": ["Fresh basil", "Grated parmesan", "Arugula", "Fresh mozzarella"],
+    "freezeWell": [
+      "Whole-wheat penne (al dente)",
+      "Roasted zucchini & peppers",
+      "White beans",
+      "Marinara",
+      "Cooked chicken / meatballs / bolognese"
+    ],
+    "addFresh": [
+      "Fresh basil",
+      "Grated parmesan",
+      "Arugula",
+      "Fresh mozzarella"
+    ],
     "storeSep": "Alfredo sauce — fridge ~1 week (cream sauces split when frozen); marinara & pesto freeze fine in 2-Tbsp molds"
   }
 }
@@ -676,11 +1284,11 @@
 
     document.getElementById("body-cube").innerHTML =
       '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · 2-cup mold</div>' +
+        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
         '<div class="cubes">' + cubes + "</div>" +
         '<ul class="fill-list">' + fill + "</ul>" +
         '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Fills to ~2 cups → uses all four of your 2-cup molds = 4 complete meals. Fill warm-not-hot to the line and press gently to remove air.</div></div>' +
+        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
           moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +
