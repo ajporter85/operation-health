@@ -25,7 +25,7 @@ let fns = appScript
   .replace(/\s*renderNotes\(\);\s*update\(\);\s*$/, "\n");
 
 // sanity: the render fns must survive extraction
-["function renderTabs", "function renderNotes", "function update", "function renderShopping"].forEach(k => {
+["function renderTabs", "function renderNotes", "function update", "function renderBuildShop"].forEach(k => {
   if (fns.indexOf(k) === -1) { console.error("extraction lost " + k); process.exit(1); }
 });
 if (/document\.getElementById\("meal-data"\)/.test(fns)) { console.error("meal-data ref still present"); process.exit(1); }
@@ -46,32 +46,22 @@ THEMES.forEach(t => {
 
 // --- the 6 collapsible detail sections (verbatim from a theme card) ---
 const detailSections = `  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Build Your Bowl</h2><span class="rule"></span><span class="subnote">Assemble 1 → 4</span></summary>
-    <div class="secbody"><div class="build" id="body-build"></div></div>
+    <summary><span class="caret">›</span><h2 id="h-buildshop">Build &amp; Shop</h2><span class="rule"></span><span class="subnote" id="sub-buildshop">Per meal · buy for 4</span></summary>
+    <div class="secbody"><div class="build" id="body-buildshop"></div></div>
   </details>
 
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Prep Workflow</h2><span class="rule"></span><span class="subnote">For 4 portions</span></summary>
+    <summary><span class="caret">›</span><h2>Prep Workflow</h2><span class="rule"></span><span class="subnote" id="sub-prep">For 4 meals</span></summary>
     <div class="secbody"><div class="flow" id="body-prep"></div></div>
   </details>
 
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Souper Cube Fill &amp; Freeze</h2><span class="rule"></span><span class="subnote">2-cup ×4</span></summary>
-    <div class="secbody"><div class="band" id="body-cube"></div></div>
-  </details>
-
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Nutrition</h2><span class="rule"></span><span class="subnote">Per 2-cup bowl · estimated</span></summary>
+    <summary><span class="caret">›</span><h2>Nutrition</h2><span class="rule"></span><span class="subnote" id="sub-nutri">Per 3-cup meal · estimated</span></summary>
     <div class="secbody"><div id="body-nutri"></div></div>
   </details>
 
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Shopping List</h2><span class="rule"></span><span class="subnote">4 portions</span></summary>
-    <div class="secbody"><div class="shop" id="body-shop"></div></div>
-  </details>
-
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Make It Yours</h2><span class="rule"></span><span class="subnote">Batch · subs · boost · freeze</span></summary>
+  <details class="sec" open id="sec-swaps">
+    <summary><span class="caret">›</span><h2>Swaps &amp; Boosts</h2><span class="rule"></span><span class="subnote">Make it yours</span></summary>
     <div class="secbody"><div id="body-notes"></div></div>
   </details>`;
 
@@ -173,6 +163,8 @@ const body = `<div class="wrap">
       <div class="tabs" id="var-tabs" role="tablist" aria-label="Meal variations"></div>
     </section>
 
+    <div class="modebar" id="modebar"></div>
+
 ${detailSections}
   </div>
   </div>
@@ -268,27 +260,27 @@ const hubJs = `
     });
     return parts.join(" | ").toLowerCase();
   }
+  // Grouped by the three pucks that make up every meal (+ sauce & fresh handled
+  // as asides below the matrix, since those aren't batch-frozen the same way).
   var STAPLES = [
-    { cat: "Grains & starches", items: [
-      { label: "Brown rice", kw: ["rice"], prep: "Cook a big pot; freezes better than white. Portion in 1-cup molds." },
-      { label: "Quinoa", kw: ["quinoa"], prep: "Batch-cook, cool, freeze in 1-cup molds." },
+    { cat: "① Grain pucks — 1-cup molds", items: [
+      { label: "Brown rice", kw: ["rice"], prep: "Cook a big pot; freezes better than white. Portion into 1-cup pucks." },
+      { label: "Quinoa", kw: ["quinoa"], prep: "Batch-cook, cool, freeze in 1-cup pucks." },
       { label: "Whole-grain pasta", kw: ["pasta", "penne", "rotini"], prep: "Boil just shy of al dente; oil lightly so it doesn't clump." },
       { label: "Roast-ahead potatoes", kw: ["potato"], prep: "Cube & roast crisp (white or sweet); re-crisp in the air fryer." }
     ]},
-    { cat: "Proteins — batch-cook, 1-cup molds", items: [
+    { cat: "② Protein pucks — 1-cup molds", items: [
       { label: "Chicken (grilled or shredded)", kw: ["chicken"], prep: "Cook a big batch, portion ~5 oz; drops into most meals." },
       { label: "Beef (ground or brisket)", kw: ["beef"], prep: "Brown seasoned crumbles or slow-cook brisket; freeze flat in portions." },
       { label: "Turkey (ground or sliced)", kw: ["turkey"], prep: "Brown ground turkey, roll meatballs, or roast/smoke a breast; freeze ~5 oz portions." },
-      { label: "Plant protein (beans / lentils / tofu)", kw: ["black bean burger", "lentil", "tofu", "tempeh", "three-bean", "edamame"], prep: "Cook & freeze bean or lentil mixes, or crisp tofu." }
+      { label: "Plant protein (tofu / lentils / bean mix)", kw: ["black bean burger", "lentil", "tofu", "tempeh", "three-bean", "edamame"], prep: "Cook & freeze a bean or lentil mix, or crisp tofu — the protein puck for plant builds." }
     ]},
-    { cat: "Beans & legumes — freeze great", items: [
+    { cat: "③ Veg & bean pucks — 1-cup molds", items: [
       { label: "White beans (cannellini)", kw: ["white bean", "cannellini"], prep: "Drain, rinse; freeze in 1/3-cup scoops for instant fiber." },
       { label: "Black beans", kw: ["black bean"], prep: "Drain, rinse, season; freeze in scoops." },
       { label: "Pinto beans", kw: ["pinto"], prep: "Great mashed for body in a chili." },
       { label: "Chickpeas", kw: ["chickpea"], prep: "Roast or keep soft; they soften a little in the freezer." },
-      { label: "Edamame", kw: ["edamame"], prep: "Keep a bag frozen — no prep, high protein." }
-    ]},
-    { cat: "Roasted vegetables", items: [
+      { label: "Edamame", kw: ["edamame"], prep: "Keep a bag frozen — no prep, high protein." },
       { label: "Bell peppers", kw: ["pepper"], prep: "Roast or char in bulk; freeze in 1/2-cup portions." },
       { label: "Onions", kw: ["onion"], prep: "Caramelize a big batch; freezes beautifully." },
       { label: "Broccoli", kw: ["broccoli"], prep: "Roast firm so it reheats without going mushy." },
@@ -318,16 +310,21 @@ const hubJs = `
     document.getElementById("staples-body").innerHTML =
       '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Prep-Ahead Staples</span>' +
         '<h1 style="font-size:clamp(28px,5vw,44px)">Cook once, <span class="lead">eat all month</span></h1>' +
-        '<p class="tagline">The components that repeat across the six meals. Batch-cook and freeze these and most bowls become assemble-only — no cooking from scratch.</p></header>' +
+        '<p class="tagline">Every meal is three 1-cup pucks + a sauce. These are the components that repeat across the six meals, grouped by those three pucks — batch-cook and freeze them and most meals become grab-and-reheat.</p></header>' +
       '<div class="kitbox"><b>Freezer starter kit</b> — the highest-leverage staples (used in 3+ meals): ' +
         (kit.length ? esc(kit.join(", ")) : "—") + '. Keep these on hand and you’ve got the backbone of every meal in the library.</div>' +
       '<div class="smatrix-wrap"><table class="smatrix"><thead><tr><th class="item">Staple</th>' + headCells + '<th class="cov">#</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="smatrix-foot">✓ = used in that meal (across its builds). Freeze components in your <b>1-cup molds</b> so you can mix &amp; match into any bowl without re-cooking.</p>';
+      '<p class="smatrix-foot">✓ = used in that meal (across its builds). Freeze each in a <b>1-cup mold</b>, then pop out and bag — three pucks + a sauce cube assemble into any meal without re-cooking.</p>' +
+      '<div class="saucecols" style="margin-top:20px">' +
+        '<div class="scol"><h3>The 4th component: sauce <span class="sub">2-Tbsp cubes, not 1-cup pucks</span></h3>' +
+          '<p style="font-size:14.5px;color:var(--ink-2);line-height:1.55;margin:0">Each sauce freezes (or is made fresh) on its own and goes on at serving — it’s the flavor swap that turns the same three pucks into a different meal. Which sauces freeze vs. stay fridge-fresh is on the <b>Freeze &amp; Reheat</b> tab.</p></div>' +
+        '<div class="scol"><h3>Not stocked: fresh toppings <span class="sub">never frozen</span></h3>' +
+          '<p style="font-size:14.5px;color:var(--ink-2);line-height:1.55;margin:0">Avocado, cheese, herbs, citrus, pickles &amp; greens go on <b>after</b> reheating — keep them out of the freezer entirely so the meal stays bright.</p></div>' +
+      '</div>';
   }
 
   // ---------- Freeze & Reheat ----------
   function renderFreeze() {
-    var m = THEMES[0].data.molds;
     var freeze = [], fresh = [];
     THEMES.forEach(function (t) {
       var s = t.data.sauces || {};
@@ -340,15 +337,14 @@ const hubJs = `
     document.getElementById("freeze-body").innerHTML =
       '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Freeze &amp; Reheat</span>' +
         '<h1 style="font-size:clamp(28px,5vw,44px)">Fill · freeze · <span class="lead">reheat</span></h1>' +
-        '<p class="tagline">One system for the whole library — every meal freezes ~3 months and reheats in 4–6 minutes.</p></header>' +
+        '<p class="tagline">One system for the whole library — freeze each part as a 1-cup puck, keep ~3 months, and reheat in 6–9 minutes.</p></header>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>The mold system</h3><ul class="fill-list" style="margin-top:6px">' +
-          '<li><span class="q amt">' + m.assembled.count + '× 2-cup</span> ' + esc(m.assembled.use) + '</li>' +
-          '<li><span class="q amt">' + m.component.count + '× 1-cup</span> ' + esc(m.component.use) + '</li>' +
-          '<li><span class="q amt">' + m.sauce.count + '× 2-Tbsp</span> ' + esc(m.sauce.use) + '</li>' +
-        '</ul></div>' +
-        fcard("Freeze", 'Cool cubes completely (fridge ~1 hr) <b>before</b> the freezer so they don’t ice-crystal. Fill warm-not-hot to the line, press out air, pop out when solid, then bag and label <b>protein + date</b>. Keep up to <span class="big">3 months</span>; oldest first.') +
-        fcard("Reheat", 'Reheat a meal cube <span class="big">4–6 min</span> from frozen — microwave stirring halfway, or a covered pan. Then add the sauce and fresh toppings.') +
+          '<li><span class="q amt">1-cup molds</span> component pucks — protein, grain &amp; veg (3 per meal)</li>' +
+          '<li><span class="q amt">2-Tbsp molds</span> one sauce cube per meal</li>' +
+        '</ul><p style="margin-top:8px">Freeze each component as its own 1-cup puck; three pucks + a sauce cube make one ~3-cup meal. Pop pucks out when solid and bag by type — the molds are throughput, not the storage limit. (Prefer to cook fresh? Each card has a <b>Cook Fresh</b> toggle for the fridge route.)</p></div>' +
+        fcard("Freeze", 'Cool pucks completely (fridge ~1 hr) <b>before</b> the freezer so they don’t ice-crystal. Fill warm-not-hot to the line, press out air, pop out when solid, then bag and label <b>component + date</b>. Keep up to <span class="big">3 months</span>; oldest first.') +
+        fcard("Reheat", 'Reheat the pucks together <span class="big">6–9 min</span> from frozen — microwave stirring halfway, or a covered pan. Then add the sauce and fresh toppings.') +
         fcard("Add fresh, not frozen", 'Avocado, cheese, herbs, pickles, greens & citrus go on <b>after</b> reheating — they keep the bowl bright and stop the frozen portion going soggy.') +
       '</div>' +
       '<div class="saucecols">' +
@@ -439,7 +435,7 @@ ${islands.join("\n")}
 (function () {
   "use strict";
   var MEAL = null;
-  var state = { view: "meals", themeId: null, vid: null };
+  var state = { view: "meals", themeId: null, vid: null, mode: "prep" };
 ${fns}
 ${hubJs}
 })();

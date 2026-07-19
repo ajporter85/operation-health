@@ -84,6 +84,39 @@
   .tab.active .tname { color: var(--chipotle-deep); }
   .tab:focus-visible { outline: 3px solid color-mix(in srgb, var(--chipotle) 45%, transparent); outline-offset: 2px; }
 
+  /* MODE TOGGLE */
+  .modebar { margin-top: 22px; display: grid; gap: 11px; }
+  .modeseg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--surface-2); border: 1.5px solid var(--line-strong); border-radius: 11px; padding: 4px; max-width: 640px; }
+  .modebtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 12.5px; color: var(--ink-2); background: none; border: 0; border-radius: 8px; padding: 9px 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; line-height: 1.15; transition: background .14s ease, color .14s ease; }
+  .modebtn .mi { font-size: 15px; flex: none; }
+  .modebtn:hover { color: var(--ink); }
+  .modebtn.active { background: var(--chipotle); color: #fff; box-shadow: var(--shadow); }
+  .modebtn:focus-visible { outline: 3px solid color-mix(in srgb, var(--chipotle) 45%, transparent); outline-offset: 2px; }
+  .modedesc { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); line-height: 1.55; max-width: 70ch; }
+  .modedesc b { color: var(--ink); }
+  .mealstrip { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 8px; }
+  .mealstrip .ms-lead { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 12.5px; color: var(--ink-3); }
+  .ms-puck { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .03em; font-size: 12px; color: var(--chipotle-deep); background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: 8px; padding: 6px 11px; }
+  .ms-puck.sauce { border-style: dashed; }
+  @media (prefers-color-scheme: dark){ .ms-puck { color: var(--chipotle); } }
+  :root[data-theme="dark"] .ms-puck { color: var(--chipotle); }
+  .ms-plus { font-family: var(--font-mono); color: var(--ink-3); font-size: 13px; }
+  .ms-cap { flex-basis: 100%; font-family: var(--font-ui); font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+
+  /* PUCK BREAKDOWN (nutrition · freezer mode) */
+  .pucktbl { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: var(--font-ui); }
+  .pucktbl caption { text-align: left; font-family: var(--font-ui); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #E7B34E; margin-bottom: 9px; }
+  .pucktbl th, .pucktbl td { padding: 8px 6px; border-bottom: 1px solid rgba(245,236,221,.14); text-align: right; font-variant-numeric: tabular-nums; font-size: 14px; }
+  .pucktbl thead th { font-family: var(--font-display); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--panel-ink-2); font-weight: 700; }
+  .pucktbl th:first-child, .pucktbl td:first-child { text-align: left; }
+  .pucktbl td:first-child { color: var(--panel-ink); font-weight: 600; }
+  .pucktbl td .pk { font-family: var(--font-ui); font-size: 11.5px; letter-spacing: .02em; text-transform: none; color: var(--panel-ink-2); display: block; font-weight: 400; margin-top: 1px; }
+  .pucktbl td.mono { font-family: var(--font-mono); color: var(--panel-ink); }
+  .pucktbl thead th.mp { color: var(--macro-protein); } .pucktbl thead th.mc { color: var(--macro-carb); }
+  .pucktbl thead th.mf { color: var(--macro-fiber); } .pucktbl thead th.mx { color: var(--macro-fat); }
+  .pucktbl .ptot td { font-weight: 800; border-top: 2px solid rgba(245,236,221,.32); border-bottom: 0; color: var(--panel-ink); padding-top: 11px; }
+  .pucktbl .ptot td .pk { color: var(--panel-ink-2); font-weight: 400; }
+
   /* DETAILS SECTIONS */
   details.sec { margin-top: 22px; border-top: 2px solid var(--line-strong); }
   details.sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 16px 2px 4px; -webkit-user-select: none; user-select: none; }
@@ -109,6 +142,7 @@
   .ing li:last-child { border-bottom: 0; padding-bottom: 0; }
   .ing .q { color: var(--ink-2); font-size: 14px; white-space: nowrap; }
   .picked { background: var(--surface); border-color: var(--line); }
+  .buylabel { margin: 14px 0 9px; padding-top: 12px; border-top: 1px dashed var(--line-strong); font-family: var(--font-ui); font-size: 11.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--chipotle); }
   .picked-protein { display: grid; gap: 4px; }
   .picked-protein .pname { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; color: var(--ink); line-height: 1.1; }
   .picked-protein .pserve { font-family: var(--font-mono); font-size: 14px; color: var(--ink-2); }
@@ -239,33 +273,25 @@
     <div class="tabs" id="var-tabs" role="tablist" aria-label="Meal variations"></div>
   </section>
 
+  <div class="modebar" id="modebar"></div>
+
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Build Your Bowl</h2><span class="rule"></span><span class="subnote">Assemble 1 → 4</span></summary>
-    <div class="secbody"><div class="build" id="body-build"></div></div>
+    <summary><span class="caret">›</span><h2 id="h-buildshop">Build &amp; Shop</h2><span class="rule"></span><span class="subnote" id="sub-buildshop">Per meal · buy for 4</span></summary>
+    <div class="secbody"><div class="build" id="body-buildshop"></div></div>
   </details>
 
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Prep Workflow</h2><span class="rule"></span><span class="subnote">For 4 portions</span></summary>
+    <summary><span class="caret">›</span><h2>Prep Workflow</h2><span class="rule"></span><span class="subnote" id="sub-prep">For 4 meals</span></summary>
     <div class="secbody"><div class="flow" id="body-prep"></div></div>
   </details>
 
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Souper Cube Fill &amp; Freeze</h2><span class="rule"></span><span class="subnote">2-cup ×4</span></summary>
-    <div class="secbody"><div class="band" id="body-cube"></div></div>
-  </details>
-
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Nutrition</h2><span class="rule"></span><span class="subnote">Per 2-cup bowl · estimated</span></summary>
+    <summary><span class="caret">›</span><h2>Nutrition</h2><span class="rule"></span><span class="subnote" id="sub-nutri">Per 3-cup meal · estimated</span></summary>
     <div class="secbody"><div id="body-nutri"></div></div>
   </details>
 
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Shopping List</h2><span class="rule"></span><span class="subnote">4 portions</span></summary>
-    <div class="secbody"><div class="shop" id="body-shop"></div></div>
-  </details>
-
-  <details class="sec" open>
-    <summary><span class="caret">›</span><h2>Make It Yours</h2><span class="rule"></span><span class="subnote">Batch · subs · boost · freeze</span></summary>
+  <details class="sec" open id="sec-swaps">
+    <summary><span class="caret">›</span><h2>Swaps &amp; Boosts</h2><span class="rule"></span><span class="subnote">Make it yours</span></summary>
     <div class="secbody"><div id="body-notes"></div></div>
   </details>
 
@@ -454,7 +480,7 @@
         },
         {
           "item": "Limes",
-          "amt": "3 · sauce + toppings"
+          "amt": "3 · sauce + fresh topping"
         }
       ],
       "pantry": [
@@ -1134,7 +1160,7 @@
         "Roast 1–2 trays of vegetables + the chickpeas at 425°F",
         "Cook your protein (batch two if you want variety)",
         "Blend 1 sauce",
-        "Assemble the four 2-cup cubes, cool, and freeze"
+        "Assemble the four cubes, cool & freeze"
       ]
     },
     "subs": [
@@ -1173,7 +1199,7 @@
 (function () {
   "use strict";
   var MEAL = JSON.parse(document.getElementById("meal-data").textContent);
-  var state = { vid: (MEAL.variations.find(function (v) { return v.featured; }) || MEAL.variations[0]).id };
+  var state = { vid: (MEAL.variations.find(function (v) { return v.featured; }) || MEAL.variations[0]).id, mode: "prep" };
 
   function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
   function activeVar() { return MEAL.variations.find(function (v) { return v.id === state.vid; }); }
@@ -1181,6 +1207,55 @@
   function grainOf(v) { return (v.overrides && v.overrides.grain) ? v.overrides.grain : MEAL.grain; }
   function sauceOf(v) { return MEAL.sauces[v.sauceId || MEAL.defaults.sauceId]; }
   function kindLabel(k) { return k === "remix-plant" ? "Plant" : (k === "remix" ? "Remix" : ""); }
+
+  // Split the base list into its two pucks: the grain (always the first base
+  // item) and everything else (the veg & beans puck).
+  function splitBase(v) {
+    var base = baseOf(v);
+    return { grain: base.slice(0, 1), veg: base.slice(1) };
+  }
+
+  var MODES = {
+    prep: {
+      label: "Cook &amp; Freeze", icon: "🧊",
+      desc: "The batch session that stocks your freezer. Cook every component, then portion into <b>1-cup pucks</b> — protein, grain and veg &amp; beans each on their own — cool, and freeze. Later you just grab and reheat.",
+      prepSub: "Cook → freeze as pucks", cap: "three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
+    },
+    reheat: {
+      label: "Reheat from Freezer", icon: "🍲",
+      desc: "Pucks already made? Grab <b>1 protein + 1 grain + 1 veg &amp; beans puck + a sauce cube</b>, reheat, and top. No cooking — a ~3-cup meal in minutes, and you can mix &amp; match pucks between meals.",
+      prepSub: "Grab pucks → reheat", cap: "grab three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
+    },
+    fresh: {
+      label: "Cook Fresh", icon: "🍽️",
+      desc: "Cook the whole recipe as one <b>~4-serving batch</b> to eat now or keep in the fridge (<b>~4 days</b>) — no molds, no freezing.",
+      prepSub: "Cook → serve or fridge", cap: "cooked together into one ~3-cup bowl", puckTable: false, nutriSub: "Per 3-cup serving · estimated"
+    }
+  };
+  function curMode() { return MODES[state.mode] || MODES.prep; }
+
+  function renderMode() {
+    var mo = curMode();
+    var seg = Object.keys(MODES).map(function (k) {
+      var mm = MODES[k];
+      return '<button class="modebtn' + (k === state.mode ? " active" : "") + '" type="button" data-mode="' + k + '" aria-pressed="' + (k === state.mode) + '">' +
+        '<span class="mi">' + mm.icon + '</span><span>' + mm.label + "</span></button>";
+    }).join("");
+    var plus = '<span class="ms-plus">+</span>';
+    var strip =
+      '<div class="mealstrip"><span class="ms-lead">One meal =</span>' +
+      '<span class="ms-puck">Protein</span>' + plus +
+      '<span class="ms-puck">Grain</span>' + plus +
+      '<span class="ms-puck">Veg &amp; beans</span>' + plus +
+      '<span class="ms-puck sauce">Sauce</span>' +
+      '<span class="ms-cap">' + esc(mo.cap) + "</span></div>";
+    document.getElementById("modebar").innerHTML =
+      '<div class="modeseg" role="group" aria-label="Prep mode">' + seg + "</div>" +
+      '<p class="modedesc">' + mo.desc + "</p>" + strip;
+    Array.prototype.forEach.call(document.querySelectorAll(".modebtn"), function (btn) {
+      btn.addEventListener("click", function () { state.mode = btn.getAttribute("data-mode"); update(); });
+    });
+  }
 
   function renderTabs() {
     var el = document.getElementById("var-tabs");
@@ -1198,35 +1273,79 @@
     });
   }
 
-  function renderBuild() {
-    var v = activeVar(), sauce = sauceOf(v);
-    var baseLis = baseOf(v).map(function (b) {
-      return '<li>' + esc(b.item) + ' <span class="q amt">' + esc(b.amt) + "</span></li>";
-    }).join("");
-    var sauceLis = sauce.items.map(function (s) {
-      return '<li>' + esc(s.item) + ' <span class="q amt">' + esc(s.amt) + "</span></li>";
-    }).join("");
-    var freshLis = MEAL.defaults.fresh.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("");
+  function buyLi(x) {
+    return '<li><span>' + esc(x.item) + (x.amt ? ' <span class="q amt">' + esc(x.amt) + "</span>" : "") + "</span></li>";
+  }
 
-    document.getElementById("body-build").innerHTML =
-      '<div class="card">' +
-        '<div class="comp-title"><span class="num g">1</span> Base <span class="sub">Plant-forward</span></div>' +
-        '<ul class="ing">' + baseLis + "</ul>" +
-        '<div class="mini">Plant-forward base brings ' + esc(MEAL.baseContribution) + ".</div></div>" +
+  function renderBuildShop() {
+    var v = activeVar(), sauce = sauceOf(v), sb = splitBase(v);
+    var shopMode = state.mode !== "reheat";
+    var d = MEAL.defaults.shopping, shop = v.shopping || {};
+
+    // classify the buy-for-4 items into the puck buckets (nothing is dropped —
+    // veg is the catch-all; sauce ingredients & seasonings have their own homes)
+    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [] };
+    (sauce.shop || []).forEach(function (x) { buckets.sauce.push(x); });
+    if (shop.protein) buckets.protein.push(shop.protein);
+    var grainKw = (sb.grain[0] ? sb.grain[0].item : (MEAL.grain || "")).toLowerCase().replace(/\(.*?\)/g, "").trim().split(/\s+/).pop();
+    var classify = function (x) {
+      if (x.grain) return "grain";
+      if (/fresh topping/i.test(x.amt || "")) return "fresh";
+      if (grainKw && (x.item || "").toLowerCase().indexOf(grainKw) >= 0) return "grain";
+      return "veg";
+    };
+    var pantry = d.pantry.map(function (p) {
+      if (p.grain && shop.pantrySwap && new RegExp(shop.pantrySwap.from, "i").test(p.item)) {
+        return { item: shop.pantrySwap.to.item, amt: shop.pantrySwap.to.amt, grain: true };
+      }
+      return p;
+    });
+    d.produce.forEach(function (x) { buckets[classify(x)].push(x); });
+    pantry.forEach(function (x) { buckets[classify(x)].push(x); });
+    (shop.produceAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
+    (shop.pantryAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
+
+    var mealLis = function (arr) { return arr.map(function (b) {
+      return '<li>' + esc(b.item) + ' <span class="q amt">' + esc(b.amt) + "</span></li>";
+    }).join(""); };
+    var buyBlock = function (arr) {
+      return (shopMode && arr.length) ? '<div class="buylabel">Buy for 4</div><ul class="checks">' + arr.map(buyLi).join("") + "</ul>" : "";
+    };
+
+    var cards =
       '<div class="card picked">' +
-        '<div class="comp-title"><span class="num">2</span> Protein <span class="sub">Your build</span></div>' +
+        '<div class="comp-title"><span class="num">1</span> Protein puck <span class="sub">Your build</span></div>' +
         '<div class="picked-protein">' +
           '<span class="pname">' + esc(v.protein.name) + "</span>" +
-          '<span class="pserve">' + esc(v.protein.serving) + " · " + v.macros.protein + "g protein in the bowl</span>" +
-          '<span class="pmethod">' + esc(v.protein.method) + "</span>" +
-        "</div></div>" +
+          '<span class="pserve">' + esc(v.protein.serving) + " · " + v.macros.protein + "g protein</span>" +
+        "</div>" + buyBlock(buckets.protein) + "</div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">3</span> Sauce <span class="sub">Store separately</span></div>' +
+        '<div class="comp-title"><span class="num g">2</span> Grain puck <span class="sub">1-cup base</span></div>' +
+        '<ul class="ing">' + mealLis(sb.grain) + "</ul>" + buyBlock(buckets.grain) + "</div>" +
+      '<div class="card">' +
+        '<div class="comp-title"><span class="num g">3</span> Veg &amp; beans puck <span class="sub">1-cup base</span></div>' +
+        '<ul class="ing">' + mealLis(sb.veg) + "</ul>" +
+        '<div class="mini">The plant base brings ' + esc(MEAL.baseContribution) + ".</div>" + buyBlock(buckets.veg) + "</div>" +
+      '<div class="card">' +
+        '<div class="comp-title"><span class="num g">4</span> Sauce <span class="sub">2-Tbsp cube</span></div>' +
         '<div style="font-family:var(--font-display);font-weight:800;text-transform:uppercase;font-size:14px;color:var(--ink);margin-bottom:9px">' + esc(sauce.name) + "</div>" +
-        '<ul class="ing">' + sauceLis + "</ul></div>" +
+        '<ul class="ing">' + mealLis(sauce.items) + "</ul>" + buyBlock(buckets.sauce) + "</div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">4</span> Fresh <span class="sub">After reheating</span></div>' +
-        '<ul class="ing">' + freshLis + "</ul></div>" +
+        '<div class="comp-title"><span class="num g">5</span> Fresh <span class="sub">On top at serving</span></div>' +
+        '<ul class="ing">' + MEAL.defaults.fresh.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
+        buyBlock(buckets.fresh) + "</div>";
+
+    var seasoningCard = shopMode ?
+      '<div class="card">' +
+        '<div class="comp-title"><span class="num g">6</span> Seasoning &amp; staples <span class="sub">Buy for 4</span></div>' +
+        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") + "</ul></div>" : "";
+
+    var note = shopMode ?
+      '<div class="shop-note"><b>Exact for the ' + esc(v.name) + ' build.</b> Each meal is three ~1-cup pucks + a 2-Tbsp sauce; the “buy for 4” amounts make four meals. Fresh toppings are tagged; buy ~20% extra raw protein for cooking shrink; scale linearly for more.</div>' :
+      '<div class="shop-note">These are the components in one ~3-cup meal — grab one puck of each from the freezer. Switch to <b>Cook &amp; Freeze</b> for the shopping list.</div>';
+
+    document.getElementById("body-buildshop").innerHTML =
+      cards + seasoningCard + note +
       '<div class="buildnote"><b>This build:</b> ' + esc(v.note) + "</div>";
   }
 
@@ -1234,39 +1353,78 @@
 
   function renderPrep() {
     var v = activeVar(), grain = grainOf(v), sauce = sauceOf(v);
-    var isRice = /rice/i.test(grain);
-    var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t); }); };
+    var freshShort = MEAL.defaults.fresh.filter(function (f) { return !/^optional/i.test(f); })
+      .map(function (f) { return f.replace(/\s*\(.*\)/, "").toLowerCase(); }).join(", ");
+    var steps;
 
-    var steps = MEAL.prep.map(function (st) {
-      if (st.kind === "grain") {
-        return {
-          h: "Cook the " + grain,
-          p: (isRice && st.pRice) ? st.pRice : st.p,
-          chips: mkChips(st.chips),
-          tip: (isRice && st.tipRice) ? st.tipRice : (st.tip || "")
-        };
+    if (state.mode === "reheat") {
+      var sauceLine = sauce.freezes
+        ? "pop a 2-Tbsp sauce cube on top"
+        : "add your fresh " + sauce.name.toLowerCase() + " from the fridge";
+      steps = [
+        { h: "Grab your pucks",
+          p: "From the freezer: one <b>" + esc(v.protein.name) + "</b> puck, one grain puck and one veg &amp; beans puck (~1 cup each). That trio is one ~3-cup meal — swap in a different protein or grain puck any time.",
+          chips: [chip("3 pucks + sauce", "freezes")],
+          tip: "<b>Mix &amp; match:</b> because each component froze on its own, any protein pairs with any grain and veg." },
+        { h: "Reheat together",
+          p: "Reheat the three pucks together straight from frozen — microwave 6–9 min, stirring halfway, or a covered pan over medium. Then " + sauceLine + ".",
+          chips: [chip("Microwave 6–9 min"), chip("or covered pan")],
+          tip: "<b>No thawing:</b> straight from the freezer is fine; stir halfway so it heats evenly." },
+        { h: "Finish fresh",
+          p: "Top with the fresh add-ons — " + esc(freshShort) + " — and serve.",
+          chips: [chip("Add fresh", "warn")],
+          tip: "" }
+      ];
+    } else {
+      var isRice = /rice/i.test(grain);
+      var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t); }); };
+      steps = MEAL.prep.map(function (st) {
+        if (st.kind === "grain") {
+          return {
+            h: "Cook the " + grain,
+            p: (isRice && st.pRice) ? st.pRice : st.p,
+            chips: mkChips(st.chips),
+            tip: (isRice && st.tipRice) ? st.tipRice : (st.tip || "")
+          };
+        }
+        if (st.kind === "protein") {
+          return {
+            h: "Cook &amp; season: " + esc(v.protein.name),
+            p: v.protein.method + " Target " + esc(v.protein.serving) + " per meal.",
+            chips: v.protein.appliance.map(function (a) { return chip(a); }),
+            tip: /chicken|turkey/i.test(v.protein.name) ? "<b>Safe temp:</b> poultry to 165°F internal."
+               : (/steak|brisket|pork|beef/i.test(v.protein.name) ? "<b>Rest it:</b> 5 min before slicing keeps the juices in." : "")
+          };
+        }
+        if (st.kind === "sauce") {
+          return {
+            h: "Make the " + sauce.name.toLowerCase(),
+            p: sauce.recipe,
+            chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
+            tip: sauce.freezes
+              ? "<b>Freeze it separately:</b> portion into your 2-Tbsp molds and pop one onto a meal at serving so it isn't absorbed."
+              : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
+          };
+        }
+        return { h: st.h, p: st.p, chips: mkChips(st.chips), tip: st.tip || "" };
+      });
+
+      if (state.mode === "prep") {
+        steps.push({
+          h: "Portion &amp; freeze as pucks",
+          p: "Pack each component into your 1-cup molds — one protein, one grain and one veg &amp; beans puck per meal (a batch makes 4 of each). Cool completely, freeze solid, then pop out and bag by type. Freeze the sauce in 2-Tbsp cubes.",
+          chips: [chip("1-cup molds", "freezes"), chip("Pop out & bag", "freezes")],
+          tip: "<b>Molds are throughput, not the limit:</b> once pucks are solid, bag them and the molds are free again. Cool before freezing so they don't ice-crystal; label by date and use oldest first (keeps ~3 mo). Then just switch to Reheat from Freezer."
+        });
+      } else {
+        steps.push({
+          h: "Combine &amp; portion for the fridge",
+          p: "Fold the protein, grain, veg &amp; beans together (stir the sauce through, or keep it aside to add fresh). Divide into 4 containers, ~3 cups each. Cool, then refrigerate.",
+          chips: [chip("4 containers"), chip("Fridge ~4 days", "warn")],
+          tip: "<b>Eating later than 4 days?</b> Freeze some portions instead — switch to Cook &amp; Freeze above for the puck plan."
+        });
       }
-      if (st.kind === "protein") {
-        return {
-          h: "Cook &amp; season: " + esc(v.protein.name),
-          p: v.protein.method + " Target " + esc(v.protein.serving) + " per bowl.",
-          chips: v.protein.appliance.map(function (a) { return chip(a); }),
-          tip: /chicken|turkey/i.test(v.protein.name) ? "<b>Safe temp:</b> poultry to 165°F internal."
-             : (/steak|brisket|pork|beef/i.test(v.protein.name) ? "<b>Rest it:</b> 5 min before slicing keeps the juices in." : "")
-        };
-      }
-      if (st.kind === "sauce") {
-        return {
-          h: "Make the " + sauce.name.toLowerCase(),
-          p: sauce.recipe,
-          chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
-          tip: sauce.freezes
-            ? "<b>Freeze it separately:</b> portion into your 2-Tbsp molds and pop one onto a bowl at serving. Just keep it off the <em>meal</em> cube so it isn't absorbed."
-            : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
-        };
-      }
-      return { h: st.h, p: st.p, chips: mkChips(st.chips), tip: st.tip || "" };
-    });
+    }
 
     document.getElementById("body-prep").innerHTML = steps.map(function (s, i) {
       return '<div class="step"><span class="idx">' + (i + 1) + "</span><div>" +
@@ -1276,46 +1434,6 @@
     }).join("");
   }
 
-  function renderCube() {
-    var v = activeVar(), m = MEAL.molds, sauce = sauceOf(v);
-    var pserve = v.protein.serving.replace(/\s*(cooked|tofu|tempeh)$/, "");
-    var freshShort = MEAL.defaults.fresh.filter(function (f) { return !/^optional/i.test(f); })
-      .map(function (f) { return f.replace(/\s*\(.*\)/, "").toLowerCase(); }).join(", ");
-    var fill = baseOf(v).filter(function (b) { return !/pepitas/i.test(b.item); }).map(function (b) {
-      return '<li><span class="q amt">' + esc(b.amt) + "</span> " + esc(b.item) + "</li>";
-    }).join("") + '<li><span class="q amt">' + esc(pserve) + "</span> " + esc(v.protein.name) + "</li>";
-
-    var cubes = [1, 2, 3, 4].map(function (n) {
-      return '<div class="cube"><span><b>Cube ' + n + "</b>base · veg<br>+ protein</span></div>";
-    }).join("");
-
-    var moldRow = function (label, use) {
-      return '<li><span class="q amt">' + esc(label) + "</span> " + esc(use) + "</li>";
-    };
-
-    var sauceCard = sauce.freezes
-      ? "Freeze this sauce one serving per 2-Tbsp mold — keep it off the meal cube so it isn't absorbed, and pop one on at serving."
-      : "Make this sauce fresh — it splits or browns when frozen. Fridge ~1 week; add it at serving.";
-
-    document.getElementById("body-cube").innerHTML =
-      '<div class="card">' +
-        '<div class="comp-title" style="margin-bottom:8px"><span class="num g">▦</span> Assembled meal · ~3 cups</div>' +
-        '<div class="cubes">' + cubes + "</div>" +
-        '<ul class="fill-list">' + fill + "</ul>" +
-        '<div class="keep-out"><b>Leave out</b> the fresh toppings (' + esc(freshShort) + ') &amp; the ' + esc(sauce.name.toLowerCase()) + " — those go on after reheating.</div>" +
-        '<div class="mini">Each meal is ~3 cups — 4 per batch. Keep in the fridge ~4 days, or freeze. Fill warm-not-hot and press out air.</div></div>' +
-      '<div class="freeze-strip">' +
-        '<div class="freeze-card"><h3>Your Souper Cube molds</h3><ul class="fill-list" style="margin-top:6px">' +
-          moldRow(m.assembled.count + "× 2-cup", m.assembled.use) +
-          moldRow(m.component.count + "× 1-cup", m.component.use) +
-          moldRow(m.sauce.count + "× 2-Tbsp", m.sauce.use) +
-        "</ul></div>" +
-        '<div class="freeze-card"><h3>Freeze &amp; label</h3><p>Cool cubes completely (fridge ~1 hr) <b>before</b> the freezer — warm cubes ice-crystal and freezer-burn faster. Pop out when solid, bag, and label <b>protein + date</b>. Keep up to <span class="big">3 mo</span>; oldest first.</p></div>' +
-        '<div class="freeze-card"><h3>Component swaps · 1-cup molds</h3><p>Freeze spare protein or roasted veg on their own in your 1-cup molds. Drop one into any bowl to change the protein or add volume — mix &amp; match without re-cooking.</p></div>' +
-        '<div class="freeze-card"><h3>Sauce &amp; reheat · 2-Tbsp molds</h3><p>' + sauceCard + " Reheat a meal cube <span class=\"big\">4–6 min</span> from frozen, stirring halfway; then add your fresh toppings.</p></div>" +
-      "</div>";
-  }
-
   function renderNutrition() {
     var v = activeVar(), m = v.macros;
     var pk = m.protein * 4, ck = m.carbs * 4, fk = m.fat * 9, tot = pk + ck + fk;
@@ -1323,9 +1441,29 @@
     var stat = function (val, unit, label, cls) {
       return '<div class="stat"><span class="v ' + (cls || "") + '">' + val + '</span><span class="u">' + unit + '</span><span class="stat-label">' + label + "</span></div>";
     };
+
+    var puckTbl = "";
+    if (state.mode !== "fresh" && v.pucks) {
+      var order = [["protein", "Protein puck"], ["grain", "Grain puck"], ["veg", "Veg & beans puck"], ["sauce", "Sauce cube"]];
+      var prows = order.map(function (o) {
+        var p = v.pucks[o[0]]; if (!p) return "";
+        var mm = p.macros;
+        return '<tr><td>' + esc(o[1]) + '<span class="pk">' + esc(p.label) + "</span></td>" +
+          '<td class="mono">' + mm.kcal + '</td><td class="mono">' + mm.protein + '</td><td class="mono">' + mm.carbs +
+          '</td><td class="mono">' + mm.fiber + '</td><td class="mono">' + mm.fat + "</td></tr>";
+      }).join("");
+      puckTbl =
+        '<table class="pucktbl"><caption>By puck · mix &amp; match</caption>' +
+        '<thead><tr><th>Component</th><th>kcal</th><th class="mp">P</th><th class="mc">C</th><th class="mf">fiber</th><th class="mx">fat</th></tr></thead>' +
+        "<tbody>" + prows +
+        '<tr class="ptot"><td>Total · ~3-cup meal</td><td class="mono">' + m.kcal + '</td><td class="mono">' + m.protein +
+        '</td><td class="mono">' + m.carbs + '</td><td class="mono">' + m.fiber + '</td><td class="mono">' + m.fat + "</td></tr>" +
+        "</tbody></table>";
+    }
+
     document.getElementById("body-nutri").innerHTML =
       '<div class="nutri">' +
-        '<span class="nlabel">Estimated macros — ' + esc(v.name) + " bowl</span>" +
+        '<span class="nlabel">Estimated macros — ' + esc(v.name) + " · ~3-cup meal</span>" +
         '<div class="stat-row">' +
           stat(m.kcal, " kcal", "Calories") + stat(m.protein, "g", "Protein", "prot") +
           stat(m.carbs, "g", "Carbs", "carb") + stat(m.fiber, "g", "Fiber", "fib") + stat(m.fat, "g", "Fat", "fat") +
@@ -1341,70 +1479,35 @@
           '<span><i style="background:var(--macro-carb)"></i>Carbs <b>' + m.carbs + "g · " + cp + '%</b></span>' +
           '<span><i style="background:var(--macro-fat)"></i>Fat <b>' + m.fat + "g · " + fp + '%</b></span>' +
         "</div>" +
-        '<p class="disclaim">Per 2-cup bowl, with 2 Tbsp sauce. Fiber is counted within carbs. Estimates from standard per-ingredient values (~±10–15%) — actual macros vary with exact weights. V2: swap in a food-database lookup for label-accurate numbers.</p>' +
+        puckTbl +
+        '<p class="disclaim">Per ~3-cup meal (3 one-cup pucks + 2 Tbsp sauce). Fiber is counted within carbs. Estimates from standard per-ingredient values (~±10–15%) — actual macros vary with exact weights. V2: swap in a food-database lookup for label-accurate numbers.</p>' +
       "</div>";
-  }
-
-  function renderShopping() {
-    var v = activeVar(), shop = v.shopping || {}, d = MEAL.defaults.shopping;
-    var sShop = sauceOf(v).shop || [];
-
-    var produce = d.produce.slice();
-    sShop.forEach(function (x) { if (x.group === "produce") produce.push(x); });
-    (shop.produceAdd || []).forEach(function (x) { produce.push(x); });
-
-    var pantry = d.pantry.map(function (p) {
-      if (p.grain && shop.pantrySwap && new RegExp(shop.pantrySwap.from, "i").test(p.item)) {
-        return { item: shop.pantrySwap.to.item, amt: shop.pantrySwap.to.amt };
-      }
-      return p;
-    });
-    sShop.forEach(function (x) { if (x.group === "pantry") pantry.push(x); });
-    (shop.pantryAdd || []).forEach(function (x) { pantry.push(x); });
-
-    var li = function (x, hl) {
-      return '<li' + (hl ? ' class="hl"' : "") + "><span>" + esc(x.item) +
-        (x.amt ? ' <span class="q amt">' + esc(x.amt) + "</span>" : "") + "</span></li>";
-    };
-    var proteinLi = shop.protein ? li(shop.protein, true) : "";
-
-    document.getElementById("body-shop").innerHTML =
-      '<div class="shop-col"><h3>Produce</h3><ul class="checks">' +
-        produce.map(function (x) { return li(x, false); }).join("") + "</ul></div>" +
-      '<div class="shop-col"><h3>Protein &amp; pantry</h3><ul class="checks">' +
-        proteinLi + pantry.map(function (x) { return li(x, false); }).join("") + "</ul></div>" +
-      '<div class="shop-col"><h3>Seasoning</h3><ul class="checks">' +
-        d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") + "</ul></div>" +
-      '<div class="shop-note"><b>Exact for the ' + esc(v.name) + " build · 4 portions.</b> Every line maps to a component above — switch builds and this updates (the sauce ingredients change with it). Fresh toppings are tagged; buy ~20% extra raw protein for cooking shrink; scale linearly for more.</div>";
   }
 
   function renderNotes() {
     var n = MEAL.notes;
     var ul = function (arr) { return "<ul>" + arr.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; };
-    var batch =
-      '<div class="batch"><h3>Weekly batch plan</h3><p>' + esc(n.batch.intro) + "</p><ol>" +
-      n.batch.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol></div>";
     document.getElementById("body-notes").innerHTML =
-      batch +
-      '<div class="notes">' +
+      '<div class="notes" style="grid-template-columns:repeat(2,1fr)">' +
         '<div class="note"><h3>Substitutions</h3>' + ul(n.subs) + "</div>" +
         '<div class="note"><h3>Boost protein</h3>' + ul(n.boost) + "</div>" +
-        '<div class="note fresh"><h3>Freezes well vs. add fresh</h3><ul>' +
-          "<li><b>Freezes well:</b> " + n.freezeWell.join(", ") + "</li>" +
-          "<li><b>Add fresh:</b> " + n.addFresh.join(", ") + "</li>" +
-          "<li><b>Store separately:</b> the sauce</li>" +
-          "<li>Chickpeas soften in the freezer — that's normal</li>" +
-        "</ul></div>" +
       "</div>";
   }
 
   function update() {
+    renderMode();
     renderTabs();
-    renderBuild();
+    renderBuildShop();
     renderPrep();
-    renderCube();
     renderNutrition();
-    renderShopping();
+    var mo = curMode(), reheat = state.mode === "reheat";
+    var setTxt = function (id, t) { var el = document.getElementById(id); if (el) el.textContent = t; };
+    setTxt("sub-prep", mo.prepSub);
+    setTxt("sub-nutri", mo.nutriSub);
+    setTxt("h-buildshop", reheat ? "Build Your Meal" : "Build & Shop");
+    setTxt("sub-buildshop", reheat ? "What’s in each meal" : "Per meal · buy for 4");
+    var sw = document.getElementById("sec-swaps");
+    if (sw) { if (reheat) sw.setAttribute("hidden", ""); else sw.removeAttribute("hidden"); }
   }
 
   renderNotes();
