@@ -285,7 +285,7 @@
   @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
 
   /* BREAKFAST & SNACKS — day table */
-  .daytable { width: 100%; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
+  .daytable { width: 100%; min-width: 540px; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
   .daytable th, .daytable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
   .daytable th:first-child, .daytable td:first-child { text-align: left; }
   .daytable thead th { font-family: var(--font-display); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
@@ -6362,19 +6362,44 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
   // ---------- Breakfast & Snacks ----------
   function renderFuel() {
     function mc(v, cls) { return '<span class="mc ' + cls + '">' + v + "</span>"; }
-    function row(label, kcal, p, fib, cls) {
-      return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td>" + label + "</td><td>" + kcal +
-        "</td><td>" + mc(p, "prot") + "</td><td>" + mc(fib, "fib") + "</td></tr>";
+    // The cube-meal row is the LIVE average of every build in the library, so the
+    // day plan can't drift from the actual recipes.
+    var all = [];
+    THEMES.forEach(function (t) { t.data.variations.forEach(function (v) { all.push(v.macros); }); });
+    var K = ["kcal", "carbs", "protein", "fat", "fiber"];
+    var agg = function (fn, k) { return fn(all.map(function (m) { return m[k]; })); };
+    var avg = function (k) { return Math.round(agg(function (xs) { return xs.reduce(function (a, b) { return a + b; }, 0) / xs.length; }, k)); };
+    var lo = function (k) { return agg(function (xs) { return Math.min.apply(null, xs); }, k); };
+    var hi = function (k) { return agg(function (xs) { return Math.max.apply(null, xs); }, k); };
+    var cube = {}; K.forEach(function (k) { cube[k] = avg(k); });
+
+    var BREAKFAST = { kcal: 450, carbs: 35, protein: 48, fat: 12, fiber: 10 };
+    var SNACKS    = { kcal: 600, carbs: 50, protein: 30, fat: 28, fiber: 10 }; // two snacks
+    var PSYLLIUM  = { kcal: 35,  carbs: 9,  protein: 0,  fat: 0,  fiber: 7 };
+    var total = {}; K.forEach(function (k) { total[k] = BREAKFAST[k] + cube[k] * 2 + SNACKS[k] + PSYLLIUM[k]; });
+
+    function row(label, m, cls) {
+      return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td>" + label + "</td><td>" + m.kcal + "</td><td>" +
+        mc(m.carbs, "carb") + "</td><td>" + mc(m.protein, "prot") + "</td><td>" +
+        mc(m.fat, "fat") + "</td><td>" + mc(m.fiber, "fib") + "</td></tr>";
     }
-    var table = '<table class="daytable"><thead><tr><th>Meal</th><th>kcal</th><th>protein</th><th>fiber</th></tr></thead><tbody>' +
-      row("Breakfast — light", "~450", "~48 g", "~10 g") +
-      row("Lunch — 3-cup cube", "~800", "~56 g", "~16 g") +
-      row("Dinner — 3-cup cube", "~800", "~56 g", "~16 g") +
-      row("Snack", "~300", "~15 g", "~5 g") +
-      row("Psyllium — 2 scoops, pre-lunch &amp; dinner", "~35", "—", "~7 g") +
-      row("<b>Day total</b>", "<b>~2,385</b>", "<b>~175 g</b>", "<b>~54 g</b>", "tot") +
-      row("Your target", "~2,400", "~170 g", "high", "tgt") +
-      "</tbody></table>";
+    function disp(m) {
+      return { kcal: "~" + m.kcal.toLocaleString(), carbs: "~" + m.carbs + " g", protein: "~" + m.protein + " g",
+               fat: "~" + m.fat + " g", fiber: "~" + m.fiber + " g" };
+    }
+    var table = '<div class="smatrix-wrap"><table class="daytable"><thead><tr><th>Meal</th><th>kcal</th>' +
+        '<th>carbs</th><th>protein</th><th>fat</th><th>fiber</th></tr></thead><tbody>' +
+      row("Breakfast — light", disp(BREAKFAST)) +
+      row("Lunch — cube meal", disp(cube)) +
+      row("Dinner — cube meal", disp(cube)) +
+      row("Snacks × 2", disp(SNACKS)) +
+      row("Psyllium — 2 scoops", { kcal: "~35", carbs: "~9 g", protein: "—", fat: "—", fiber: "~7 g" }) +
+      row("Day total", disp(total), "tot") +
+      row("Your target", { kcal: "2,300–2,500", carbs: "~235–285 g", protein: "~170 g", fat: "~75 g", fiber: "high" }, "tgt") +
+      "</tbody></table></div>" +
+      '<p class="smatrix-foot">The cube-meal row is the live average of all ' + all.length + ' builds (range <b>' +
+      lo("kcal") + "–" + hi("kcal") + " kcal</b>, " + lo("protein") + "–" + hi("protein") + " g protein, " +
+      lo("fat") + "–" + hi("fat") + " g fat) — pick a lighter or richer build to steer the day. <b>Carbs have no fixed target:</b> they fill whatever calories protein and fat leave, which works out to ~235–285 g.</p>";
     var breakfast = '<div class="scol"><h3>Build-your-own breakfast <span class="sub">~450 kcal · ~48g protein · covers the 30–40g morning rule</span></h3><ul class="saucelist">' +
       "<li><b>Protein shake</b> — 1 scoop (24g protein, 120 kcal) with milk or water</li>" +
       "<li><b>+ Greek yogurt</b> ¾ cup (~15g P) — or cottage cheese</li>" +
@@ -6382,7 +6407,7 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       "<li><b>+ Chia or ground flax</b> 1 Tbsp — fiber &amp; omega-3</li>" +
       '<li class="opt">Optional: a little oats or granola for more staying power</li>' +
       "</ul></div>";
-    var snacks = '<div class="scol"><h3>Snacks <span class="sub">~150–300 kcal, protein-forward — pick one or two</span></h3><ul class="saucelist">' +
+    var snacks = '<div class="scol"><h3>Snacks <span class="sub">~300 kcal each, protein-forward — the plan assumes two</span></h3><ul class="saucelist">' +
       "<li>Edamame, 1 cup — ~17g protein, high fiber</li>" +
       "<li>Cottage cheese + fruit</li>" +
       "<li>Turkey stick or jerky</li>" +
@@ -6396,7 +6421,7 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
         '<h1 style="font-size:clamp(28px,5vw,44px)">Round out <span class="lead">the day</span></h1>' +
         '<p class="tagline">Your two cube meals cover lunch and dinner. This is everything around them — a light, protein-forward breakfast, a snack or two, and your psyllium — sized to round the day out to your protein, fiber and calorie targets, and to land 30–40g of protein within 30 minutes of waking.</p></header>' +
-      '<div class="kitbox"><b>The plan:</b> two 3-cup cube meals do the heavy lifting; breakfast stays light and a snack or two tops you off.</div>' +
+      '<div class="kitbox"><b>The plan:</b> two 3-cup cube meals do the heavy lifting; a light breakfast and two protein-forward snacks top you off. Because the meals average ~' + cube.kcal + ' kcal, you generally need <b>both</b> snacks to clear the 2,300 calorie floor — the snacks are load-bearing, not optional extras.</div>' +
       table +
       '<div class="saucecols" style="margin-top:18px">' + breakfast + snacks + "</div>" +
       '<div class="kitbox" style="margin-top:16px"><b>Psyllium:</b> 1 scoop in water before lunch and before dinner (2 scoops/day) — ~7g fiber for ~35 kcal, plus fullness. &nbsp;<b>Hydration:</b> aim for 3–4 L water across the day.</div>';
