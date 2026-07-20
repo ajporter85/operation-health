@@ -68,11 +68,12 @@ standalone cards. Regenerate with `node build-hub.js` (run from this directory).
 
 ## Meals
 
-- `southwest-hybrid-bowl.html` — Meal 01, Southwest / Tex-Mex (6 builds)
+- `southwest-hybrid-bowl.html` — Meal 01, Southwest / Tex-Mex (7 builds)
 - `bbq-power-bowl.html` — Meal 02, BBQ Power Bowl (6 builds)
 - `loaded-potato-bowl.html` — Meal 03, Loaded Potato Bowl (6 builds)
 - `burger-bowl.html` — Meal 04, Burger Bowl (6 builds)
 - `italian-bowl.html` — Meal 05, Italian Bowl (6 builds)
 - `chili-bowl.html` — Meal 06, Chili Bowl (6 builds)
 
-All six meals complete (36 builds total).
+All six meals complete (37 builds total). The hub's build count is derived from the
+islands at generate time, so it stays correct as builds are added.

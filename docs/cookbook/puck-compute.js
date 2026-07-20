@@ -24,6 +24,7 @@ const P = {
   lentilBolo: M(230, 18, 36, 15, 3), // lentil + mushroom bolognese
   threeBean:  M(220, 15, 40, 15, 1), // mixed beans as the protein
   bbBurger:   M(230, 15, 32, 10, 7), // black bean burger patty
+  adoboChx:   M(250, 43, 2, 0, 8),   // Moe's-style adobo marinade (soy/vinegar/spice), breast
 };
 
 // --- GRAIN pucks (1 cup cooked) ---
@@ -32,6 +33,7 @@ const G = {
   brownrice:M(218, 5, 46, 4, 2),
   potato:   M(180, 4, 33, 4, 4),   // roasted, some oil
   pasta:    M(180, 7, 37, 5, 1),   // whole-wheat
+  seasonedrice: M(255, 5, 48, 1, 4), // Moe's-style: white rice, butter-finished, tomato + broth + warm spices
 };
 
 // --- VEG/BEAN pucks (1 cup of that meal's roasted veg + beans) ---
@@ -51,6 +53,8 @@ const V = {
   chiliWht:M(140, 8, 24, 8, 2),   // white beans + corn + peppers
   chili3:  M(220, 15, 40, 15, 1), // extra beans (three-bean second cup)
   chiliPin:M(150, 8, 27, 9, 2),   // pinto + corn + peppers
+  swMoes:  M(165, 9, 29, 9, 3),   // black beans + fire-grilled peppers & onions + roasted corn
+  burgMac: M(180, 11, 34, 9, 2),  // griddled onions + white beans (no mushrooms — Big Mac)
 };
 
 // --- SAUCE (2 Tbsp) archetypes ---
@@ -63,6 +67,8 @@ const S = {
   pesto:   M(120, 2, 2, 1, 12),
   alfredo: M(60, 5, 3, 0, 3),
   redchili:M(40, 1, 7, 1, 1),
+  queso:   M(85, 4, 2, 0, 6),   // white American cheese queso — does NOT freeze
+  bigmac:  M(65, 2, 3, 0, 5),   // yogurt+mayo, sweet relish, mustard — does NOT freeze
 };
 
 // extras
@@ -72,6 +78,7 @@ const X = {
   bacon:        M(80, 6, 0, 0, 6),
   mozz:         M(70, 6, 1, 0, 5),
   pepitas:      M(50, 2, 3, 2, 4),
+  american:     M(70, 4, 2, 0, 6),   // 1 slice American, melted onto the patty
 };
 
 // --- BUILDS: [meal, name, proteinPuck, grainPuck, vegPuck, sauce, ...extras] ---
@@ -82,6 +89,7 @@ const B = [
   ["SW","Smoky Pulled Chicken", P.chicken, G.quinoa, V.sw, S.crema],
   ["SW","Plant-Powered", P.tofu, G.quinoa, add(V.sw, X.pepitas), S.crema],
   ["SW","Cilantro-Lime Rice", P.chicken, G.brownrice, V.sw, S.crema],
+  ["SW","Moe's Adobo Chicken", P.adoboChx, G.seasonedrice, V.swMoes, S.queso],
 
   ["BBQ","BBQ Chicken", P.chicken, G.brownrice, V.bbq, S.bbq],
   ["BBQ","Smoked Turkey", P.turkeyBrst, G.brownrice, V.bbq, S.bbq],
@@ -103,6 +111,7 @@ const B = [
   ["BURG","Bacon Cheeseburger", P.beef, G.potato, V.burger, S.special, X.bacon],
   ["BURG","Black Bean Burger", P.bbBurger, G.potato, V.burgEdam, S.special],
   ["BURG","Patty Melt", P.beef, G.potato, V.burger, S.special],
+  ["BURG","Big Mac Bowl", P.beef, G.potato, V.burgMac, S.bigmac, X.american],
 
   ["ITAL","Chicken Parm", P.parmChx, G.pasta, V.ital, S.marinara, X.mozz],
   ["ITAL","Turkey Meatball", P.meatballs, G.pasta, V.ital, S.marinara],
@@ -139,7 +148,7 @@ const fs = require("fs");
 const WRITE = process.argv.includes("--write");
 
 const MEALS = {
-  "southwest-hybrid-bowl.html": { grainRe: /quinoa/i, bc: "~17 g protein & ~14 g fiber before you add your protein" },
+  "southwest-hybrid-bowl.html": { grainRe: /quinoa|rice/i, bc: "~17 g protein & ~14 g fiber before you add your protein" },
   "bbq-power-bowl.html":        { grainRe: /brown rice/i, bc: "~9 g protein & ~10 g fiber before you add your protein" },
   "loaded-potato-bowl.html":    { grainRe: /roasted potato/i, bc: "~8 g protein & ~9 g fiber before you add your protein" },
   "burger-bowl.html":           { grainRe: /roasted potato/i, bc: "~12 g protein & ~12 g fiber before you add your protein" },

@@ -554,6 +554,56 @@
           "group": "pantry"
         }
       ]
+    },
+    "big-mac-sauce": {
+      "name": "Big Mac-style special sauce",
+      "tool": "Whisk · 5 min",
+      "freezes": false,
+      "recipe": "Whisk 1/4 cup Greek yogurt with 2 Tbsp mayo, 2 Tbsp sweet pickle relish, 1 Tbsp yellow mustard, 1 tsp white vinegar, and 1/2 tsp each onion powder, garlic powder and paprika. Chill 30 min so it thickens and the flavors marry. Note the two giveaways vs. a normal burger sauce: sweet relish, not dill, and no ketchup.",
+      "items": [
+        {
+          "item": "Greek yogurt",
+          "amt": "1/4 cup"
+        },
+        {
+          "item": "Mayonnaise",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Sweet pickle relish",
+          "amt": "2 Tbsp"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "1 Tbsp"
+        },
+        {
+          "item": "Onion + garlic powder, paprika",
+          "amt": "1/2 tsp each"
+        }
+      ],
+      "shop": [
+        {
+          "item": "Sweet pickle relish",
+          "amt": "small jar",
+          "group": "pantry"
+        },
+        {
+          "item": "Mayonnaise",
+          "amt": "small jar",
+          "group": "pantry"
+        },
+        {
+          "item": "Yellow mustard",
+          "amt": "small bottle",
+          "group": "pantry"
+        },
+        {
+          "item": "Greek yogurt",
+          "amt": "small tub",
+          "group": "pantry"
+        }
+      ]
     }
   },
   "variations": [
@@ -1143,6 +1193,106 @@
           }
         }
       }
+    },
+    {
+      "id": "big-mac-bowl",
+      "name": "Big Mac Bowl",
+      "kind": "remix",
+      "sauceId": "big-mac-sauce",
+      "protein": {
+        "name": "Smashed beef patties + American cheese",
+        "serving": "5 oz / ~140 g cooked",
+        "method": "Press 93/7 beef into thin smashed patties, season with just salt and pepper (that's all McDonald's uses), and griddle hard for a deep crust. Lay American cheese over the patties in the last 30 seconds to melt, then chop into bite-size pieces so every forkful gets crust, cheese and sauce.",
+        "appliance": [
+          "Cast-iron / griddle · 6–8 min",
+          "Air fryer · 400°F · 8 min"
+        ]
+      },
+      "overrides": {
+        "base": [
+          {
+            "item": "Roasted potatoes",
+            "amt": "1 cup"
+          },
+          {
+            "item": "Griddled onions",
+            "amt": "1/3 cup"
+          },
+          {
+            "item": "White beans",
+            "amt": "2/3 cup"
+          }
+        ]
+      },
+      "shopping": {
+        "protein": {
+          "item": "Lean ground beef 93/7",
+          "amt": "~20 oz"
+        },
+        "produceAdd": [],
+        "pantryAdd": [
+          {
+            "item": "American cheese",
+            "amt": "4 slices",
+            "group": "protein"
+          },
+          {
+            "item": "White vinegar",
+            "amt": "small bottle",
+            "group": "staple"
+          }
+        ]
+      },
+      "note": "A Big Mac, rebuilt as a bowl: smashed beef with melted American cheese, crispy potatoes standing in for the fries, griddled onions and white beans, under a proper special sauce. The mushrooms sit this one out. Two giveaways make the sauce taste right — sweet relish (not dill) and no ketchup — and like all mayo/yogurt sauces it won't freeze, so make it fresh. Pile shredded lettuce on at serving; that crunch is half the Big Mac. Pickles are optional: the sweet relish in the sauce already carries the tang. Optional and very on-theme: toast half a sesame bun into croutons and scatter them on at serving (~60 kcal) for the club-bun crunch.",
+      "macros": {
+        "kcal": 745,
+        "protein": 58,
+        "carbs": 72,
+        "fiber": 13,
+        "fat": 28
+      },
+      "pucks": {
+        "protein": {
+          "label": "Smashed beef patties + American cheese",
+          "macros": {
+            "kcal": 320,
+            "protein": 41,
+            "carbs": 2,
+            "fiber": 0,
+            "fat": 17
+          }
+        },
+        "grain": {
+          "label": "Roasted potatoes",
+          "macros": {
+            "kcal": 180,
+            "protein": 4,
+            "carbs": 33,
+            "fiber": 4,
+            "fat": 4
+          }
+        },
+        "veg": {
+          "label": "Roasted veg & beans",
+          "macros": {
+            "kcal": 180,
+            "protein": 11,
+            "carbs": 34,
+            "fiber": 9,
+            "fat": 2
+          }
+        },
+        "sauce": {
+          "label": "Big Mac-style special sauce",
+          "macros": {
+            "kcal": 65,
+            "protein": 2,
+            "carbs": 3,
+            "fiber": 0,
+            "fat": 5
+          }
+        }
+      }
     }
   ],
   "notes": {
@@ -1276,11 +1426,12 @@
 
     // classify the buy-for-4 items into the puck buckets (nothing is dropped —
     // veg is the catch-all; sauce ingredients & seasonings have their own homes)
-    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [] };
+    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [], staple: [] };
     (sauce.shop || []).forEach(function (x) { buckets.sauce.push(x); });
     if (shop.protein) buckets.protein.push(shop.protein);
     var grainKw = (sb.grain[0] ? sb.grain[0].item : (MEAL.grain || "")).toLowerCase().replace(/\(.*?\)/g, "").trim().split(/\s+/).pop();
     var classify = function (x) {
+      if (x.group && buckets[x.group]) return x.group;   // data can name its own bucket
       if (x.grain) return "grain";
       if (/fresh topping/i.test(x.amt || "")) return "fresh";
       if (grainKw && (x.item || "").toLowerCase().indexOf(grainKw) >= 0) return "grain";
@@ -1330,7 +1481,8 @@
     var seasoningCard = shopMode ?
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">6</span> Seasoning &amp; staples <span class="sub">Buy for 4</span></div>' +
-        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") + "</ul></div>" : "";
+        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") +
+          buckets.staple.map(buyLi).join("") + "</ul></div>" : "";
 
     var note = shopMode ?
       '<div class="shop-note"><b>Exact for the ' + esc(v.name) + ' build.</b> Each meal is three ~1-cup pucks + a 2-Tbsp sauce; the “buy for 4” amounts make four meals. Fresh toppings are tagged; buy ~20% extra raw protein for cooking shrink; scale linearly for more.</div>' :

@@ -1233,11 +1233,12 @@
 
     // classify the buy-for-4 items into the puck buckets (nothing is dropped —
     // veg is the catch-all; sauce ingredients & seasonings have their own homes)
-    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [] };
+    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [], staple: [] };
     (sauce.shop || []).forEach(function (x) { buckets.sauce.push(x); });
     if (shop.protein) buckets.protein.push(shop.protein);
     var grainKw = (sb.grain[0] ? sb.grain[0].item : (MEAL.grain || "")).toLowerCase().replace(/\(.*?\)/g, "").trim().split(/\s+/).pop();
     var classify = function (x) {
+      if (x.group && buckets[x.group]) return x.group;   // data can name its own bucket
       if (x.grain) return "grain";
       if (/fresh topping/i.test(x.amt || "")) return "fresh";
       if (grainKw && (x.item || "").toLowerCase().indexOf(grainKw) >= 0) return "grain";
@@ -1287,7 +1288,8 @@
     var seasoningCard = shopMode ?
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">6</span> Seasoning &amp; staples <span class="sub">Buy for 4</span></div>' +
-        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") + "</ul></div>" : "";
+        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") +
+          buckets.staple.map(buyLi).join("") + "</ul></div>" : "";
 
     var note = shopMode ?
       '<div class="shop-note"><b>Exact for the ' + esc(v.name) + ' build.</b> Each meal is three ~1-cup pucks + a 2-Tbsp sauce; the “buy for 4” amounts make four meals. Fresh toppings are tagged; buy ~20% extra raw protein for cooking shrink; scale linearly for more.</div>' :

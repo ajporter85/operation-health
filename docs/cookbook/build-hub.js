@@ -33,10 +33,11 @@ if (/document\.getElementById\("meal-data"\)/.test(fns)) { console.error("meal-d
 // --- per-theme meta + data ---
 const meta = [];
 const islands = [];
+let totalBuilds = 0;
 THEMES.forEach(t => {
   const h = fs.readFileSync(t.file, "utf8");
   const jsonTxt = h.match(/id="meal-data">([\s\S]*?)<\/script>/)[1].trim();
-  JSON.parse(jsonTxt); // validate
+  totalBuilds += JSON.parse(jsonTxt).variations.length; // validate + count
   const tagline = h.match(/<p class="tagline">([\s\S]*?)<\/p>/)[1].trim();
   const h1 = h.match(/<h1>([\s\S]*?)<span class="lead">([\s\S]*?)<\/span><\/h1>/);
   const no = h.match(/Meal Library · Meal (\d+)/)[1];
@@ -136,7 +137,7 @@ const body = `<div class="wrap">
   <header class="lib-hero">
     <span class="eyebrow">Operation Health</span>
     <h1>Meal <span class="lead">Library</span></h1>
-    <p class="tagline">Six freezer meals · 36 builds. Tap a meal for its full recipe card — ingredients, macros, Souper Cube fill, freeze &amp; reheat, and an exact shopping list, all driven by the build you pick.</p>
+    <p class="tagline">Six freezer meals · ${totalBuilds} builds. Tap a meal for its full recipe card — ingredients, macros, Souper Cube fill, freeze &amp; reheat, and an exact shopping list, all driven by the build you pick.</p>
   </header>
 
   <nav class="hubnav" id="hubnav">
@@ -174,7 +175,7 @@ ${detailSections}
   <div class="view" id="view-fuel" hidden><div id="fuel-body"></div></div>
 
   <footer>
-    <span>Operation Health Meal Library · 6 meals · 36 builds</span>
+    <span>Operation Health Meal Library · ${meta.length} meals · ${totalBuilds} builds</span>
     <span class="pills">
       <span class="pill">★ High protein</span>
       <span class="pill">★ High fiber</span>
