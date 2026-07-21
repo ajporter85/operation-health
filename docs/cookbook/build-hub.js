@@ -76,32 +76,35 @@ islands.push('<script type="application/json" id="snack-data">\n' + snackTxt + "
 const hubCss = `
   /* HUB */
   .lib-hero { display: grid; gap: 12px; padding-bottom: 22px; border-bottom: 2px solid var(--ink); margin-bottom: 22px; }
-  .lib-hero h1 { margin: 0; font-size: clamp(34px, 6.5vw, 58px); line-height: .96; font-weight: 800; letter-spacing: -.02em; text-transform: uppercase; }
+  .lib-hero h1 { margin: 0; font-size: var(--t-hero); line-height: .96; font-weight: 800; letter-spacing: -.02em; text-transform: uppercase; }
   .lib-hero h1 .lead { color: var(--chipotle); }
-  .lib-hero .tagline { font-size: clamp(15.5px, 2.4vw, 18px); color: var(--ink-2); max-width: 62ch; line-height: 1.55; }
+  .lib-hero .tagline { font-size: var(--t-lead); color: var(--ink-2); max-width: 62ch; line-height: 1.55; }
   .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .theme-card { text-align: left; cursor: pointer; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 7px; color: var(--ink); font-family: inherit; transition: border-color .14s ease, transform .14s ease, box-shadow .14s ease; }
   .theme-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--chipotle); }
   .theme-card .emoji { font-size: 30px; line-height: 1; }
-  .theme-card .tno { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
-  .theme-card .tt { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 20px; line-height: 1.05; }
-  .theme-card .tt .lead { color: var(--chipotle); display: block; font-size: 13.5px; letter-spacing: .02em; margin-top: 2px; }
-  .theme-card .tstats { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .theme-card .tno { font-family: var(--font-ui); font-size: var(--t-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .theme-card .tt { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-h3); line-height: 1.05; }
+  .theme-card .tt .lead { color: var(--chipotle); display: block; font-size: var(--t-label); letter-spacing: .02em; margin-top: 2px; }
+  .theme-card .tstats { font-family: var(--font-mono); font-size: var(--t-data); color: var(--ink-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
   .theme-card .tstats .fib { color: var(--macro-fiber); font-weight: 700; }
-  .theme-card .go { font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; color: var(--chipotle); text-transform: uppercase; letter-spacing: .04em; margin-top: 3px; }
-  .backbtn { font-family: var(--font-ui); font-weight: 700; font-size: 13px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: 8px; padding: 8px 14px; cursor: pointer; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+  .theme-card .go { font-family: var(--font-ui); font-size: var(--t-label); font-weight: 700; color: var(--chipotle); text-transform: uppercase; letter-spacing: .04em; margin-top: 3px; }
+  .backbtn { font-family: var(--font-ui); font-weight: 700; font-size: var(--t-label); color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: 8px; padding: 8px 14px; cursor: pointer; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
   .backbtn:hover { border-color: var(--chipotle); color: var(--chipotle); }
   @media (max-width: 720px){ .theme-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 460px){ .theme-grid { grid-template-columns: 1fr; } }
 
+  .lib-hero.sub h1 { font-size: var(--t-hero-sub); }
+  .scolp { font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); line-height: 1.55; margin: 0; }
+
   /* HUB NAV + VIEWS */
   .hubnav { display: flex; gap: 4px 20px; flex-wrap: wrap; margin-bottom: 26px; border-bottom: 2px solid var(--line-strong); }
-  .navbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 14px; color: var(--ink-3); background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 2px; margin-bottom: -2px; cursor: pointer; }
+  .navbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: var(--t-body); color: var(--ink-3); background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 2px; margin-bottom: -2px; cursor: pointer; }
   .navbtn:hover { color: var(--ink); }
   .navbtn.active { color: var(--chipotle); border-bottom-color: var(--chipotle); }
 
   /* STAPLES */
-  .kitbox { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); background: color-mix(in srgb, var(--cactus) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--cactus) 30%, var(--line)); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.5; margin-bottom: 18px; }
+  .kitbox { font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); background: color-mix(in srgb, var(--cactus) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--cactus) 30%, var(--line)); border-radius: var(--radius-sm); padding: 14px 16px; line-height: 1.5; margin-bottom: 18px; }
   .kitbox b { color: var(--cactus-deep); }
   @media (prefers-color-scheme: dark){ .kitbox b { color: var(--cactus); } }
   :root[data-theme="dark"] .kitbox b { color: var(--cactus); }
@@ -110,45 +113,45 @@ const hubCss = `
   .smatrix th, .smatrix td { padding: 9px 8px; text-align: center; border-bottom: 1px solid var(--line); }
   .smatrix thead th { font-size: 22px; line-height: 1; border-bottom: 2px solid var(--line-strong); }
   .smatrix thead th.item, .smatrix td.item { text-align: left; }
-  .smatrix thead th.item { font-family: var(--font-display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
-  .smatrix thead th.cov, .smatrix td.cov { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
-  .smatrix .catrow td { background: var(--surface-2); font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .05em; text-align: left; color: var(--chipotle); }
-  .smatrix td.item b { font-weight: 700; font-size: 14.5px; }
-  .smatrix td.item .sprep { display: block; font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.35; max-width: 40ch; }
+  .smatrix thead th.item { font-family: var(--font-display); font-size: var(--t-label); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+  .smatrix thead th.cov, .smatrix td.cov { font-family: var(--font-mono); font-size: var(--t-label); color: var(--ink-3); }
+  .smatrix .catrow td { background: var(--surface-2); font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-label); letter-spacing: .05em; text-align: left; color: var(--chipotle); }
+  .smatrix td.item b { font-weight: 700; font-size: var(--t-body); }
+  .smatrix td.item .sprep { display: block; font-size: var(--t-body-sm); color: var(--ink-3); margin-top: 2px; line-height: 1.35; max-width: 40ch; }
   .smatrix .yes { color: var(--chipotle); font-weight: 800; }
   .smatrix .no { color: var(--line-strong); }
-  .smatrix-foot { margin-top: 12px; font-family: var(--font-ui); font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+  .smatrix-foot { margin-top: 12px; font-family: var(--font-ui); font-size: var(--t-body-sm); color: var(--ink-3); line-height: 1.5; }
 
   /* FREEZE — sauce columns */
   .saucecols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
   .scol { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px 18px; }
-  .scol h3 { margin: 0 0 10px; font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: var(--chipotle); }
-  .scol h3 .sub { display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-3); margin-top: 2px; }
-  .saucelist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; color: var(--ink-2); }
-  .saucelist .mtag { font-size: 14px; }
+  .scol h3 { margin: 0 0 10px; font-family: var(--font-display); font-size: var(--t-h3); text-transform: uppercase; letter-spacing: .03em; color: var(--chipotle); }
+  .scol h3 .sub { display: block; font-family: var(--font-ui); font-size: var(--t-label); font-weight: 600; letter-spacing: .04em; color: var(--ink-3); margin-top: 2px; }
+  .saucelist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: var(--t-body); color: var(--ink-2); }
+  .saucelist .mtag { font-size: var(--t-body); }
   .saucelist .opt { color: var(--ink-3); }
   @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
 
   /* SNACKS */
   .sortbar { margin: 0 0 22px; }
-  .sortlab { font-family: var(--font-display); font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); display: block; margin-bottom: 7px; }
+  .sortlab { font-family: var(--font-display); font-size: var(--t-label); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); display: block; margin-bottom: 7px; }
   .sortseg { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-  .sortbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px 6px; cursor: pointer; transition: background .14s ease, color .14s ease, border-color .14s ease; }
+  .sortbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: var(--t-body-sm); color: var(--ink-2); background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px 6px; cursor: pointer; transition: background .14s ease, color .14s ease, border-color .14s ease; }
   .sortbtn:hover { border-color: var(--chipotle); color: var(--chipotle); }
   .sortbtn.on { background: var(--chipotle); border-color: var(--chipotle); color: #fff; }
   @media (max-width: 900px){ .sortseg { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 620px){ .sortseg { grid-template-columns: repeat(2, 1fr); } }
 
-  .slegend { display: flex; gap: 8px 22px; flex-wrap: wrap; font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 15px; margin: 0 0 22px; line-height: 1.5; }
+  .slegend { display: flex; gap: 8px 22px; flex-wrap: wrap; font-family: var(--font-ui); font-size: var(--t-body-sm); color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 15px; margin: 0 0 22px; line-height: 1.5; }
   .slegend span { white-space: nowrap; }
   .slegend .lg-ico { font-size: 16px; }
   .slegend b { color: var(--ink); }
 
   .sgroup { margin-bottom: 26px; }
   .sgroup > .sghead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--line-strong); padding-bottom: 7px; margin-bottom: 12px; }
-  .sgroup > .sghead h3 { margin: 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; letter-spacing: .01em; }
-  .sgroup > .sghead .sgn { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); }
-  .sgroup > .sghead .sgblurb { flex: 1 1 100%; font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+  .sgroup > .sghead h3 { margin: 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-h3); letter-spacing: .01em; }
+  .sgroup > .sghead .sgn { font-family: var(--font-mono); font-size: var(--t-label); color: var(--ink-3); }
+  .sgroup > .sghead .sgblurb { flex: 1 1 100%; font-family: var(--font-ui); font-size: var(--t-body-sm); color: var(--ink-2); line-height: 1.5; }
 
   .snack { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 8px; }
   .snack > summary { padding: 12px 14px; }
@@ -156,23 +159,23 @@ const hubCss = `
   .snack > .sbody.solo { padding: 12px 14px; }
   .snack > summary { cursor: pointer; list-style: none; }
   .snack > summary::-webkit-details-marker { display: none; }
-  .snack > summary::after { content: "▸ details"; display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--chipotle); margin-top: 8px; }
+  .snack > summary::after { content: "▸ details"; display: block; font-family: var(--font-ui); font-size: var(--t-label); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--chipotle); margin-top: 8px; }
   .snack[open] > summary::after { content: "▾ close"; }
   .snack:hover { border-color: var(--line-strong); }
   .s-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .s-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 18px; letter-spacing: .01em; }
+  .s-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-h3); letter-spacing: .01em; }
   .s-star { color: var(--chipotle); font-size: 15px; }
   .s-where { font-size: 17px; letter-spacing: 3px; margin-left: auto; }
-  .s-portion { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.45; }
-  .s-macros { font-family: var(--font-mono); font-size: 14px; margin-top: 8px; display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline; font-variant-numeric: tabular-nums; }
+  .s-portion { font-family: var(--font-ui); font-size: var(--t-body-sm); color: var(--ink-3); margin-top: 3px; line-height: 1.45; }
+  .s-macros { font-family: var(--font-mono); font-size: var(--t-data); margin-top: 8px; display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline; font-variant-numeric: tabular-nums; }
   .s-kcal { font-weight: 800; }
   .na { font-weight: 700; }
   .na.lo { color: var(--macro-fiber); }
   .na.mid { color: var(--macro-carb); }
   .na.hi { color: var(--chipotle); }
-  .s-note { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; margin: 9px 0 0; }
-  .s-tip { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; background: var(--surface-2); border-left: 3px solid var(--chipotle); border-radius: 0 6px 6px 0; padding: 9px 12px; margin: 10px 0 0; }
-  .s-link { display: inline-block; font-family: var(--font-ui); font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--chipotle); background: none; border: 0; padding: 0; margin-top: 10px; cursor: pointer; }
+  .s-note { font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); line-height: 1.55; margin: 9px 0 0; }
+  .s-tip { font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); line-height: 1.55; background: var(--surface-2); border-left: 3px solid var(--chipotle); border-radius: 0 6px 6px 0; padding: 9px 12px; margin: 10px 0 0; }
+  .s-link { display: inline-block; font-family: var(--font-ui); font-size: var(--t-label); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--chipotle); background: none; border: 0; padding: 0; margin-top: 10px; cursor: pointer; }
   .s-link:hover { text-decoration: underline; }
 
   /* MAKE YOUR OWN */
@@ -180,22 +183,22 @@ const hubCss = `
   .myo > summary { cursor: pointer; list-style: none; padding: 16px 18px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .myo > summary::-webkit-details-marker { display: none; }
   .myo .myo-ico { font-size: 26px; line-height: 1; }
-  .myo .myo-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 20px; }
-  .myo .myo-time { font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); margin-left: auto; }
+  .myo .myo-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: var(--t-h2); }
+  .myo .myo-time { font-family: var(--font-mono); font-size: var(--t-data); color: var(--ink-3); margin-left: auto; }
   .myo .myo-body { padding: 0 18px 18px; }
-  .myo .myo-why { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
-  .myo .myo-yield { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-3); margin: 0 0 12px; }
-  .myo .myo-warn { font-family: var(--font-ui); font-size: 15px; line-height: 1.55; background: color-mix(in srgb, var(--chipotle) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--chipotle) 32%, var(--line)); border-radius: var(--radius-sm); padding: 11px 13px; margin: 0 0 14px; color: var(--ink-2); }
-  .myo h4 { font-family: var(--font-display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-3); margin: 14px 0 7px; }
-  .myo ul, .myo ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+  .myo .myo-why { font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+  .myo .myo-yield { font-family: var(--font-mono); font-size: var(--t-data); color: var(--ink-3); margin: 0 0 12px; }
+  .myo .myo-warn { font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.55; background: color-mix(in srgb, var(--chipotle) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--chipotle) 32%, var(--line)); border-radius: var(--radius-sm); padding: 11px 13px; margin: 0 0 14px; color: var(--ink-2); }
+  .myo h4 { font-family: var(--font-display); font-size: var(--t-label); text-transform: uppercase; letter-spacing: .07em; color: var(--ink-3); margin: 14px 0 7px; }
+  .myo ul, .myo ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink-2); line-height: 1.55; }
 
   /* BREAKFAST & SNACKS — day table */
   .daytable { width: 100%; min-width: 540px; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
   .daytable th, .daytable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
   .daytable th:first-child, .daytable td:first-child { text-align: left; }
-  .daytable thead th { font-family: var(--font-display); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+  .daytable thead th { font-family: var(--font-display); font-size: var(--t-label); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
   .daytable .tot td { font-weight: 800; border-top: 2px solid var(--line-strong); border-bottom: 0; }
-  .daytable .tgt td { color: var(--ink-3); font-size: 13px; }
+  .daytable .tgt td { color: var(--ink-3); font-size: var(--t-data); }
 `;
 
 // --- body ---
@@ -377,8 +380,8 @@ const hubJs = `
       });
     });
     document.getElementById("staples-body").innerHTML =
-      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Prep-Ahead Staples</span>' +
-        '<h1 style="font-size:clamp(28px,5vw,44px)">Cook once, <span class="lead">eat all month</span></h1>' +
+      '<header class="lib-hero sub" style="margin-bottom:16px"><span class="eyebrow">Prep-Ahead Staples</span>' +
+        '<h1>Cook once, <span class="lead">eat all month</span></h1>' +
         '<p class="tagline">Every meal is three 1-cup pucks + a sauce. These are the components that repeat across the six meals, grouped by those three pucks — batch-cook and freeze them and most meals become grab-and-reheat.</p></header>' +
       '<div class="kitbox"><b>Freezer starter kit</b> — the highest-leverage staples (used in 3+ meals): ' +
         (kit.length ? esc(kit.join(", ")) : "—") + '. Keep these on hand and you’ve got the backbone of every meal in the library.</div>' +
@@ -386,9 +389,9 @@ const hubJs = `
       '<p class="smatrix-foot">✓ = used in that meal (across its builds). Freeze each in a <b>1-cup mold</b>, then pop out and bag — three pucks + a sauce cube assemble into any meal without re-cooking.</p>' +
       '<div class="saucecols" style="margin-top:20px">' +
         '<div class="scol"><h3>The 4th component: sauce <span class="sub">2-Tbsp cubes, not 1-cup pucks</span></h3>' +
-          '<p style="font-size:14.5px;color:var(--ink-2);line-height:1.55;margin:0">Each sauce freezes (or is made fresh) on its own and goes on at serving — it’s the flavor swap that turns the same three pucks into a different meal. Which sauces freeze vs. stay fridge-fresh is on the <b>Freeze &amp; Reheat</b> tab.</p></div>' +
+          '<p class="scolp">Each sauce freezes (or is made fresh) on its own and goes on at serving — it’s the flavor swap that turns the same three pucks into a different meal. Which sauces freeze vs. stay fridge-fresh is on the <b>Freeze &amp; Reheat</b> tab.</p></div>' +
         '<div class="scol"><h3>Not stocked: fresh toppings <span class="sub">never frozen</span></h3>' +
-          '<p style="font-size:14.5px;color:var(--ink-2);line-height:1.55;margin:0">Avocado, cheese, herbs, citrus, pickles &amp; greens go on <b>after</b> reheating — keep them out of the freezer entirely so the meal stays bright.</p></div>' +
+          '<p class="scolp">Avocado, cheese, herbs, citrus, pickles &amp; greens go on <b>after</b> reheating — keep them out of the freezer entirely so the meal stays bright.</p></div>' +
       '</div>';
   }
 
@@ -404,8 +407,8 @@ const hubJs = `
     });
     function fcard(h, p) { return '<div class="freeze-card"><h3>' + h + "</h3><p>" + p + "</p></div>"; }
     document.getElementById("freeze-body").innerHTML =
-      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Freeze &amp; Reheat</span>' +
-        '<h1 style="font-size:clamp(28px,5vw,44px)">Fill · freeze · <span class="lead">reheat</span></h1>' +
+      '<header class="lib-hero sub" style="margin-bottom:16px"><span class="eyebrow">Freeze &amp; Reheat</span>' +
+        '<h1>Fill · freeze · <span class="lead">reheat</span></h1>' +
         '<p class="tagline">One system for the whole library — freeze each part as a 1-cup puck, keep ~3 months, and reheat in 6–9 minutes.</p></header>' +
       '<div class="freeze-strip">' +
         '<div class="freeze-card"><h3>The mold system</h3><ul class="fill-list" style="margin-top:6px">' +
@@ -482,8 +485,8 @@ const hubJs = `
       '<li class="opt">' + SNACKS.snacks.length + " options with full macros on the <b>Snacks</b> tab →</li>" +
       "</ul></div>";
     document.getElementById("fuel-body").innerHTML =
-      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
-        '<h1 style="font-size:clamp(28px,5vw,44px)">Round out <span class="lead">the day</span></h1>' +
+      '<header class="lib-hero sub" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
+        '<h1>Round out <span class="lead">the day</span></h1>' +
         '<p class="tagline">Your two cube meals cover lunch and dinner. This is everything around them — a light, protein-forward breakfast, a snack or two, and your psyllium — sized to round the day out to your protein, fiber and calorie targets, and to land 30–40g of protein within 30 minutes of waking.</p></header>' +
       '<div class="kitbox"><b>The plan:</b> two 3-cup cube meals do the heavy lifting; a light breakfast and two protein-forward snacks top you off. Because the meals average ~' + cube.kcal + ' kcal, you generally need <b>both</b> snacks to clear the 2,300 calorie floor — the snacks are load-bearing, not optional extras.</div>' +
       table +
@@ -616,16 +619,16 @@ const hubJs = `
     }).join("");
 
     document.getElementById("snacks-body").innerHTML =
-      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Snacks</span>' +
-        '<h1 style="font-size:clamp(28px,5vw,44px)">The other <span class="lead">quarter of the day</span></h1>' +
+      '<header class="lib-hero sub" style="margin-bottom:16px"><span class="eyebrow">Snacks</span>' +
+        '<h1>The other <span class="lead">quarter of the day</span></h1>' +
         '<p class="tagline">Two snacks are about 600 calories — roughly a quarter of everything you eat, and the part that decides whether the day lands on target. ' + SNACKS.snacks.length + ' options, each with real macros. Regroup them however you are thinking about it.</p></header>' +
       '<div class="kitbox"><b>Two numbers to watch.</b> <b>Fat</b> is your binding macro — the meals already run 20–28g each, so a snack at 14g of fat costs more than its calories suggest. And <b>sodium</b>: the ceiling is ' +
         b.sodiumDayMg.toLocaleString() + 'mg a day, and three meals use most of it, which leaves roughly <b>' + b.sodiumSnackBudgetMg +
         'mg for the day’s snacks</b>. Shelf-stable things are salted to stay shelf-stable, so the desk-friendly picks are usually the salty ones. ' +
         'Handy: the <b>%DV</b> printed on any label is calculated against that same ' + b.sodiumDayMg.toLocaleString() + 'mg — so it is already your share of the day.</div>' +
       bar + (onlyMyo ? "" : legend) + groups +
-      '<header class="lib-hero" style="margin:' + (onlyMyo ? "0" : "34px") + ' 0 16px"><span class="eyebrow">Make Your Own</span>' +
-        '<h1 style="font-size:clamp(24px,4vw,36px)">Worth <span class="lead">making yourself</span></h1>' +
+      '<header class="lib-hero sub" style="margin:' + (onlyMyo ? "0" : "34px") + ' 0 16px"><span class="eyebrow">Make Your Own</span>' +
+        '<h1>Worth <span class="lead">making yourself</span></h1>' +
         '<p class="tagline">These are productions, not snacks — the things that feed the list' +
         (onlyMyo ? " on the other tabs" : " above") +
         '. Each one is either meaningfully cheaper than buying it, or lets you fix something you cannot fix at the store.</p></header>' +
