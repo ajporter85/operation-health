@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 1,
+  "kind": "snacks",
+  "note": "Canonical snack model for the Operation Health Meal Library. Same discipline as #meal-data — the app's Meal Library can import these. Macros are per the stated portion.",
+  "budget": {
+    "snacksPerDay": 2,
+    "kcalPerSnack": 300,
+    "sodiumDayMg": 2300,
+    "sodiumSnackBudgetMg": 600
+  },
+  "fatBands": { "lean": 5, "mid": 9 },
+  "sodiumBands": { "low": 140, "mod": 400 },
+  "tiers": [
+    {
+      "id": "grab",
+      "icon": "🥣",
+      "label": "Grab & assemble",
+      "blurb": "No prep beyond opening a container. Thirty seconds, a bowl, done."
+    },
+    {
+      "id": "measure",
+      "icon": "🧮",
+      "label": "Measure & bag",
+      "blurb": "Shelf-stable things that only go wrong when eaten from the bag. Portion once, on a scale, into bags."
+    },
+    {
+      "id": "batch",
+      "icon": "🧊",
+      "label": "Batch & freeze",
+      "blurb": "Made in a batch on prep day, same as the meals. Several reuse your 2-Tbsp sauce molds."
+    }
+  ],
+  "wheres": [
+    { "id": "home", "icon": "🏠", "label": "Home / near a fridge" },
+    { "id": "desk", "icon": "💼", "label": "Desk / portable" },
+    { "id": "post", "icon": "💪", "label": "Post-workout" }
+  ],
+  "flavors": [
+    { "id": "savory", "icon": "🧂", "label": "Savory" },
+    { "id": "sweet", "icon": "🍫", "label": "Sweet / evening" }
+  ],
+  "snacks": [
+    {
+      "id": "greek-yogurt-berries",
+      "name": "Greek yogurt + berries",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "¾ cup nonfat Greek yogurt + ½ cup berries",
+      "macros": { "kcal": 140, "protein": 18, "carbs": 17, "fat": 0, "fiber": 3, "sodium": 65 },
+      "star": true,
+      "note": "The best snack in the library: 18g protein for zero fat and almost no sodium. Nothing else here wins on all three.",
+      "makeOwn": "greek-yogurt"
+    },
+    {
+      "id": "protein-shake",
+      "name": "Protein shake",
+      "tier": "grab",
+      "where": ["home", "desk", "post"],
+      "flavor": "sweet",
+      "portion": "1 scoop + 1 cup skim milk (or water at a desk)",
+      "macros": { "kcal": 220, "protein": 32, "carbs": 12, "fat": 5, "fiber": 1, "sodium": 180 },
+      "star": true,
+      "note": "Dry-scoop into a shaker in the morning and add water at your desk — the cheapest 30g of protein you can carry.",
+      "tip": "Post-workout this is the one to reach for: liquid protein hits fastest and you're usually not hungry for solid food yet."
+    },
+    {
+      "id": "half-protein-puck",
+      "name": "½ protein puck",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "Half a 1-cup protein puck, reheated (~2½ oz cooked)",
+      "macros": { "kcal": 115, "protein": 21, "carbs": 0, "fat": 3, "fiber": 0, "sodium": 200 },
+      "star": true,
+      "note": "Costs nothing extra — it's already in your freezer from meal prep. Best protein-per-calorie of anything you don't have to shop for.",
+      "tip": "Reheat 60–90 seconds from frozen. A squeeze of lime or a spoon of salsa is all it needs."
+    },
+    {
+      "id": "cottage-cheese-fruit",
+      "name": "Cottage cheese + fruit",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "¾ cup 2% cottage cheese + ½ cup pineapple or berries",
+      "macros": { "kcal": 165, "protein": 16, "carbs": 18, "fat": 3, "fiber": 1, "sodium": 550 },
+      "note": "Macro twin of Greek yogurt but roughly 8× the sodium — a rotation item, not a twice-a-day one.",
+      "tip": "Buy 2% (creamy enough to enjoy, only 3g fat) and check the label — mainstream brands run ~600mg sodium where Good Culture is closer to 300mg. If the curds are the problem, see the blended versions below."
+    },
+    {
+      "id": "edamame",
+      "name": "Edamame, steamed",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 cup shelled, from frozen",
+      "macros": { "kcal": 190, "protein": 18, "carbs": 14, "fat": 8, "fiber": 8, "sodium": 15 },
+      "note": "18g protein and 8g fiber for essentially no sodium. Three minutes in the microwave from a frozen bag.",
+      "tip": "Salt it at the table, not in the pot — you'll use a fraction as much."
+    },
+    {
+      "id": "hard-boiled-eggs",
+      "name": "Hard-boiled eggs ×2",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "2 large eggs",
+      "macros": { "kcal": 140, "protein": 12, "carbs": 1, "fat": 10, "fiber": 0, "sodium": 125 },
+      "note": "Keep a boiled half-dozen in the fridge. Deliberately not tagged for the desk — the smell is an office-etiquette problem.",
+      "tip": "Steam them 12 minutes instead of boiling; they peel far more cleanly."
+    },
+    {
+      "id": "string-cheese",
+      "name": "String cheese ×2",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "2 sticks",
+      "macros": { "kcal": 160, "protein": 14, "carbs": 2, "fat": 12, "fiber": 0, "sodium": 380 },
+      "note": "Convenient and genuinely portable, but 12g of fat for 14g of protein is a mediocre trade on a day where fat is the ceiling."
+    },
+    {
+      "id": "apple-pb",
+      "name": "Apple + peanut butter",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "sweet",
+      "portion": "1 medium apple + 1 level Tbsp peanut butter",
+      "macros": { "kcal": 190, "protein": 5, "carbs": 27, "fat": 8, "fiber": 5, "sodium": 75 },
+      "note": "Level the tablespoon. A heaped one is closer to 2 Tbsp and quietly doubles the fat.",
+      "tip": "Swap in powdered peanut butter mixed with water and the same snack lands at ~120 kcal and 2g fat."
+    },
+    {
+      "id": "rollup-lean",
+      "name": "Deli roll-up — lean",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "4 slices turkey + 2 Tbsp hummus + cucumber batons",
+      "macros": { "kcal": 130, "protein": 18, "carbs": 6, "fat": 3, "fiber": 1, "sodium": 560 },
+      "note": "The cheese is the entire fat lever in a roll-up — skipping it takes this family from 10g of fat to 3g.",
+      "tip": "Buy lower-sodium deli meat. Sodium, not macros, is the real cost of this whole category."
+    },
+    {
+      "id": "rollup-classic",
+      "name": "Deli roll-up — classic",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "4 slices turkey + 1 Laughing Cow wedge + cucumber spear",
+      "macros": { "kcal": 130, "protein": 16, "carbs": 3, "fat": 5, "fiber": 1, "sodium": 620 },
+      "note": "The cucumber spear stands in for a pickle — same shape and crunch, none of the sour.",
+      "tip": "Other swaps for the pickle: bell pepper strips (sweet crunch), pepperoncini (tangy, mild heat), or a blanched asparagus spear."
+    },
+    {
+      "id": "rollup-italian",
+      "name": "Deli roll-up — Italian",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "3 slices ham + 1 slice provolone + pepperoncini + spinach",
+      "macros": { "kcal": 180, "protein": 18, "carbs": 2, "fat": 10, "fiber": 1, "sodium": 700 },
+      "note": "The richest and saltiest roll-up. Worth it occasionally; not a default."
+    },
+    {
+      "id": "tuna-classic",
+      "name": "Tuna salad — classic",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "savory",
+      "portion": "1 can chunk light in water, drained + 2 Tbsp nonfat Greek yogurt + lemon + dill + celery + red onion",
+      "macros": { "kcal": 135, "protein": 27, "carbs": 3, "fat": 1.5, "fiber": 1, "sodium": 330 },
+      "star": true,
+      "note": "27g protein for 1.5g fat — the leanest protein in the library. Greek yogurt instead of mayo saves ~10g of fat and the tang helps with the fish.",
+      "tip": "Drain AND rinse the tuna. The packing liquid holds most of the smell, and rinsing is the single biggest improvement you can make.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-creamy",
+      "name": "Tuna salad — creamy horseradish",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "savory",
+      "portion": "1 can tuna + ¼ cup blended cottage cheese + ½ tsp prepared horseradish + lemon",
+      "macros": { "kcal": 140, "protein": 29, "carbs": 2, "fat": 1.5, "fiber": 0, "sodium": 420 },
+      "note": "Horseradish replaces dijon — same sharpness, no mustard. Highest protein-per-calorie of anything on this tab.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-southwest",
+      "name": "Tuna salad — southwest",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 can tuna + Greek yogurt + lime + cumin + corn + black beans + cilantro",
+      "macros": { "kcal": 200, "protein": 27, "carbs": 15, "fat": 2, "fiber": 4, "sodium": 380 },
+      "note": "Deliberately borrows the Southwest Bowl's flavor profile — familiar territory while you get used to fish.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-med",
+      "name": "Tuna salad — Mediterranean",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 can tuna + lemon + 1 tsp olive oil + capers + cherry tomato + parsley",
+      "macros": { "kcal": 180, "protein": 23, "carbs": 3, "fat": 6, "fiber": 1, "sodium": 400 },
+      "note": "Capers bring briny sharpness in place of mustard. Serve with cucumber rounds or bell pepper scoops instead of crackers.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "biltong",
+      "name": "Biltong",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 90, "protein": 16, "carbs": 1, "fat": 1, "fiber": 0, "sodium": 380 },
+      "star": true,
+      "note": "Air-dried rather than dehydrated, so it's tender rather than leathery — and it carries no added sugar. If jerky has disappointed you before, this fails differently.",
+      "tip": "Look for Stryve. 16g protein for 1g fat is the best ratio of any shelf-stable snack here."
+    },
+    {
+      "id": "sliced-jerky",
+      "name": "Sliced beef jerky",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 85, "protein": 10, "carbs": 6, "fat": 1.5, "fiber": 0, "sodium": 520 },
+      "note": "Excellent macros, but one ounce can be your entire day's snack sodium budget. Sliced jerky only — meat sticks like Slim Jims are ~40% fat and a completely different product.",
+      "tip": "Jack Link's Original: 10g protein, 6g sugar, 520mg sodium. People's Choice Classic: 9g protein, 9g sugar, but only 270mg sodium. Buy Original, never teriyaki. Note that People's Choice describe their own as \"thin and tough\" — if texture is your objection, start elsewhere.",
+      "makeOwn": "jerky"
+    },
+    {
+      "id": "dry-roasted-edamame",
+      "name": "Dry-roasted edamame",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 130, "protein": 14, "carbs": 9, "fat": 5, "fiber": 9, "sodium": 150 },
+      "star": true,
+      "note": "The most underrated desk snack: shelf-stable, no mess, no smell, 14g protein and 9g fiber. No fridge required."
+    },
+    {
+      "id": "roasted-chickpeas",
+      "name": "Roasted chickpeas",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "⅓ cup",
+      "macros": { "kcal": 120, "protein": 6, "carbs": 20, "fat": 2, "fiber": 5, "sodium": 180 },
+      "note": "Crunchy, cheap, 5g of fiber. Modest protein, so it pairs rather than stands alone.",
+      "makeOwn": "roasted-chickpeas"
+    },
+    {
+      "id": "popcorn",
+      "name": "Air-popped popcorn",
+      "tier": "measure",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "5 cups, popped from ~¼ cup kernels",
+      "macros": { "kcal": 155, "protein": 5, "carbs": 31, "fat": 2, "fiber": 6, "sodium": 0 },
+      "star": true,
+      "note": "An enormous volume of food for nothing — zero added fat, zero sodium, 6g fiber. Popped from bare kernels, not from a bag.",
+      "tip": "Kernels in a brown paper lunch bag, fold the top twice, microwave ~2 min until pops slow to 2 seconds apart. Season after: spray oil plus nutritional yeast (cheesy, adds a little protein), chili-lime, or everything bagel. Two pounds of kernels runs about $3 and makes ~26 bags' worth. Pair it with a blended cottage cheese dip to fix its near-zero protein.",
+      "makeOwn": "popcorn"
+    },
+    {
+      "id": "almonds",
+      "name": "Almonds, portioned",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz — 23 nuts, weighed",
+      "macros": { "kcal": 165, "protein": 6, "carbs": 6, "fat": 14, "fiber": 4, "sodium": 0 },
+      "note": "14g of fat is nearly a fifth of your daily budget for 6g of protein. This single line is why the measure-and-bag tier exists — never eat these from the container.",
+      "tip": "Buy unsalted. Salted runs ~190mg sodium for no benefit."
+    },
+    {
+      "id": "trail-mix",
+      "name": "Trail mix, weighed",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 oz, weighed",
+      "macros": { "kcal": 140, "protein": 4, "carbs": 13, "fat": 9, "fiber": 2, "sodium": 55 },
+      "note": "Low protein, high fat, easy to overeat. Fine as an occasional desk item; not a default."
+    },
+    {
+      "id": "egg-bites",
+      "name": "Egg bites ×2",
+      "tier": "batch",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "2 bites",
+      "macros": { "kcal": 160, "protein": 14, "carbs": 3, "fat": 10, "fiber": 0, "sodium": 290 },
+      "note": "Freeze a tray; reheat 60–90 seconds. Portable once cooled.",
+      "makeOwn": "egg-bites"
+    },
+    {
+      "id": "turkey-meatballs",
+      "name": "Turkey meatballs ×3",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "3 meatballs (~1 oz each)",
+      "macros": { "kcal": 190, "protein": 20, "carbs": 6, "fat": 9, "fiber": 1, "sodium": 340 },
+      "note": "Make a double batch on Italian Bowl prep day and freeze the overflow as a snack. Zero extra shopping."
+    },
+    {
+      "id": "smoothie-pack",
+      "name": "Smoothie freezer pack",
+      "tier": "batch",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "1 bagged pack + 1 scoop protein + water",
+      "macros": { "kcal": 280, "protein": 28, "carbs": 30, "fat": 5, "fiber": 5, "sodium": 160 },
+      "note": "Bag frozen fruit, spinach and oats in portions on prep day. Tip a bag into the blender, add protein powder and water.",
+      "tip": "The biggest snack on the tab — treat it as a post-workout meal rather than a top-up."
+    },
+    {
+      "id": "yogurt-bark",
+      "name": "Greek yogurt bark",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "4 frozen pieces",
+      "macros": { "kcal": 140, "protein": 12, "carbs": 14, "fat": 3, "fiber": 1, "sodium": 50 },
+      "star": true,
+      "note": "Reuses your sixteen 2-Tbsp sauce molds — zero new equipment. Frozen yogurt that happens to be 12g of protein.",
+      "makeOwn": "yogurt-bark"
+    },
+    {
+      "id": "cc-everything",
+      "name": "Blended cottage cheese — everything bagel dip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "¾ cup blended + everything seasoning + squeeze of lemon",
+      "macros": { "kcal": 120, "protein": 15, "carbs": 4, "fat": 3, "fiber": 0, "sodium": 520 },
+      "note": "Thirty seconds in the blender turns curds into something like whipped ricotta. If texture was the objection, this is the fix.",
+      "tip": "This is the dip that pairs with air-popped popcorn — together ~275 kcal, 20g protein, and a genuinely large pile of food.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-ranch",
+      "name": "Blended cottage cheese — ranch dip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "¾ cup blended + dried dill, garlic & onion powder, chives",
+      "macros": { "kcal": 120, "protein": 15, "carbs": 4, "fat": 3, "fiber": 0, "sodium": 500 },
+      "note": "Dip for cucumber, peppers, carrots. Makes vegetables into a 15g-protein snack.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-chocolate",
+      "name": "Blended cottage cheese — chocolate pudding",
+      "tier": "batch",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "¾ cup blended + 1 Tbsp cocoa + sweetener",
+      "macros": { "kcal": 140, "protein": 16, "carbs": 8, "fat": 3, "fiber": 1, "sodium": 450 },
+      "star": true,
+      "note": "Dessert that is 16g of protein and 3g of fat. This is the whole evening strategy in one bowl.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-honey-vanilla",
+      "name": "Blended cottage cheese — honey-vanilla whip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "¾ cup blended + 1 tsp honey + vanilla + cinnamon, over berries",
+      "macros": { "kcal": 175, "protein": 16, "carbs": 20, "fat": 3, "fiber": 3, "sodium": 450 },
+      "note": "Tastes like cheesecake filling. Also good dolloped on hot food with Italian herbs instead of honey — a passable ricotta.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "protein-hot-chocolate",
+      "name": "Protein hot chocolate",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "sweet",
+      "portion": "1 scoop chocolate protein + 1 tsp cocoa + hot skim milk or water",
+      "macros": { "kcal": 160, "protein": 26, "carbs": 8, "fat": 3, "fiber": 1, "sodium": 190 },
+      "star": true,
+      "note": "The sleeper for an evening craving — warm and slow to drink, which does more than anything cold. 26g of protein disguised as dessert.",
+      "tip": "Mix the powder into a splash of cold liquid first, then top up with hot. Straight into hot liquid and it clumps."
+    },
+    {
+      "id": "frozen-grapes",
+      "name": "Frozen grapes",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "1 cup, frozen",
+      "macros": { "kcal": 100, "protein": 1, "carbs": 27, "fat": 0, "fiber": 1, "sodium": 3 },
+      "note": "The sweet equivalent of air-popped popcorn — eat a whole bowl and pay nothing. Freezing makes them slow to eat, which is most of the point.",
+      "tip": "No protein at all, so pair with the chocolate pudding or hot chocolate if it's replacing a real snack."
+    },
+    {
+      "id": "bar-nobake",
+      "name": "No-bake protein oat bar",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 bar",
+      "macros": { "kcal": 180, "protein": 15, "carbs": 22, "fat": 4, "fiber": 3, "sodium": 95 },
+      "note": "Store bars run $2.50–3.50 and 15–20g of fat. These are ~$0.75 and 4g, because powdered peanut butter binds as well as the real thing.",
+      "makeOwn": "protein-bars"
+    },
+    {
+      "id": "bar-baked",
+      "name": "Baked protein oat bar",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 bar",
+      "macros": { "kcal": 170, "protein": 14, "carbs": 24, "fat": 3, "fiber": 3, "sodium": 110 },
+      "note": "Cakier than the no-bake version and the lowest-fat bar of the three. Wraps in parchment, survives a bag.",
+      "makeOwn": "protein-bars"
+    },
+    {
+      "id": "bar-crispy",
+      "name": "Protein crispy treat",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 square",
+      "macros": { "kcal": 150, "protein": 12, "carbs": 22, "fat": 2, "fiber": 1, "sodium": 80 },
+      "star": true,
+      "note": "A rice-crispy treat that is 12g of protein and 2g of fat. Aimed squarely at the evening sweet tooth.",
+      "makeOwn": "protein-bars"
+    }
+  ],
+  "makeYourOwn": [
+    {
+      "id": "greek-yogurt",
+      "icon": "🥛",
+      "name": "Homemade Greek yogurt",
+      "time": "20 min hands-on · 8–12 hr culture · 2–4 hr strain",
+      "yield": "1 gallon skim milk → ~2 quarts strained",
+      "why": "About $0.50 a cup against ~$1.25 store-bought. On something you eat every single day, that adds up faster than anything else in the library.",
+      "warn": "Use SKIM milk. Whole-milk yogurt runs ~10g fat per ¾ cup — on a daily item that's an eighth of your fat budget appearing out of nowhere. Skim reproduces your current tub almost exactly.",
+      "ingredients": [
+        "1 gallon skim milk",
+        "2 Tbsp of your current store yogurt (the starter — it just needs live cultures)"
+      ],
+      "steps": [
+        "Heat the milk to 180°F — Instant Pot on Boil, or a heavy pot on the stove. This denatures the whey proteins and is what makes the yogurt thick. Do not skip it.",
+        "Cool to 110°F. A sink of cold water speeds this up.",
+        "Whisk in the 2 Tbsp of starter yogurt until fully dispersed.",
+        "Hold at 108–112°F for 8–12 hours — Instant Pot Yogurt setting, or an oven with just the light on. Longer means tangier.",
+        "Strain 2–4 hours through cheesecloth or a nut-milk bag over a bowl. This is the step that makes it Greek.",
+        "Save 2 Tbsp of this batch as the starter for the next one."
+      ],
+      "tips": [
+        "The strained-off whey is protein-rich — use it in smoothies instead of pouring it away.",
+        "Keeps about 2 weeks in the fridge."
+      ]
+    },
+    {
+      "id": "jerky",
+      "icon": "🥩",
+      "name": "Homemade jerky",
+      "time": "20 min prep · 6–24 hr marinade · 3–4 hr dry",
+      "yield": "3 lbs raw ≈ 1 lb finished",
+      "why": "Store-bought runs ~$2.00/oz. Eye of round at ~$7/lb works out to ~$1.30/oz — roughly half. More importantly you control the two things you can't buy your way out of: drop the sugar entirely and halve the sodium.",
+      "macros": { "kcal": 90, "protein": 15, "carbs": 1, "fat": 2, "fiber": 0, "sodium": 250 },
+      "ingredients": [
+        "2–3 lbs eye of round (leanest and cheapest; top round also works)",
+        "½ cup soy sauce (low-sodium)",
+        "2 Tbsp Worcestershire",
+        "1 tsp each garlic powder, onion powder, coarse black pepper",
+        "1 tsp liquid smoke"
+      ],
+      "steps": [
+        "Trim every visible speck of fat. Fat goes rancid — it's the reason jerky must be made from lean cuts.",
+        "Freeze the meat 1–2 hours so it firms up and slices cleanly.",
+        "Slice ¼ inch thick, AGAINST the grain. This is your tenderness lever — with the grain is what makes jerky leathery.",
+        "Marinate 6–24 hours in the fridge. No sugar needed.",
+        "Pat dry, then dry at 160–180°F in the air fryer for 2–3 hours, or at 175°F in the oven with the door cracked for 3–4 hours.",
+        "Done when a piece cracks but does not snap. Pull earlier than feels right — over-drying is the usual reason people think they dislike jerky."
+      ],
+      "tips": [
+        "Food safety: either bring the meat to 160°F internal before drying, or finish the dried jerky at 275°F for 10 minutes.",
+        "Store in the fridge ~2 weeks, or freeze for months."
+      ]
+    },
+    {
+      "id": "protein-bars",
+      "icon": "🍫",
+      "name": "Homemade protein bars",
+      "time": "15 min · plus chill or 20 min bake",
+      "yield": "8–10 bars per batch",
+      "why": "Store bars cost $2.50–3.50 each and usually carry 15–20g of fat. These run $0.60–0.90 and 2–4g. The trick is that most recipes lean on nut butter to bind — swapping in powdered peanut butter, Greek yogurt or pumpkin purée binds just as well at a fraction of the fat. You already buy protein powder for shakes, so the marginal cost is oats and a binder.",
+      "ingredients": [
+        "No-bake: 2 cups oats · 2 scoops protein powder · ½ cup powdered peanut butter (PB2) mixed with water · ⅓ cup honey · milk to bind",
+        "Baked: 2 cups oats · 2 scoops protein powder · 4 egg whites · ¾ cup applesauce · cinnamon · 1 tsp baking powder",
+        "Crispy: 2 scoops protein powder · 3 cups brown rice cereal · ½ cup marshmallow or honey · splash of milk"
+      ],
+      "steps": [
+        "No-bake — mix everything, press hard into a parchment-lined 8×8 pan, chill 2 hours, cut into 8. Press harder than you think or they crumble.",
+        "Baked — mix, spread in an 8×8 pan, bake at 350°F for 18–22 minutes until just set. Cool fully before cutting.",
+        "Crispy — melt the marshmallow or honey, stir in the protein powder off the heat, fold through the cereal, press into the pan and cool.",
+        "Wrap individually in parchment. They keep a week in the fridge and freeze for months."
+      ],
+      "tips": [
+        "Whey protein bakes drier than casein or a blend. If your bars come out chalky, add another ¼ cup of applesauce or milk.",
+        "Pull the baked bars while they still look slightly underdone — they firm up as they cool."
+      ]
+    },
+    {
+      "id": "blended-cc",
+      "icon": "🥄",
+      "name": "Blended cottage cheese base",
+      "time": "1 min",
+      "yield": "2–3 servings · keeps 4–5 days",
+      "why": "Cottage cheese's only real problem is the curds. Thirty seconds in a blender turns it into something like whipped ricotta, and it stops being cottage cheese at all — it becomes a base that goes five directions.",
+      "ingredients": ["1½ cups 2% cottage cheese (low-sodium if you can find it)"],
+      "steps": [
+        "Blend on high 30 seconds, scraping down once, until completely smooth with no grain left.",
+        "Split into portions and flavor each one: everything bagel seasoning + lemon · dried dill, garlic and onion powder, chives · cocoa and sweetener · honey, vanilla and cinnamon · Italian herbs for a ricotta stand-in."
+      ],
+      "tips": [
+        "The savory versions are dips — cucumber, peppers, carrots, and air-popped popcorn.",
+        "Sodium is the one weak spot: a serving is 450–550mg. Low-sodium cottage cheese cuts that nearly in half."
+      ]
+    },
+    {
+      "id": "yogurt-bark",
+      "icon": "🧊",
+      "name": "Greek yogurt bark",
+      "time": "10 min · 3 hr freeze",
+      "yield": "16 pieces, using your 2-Tbsp molds",
+      "why": "Reuses the sixteen 2-Tbsp sauce molds you already own, so there's no new equipment and no new shopping. Frozen dessert at 12g protein and 3g fat a serving.",
+      "ingredients": [
+        "2 cups nonfat Greek yogurt",
+        "2 Tbsp honey or maple syrup",
+        "1 tsp vanilla",
+        "Berries, chopped; a little dark chocolate if you want it"
+      ],
+      "steps": [
+        "Stir the yogurt with honey and vanilla.",
+        "Spoon into the 2-Tbsp molds, pressing a berry or two into each.",
+        "Freeze 3 hours until solid, pop out, and bag. Keeps 2 months.",
+        "Eat straight from the freezer — 4 pieces is a serving."
+      ],
+      "tips": ["Skip the chocolate to keep it at 3g of fat; a tablespoon of chips across the batch adds about 1g per serving."]
+    },
+    {
+      "id": "egg-bites",
+      "icon": "🥚",
+      "name": "Egg bites",
+      "time": "10 min · 20 min bake",
+      "yield": "12 bites",
+      "why": "Freezer-friendly, portable once cooled, and they use up whatever veg is left from meal prep.",
+      "ingredients": [
+        "6 whole eggs + 4 egg whites",
+        "¼ cup cottage cheese (blended in — this is what makes them custardy)",
+        "Chopped peppers, onion, spinach; a little cheese",
+        "Salt, pepper"
+      ],
+      "steps": [
+        "Blend the eggs, whites and cottage cheese until smooth.",
+        "Divide veg between 12 greased muffin cups, pour the egg mix over.",
+        "Bake at 325°F for 20–22 minutes until just set — low and slow keeps them tender.",
+        "Cool completely, then freeze on a tray before bagging."
+      ],
+      "tips": ["Reheat 60–90 seconds from frozen.", "Using more whites than yolks is the fat lever: all-whole-egg bites are closer to 14g of fat per pair."]
+    },
+    {
+      "id": "roasted-chickpeas",
+      "icon": "🫛",
+      "name": "Roasted chickpeas",
+      "time": "5 min · 40 min roast",
+      "yield": "~2 cups",
+      "why": "Cheap, crunchy, 5g of fiber a portion, and shelf-stable enough for a desk drawer for a few days.",
+      "ingredients": ["2 cans chickpeas, drained and rinsed", "2 tsp olive oil", "Smoked paprika, cumin, garlic powder, salt"],
+      "steps": [
+        "Dry the chickpeas thoroughly on a towel — this is the difference between crunchy and chewy. Rub the skins off as you go.",
+        "Toss with oil and spices.",
+        "Air fryer 15–18 min at 390°F shaking twice, or oven 40 min at 400°F.",
+        "Cool completely uncovered before bagging, or they go soft."
+      ],
+      "tips": ["They soften after a couple of days — make a batch you'll finish inside a week.", "Season after roasting for a punchier flavor."]
+    },
+    {
+      "id": "popcorn",
+      "icon": "🍿",
+      "name": "Air-popped popcorn",
+      "time": "3 min",
+      "yield": "¼ cup kernels → ~5 cups popped",
+      "why": "Bagged popcorn is 36% fat by weight; microwave bags are close behind. The corn was never the problem — you're paying for the oil it arrives in. A whole SkinnyPop bag is 675 kcal and 45g of fat; the same volume air-popped is about 230 kcal and under 3g.",
+      "ingredients": ["¼ cup popcorn kernels", "Spray oil, nutritional yeast, chili-lime or everything bagel seasoning"],
+      "steps": [
+        "Put the kernels in a brown paper lunch bag and fold the top over twice. No oil, no staples.",
+        "Microwave on high ~2 minutes, until the pops slow to about 2 seconds apart. Listen, don't trust the timer.",
+        "Tip into a bowl, mist lightly with spray oil, then season."
+      ],
+      "tips": [
+        "Nutritional yeast gives it a cheesy hit and adds a little protein.",
+        "Two pounds of kernels costs about $3 and makes roughly 26 bags' worth.",
+        "Popcorn has almost no protein — pair it with a blended cottage cheese dip to make it a real snack."
+      ]
+    },
+    {
+      "id": "tuna-primer",
+      "icon": "🐟",
+      "name": "Canned tuna — a primer",
+      "time": "5 min",
+      "yield": "1 can per serving",
+      "why": "One can drained is 100 kcal, 22g protein and 1g fat — the leanest protein available to you. Worth pushing through the taste barrier, because nothing else in the library is this efficient.",
+      "warn": "Keep this one at home. The macros are excellent but tuna at a desk is an office-etiquette problem.",
+      "ingredients": ["Solid white albacore in water (milder than chunk light while you adjust)"],
+      "steps": [
+        "Drain AND rinse. The packing liquid holds most of the smell — this is the single biggest improvement available.",
+        "Hit it with acid immediately: lemon juice, or a splash of vinegar. This isn't just flavor-masking — acid binds the trimethylamine that is the fishy smell and stops it going airborne.",
+        "Mix with nonfat Greek yogurt rather than mayo. Saves ~10g of fat and the tang helps again.",
+        "Don't make it the star at first — fold it into a bowl or onto a tortilla with something loud."
+      ],
+      "tips": [
+        "Not a mustard fan? Prepared horseradish (½ tsp) is the sharpest swap and a completely different flavor family. Minced capers or a splash of vinegar also work.",
+        "Serve with cucumber rounds or bell pepper scoops instead of crackers."
+      ]
+    }
+  ]
+}

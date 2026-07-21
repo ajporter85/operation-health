@@ -66,6 +66,12 @@ const detailSections = `  <details class="sec" open>
     <div class="secbody"><div id="body-notes"></div></div>
   </details>`;
 
+// --- snacks (own data file — there's no card to extract them from) ---
+const snackTxt = fs.readFileSync("snack-data.json", "utf8").trim();
+const snackData = JSON.parse(snackTxt); // validate
+const snackCount = snackData.snacks.length;
+islands.push('<script type="application/json" id="snack-data">\n' + snackTxt + "\n</script>");
+
 // --- hub-specific CSS ---
 const hubCss = `
   /* HUB */
@@ -123,6 +129,66 @@ const hubCss = `
   .saucelist .opt { color: var(--ink-3); }
   @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
 
+  /* SNACKS */
+  .sortbar { margin: 0 0 22px; }
+  .sortlab { font-family: var(--font-display); font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); display: block; margin-bottom: 7px; }
+  .sortseg { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .sortbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px 6px; cursor: pointer; transition: background .14s ease, color .14s ease, border-color .14s ease; }
+  .sortbtn:hover { border-color: var(--chipotle); color: var(--chipotle); }
+  .sortbtn.on { background: var(--chipotle); border-color: var(--chipotle); color: #fff; }
+  @media (max-width: 900px){ .sortseg { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px){ .sortseg { grid-template-columns: repeat(2, 1fr); } }
+
+  .slegend { display: flex; gap: 8px 22px; flex-wrap: wrap; font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 15px; margin: 0 0 22px; line-height: 1.5; }
+  .slegend span { white-space: nowrap; }
+  .slegend .lg-ico { font-size: 16px; }
+  .slegend b { color: var(--ink); }
+
+  .sgroup { margin-bottom: 26px; }
+  .sgroup > .sghead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--line-strong); padding-bottom: 7px; margin-bottom: 12px; }
+  .sgroup > .sghead h3 { margin: 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; letter-spacing: .01em; }
+  .sgroup > .sghead .sgn { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); }
+  .sgroup > .sghead .sgblurb { flex: 1 1 100%; font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+
+  .snack { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 8px; }
+  .snack > summary { padding: 12px 14px; }
+  .snack > .sbody { padding: 0 14px 14px; }
+  .snack > .sbody.solo { padding: 12px 14px; }
+  .snack > summary { cursor: pointer; list-style: none; }
+  .snack > summary::-webkit-details-marker { display: none; }
+  .snack > summary::after { content: "▸ details"; display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--chipotle); margin-top: 8px; }
+  .snack[open] > summary::after { content: "▾ close"; }
+  .snack:hover { border-color: var(--line-strong); }
+  .s-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .s-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 18px; letter-spacing: .01em; }
+  .s-star { color: var(--chipotle); font-size: 15px; }
+  .s-where { font-size: 17px; letter-spacing: 3px; margin-left: auto; }
+  .s-portion { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.45; }
+  .s-macros { font-family: var(--font-mono); font-size: 14px; margin-top: 8px; display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline; font-variant-numeric: tabular-nums; }
+  .s-kcal { font-weight: 800; }
+  .na { font-weight: 700; }
+  .na.lo { color: var(--macro-fiber); }
+  .na.mid { color: var(--macro-carb); }
+  .na.hi { color: var(--chipotle); }
+  .s-note { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; margin: 9px 0 0; }
+  .s-tip { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; background: var(--surface-2); border-left: 3px solid var(--chipotle); border-radius: 0 6px 6px 0; padding: 9px 12px; margin: 10px 0 0; }
+  .s-link { display: inline-block; font-family: var(--font-ui); font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--chipotle); background: none; border: 0; padding: 0; margin-top: 10px; cursor: pointer; }
+  .s-link:hover { text-decoration: underline; }
+
+  /* MAKE YOUR OWN */
+  .myo { background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius); margin-bottom: 12px; }
+  .myo > summary { cursor: pointer; list-style: none; padding: 16px 18px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .myo > summary::-webkit-details-marker { display: none; }
+  .myo .myo-ico { font-size: 26px; line-height: 1; }
+  .myo .myo-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 20px; }
+  .myo .myo-time { font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); margin-left: auto; }
+  .myo .myo-body { padding: 0 18px 18px; }
+  .myo .myo-why { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+  .myo .myo-yield { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-3); margin: 0 0 12px; }
+  .myo .myo-warn { font-family: var(--font-ui); font-size: 15px; line-height: 1.55; background: color-mix(in srgb, var(--chipotle) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--chipotle) 32%, var(--line)); border-radius: var(--radius-sm); padding: 11px 13px; margin: 0 0 14px; color: var(--ink-2); }
+  .myo h4 { font-family: var(--font-display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-3); margin: 14px 0 7px; }
+  .myo ul, .myo ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+
   /* BREAKFAST & SNACKS — day table */
   .daytable { width: 100%; min-width: 540px; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
   .daytable th, .daytable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
@@ -145,6 +211,7 @@ const body = `<div class="wrap">
     <button class="navbtn" type="button" data-view="staples">Prep-Ahead Staples</button>
     <button class="navbtn" type="button" data-view="freeze">Freeze &amp; Reheat</button>
     <button class="navbtn" type="button" data-view="fuel">Round Out the Day</button>
+    <button class="navbtn" type="button" data-view="snacks">Snacks</button>
   </nav>
 
   <div class="view" id="view-meals">
@@ -173,6 +240,7 @@ ${detailSections}
   <div class="view" id="view-staples" hidden><div id="staples-body"></div></div>
   <div class="view" id="view-freeze" hidden><div id="freeze-body"></div></div>
   <div class="view" id="view-fuel" hidden><div id="fuel-body"></div></div>
+  <div class="view" id="view-snacks" hidden><div id="snacks-body"></div></div>
 
   <footer>
     <span>Operation Health Meal Library · ${meta.length} meals · ${totalBuilds} builds</span>
@@ -369,9 +437,9 @@ const hubJs = `
     var cube = {}; K.forEach(function (k) { cube[k] = avg(k); });
 
     var BREAKFAST = { kcal: 450, carbs: 35, protein: 48, fat: 12, fiber: 10 };
-    var SNACKS    = { kcal: 600, carbs: 50, protein: 30, fat: 28, fiber: 10 }; // two snacks
+    var SNACKBLOCK = { kcal: 600, carbs: 50, protein: 30, fat: 28, fiber: 10 }; // two snacks
     var PSYLLIUM  = { kcal: 35,  carbs: 9,  protein: 0,  fat: 0,  fiber: 7 };
-    var total = {}; K.forEach(function (k) { total[k] = BREAKFAST[k] + cube[k] * 2 + SNACKS[k] + PSYLLIUM[k]; });
+    var total = {}; K.forEach(function (k) { total[k] = BREAKFAST[k] + cube[k] * 2 + SNACKBLOCK[k] + PSYLLIUM[k]; });
 
     function row(label, m, cls) {
       return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td>" + label + "</td><td>" + m.kcal + "</td><td>" +
@@ -387,7 +455,7 @@ const hubJs = `
       row("Breakfast — light", disp(BREAKFAST)) +
       row("Lunch — cube meal", disp(cube)) +
       row("Dinner — cube meal", disp(cube)) +
-      row("Snacks × 2", disp(SNACKS)) +
+      row("Snacks × 2", disp(SNACKBLOCK)) +
       row("Psyllium — 2 scoops", { kcal: "~35", carbs: "~9 g", protein: "—", fat: "—", fiber: "~7 g" }) +
       row("Day total", disp(total), "tot") +
       row("Your target", { kcal: "2,300–2,500", carbs: "~235–285 g", protein: "~170 g", fat: "~75 g", fiber: "high" }, "tgt") +
@@ -402,15 +470,16 @@ const hubJs = `
       "<li><b>+ Chia or ground flax</b> 1 Tbsp — fiber &amp; omega-3</li>" +
       '<li class="opt">Optional: a little oats or granola for more staying power</li>' +
       "</ul></div>";
+    // Pulled live from the Snacks tab so the two can't drift apart: the starred
+    // picks, leanest first — those are the ones that clear the fat budget.
+    var picks = SNACKS.snacks.filter(function (s) { return s.star; })
+      .sort(function (a, b) { return a.macros.fat - b.macros.fat; }).slice(0, 6);
     var snacks = '<div class="scol"><h3>Snacks <span class="sub">~300 kcal each, protein-forward — the plan assumes two</span></h3><ul class="saucelist">' +
-      "<li>Edamame, 1 cup — ~17g protein, high fiber</li>" +
-      "<li>Cottage cheese + fruit</li>" +
-      "<li>Turkey stick or jerky</li>" +
-      "<li>Roasted chickpeas</li>" +
-      "<li>A second protein shake</li>" +
-      "<li>Two hard-boiled eggs</li>" +
-      "<li>Apple + 1 Tbsp peanut butter</li>" +
-      "<li>Small handful of almonds</li>" +
+      picks.map(function (s) {
+        return "<li><b>" + esc(s.name) + "</b> — " + s.macros.kcal + " kcal · " +
+          s.macros.protein + "g protein · " + s.macros.fat + "g fat</li>";
+      }).join("") +
+      '<li class="opt">' + SNACKS.snacks.length + " options with full macros on the <b>Snacks</b> tab →</li>" +
       "</ul></div>";
     document.getElementById("fuel-body").innerHTML =
       '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
@@ -422,6 +491,159 @@ const hubJs = `
       '<div class="kitbox" style="margin-top:16px"><b>Psyllium:</b> 1 scoop in water before lunch and before dinner (2 scoops/day) — ~7g fiber for ~35 kcal, plus fullness. &nbsp;<b>Hydration:</b> aim for 3–4 L water across the day.</div>';
   }
 
+  // ---------- Snacks ----------
+  var SNACKS = JSON.parse(document.getElementById("snack-data").textContent);
+  var snackSort = "tier";
+
+  function fatBand(g) { return g <= SNACKS.fatBands.lean ? "lean" : (g <= SNACKS.fatBands.mid ? "mid" : "rich"); }
+  function naBand(mg) { return mg <= SNACKS.sodiumBands.low ? "lo" : (mg <= SNACKS.sodiumBands.mod ? "mid" : "hi"); }
+  function chip(v, cls) { return '<span class="mc ' + cls + '">' + v + "</span>"; }
+  function byId(list, id) { return list.filter(function (x) { return x.id === id; })[0]; }
+
+  var AXES = [
+    { id: "tier",   label: "Prep tier" },
+    { id: "where",  label: "Where" },
+    { id: "fat",    label: "Fat cost" },
+    { id: "flavor", label: "Sweet &amp; savory" },
+    { id: "myo",    label: "Make your own" }
+  ];
+  var FATG = [
+    { id: "lean", icon: "🟢", label: "Lean — 5g fat or less",
+      blurb: "Fat is the macro that binds your day, so these are the ones you can reach for twice without thinking about it." },
+    { id: "mid", icon: "🟡", label: "Moderate — 6 to 9g fat",
+      blurb: "Fine once a day. Two of these plus a rich meal and you are at the ceiling." },
+    { id: "rich", icon: "🔴", label: "Rich — 10g fat or more",
+      blurb: "A seventh of your daily fat budget or worse, usually for very little protein. Portion these deliberately." }
+  ];
+
+  function groupsFor(axis) {
+    function mk(o, pick) { return { icon: o.icon, label: o.label, blurb: o.blurb || "", pick: pick }; }
+    if (axis === "where") {
+      return SNACKS.wheres.map(function (w) {
+        return mk(w, function (s) { return s.where.indexOf(w.id) >= 0; });
+      });
+    }
+    if (axis === "fat") {
+      return FATG.map(function (g) {
+        return mk(g, function (s) { return fatBand(s.macros.fat) === g.id; });
+      });
+    }
+    if (axis === "flavor") {
+      return SNACKS.flavors.map(function (f) {
+        return mk(f, function (s) { return s.flavor === f.id; });
+      });
+    }
+    return SNACKS.tiers.map(function (t) {
+      return mk(t, function (s) { return s.tier === t.id; });
+    });
+  }
+
+  function snackHead(s) {
+    var m = s.macros;
+    var wIcons = s.where.map(function (w) {
+      var o = byId(SNACKS.wheres, w);
+      return o ? '<span title="' + esc(o.label) + '">' + o.icon + "</span>" : "";
+    }).join("");
+    return '<div class="s-top"><span class="s-name">' + esc(s.name) + "</span>" +
+      (s.star ? '<span class="s-star" title="Standout pick">★</span>' : "") +
+      '<span class="s-where">' + wIcons + "</span></div>" +
+      '<div class="s-portion">' + esc(s.portion) + "</div>" +
+      '<div class="s-macros"><span class="s-kcal">' + m.kcal + " kcal</span>" +
+        chip(m.protein + "g P", "prot") + chip(m.carbs + "g C", "carb") +
+        chip(m.fat + "g F", "fat") + chip(m.fiber + "g fib", "fib") +
+        '<span class="na ' + naBand(m.sodium) + '" title="Sodium">' + m.sodium + "mg Na</span></div>" +
+      (s.note ? '<p class="s-note">' + esc(s.note) + "</p>" : "");
+  }
+
+  function snackRow(s) {
+    var extra = "";
+    if (s.tip) extra += '<p class="s-tip">' + esc(s.tip) + "</p>";
+    if (s.makeOwn) {
+      var o = byId(SNACKS.makeYourOwn, s.makeOwn);
+      if (o) extra += '<button class="s-link" type="button" data-myo="' + o.id + '">' + o.icon + " Make your own: " + esc(o.name) + " ↓</button>";
+    }
+    if (!extra) return '<div class="snack"><div class="sbody solo">' + snackHead(s) + "</div></div>";
+    return '<details class="snack"><summary>' + snackHead(s) + '</summary><div class="sbody">' + extra + "</div></details>";
+  }
+
+  function myoCard(o) {
+    function li(x) { return "<li>" + esc(x) + "</li>"; }
+    var m = o.macros;
+    return '<details class="myo" id="myo-' + o.id + '">' +
+      '<summary><span class="myo-ico">' + o.icon + '</span><span class="myo-name">' + esc(o.name) + "</span>" +
+        '<span class="myo-time">' + esc(o.time) + "</span></summary>" +
+      '<div class="myo-body">' +
+        '<p class="myo-yield">Makes: ' + esc(o["yield"]) + "</p>" +
+        '<p class="myo-why">' + esc(o.why) + "</p>" +
+        (o.warn ? '<p class="myo-warn"><b>Heads up —</b> ' + esc(o.warn) + "</p>" : "") +
+        (m ? '<div class="s-macros" style="margin-bottom:14px"><span class="s-kcal">' + m.kcal + " kcal</span>" +
+              chip(m.protein + "g P", "prot") + chip(m.carbs + "g C", "carb") + chip(m.fat + "g F", "fat") +
+              chip(m.fiber + "g fib", "fib") + '<span class="na ' + naBand(m.sodium) + '">' + m.sodium + "mg Na</span></div>" : "") +
+        "<h4>What you need</h4><ul>" + o.ingredients.map(li).join("") + "</ul>" +
+        "<h4>Steps</h4><ol>" + o.steps.map(li).join("") + "</ol>" +
+        (o.tips && o.tips.length ? "<h4>Tips</h4><ul>" + o.tips.map(li).join("") + "</ul>" : "") +
+      "</div></details>";
+  }
+
+  function renderSnacks() {
+    var b = SNACKS.budget;
+    var bar = '<div class="sortbar"><span class="sortlab">Group by</span><div class="sortseg" id="sortseg">' +
+      AXES.map(function (a) {
+        return '<button class="sortbtn' + (a.id === snackSort ? " on" : "") + '" type="button" data-sort="' + a.id + '">' + a.label + "</button>";
+      }).join("") + "</div></div>";
+
+    var legend = '<div class="slegend">' +
+      '<span><b class="s-star">★</b> standout pick</span>' +
+      SNACKS.wheres.map(function (w) {
+        return '<span><b class="lg-ico">' + w.icon + "</b> " + esc(w.label) + "</span>";
+      }).join("") +
+      '<span>Sodium — <b class="na lo">under ' + SNACKS.sodiumBands.low + "mg</b> · " +
+        '<b class="na mid">to ' + SNACKS.sodiumBands.mod + 'mg</b> · <b class="na hi">above</b></span>' +
+      "</div>";
+
+    // "Make your own" is a filter, not a grouping — show the productions alone.
+    var onlyMyo = snackSort === "myo";
+
+    var groups = onlyMyo ? "" : groupsFor(snackSort).map(function (g) {
+      var rows = SNACKS.snacks.filter(g.pick).sort(function (x, y) {
+        return (x.macros.fat - y.macros.fat) || (x.macros.kcal - y.macros.kcal);
+      });
+      if (!rows.length) return "";
+      return '<section class="sgroup"><div class="sghead"><h3>' + g.icon + " " + g.label + "</h3>" +
+        '<span class="sgn">' + rows.length + " option" + (rows.length === 1 ? "" : "s") + "</span>" +
+        (g.blurb ? '<span class="sgblurb">' + esc(g.blurb) + "</span>" : "") +
+        "</div>" + rows.map(snackRow).join("") + "</section>";
+    }).join("");
+
+    document.getElementById("snacks-body").innerHTML =
+      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Snacks</span>' +
+        '<h1 style="font-size:clamp(28px,5vw,44px)">The other <span class="lead">quarter of the day</span></h1>' +
+        '<p class="tagline">Two snacks are about 600 calories — roughly a quarter of everything you eat, and the part that decides whether the day lands on target. ' + SNACKS.snacks.length + ' options, each with real macros. Regroup them however you are thinking about it.</p></header>' +
+      '<div class="kitbox"><b>Two numbers to watch.</b> <b>Fat</b> is your binding macro — the meals already run 20–28g each, so a snack at 14g of fat costs more than its calories suggest. And <b>sodium</b>: the ceiling is ' +
+        b.sodiumDayMg.toLocaleString() + 'mg a day, and three meals use most of it, which leaves roughly <b>' + b.sodiumSnackBudgetMg +
+        'mg for the day’s snacks</b>. Shelf-stable things are salted to stay shelf-stable, so the desk-friendly picks are usually the salty ones. ' +
+        'Handy: the <b>%DV</b> printed on any label is calculated against that same ' + b.sodiumDayMg.toLocaleString() + 'mg — so it is already your share of the day.</div>' +
+      bar + (onlyMyo ? "" : legend) + groups +
+      '<header class="lib-hero" style="margin:' + (onlyMyo ? "0" : "34px") + ' 0 16px"><span class="eyebrow">Make Your Own</span>' +
+        '<h1 style="font-size:clamp(24px,4vw,36px)">Worth <span class="lead">making yourself</span></h1>' +
+        '<p class="tagline">These are productions, not snacks — the things that feed the list' +
+        (onlyMyo ? " on the other tabs" : " above") +
+        '. Each one is either meaningfully cheaper than buying it, or lets you fix something you cannot fix at the store.</p></header>' +
+      SNACKS.makeYourOwn.map(myoCard).join("");
+
+    Array.prototype.forEach.call(document.querySelectorAll(".sortbtn"), function (btn) {
+      btn.addEventListener("click", function () { snackSort = btn.getAttribute("data-sort"); renderSnacks(); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-myo]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var card = document.getElementById("myo-" + btn.getAttribute("data-myo"));
+        if (!card) return;
+        card.open = true;
+        if (card.scrollIntoView) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
   // ---------- view switching ----------
   function showView(v) {
     state.view = v;
@@ -429,12 +651,14 @@ const hubJs = `
     document.getElementById("view-staples").hidden = v !== "staples";
     document.getElementById("view-freeze").hidden = v !== "freeze";
     document.getElementById("view-fuel").hidden = v !== "fuel";
+    document.getElementById("view-snacks").hidden = v !== "snacks";
     Array.prototype.forEach.call(document.querySelectorAll(".navbtn"), function (b) {
       b.className = "navbtn" + (b.getAttribute("data-view") === v ? " active" : "");
     });
     if (v === "staples") renderStaples();
     else if (v === "freeze") renderFreeze();
     else if (v === "fuel") renderFuel();
+    else if (v === "snacks") renderSnacks();
     else showHome();
     if (window.scrollTo) window.scrollTo(0, 0);
   }

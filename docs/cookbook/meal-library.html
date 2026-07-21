@@ -284,6 +284,66 @@
   .saucelist .opt { color: var(--ink-3); }
   @media (max-width: 600px){ .saucecols { grid-template-columns: 1fr; } }
 
+  /* SNACKS */
+  .sortbar { margin: 0 0 22px; }
+  .sortlab { font-family: var(--font-display); font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); display: block; margin-bottom: 7px; }
+  .sortseg { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .sortbtn { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 13.5px; color: var(--ink-2); background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm); padding: 10px 6px; cursor: pointer; transition: background .14s ease, color .14s ease, border-color .14s ease; }
+  .sortbtn:hover { border-color: var(--chipotle); color: var(--chipotle); }
+  .sortbtn.on { background: var(--chipotle); border-color: var(--chipotle); color: #fff; }
+  @media (max-width: 900px){ .sortseg { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px){ .sortseg { grid-template-columns: repeat(2, 1fr); } }
+
+  .slegend { display: flex; gap: 8px 22px; flex-wrap: wrap; font-family: var(--font-ui); font-size: 14px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 15px; margin: 0 0 22px; line-height: 1.5; }
+  .slegend span { white-space: nowrap; }
+  .slegend .lg-ico { font-size: 16px; }
+  .slegend b { color: var(--ink); }
+
+  .sgroup { margin-bottom: 26px; }
+  .sgroup > .sghead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--line-strong); padding-bottom: 7px; margin-bottom: 12px; }
+  .sgroup > .sghead h3 { margin: 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 19px; letter-spacing: .01em; }
+  .sgroup > .sghead .sgn { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-3); }
+  .sgroup > .sghead .sgblurb { flex: 1 1 100%; font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+
+  .snack { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 8px; }
+  .snack > summary { padding: 12px 14px; }
+  .snack > .sbody { padding: 0 14px 14px; }
+  .snack > .sbody.solo { padding: 12px 14px; }
+  .snack > summary { cursor: pointer; list-style: none; }
+  .snack > summary::-webkit-details-marker { display: none; }
+  .snack > summary::after { content: "▸ details"; display: block; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--chipotle); margin-top: 8px; }
+  .snack[open] > summary::after { content: "▾ close"; }
+  .snack:hover { border-color: var(--line-strong); }
+  .s-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .s-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 18px; letter-spacing: .01em; }
+  .s-star { color: var(--chipotle); font-size: 15px; }
+  .s-where { font-size: 17px; letter-spacing: 3px; margin-left: auto; }
+  .s-portion { font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-3); margin-top: 3px; line-height: 1.45; }
+  .s-macros { font-family: var(--font-mono); font-size: 14px; margin-top: 8px; display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline; font-variant-numeric: tabular-nums; }
+  .s-kcal { font-weight: 800; }
+  .na { font-weight: 700; }
+  .na.lo { color: var(--macro-fiber); }
+  .na.mid { color: var(--macro-carb); }
+  .na.hi { color: var(--chipotle); }
+  .s-note { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; margin: 9px 0 0; }
+  .s-tip { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; background: var(--surface-2); border-left: 3px solid var(--chipotle); border-radius: 0 6px 6px 0; padding: 9px 12px; margin: 10px 0 0; }
+  .s-link { display: inline-block; font-family: var(--font-ui); font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--chipotle); background: none; border: 0; padding: 0; margin-top: 10px; cursor: pointer; }
+  .s-link:hover { text-decoration: underline; }
+
+  /* MAKE YOUR OWN */
+  .myo { background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius); margin-bottom: 12px; }
+  .myo > summary { cursor: pointer; list-style: none; padding: 16px 18px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .myo > summary::-webkit-details-marker { display: none; }
+  .myo .myo-ico { font-size: 26px; line-height: 1; }
+  .myo .myo-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 20px; }
+  .myo .myo-time { font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); margin-left: auto; }
+  .myo .myo-body { padding: 0 18px 18px; }
+  .myo .myo-why { font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.6; margin: 0 0 12px; }
+  .myo .myo-yield { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-3); margin: 0 0 12px; }
+  .myo .myo-warn { font-family: var(--font-ui); font-size: 15px; line-height: 1.55; background: color-mix(in srgb, var(--chipotle) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--chipotle) 32%, var(--line)); border-radius: var(--radius-sm); padding: 11px 13px; margin: 0 0 14px; color: var(--ink-2); }
+  .myo h4 { font-family: var(--font-display); font-size: 12.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-3); margin: 14px 0 7px; }
+  .myo ul, .myo ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; font-family: var(--font-ui); font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+
   /* BREAKFAST & SNACKS — day table */
   .daytable { width: 100%; min-width: 540px; border-collapse: collapse; font-family: var(--font-ui); margin: 2px 0 4px; }
   .daytable th, .daytable td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
@@ -305,6 +365,7 @@
     <button class="navbtn" type="button" data-view="staples">Prep-Ahead Staples</button>
     <button class="navbtn" type="button" data-view="freeze">Freeze &amp; Reheat</button>
     <button class="navbtn" type="button" data-view="fuel">Round Out the Day</button>
+    <button class="navbtn" type="button" data-view="snacks">Snacks</button>
   </nav>
 
   <div class="view" id="view-meals">
@@ -351,6 +412,7 @@
   <div class="view" id="view-staples" hidden><div id="staples-body"></div></div>
   <div class="view" id="view-freeze" hidden><div id="freeze-body"></div></div>
   <div class="view" id="view-fuel" hidden><div id="fuel-body"></div></div>
+  <div class="view" id="view-snacks" hidden><div id="snacks-body"></div></div>
 
   <footer>
     <span>Operation Health Meal Library · 6 meals · 38 builds</span>
@@ -5872,6 +5934,639 @@
   }
 }
 </script>
+<script type="application/json" id="snack-data">
+{
+  "schemaVersion": 1,
+  "kind": "snacks",
+  "note": "Canonical snack model for the Operation Health Meal Library. Same discipline as #meal-data — the app's Meal Library can import these. Macros are per the stated portion.",
+  "budget": {
+    "snacksPerDay": 2,
+    "kcalPerSnack": 300,
+    "sodiumDayMg": 2300,
+    "sodiumSnackBudgetMg": 600
+  },
+  "fatBands": { "lean": 5, "mid": 9 },
+  "sodiumBands": { "low": 140, "mod": 400 },
+  "tiers": [
+    {
+      "id": "grab",
+      "icon": "🥣",
+      "label": "Grab & assemble",
+      "blurb": "No prep beyond opening a container. Thirty seconds, a bowl, done."
+    },
+    {
+      "id": "measure",
+      "icon": "🧮",
+      "label": "Measure & bag",
+      "blurb": "Shelf-stable things that only go wrong when eaten from the bag. Portion once, on a scale, into bags."
+    },
+    {
+      "id": "batch",
+      "icon": "🧊",
+      "label": "Batch & freeze",
+      "blurb": "Made in a batch on prep day, same as the meals. Several reuse your 2-Tbsp sauce molds."
+    }
+  ],
+  "wheres": [
+    { "id": "home", "icon": "🏠", "label": "Home / near a fridge" },
+    { "id": "desk", "icon": "💼", "label": "Desk / portable" },
+    { "id": "post", "icon": "💪", "label": "Post-workout" }
+  ],
+  "flavors": [
+    { "id": "savory", "icon": "🧂", "label": "Savory" },
+    { "id": "sweet", "icon": "🍫", "label": "Sweet / evening" }
+  ],
+  "snacks": [
+    {
+      "id": "greek-yogurt-berries",
+      "name": "Greek yogurt + berries",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "¾ cup nonfat Greek yogurt + ½ cup berries",
+      "macros": { "kcal": 140, "protein": 18, "carbs": 17, "fat": 0, "fiber": 3, "sodium": 65 },
+      "star": true,
+      "note": "The best snack in the library: 18g protein for zero fat and almost no sodium. Nothing else here wins on all three.",
+      "makeOwn": "greek-yogurt"
+    },
+    {
+      "id": "protein-shake",
+      "name": "Protein shake",
+      "tier": "grab",
+      "where": ["home", "desk", "post"],
+      "flavor": "sweet",
+      "portion": "1 scoop + 1 cup skim milk (or water at a desk)",
+      "macros": { "kcal": 220, "protein": 32, "carbs": 12, "fat": 5, "fiber": 1, "sodium": 180 },
+      "star": true,
+      "note": "Dry-scoop into a shaker in the morning and add water at your desk — the cheapest 30g of protein you can carry.",
+      "tip": "Post-workout this is the one to reach for: liquid protein hits fastest and you're usually not hungry for solid food yet."
+    },
+    {
+      "id": "half-protein-puck",
+      "name": "½ protein puck",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "Half a 1-cup protein puck, reheated (~2½ oz cooked)",
+      "macros": { "kcal": 115, "protein": 21, "carbs": 0, "fat": 3, "fiber": 0, "sodium": 200 },
+      "star": true,
+      "note": "Costs nothing extra — it's already in your freezer from meal prep. Best protein-per-calorie of anything you don't have to shop for.",
+      "tip": "Reheat 60–90 seconds from frozen. A squeeze of lime or a spoon of salsa is all it needs."
+    },
+    {
+      "id": "cottage-cheese-fruit",
+      "name": "Cottage cheese + fruit",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "¾ cup 2% cottage cheese + ½ cup pineapple or berries",
+      "macros": { "kcal": 165, "protein": 16, "carbs": 18, "fat": 3, "fiber": 1, "sodium": 550 },
+      "note": "Macro twin of Greek yogurt but roughly 8× the sodium — a rotation item, not a twice-a-day one.",
+      "tip": "Buy 2% (creamy enough to enjoy, only 3g fat) and check the label — mainstream brands run ~600mg sodium where Good Culture is closer to 300mg. If the curds are the problem, see the blended versions below."
+    },
+    {
+      "id": "edamame",
+      "name": "Edamame, steamed",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 cup shelled, from frozen",
+      "macros": { "kcal": 190, "protein": 18, "carbs": 14, "fat": 8, "fiber": 8, "sodium": 15 },
+      "note": "18g protein and 8g fiber for essentially no sodium. Three minutes in the microwave from a frozen bag.",
+      "tip": "Salt it at the table, not in the pot — you'll use a fraction as much."
+    },
+    {
+      "id": "hard-boiled-eggs",
+      "name": "Hard-boiled eggs ×2",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "2 large eggs",
+      "macros": { "kcal": 140, "protein": 12, "carbs": 1, "fat": 10, "fiber": 0, "sodium": 125 },
+      "note": "Keep a boiled half-dozen in the fridge. Deliberately not tagged for the desk — the smell is an office-etiquette problem.",
+      "tip": "Steam them 12 minutes instead of boiling; they peel far more cleanly."
+    },
+    {
+      "id": "string-cheese",
+      "name": "String cheese ×2",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "2 sticks",
+      "macros": { "kcal": 160, "protein": 14, "carbs": 2, "fat": 12, "fiber": 0, "sodium": 380 },
+      "note": "Convenient and genuinely portable, but 12g of fat for 14g of protein is a mediocre trade on a day where fat is the ceiling."
+    },
+    {
+      "id": "apple-pb",
+      "name": "Apple + peanut butter",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "sweet",
+      "portion": "1 medium apple + 1 level Tbsp peanut butter",
+      "macros": { "kcal": 190, "protein": 5, "carbs": 27, "fat": 8, "fiber": 5, "sodium": 75 },
+      "note": "Level the tablespoon. A heaped one is closer to 2 Tbsp and quietly doubles the fat.",
+      "tip": "Swap in powdered peanut butter mixed with water and the same snack lands at ~120 kcal and 2g fat."
+    },
+    {
+      "id": "rollup-lean",
+      "name": "Deli roll-up — lean",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "4 slices turkey + 2 Tbsp hummus + cucumber batons",
+      "macros": { "kcal": 130, "protein": 18, "carbs": 6, "fat": 3, "fiber": 1, "sodium": 560 },
+      "note": "The cheese is the entire fat lever in a roll-up — skipping it takes this family from 10g of fat to 3g.",
+      "tip": "Buy lower-sodium deli meat. Sodium, not macros, is the real cost of this whole category."
+    },
+    {
+      "id": "rollup-classic",
+      "name": "Deli roll-up — classic",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "4 slices turkey + 1 Laughing Cow wedge + cucumber spear",
+      "macros": { "kcal": 130, "protein": 16, "carbs": 3, "fat": 5, "fiber": 1, "sodium": 620 },
+      "note": "The cucumber spear stands in for a pickle — same shape and crunch, none of the sour.",
+      "tip": "Other swaps for the pickle: bell pepper strips (sweet crunch), pepperoncini (tangy, mild heat), or a blanched asparagus spear."
+    },
+    {
+      "id": "rollup-italian",
+      "name": "Deli roll-up — Italian",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "3 slices ham + 1 slice provolone + pepperoncini + spinach",
+      "macros": { "kcal": 180, "protein": 18, "carbs": 2, "fat": 10, "fiber": 1, "sodium": 700 },
+      "note": "The richest and saltiest roll-up. Worth it occasionally; not a default."
+    },
+    {
+      "id": "tuna-classic",
+      "name": "Tuna salad — classic",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "savory",
+      "portion": "1 can chunk light in water, drained + 2 Tbsp nonfat Greek yogurt + lemon + dill + celery + red onion",
+      "macros": { "kcal": 135, "protein": 27, "carbs": 3, "fat": 1.5, "fiber": 1, "sodium": 330 },
+      "star": true,
+      "note": "27g protein for 1.5g fat — the leanest protein in the library. Greek yogurt instead of mayo saves ~10g of fat and the tang helps with the fish.",
+      "tip": "Drain AND rinse the tuna. The packing liquid holds most of the smell, and rinsing is the single biggest improvement you can make.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-creamy",
+      "name": "Tuna salad — creamy horseradish",
+      "tier": "grab",
+      "where": ["home", "post"],
+      "flavor": "savory",
+      "portion": "1 can tuna + ¼ cup blended cottage cheese + ½ tsp prepared horseradish + lemon",
+      "macros": { "kcal": 140, "protein": 29, "carbs": 2, "fat": 1.5, "fiber": 0, "sodium": 420 },
+      "note": "Horseradish replaces dijon — same sharpness, no mustard. Highest protein-per-calorie of anything on this tab.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-southwest",
+      "name": "Tuna salad — southwest",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 can tuna + Greek yogurt + lime + cumin + corn + black beans + cilantro",
+      "macros": { "kcal": 200, "protein": 27, "carbs": 15, "fat": 2, "fiber": 4, "sodium": 380 },
+      "note": "Deliberately borrows the Southwest Bowl's flavor profile — familiar territory while you get used to fish.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "tuna-med",
+      "name": "Tuna salad — Mediterranean",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "1 can tuna + lemon + 1 tsp olive oil + capers + cherry tomato + parsley",
+      "macros": { "kcal": 180, "protein": 23, "carbs": 3, "fat": 6, "fiber": 1, "sodium": 400 },
+      "note": "Capers bring briny sharpness in place of mustard. Serve with cucumber rounds or bell pepper scoops instead of crackers.",
+      "makeOwn": "tuna-primer"
+    },
+    {
+      "id": "biltong",
+      "name": "Biltong",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 90, "protein": 16, "carbs": 1, "fat": 1, "fiber": 0, "sodium": 380 },
+      "star": true,
+      "note": "Air-dried rather than dehydrated, so it's tender rather than leathery — and it carries no added sugar. If jerky has disappointed you before, this fails differently.",
+      "tip": "Look for Stryve. 16g protein for 1g fat is the best ratio of any shelf-stable snack here."
+    },
+    {
+      "id": "sliced-jerky",
+      "name": "Sliced beef jerky",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 85, "protein": 10, "carbs": 6, "fat": 1.5, "fiber": 0, "sodium": 520 },
+      "note": "Excellent macros, but one ounce can be your entire day's snack sodium budget. Sliced jerky only — meat sticks like Slim Jims are ~40% fat and a completely different product.",
+      "tip": "Jack Link's Original: 10g protein, 6g sugar, 520mg sodium. People's Choice Classic: 9g protein, 9g sugar, but only 270mg sodium. Buy Original, never teriyaki. Note that People's Choice describe their own as \"thin and tough\" — if texture is your objection, start elsewhere.",
+      "makeOwn": "jerky"
+    },
+    {
+      "id": "dry-roasted-edamame",
+      "name": "Dry-roasted edamame",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz (28g)",
+      "macros": { "kcal": 130, "protein": 14, "carbs": 9, "fat": 5, "fiber": 9, "sodium": 150 },
+      "star": true,
+      "note": "The most underrated desk snack: shelf-stable, no mess, no smell, 14g protein and 9g fiber. No fridge required."
+    },
+    {
+      "id": "roasted-chickpeas",
+      "name": "Roasted chickpeas",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "⅓ cup",
+      "macros": { "kcal": 120, "protein": 6, "carbs": 20, "fat": 2, "fiber": 5, "sodium": 180 },
+      "note": "Crunchy, cheap, 5g of fiber. Modest protein, so it pairs rather than stands alone.",
+      "makeOwn": "roasted-chickpeas"
+    },
+    {
+      "id": "popcorn",
+      "name": "Air-popped popcorn",
+      "tier": "measure",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "5 cups, popped from ~¼ cup kernels",
+      "macros": { "kcal": 155, "protein": 5, "carbs": 31, "fat": 2, "fiber": 6, "sodium": 0 },
+      "star": true,
+      "note": "An enormous volume of food for nothing — zero added fat, zero sodium, 6g fiber. Popped from bare kernels, not from a bag.",
+      "tip": "Kernels in a brown paper lunch bag, fold the top twice, microwave ~2 min until pops slow to 2 seconds apart. Season after: spray oil plus nutritional yeast (cheesy, adds a little protein), chili-lime, or everything bagel. Two pounds of kernels runs about $3 and makes ~26 bags' worth. Pair it with a blended cottage cheese dip to fix its near-zero protein.",
+      "makeOwn": "popcorn"
+    },
+    {
+      "id": "almonds",
+      "name": "Almonds, portioned",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "savory",
+      "portion": "1 oz — 23 nuts, weighed",
+      "macros": { "kcal": 165, "protein": 6, "carbs": 6, "fat": 14, "fiber": 4, "sodium": 0 },
+      "note": "14g of fat is nearly a fifth of your daily budget for 6g of protein. This single line is why the measure-and-bag tier exists — never eat these from the container.",
+      "tip": "Buy unsalted. Salted runs ~190mg sodium for no benefit."
+    },
+    {
+      "id": "trail-mix",
+      "name": "Trail mix, weighed",
+      "tier": "measure",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 oz, weighed",
+      "macros": { "kcal": 140, "protein": 4, "carbs": 13, "fat": 9, "fiber": 2, "sodium": 55 },
+      "note": "Low protein, high fat, easy to overeat. Fine as an occasional desk item; not a default."
+    },
+    {
+      "id": "egg-bites",
+      "name": "Egg bites ×2",
+      "tier": "batch",
+      "where": ["home", "desk"],
+      "flavor": "savory",
+      "portion": "2 bites",
+      "macros": { "kcal": 160, "protein": 14, "carbs": 3, "fat": 10, "fiber": 0, "sodium": 290 },
+      "note": "Freeze a tray; reheat 60–90 seconds. Portable once cooled.",
+      "makeOwn": "egg-bites"
+    },
+    {
+      "id": "turkey-meatballs",
+      "name": "Turkey meatballs ×3",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "3 meatballs (~1 oz each)",
+      "macros": { "kcal": 190, "protein": 20, "carbs": 6, "fat": 9, "fiber": 1, "sodium": 340 },
+      "note": "Make a double batch on Italian Bowl prep day and freeze the overflow as a snack. Zero extra shopping."
+    },
+    {
+      "id": "smoothie-pack",
+      "name": "Smoothie freezer pack",
+      "tier": "batch",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "1 bagged pack + 1 scoop protein + water",
+      "macros": { "kcal": 280, "protein": 28, "carbs": 30, "fat": 5, "fiber": 5, "sodium": 160 },
+      "note": "Bag frozen fruit, spinach and oats in portions on prep day. Tip a bag into the blender, add protein powder and water.",
+      "tip": "The biggest snack on the tab — treat it as a post-workout meal rather than a top-up."
+    },
+    {
+      "id": "yogurt-bark",
+      "name": "Greek yogurt bark",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "4 frozen pieces",
+      "macros": { "kcal": 140, "protein": 12, "carbs": 14, "fat": 3, "fiber": 1, "sodium": 50 },
+      "star": true,
+      "note": "Reuses your sixteen 2-Tbsp sauce molds — zero new equipment. Frozen yogurt that happens to be 12g of protein.",
+      "makeOwn": "yogurt-bark"
+    },
+    {
+      "id": "cc-everything",
+      "name": "Blended cottage cheese — everything bagel dip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "¾ cup blended + everything seasoning + squeeze of lemon",
+      "macros": { "kcal": 120, "protein": 15, "carbs": 4, "fat": 3, "fiber": 0, "sodium": 520 },
+      "note": "Thirty seconds in the blender turns curds into something like whipped ricotta. If texture was the objection, this is the fix.",
+      "tip": "This is the dip that pairs with air-popped popcorn — together ~275 kcal, 20g protein, and a genuinely large pile of food.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-ranch",
+      "name": "Blended cottage cheese — ranch dip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "savory",
+      "portion": "¾ cup blended + dried dill, garlic & onion powder, chives",
+      "macros": { "kcal": 120, "protein": 15, "carbs": 4, "fat": 3, "fiber": 0, "sodium": 500 },
+      "note": "Dip for cucumber, peppers, carrots. Makes vegetables into a 15g-protein snack.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-chocolate",
+      "name": "Blended cottage cheese — chocolate pudding",
+      "tier": "batch",
+      "where": ["home", "post"],
+      "flavor": "sweet",
+      "portion": "¾ cup blended + 1 Tbsp cocoa + sweetener",
+      "macros": { "kcal": 140, "protein": 16, "carbs": 8, "fat": 3, "fiber": 1, "sodium": 450 },
+      "star": true,
+      "note": "Dessert that is 16g of protein and 3g of fat. This is the whole evening strategy in one bowl.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "cc-honey-vanilla",
+      "name": "Blended cottage cheese — honey-vanilla whip",
+      "tier": "batch",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "¾ cup blended + 1 tsp honey + vanilla + cinnamon, over berries",
+      "macros": { "kcal": 175, "protein": 16, "carbs": 20, "fat": 3, "fiber": 3, "sodium": 450 },
+      "note": "Tastes like cheesecake filling. Also good dolloped on hot food with Italian herbs instead of honey — a passable ricotta.",
+      "makeOwn": "blended-cc"
+    },
+    {
+      "id": "protein-hot-chocolate",
+      "name": "Protein hot chocolate",
+      "tier": "grab",
+      "where": ["home", "desk"],
+      "flavor": "sweet",
+      "portion": "1 scoop chocolate protein + 1 tsp cocoa + hot skim milk or water",
+      "macros": { "kcal": 160, "protein": 26, "carbs": 8, "fat": 3, "fiber": 1, "sodium": 190 },
+      "star": true,
+      "note": "The sleeper for an evening craving — warm and slow to drink, which does more than anything cold. 26g of protein disguised as dessert.",
+      "tip": "Mix the powder into a splash of cold liquid first, then top up with hot. Straight into hot liquid and it clumps."
+    },
+    {
+      "id": "frozen-grapes",
+      "name": "Frozen grapes",
+      "tier": "grab",
+      "where": ["home"],
+      "flavor": "sweet",
+      "portion": "1 cup, frozen",
+      "macros": { "kcal": 100, "protein": 1, "carbs": 27, "fat": 0, "fiber": 1, "sodium": 3 },
+      "note": "The sweet equivalent of air-popped popcorn — eat a whole bowl and pay nothing. Freezing makes them slow to eat, which is most of the point.",
+      "tip": "No protein at all, so pair with the chocolate pudding or hot chocolate if it's replacing a real snack."
+    },
+    {
+      "id": "bar-nobake",
+      "name": "No-bake protein oat bar",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 bar",
+      "macros": { "kcal": 180, "protein": 15, "carbs": 22, "fat": 4, "fiber": 3, "sodium": 95 },
+      "note": "Store bars run $2.50–3.50 and 15–20g of fat. These are ~$0.75 and 4g, because powdered peanut butter binds as well as the real thing.",
+      "makeOwn": "protein-bars"
+    },
+    {
+      "id": "bar-baked",
+      "name": "Baked protein oat bar",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 bar",
+      "macros": { "kcal": 170, "protein": 14, "carbs": 24, "fat": 3, "fiber": 3, "sodium": 110 },
+      "note": "Cakier than the no-bake version and the lowest-fat bar of the three. Wraps in parchment, survives a bag.",
+      "makeOwn": "protein-bars"
+    },
+    {
+      "id": "bar-crispy",
+      "name": "Protein crispy treat",
+      "tier": "batch",
+      "where": ["desk"],
+      "flavor": "sweet",
+      "portion": "1 square",
+      "macros": { "kcal": 150, "protein": 12, "carbs": 22, "fat": 2, "fiber": 1, "sodium": 80 },
+      "star": true,
+      "note": "A rice-crispy treat that is 12g of protein and 2g of fat. Aimed squarely at the evening sweet tooth.",
+      "makeOwn": "protein-bars"
+    }
+  ],
+  "makeYourOwn": [
+    {
+      "id": "greek-yogurt",
+      "icon": "🥛",
+      "name": "Homemade Greek yogurt",
+      "time": "20 min hands-on · 8–12 hr culture · 2–4 hr strain",
+      "yield": "1 gallon skim milk → ~2 quarts strained",
+      "why": "About $0.50 a cup against ~$1.25 store-bought. On something you eat every single day, that adds up faster than anything else in the library.",
+      "warn": "Use SKIM milk. Whole-milk yogurt runs ~10g fat per ¾ cup — on a daily item that's an eighth of your fat budget appearing out of nowhere. Skim reproduces your current tub almost exactly.",
+      "ingredients": [
+        "1 gallon skim milk",
+        "2 Tbsp of your current store yogurt (the starter — it just needs live cultures)"
+      ],
+      "steps": [
+        "Heat the milk to 180°F — Instant Pot on Boil, or a heavy pot on the stove. This denatures the whey proteins and is what makes the yogurt thick. Do not skip it.",
+        "Cool to 110°F. A sink of cold water speeds this up.",
+        "Whisk in the 2 Tbsp of starter yogurt until fully dispersed.",
+        "Hold at 108–112°F for 8–12 hours — Instant Pot Yogurt setting, or an oven with just the light on. Longer means tangier.",
+        "Strain 2–4 hours through cheesecloth or a nut-milk bag over a bowl. This is the step that makes it Greek.",
+        "Save 2 Tbsp of this batch as the starter for the next one."
+      ],
+      "tips": [
+        "The strained-off whey is protein-rich — use it in smoothies instead of pouring it away.",
+        "Keeps about 2 weeks in the fridge."
+      ]
+    },
+    {
+      "id": "jerky",
+      "icon": "🥩",
+      "name": "Homemade jerky",
+      "time": "20 min prep · 6–24 hr marinade · 3–4 hr dry",
+      "yield": "3 lbs raw ≈ 1 lb finished",
+      "why": "Store-bought runs ~$2.00/oz. Eye of round at ~$7/lb works out to ~$1.30/oz — roughly half. More importantly you control the two things you can't buy your way out of: drop the sugar entirely and halve the sodium.",
+      "macros": { "kcal": 90, "protein": 15, "carbs": 1, "fat": 2, "fiber": 0, "sodium": 250 },
+      "ingredients": [
+        "2–3 lbs eye of round (leanest and cheapest; top round also works)",
+        "½ cup soy sauce (low-sodium)",
+        "2 Tbsp Worcestershire",
+        "1 tsp each garlic powder, onion powder, coarse black pepper",
+        "1 tsp liquid smoke"
+      ],
+      "steps": [
+        "Trim every visible speck of fat. Fat goes rancid — it's the reason jerky must be made from lean cuts.",
+        "Freeze the meat 1–2 hours so it firms up and slices cleanly.",
+        "Slice ¼ inch thick, AGAINST the grain. This is your tenderness lever — with the grain is what makes jerky leathery.",
+        "Marinate 6–24 hours in the fridge. No sugar needed.",
+        "Pat dry, then dry at 160–180°F in the air fryer for 2–3 hours, or at 175°F in the oven with the door cracked for 3–4 hours.",
+        "Done when a piece cracks but does not snap. Pull earlier than feels right — over-drying is the usual reason people think they dislike jerky."
+      ],
+      "tips": [
+        "Food safety: either bring the meat to 160°F internal before drying, or finish the dried jerky at 275°F for 10 minutes.",
+        "Store in the fridge ~2 weeks, or freeze for months."
+      ]
+    },
+    {
+      "id": "protein-bars",
+      "icon": "🍫",
+      "name": "Homemade protein bars",
+      "time": "15 min · plus chill or 20 min bake",
+      "yield": "8–10 bars per batch",
+      "why": "Store bars cost $2.50–3.50 each and usually carry 15–20g of fat. These run $0.60–0.90 and 2–4g. The trick is that most recipes lean on nut butter to bind — swapping in powdered peanut butter, Greek yogurt or pumpkin purée binds just as well at a fraction of the fat. You already buy protein powder for shakes, so the marginal cost is oats and a binder.",
+      "ingredients": [
+        "No-bake: 2 cups oats · 2 scoops protein powder · ½ cup powdered peanut butter (PB2) mixed with water · ⅓ cup honey · milk to bind",
+        "Baked: 2 cups oats · 2 scoops protein powder · 4 egg whites · ¾ cup applesauce · cinnamon · 1 tsp baking powder",
+        "Crispy: 2 scoops protein powder · 3 cups brown rice cereal · ½ cup marshmallow or honey · splash of milk"
+      ],
+      "steps": [
+        "No-bake — mix everything, press hard into a parchment-lined 8×8 pan, chill 2 hours, cut into 8. Press harder than you think or they crumble.",
+        "Baked — mix, spread in an 8×8 pan, bake at 350°F for 18–22 minutes until just set. Cool fully before cutting.",
+        "Crispy — melt the marshmallow or honey, stir in the protein powder off the heat, fold through the cereal, press into the pan and cool.",
+        "Wrap individually in parchment. They keep a week in the fridge and freeze for months."
+      ],
+      "tips": [
+        "Whey protein bakes drier than casein or a blend. If your bars come out chalky, add another ¼ cup of applesauce or milk.",
+        "Pull the baked bars while they still look slightly underdone — they firm up as they cool."
+      ]
+    },
+    {
+      "id": "blended-cc",
+      "icon": "🥄",
+      "name": "Blended cottage cheese base",
+      "time": "1 min",
+      "yield": "2–3 servings · keeps 4–5 days",
+      "why": "Cottage cheese's only real problem is the curds. Thirty seconds in a blender turns it into something like whipped ricotta, and it stops being cottage cheese at all — it becomes a base that goes five directions.",
+      "ingredients": ["1½ cups 2% cottage cheese (low-sodium if you can find it)"],
+      "steps": [
+        "Blend on high 30 seconds, scraping down once, until completely smooth with no grain left.",
+        "Split into portions and flavor each one: everything bagel seasoning + lemon · dried dill, garlic and onion powder, chives · cocoa and sweetener · honey, vanilla and cinnamon · Italian herbs for a ricotta stand-in."
+      ],
+      "tips": [
+        "The savory versions are dips — cucumber, peppers, carrots, and air-popped popcorn.",
+        "Sodium is the one weak spot: a serving is 450–550mg. Low-sodium cottage cheese cuts that nearly in half."
+      ]
+    },
+    {
+      "id": "yogurt-bark",
+      "icon": "🧊",
+      "name": "Greek yogurt bark",
+      "time": "10 min · 3 hr freeze",
+      "yield": "16 pieces, using your 2-Tbsp molds",
+      "why": "Reuses the sixteen 2-Tbsp sauce molds you already own, so there's no new equipment and no new shopping. Frozen dessert at 12g protein and 3g fat a serving.",
+      "ingredients": [
+        "2 cups nonfat Greek yogurt",
+        "2 Tbsp honey or maple syrup",
+        "1 tsp vanilla",
+        "Berries, chopped; a little dark chocolate if you want it"
+      ],
+      "steps": [
+        "Stir the yogurt with honey and vanilla.",
+        "Spoon into the 2-Tbsp molds, pressing a berry or two into each.",
+        "Freeze 3 hours until solid, pop out, and bag. Keeps 2 months.",
+        "Eat straight from the freezer — 4 pieces is a serving."
+      ],
+      "tips": ["Skip the chocolate to keep it at 3g of fat; a tablespoon of chips across the batch adds about 1g per serving."]
+    },
+    {
+      "id": "egg-bites",
+      "icon": "🥚",
+      "name": "Egg bites",
+      "time": "10 min · 20 min bake",
+      "yield": "12 bites",
+      "why": "Freezer-friendly, portable once cooled, and they use up whatever veg is left from meal prep.",
+      "ingredients": [
+        "6 whole eggs + 4 egg whites",
+        "¼ cup cottage cheese (blended in — this is what makes them custardy)",
+        "Chopped peppers, onion, spinach; a little cheese",
+        "Salt, pepper"
+      ],
+      "steps": [
+        "Blend the eggs, whites and cottage cheese until smooth.",
+        "Divide veg between 12 greased muffin cups, pour the egg mix over.",
+        "Bake at 325°F for 20–22 minutes until just set — low and slow keeps them tender.",
+        "Cool completely, then freeze on a tray before bagging."
+      ],
+      "tips": ["Reheat 60–90 seconds from frozen.", "Using more whites than yolks is the fat lever: all-whole-egg bites are closer to 14g of fat per pair."]
+    },
+    {
+      "id": "roasted-chickpeas",
+      "icon": "🫛",
+      "name": "Roasted chickpeas",
+      "time": "5 min · 40 min roast",
+      "yield": "~2 cups",
+      "why": "Cheap, crunchy, 5g of fiber a portion, and shelf-stable enough for a desk drawer for a few days.",
+      "ingredients": ["2 cans chickpeas, drained and rinsed", "2 tsp olive oil", "Smoked paprika, cumin, garlic powder, salt"],
+      "steps": [
+        "Dry the chickpeas thoroughly on a towel — this is the difference between crunchy and chewy. Rub the skins off as you go.",
+        "Toss with oil and spices.",
+        "Air fryer 15–18 min at 390°F shaking twice, or oven 40 min at 400°F.",
+        "Cool completely uncovered before bagging, or they go soft."
+      ],
+      "tips": ["They soften after a couple of days — make a batch you'll finish inside a week.", "Season after roasting for a punchier flavor."]
+    },
+    {
+      "id": "popcorn",
+      "icon": "🍿",
+      "name": "Air-popped popcorn",
+      "time": "3 min",
+      "yield": "¼ cup kernels → ~5 cups popped",
+      "why": "Bagged popcorn is 36% fat by weight; microwave bags are close behind. The corn was never the problem — you're paying for the oil it arrives in. A whole SkinnyPop bag is 675 kcal and 45g of fat; the same volume air-popped is about 230 kcal and under 3g.",
+      "ingredients": ["¼ cup popcorn kernels", "Spray oil, nutritional yeast, chili-lime or everything bagel seasoning"],
+      "steps": [
+        "Put the kernels in a brown paper lunch bag and fold the top over twice. No oil, no staples.",
+        "Microwave on high ~2 minutes, until the pops slow to about 2 seconds apart. Listen, don't trust the timer.",
+        "Tip into a bowl, mist lightly with spray oil, then season."
+      ],
+      "tips": [
+        "Nutritional yeast gives it a cheesy hit and adds a little protein.",
+        "Two pounds of kernels costs about $3 and makes roughly 26 bags' worth.",
+        "Popcorn has almost no protein — pair it with a blended cottage cheese dip to make it a real snack."
+      ]
+    },
+    {
+      "id": "tuna-primer",
+      "icon": "🐟",
+      "name": "Canned tuna — a primer",
+      "time": "5 min",
+      "yield": "1 can per serving",
+      "why": "One can drained is 100 kcal, 22g protein and 1g fat — the leanest protein available to you. Worth pushing through the taste barrier, because nothing else in the library is this efficient.",
+      "warn": "Keep this one at home. The macros are excellent but tuna at a desk is an office-etiquette problem.",
+      "ingredients": ["Solid white albacore in water (milder than chunk light while you adjust)"],
+      "steps": [
+        "Drain AND rinse. The packing liquid holds most of the smell — this is the single biggest improvement available.",
+        "Hit it with acid immediately: lemon juice, or a splash of vinegar. This isn't just flavor-masking — acid binds the trimethylamine that is the fishy smell and stops it going airborne.",
+        "Mix with nonfat Greek yogurt rather than mayo. Saves ~10g of fat and the tang helps again.",
+        "Don't make it the star at first — fold it into a bowl or onto a tortilla with something loud."
+      ],
+      "tips": [
+        "Not a mustard fan? Prepared horseradish (½ tsp) is the sharpest swap and a completely different flavor family. Minced capers or a splash of vinegar also work.",
+        "Serve with cucumber rounds or bell pepper scoops instead of crackers."
+      ]
+    }
+  ]
+}
+</script>
 
 <script>
 (function () {
@@ -6374,9 +7069,9 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
     var cube = {}; K.forEach(function (k) { cube[k] = avg(k); });
 
     var BREAKFAST = { kcal: 450, carbs: 35, protein: 48, fat: 12, fiber: 10 };
-    var SNACKS    = { kcal: 600, carbs: 50, protein: 30, fat: 28, fiber: 10 }; // two snacks
+    var SNACKBLOCK = { kcal: 600, carbs: 50, protein: 30, fat: 28, fiber: 10 }; // two snacks
     var PSYLLIUM  = { kcal: 35,  carbs: 9,  protein: 0,  fat: 0,  fiber: 7 };
-    var total = {}; K.forEach(function (k) { total[k] = BREAKFAST[k] + cube[k] * 2 + SNACKS[k] + PSYLLIUM[k]; });
+    var total = {}; K.forEach(function (k) { total[k] = BREAKFAST[k] + cube[k] * 2 + SNACKBLOCK[k] + PSYLLIUM[k]; });
 
     function row(label, m, cls) {
       return "<tr" + (cls ? ' class="' + cls + '"' : "") + "><td>" + label + "</td><td>" + m.kcal + "</td><td>" +
@@ -6392,7 +7087,7 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       row("Breakfast — light", disp(BREAKFAST)) +
       row("Lunch — cube meal", disp(cube)) +
       row("Dinner — cube meal", disp(cube)) +
-      row("Snacks × 2", disp(SNACKS)) +
+      row("Snacks × 2", disp(SNACKBLOCK)) +
       row("Psyllium — 2 scoops", { kcal: "~35", carbs: "~9 g", protein: "—", fat: "—", fiber: "~7 g" }) +
       row("Day total", disp(total), "tot") +
       row("Your target", { kcal: "2,300–2,500", carbs: "~235–285 g", protein: "~170 g", fat: "~75 g", fiber: "high" }, "tgt") +
@@ -6407,15 +7102,16 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       "<li><b>+ Chia or ground flax</b> 1 Tbsp — fiber &amp; omega-3</li>" +
       '<li class="opt">Optional: a little oats or granola for more staying power</li>' +
       "</ul></div>";
+    // Pulled live from the Snacks tab so the two can't drift apart: the starred
+    // picks, leanest first — those are the ones that clear the fat budget.
+    var picks = SNACKS.snacks.filter(function (s) { return s.star; })
+      .sort(function (a, b) { return a.macros.fat - b.macros.fat; }).slice(0, 6);
     var snacks = '<div class="scol"><h3>Snacks <span class="sub">~300 kcal each, protein-forward — the plan assumes two</span></h3><ul class="saucelist">' +
-      "<li>Edamame, 1 cup — ~17g protein, high fiber</li>" +
-      "<li>Cottage cheese + fruit</li>" +
-      "<li>Turkey stick or jerky</li>" +
-      "<li>Roasted chickpeas</li>" +
-      "<li>A second protein shake</li>" +
-      "<li>Two hard-boiled eggs</li>" +
-      "<li>Apple + 1 Tbsp peanut butter</li>" +
-      "<li>Small handful of almonds</li>" +
+      picks.map(function (s) {
+        return "<li><b>" + esc(s.name) + "</b> — " + s.macros.kcal + " kcal · " +
+          s.macros.protein + "g protein · " + s.macros.fat + "g fat</li>";
+      }).join("") +
+      '<li class="opt">' + SNACKS.snacks.length + " options with full macros on the <b>Snacks</b> tab →</li>" +
       "</ul></div>";
     document.getElementById("fuel-body").innerHTML =
       '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Around the meals</span>' +
@@ -6427,6 +7123,159 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
       '<div class="kitbox" style="margin-top:16px"><b>Psyllium:</b> 1 scoop in water before lunch and before dinner (2 scoops/day) — ~7g fiber for ~35 kcal, plus fullness. &nbsp;<b>Hydration:</b> aim for 3–4 L water across the day.</div>';
   }
 
+  // ---------- Snacks ----------
+  var SNACKS = JSON.parse(document.getElementById("snack-data").textContent);
+  var snackSort = "tier";
+
+  function fatBand(g) { return g <= SNACKS.fatBands.lean ? "lean" : (g <= SNACKS.fatBands.mid ? "mid" : "rich"); }
+  function naBand(mg) { return mg <= SNACKS.sodiumBands.low ? "lo" : (mg <= SNACKS.sodiumBands.mod ? "mid" : "hi"); }
+  function chip(v, cls) { return '<span class="mc ' + cls + '">' + v + "</span>"; }
+  function byId(list, id) { return list.filter(function (x) { return x.id === id; })[0]; }
+
+  var AXES = [
+    { id: "tier",   label: "Prep tier" },
+    { id: "where",  label: "Where" },
+    { id: "fat",    label: "Fat cost" },
+    { id: "flavor", label: "Sweet &amp; savory" },
+    { id: "myo",    label: "Make your own" }
+  ];
+  var FATG = [
+    { id: "lean", icon: "🟢", label: "Lean — 5g fat or less",
+      blurb: "Fat is the macro that binds your day, so these are the ones you can reach for twice without thinking about it." },
+    { id: "mid", icon: "🟡", label: "Moderate — 6 to 9g fat",
+      blurb: "Fine once a day. Two of these plus a rich meal and you are at the ceiling." },
+    { id: "rich", icon: "🔴", label: "Rich — 10g fat or more",
+      blurb: "A seventh of your daily fat budget or worse, usually for very little protein. Portion these deliberately." }
+  ];
+
+  function groupsFor(axis) {
+    function mk(o, pick) { return { icon: o.icon, label: o.label, blurb: o.blurb || "", pick: pick }; }
+    if (axis === "where") {
+      return SNACKS.wheres.map(function (w) {
+        return mk(w, function (s) { return s.where.indexOf(w.id) >= 0; });
+      });
+    }
+    if (axis === "fat") {
+      return FATG.map(function (g) {
+        return mk(g, function (s) { return fatBand(s.macros.fat) === g.id; });
+      });
+    }
+    if (axis === "flavor") {
+      return SNACKS.flavors.map(function (f) {
+        return mk(f, function (s) { return s.flavor === f.id; });
+      });
+    }
+    return SNACKS.tiers.map(function (t) {
+      return mk(t, function (s) { return s.tier === t.id; });
+    });
+  }
+
+  function snackHead(s) {
+    var m = s.macros;
+    var wIcons = s.where.map(function (w) {
+      var o = byId(SNACKS.wheres, w);
+      return o ? '<span title="' + esc(o.label) + '">' + o.icon + "</span>" : "";
+    }).join("");
+    return '<div class="s-top"><span class="s-name">' + esc(s.name) + "</span>" +
+      (s.star ? '<span class="s-star" title="Standout pick">★</span>' : "") +
+      '<span class="s-where">' + wIcons + "</span></div>" +
+      '<div class="s-portion">' + esc(s.portion) + "</div>" +
+      '<div class="s-macros"><span class="s-kcal">' + m.kcal + " kcal</span>" +
+        chip(m.protein + "g P", "prot") + chip(m.carbs + "g C", "carb") +
+        chip(m.fat + "g F", "fat") + chip(m.fiber + "g fib", "fib") +
+        '<span class="na ' + naBand(m.sodium) + '" title="Sodium">' + m.sodium + "mg Na</span></div>" +
+      (s.note ? '<p class="s-note">' + esc(s.note) + "</p>" : "");
+  }
+
+  function snackRow(s) {
+    var extra = "";
+    if (s.tip) extra += '<p class="s-tip">' + esc(s.tip) + "</p>";
+    if (s.makeOwn) {
+      var o = byId(SNACKS.makeYourOwn, s.makeOwn);
+      if (o) extra += '<button class="s-link" type="button" data-myo="' + o.id + '">' + o.icon + " Make your own: " + esc(o.name) + " ↓</button>";
+    }
+    if (!extra) return '<div class="snack"><div class="sbody solo">' + snackHead(s) + "</div></div>";
+    return '<details class="snack"><summary>' + snackHead(s) + '</summary><div class="sbody">' + extra + "</div></details>";
+  }
+
+  function myoCard(o) {
+    function li(x) { return "<li>" + esc(x) + "</li>"; }
+    var m = o.macros;
+    return '<details class="myo" id="myo-' + o.id + '">' +
+      '<summary><span class="myo-ico">' + o.icon + '</span><span class="myo-name">' + esc(o.name) + "</span>" +
+        '<span class="myo-time">' + esc(o.time) + "</span></summary>" +
+      '<div class="myo-body">' +
+        '<p class="myo-yield">Makes: ' + esc(o["yield"]) + "</p>" +
+        '<p class="myo-why">' + esc(o.why) + "</p>" +
+        (o.warn ? '<p class="myo-warn"><b>Heads up —</b> ' + esc(o.warn) + "</p>" : "") +
+        (m ? '<div class="s-macros" style="margin-bottom:14px"><span class="s-kcal">' + m.kcal + " kcal</span>" +
+              chip(m.protein + "g P", "prot") + chip(m.carbs + "g C", "carb") + chip(m.fat + "g F", "fat") +
+              chip(m.fiber + "g fib", "fib") + '<span class="na ' + naBand(m.sodium) + '">' + m.sodium + "mg Na</span></div>" : "") +
+        "<h4>What you need</h4><ul>" + o.ingredients.map(li).join("") + "</ul>" +
+        "<h4>Steps</h4><ol>" + o.steps.map(li).join("") + "</ol>" +
+        (o.tips && o.tips.length ? "<h4>Tips</h4><ul>" + o.tips.map(li).join("") + "</ul>" : "") +
+      "</div></details>";
+  }
+
+  function renderSnacks() {
+    var b = SNACKS.budget;
+    var bar = '<div class="sortbar"><span class="sortlab">Group by</span><div class="sortseg" id="sortseg">' +
+      AXES.map(function (a) {
+        return '<button class="sortbtn' + (a.id === snackSort ? " on" : "") + '" type="button" data-sort="' + a.id + '">' + a.label + "</button>";
+      }).join("") + "</div></div>";
+
+    var legend = '<div class="slegend">' +
+      '<span><b class="s-star">★</b> standout pick</span>' +
+      SNACKS.wheres.map(function (w) {
+        return '<span><b class="lg-ico">' + w.icon + "</b> " + esc(w.label) + "</span>";
+      }).join("") +
+      '<span>Sodium — <b class="na lo">under ' + SNACKS.sodiumBands.low + "mg</b> · " +
+        '<b class="na mid">to ' + SNACKS.sodiumBands.mod + 'mg</b> · <b class="na hi">above</b></span>' +
+      "</div>";
+
+    // "Make your own" is a filter, not a grouping — show the productions alone.
+    var onlyMyo = snackSort === "myo";
+
+    var groups = onlyMyo ? "" : groupsFor(snackSort).map(function (g) {
+      var rows = SNACKS.snacks.filter(g.pick).sort(function (x, y) {
+        return (x.macros.fat - y.macros.fat) || (x.macros.kcal - y.macros.kcal);
+      });
+      if (!rows.length) return "";
+      return '<section class="sgroup"><div class="sghead"><h3>' + g.icon + " " + g.label + "</h3>" +
+        '<span class="sgn">' + rows.length + " option" + (rows.length === 1 ? "" : "s") + "</span>" +
+        (g.blurb ? '<span class="sgblurb">' + esc(g.blurb) + "</span>" : "") +
+        "</div>" + rows.map(snackRow).join("") + "</section>";
+    }).join("");
+
+    document.getElementById("snacks-body").innerHTML =
+      '<header class="lib-hero" style="margin-bottom:16px"><span class="eyebrow">Snacks</span>' +
+        '<h1 style="font-size:clamp(28px,5vw,44px)">The other <span class="lead">quarter of the day</span></h1>' +
+        '<p class="tagline">Two snacks are about 600 calories — roughly a quarter of everything you eat, and the part that decides whether the day lands on target. ' + SNACKS.snacks.length + ' options, each with real macros. Regroup them however you are thinking about it.</p></header>' +
+      '<div class="kitbox"><b>Two numbers to watch.</b> <b>Fat</b> is your binding macro — the meals already run 20–28g each, so a snack at 14g of fat costs more than its calories suggest. And <b>sodium</b>: the ceiling is ' +
+        b.sodiumDayMg.toLocaleString() + 'mg a day, and three meals use most of it, which leaves roughly <b>' + b.sodiumSnackBudgetMg +
+        'mg for the day’s snacks</b>. Shelf-stable things are salted to stay shelf-stable, so the desk-friendly picks are usually the salty ones. ' +
+        'Handy: the <b>%DV</b> printed on any label is calculated against that same ' + b.sodiumDayMg.toLocaleString() + 'mg — so it is already your share of the day.</div>' +
+      bar + (onlyMyo ? "" : legend) + groups +
+      '<header class="lib-hero" style="margin:' + (onlyMyo ? "0" : "34px") + ' 0 16px"><span class="eyebrow">Make Your Own</span>' +
+        '<h1 style="font-size:clamp(24px,4vw,36px)">Worth <span class="lead">making yourself</span></h1>' +
+        '<p class="tagline">These are productions, not snacks — the things that feed the list' +
+        (onlyMyo ? " on the other tabs" : " above") +
+        '. Each one is either meaningfully cheaper than buying it, or lets you fix something you cannot fix at the store.</p></header>' +
+      SNACKS.makeYourOwn.map(myoCard).join("");
+
+    Array.prototype.forEach.call(document.querySelectorAll(".sortbtn"), function (btn) {
+      btn.addEventListener("click", function () { snackSort = btn.getAttribute("data-sort"); renderSnacks(); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-myo]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var card = document.getElementById("myo-" + btn.getAttribute("data-myo"));
+        if (!card) return;
+        card.open = true;
+        if (card.scrollIntoView) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
   // ---------- view switching ----------
   function showView(v) {
     state.view = v;
@@ -6434,12 +7283,14 @@ function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&"
     document.getElementById("view-staples").hidden = v !== "staples";
     document.getElementById("view-freeze").hidden = v !== "freeze";
     document.getElementById("view-fuel").hidden = v !== "fuel";
+    document.getElementById("view-snacks").hidden = v !== "snacks";
     Array.prototype.forEach.call(document.querySelectorAll(".navbtn"), function (b) {
       b.className = "navbtn" + (b.getAttribute("data-view") === v ? " active" : "");
     });
     if (v === "staples") renderStaples();
     else if (v === "freeze") renderFreeze();
     else if (v === "fuel") renderFuel();
+    else if (v === "snacks") renderSnacks();
     else showHome();
     if (window.scrollTo) window.scrollTo(0, 0);
   }
