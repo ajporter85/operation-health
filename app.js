@@ -1186,6 +1186,9 @@
     $('#s-fiber').value = valOr(p.fiberTarget);
     $('#s-sodium').value = valOr(p.sodiumTarget);
     renderMealLibrary();
+    var nCookbook = (window.CookbookMeals || []).length;
+    $('#import-cookbook-btn').textContent = nCookbook ? 'Add cookbook meals (' + nCookbook + ')' : 'Add cookbook meals';
+    $('#import-cookbook-status').textContent = '';
     $('#settings-saved').hidden = true;
   }
 
@@ -1212,6 +1215,27 @@
     if (!confirm('Remove this meal from your library?')) return;
     S.deleteMealItem(del.dataset.libDel);
     renderMealLibrary();
+  });
+
+  // Bulk-add the bundled cookbook builds (window.CookbookMeals), upserting by name
+  // so a re-run re-syncs those meals to the latest cookbook numbers rather than
+  // duplicating them. Meals you saved yourself (different names) are untouched.
+  $('#import-cookbook-btn').addEventListener('click', function () {
+    var src = window.CookbookMeals;
+    var status = $('#import-cookbook-status');
+    if (!Array.isArray(src) || !src.length) {
+      status.textContent = 'No cookbook meals are bundled.';
+      return;
+    }
+    var added = 0, updated = 0;
+    src.forEach(function (m) {
+      var item = Object.assign({}, m);
+      var existing = S.findMealByName(item.name);
+      if (existing) { item.id = existing.id; updated++; } else { added++; }
+      S.saveMealItem(item);
+    });
+    renderMealLibrary();
+    status.textContent = added + ' added' + (updated ? ', ' + updated + ' refreshed' : '') + '.';
   });
 
   // Flip the water unit live: reinterpret the shown target into the new unit

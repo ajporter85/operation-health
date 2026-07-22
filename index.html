@@ -222,6 +222,12 @@
       on a meal (in the Log tab or when editing a meal in History) to add one.</p>
     <div id="meal-lib-list" class="meal-lib-list"></div>
     <p class="muted small" id="meal-lib-empty" hidden>No saved meals yet.</p>
+    <div class="form-actions">
+      <button type="button" class="btn" id="import-cookbook-btn">Add cookbook meals</button>
+      <span class="muted small" id="import-cookbook-status" role="status" aria-live="polite"></span>
+    </div>
+    <p class="muted small">Adds the meal-prep cookbook builds (name + macros). Re-syncs from the
+      cookbook by name, so running it again refreshes those meals to the latest numbers.</p>
 
     <hr>
 
@@ -253,4 +259,5 @@
 
 <script src="logic.js"></script>
 <script src="storage.js"></script>
+<script src="cookbook-meals.js"></script>
 <script src="app.js"></script>
