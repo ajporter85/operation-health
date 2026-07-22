@@ -39,8 +39,15 @@
     { key: 'protein',  label: 'Protein',  unit: 'g',    max: 2000,  target: 'proteinTarget' },
     { key: 'carbs',    label: 'Carbs',    unit: 'g',    max: 2000,  target: 'carbTarget' },
     { key: 'fat',      label: 'Fat',      unit: 'g',    max: 2000,  target: 'fatTarget' },
-    { key: 'fiber',    label: 'Fiber',    unit: 'g',    max: 500,   target: 'fiberTarget' }
+    { key: 'fiber',    label: 'Fiber',    unit: 'g',    max: 500,   target: 'fiberTarget' },
+    // Sodium is a nullable 6th macro: meals may or may not carry it (the cookbook
+    // bowls don't yet), it rolls into day.nutrition.sodium when present, and it is
+    // tracked-only — it does NOT feed the consistency score (see activeSignals).
+    { key: 'sodium',   label: 'Sodium',   unit: 'mg',   max: 20000, target: 'sodiumTarget' }
   ];
+
+  // Macros stored/shown as whole numbers (the rest round to 0.1).
+  var INT_MACROS = { calories: true, sodium: true };
 
   // ---- Log entries (the incremental-logging model) ----
   // A day is no longer one big record; it's a stream of small timestamped
@@ -147,12 +154,15 @@
   // this same object, so there is one source of truth for the dials.
   var DEFAULT_SCORING = {
     yellowCredit: 0.75,      // credit for a 🟡 signal (🟢 = 1.0, 🔴 = 0.0)
-    numericGreenPct: 1.0,    // 🟢 at ≥100% of target (steps, water)
+    numericGreenPct: 1.0,    // 🟢 at ≥100% of target (steps, water, protein, fiber)
     numericYellowPct: 0.75,  // 🟡 at ≥75% of target
+    bandGreenPct: 0.10,      // 🟢 within ±10% of a band-graded target (calories)
+    bandYellowPct: 0.20,     // 🟡 within ±20%; beyond (over OR under) → 🔴
     wakeGreenMin: 30,        // 🟢 within ±30 min of wakeGoal
     wakeYellowMin: 60,       // 🟡 within ±60 min
     dayBands: { green: 80, yellow: 50 }, // whole-day grade from daily score
-    weights: { logged: 1, protein: 1, morningExercise: 1, steps: 1, water: 1, wake: 1 }
+    weights: { logged: 1, protein: 1, morningExercise: 1, steps: 1, water: 1, wake: 1,
+               proteinTotal: 1, calories: 1, fiber: 1 }
   };
 
   /** Resolve a full scoring config from a profile, filling any gaps with defaults. */
@@ -163,6 +173,8 @@
       yellowCredit: num(s.yellowCredit, DEFAULT_SCORING.yellowCredit),
       numericGreenPct: num(s.numericGreenPct, DEFAULT_SCORING.numericGreenPct),
       numericYellowPct: num(s.numericYellowPct, DEFAULT_SCORING.numericYellowPct),
+      bandGreenPct: num(s.bandGreenPct, DEFAULT_SCORING.bandGreenPct),
+      bandYellowPct: num(s.bandYellowPct, DEFAULT_SCORING.bandYellowPct),
       wakeGreenMin: num(s.wakeGreenMin, DEFAULT_SCORING.wakeGreenMin),
       wakeYellowMin: num(s.wakeYellowMin, DEFAULT_SCORING.wakeYellowMin),
       dayBands: Object.assign({}, DEFAULT_SCORING.dayBands, s.dayBands),
@@ -186,6 +198,22 @@
     var pct = value / target;
     if (pct >= cfg.numericGreenPct) return 'green';
     if (pct >= cfg.numericYellowPct) return 'yellow';
+    return 'red';
+  }
+
+  /**
+   * Numeric metric that should land NEAR a target — a range goal, not a floor:
+   * 🟢 within ±bandGreenPct, 🟡 within ±bandYellowPct, else 🔴. Used for calories,
+   * where overshooting is as much a miss as falling short (unlike protein/fiber,
+   * where more is better). A logged-but-blank/invalid value is a miss → 🔴.
+   */
+  function gradeBand(value, target, cfg) {
+    cfg = cfg || DEFAULT_SCORING;
+    if (!isNum(target) || target <= 0) return 'red'; // signal inactive upstream
+    if (!isNum(value)) return 'red';
+    var dev = Math.abs(value - target) / target;
+    if (dev <= cfg.bandGreenPct) return 'green';
+    if (dev <= cfg.bandYellowPct) return 'yellow';
     return 'red';
   }
 
@@ -217,6 +245,14 @@
     if (isNum(profile.stepsTarget) && profile.stepsTarget > 0) sig.push('steps');
     if (isNum(profile.waterTarget) && profile.waterTarget > 0) sig.push('water');
     if (profile.wakeGoal) sig.push('wake');
+    // Nutrition adherence (Meals M3) — each dial activates only when its target is
+    // set, mirroring steps/water, so nutrition never drags a score until opted in.
+    // `proteinTotal` is the day's TOTAL protein vs target; the morning `protein`
+    // binary (proteinWithin30) stays a separate signal. Sodium is tracked-only —
+    // deliberately NOT scored.
+    if (isNum(profile.proteinTarget) && profile.proteinTarget > 0) sig.push('proteinTotal');
+    if (isNum(profile.calorieTarget) && profile.calorieTarget > 0) sig.push('calories');
+    if (isNum(profile.fiberTarget) && profile.fiberTarget > 0) sig.push('fiber');
     return sig;
   }
 
@@ -229,6 +265,11 @@
       case 'steps': return gradeNumeric(log.steps, profile.stepsTarget, cfg);
       case 'water': return gradeNumeric(log.waterLiters, profile.waterTarget, cfg);
       case 'wake': return gradeWake(log.wakeTime, profile.wakeGoal, cfg);
+      // Nutrition dials read the derived day.nutrition totals. Protein/fiber are
+      // floors (more is better); calories is a band (over is as much a miss as under).
+      case 'proteinTotal': return gradeNumeric(log.nutrition && log.nutrition.protein, profile.proteinTarget, cfg);
+      case 'fiber': return gradeNumeric(log.nutrition && log.nutrition.fiber, profile.fiberTarget, cfg);
+      case 'calories': return gradeBand(log.nutrition && log.nutrition.calories, profile.calorieTarget, cfg);
       default: return 'red';
     }
   }
@@ -311,7 +352,10 @@
     morningExercise: "Morning movement is the gap — even 10 minutes after waking counts.",
     steps:           "Your step count is short of target — a short walk anywhere adds up.",
     water:           "Hydration is low — fill your water bottle first thing.",
-    wake:            "Wake time is drifting — anchor a steady wake-up to steady the rest."
+    wake:            "Wake time is drifting — anchor a steady wake-up to steady the rest.",
+    proteinTotal:    "Daily protein is short of target — add a protein-forward snack or shake.",
+    calories:        "Calories are off your target range — nudge portions toward the middle.",
+    fiber:           "Fiber is running low — add beans, veg, or a psyllium scoop."
   };
 
   /**
@@ -482,7 +526,11 @@
     for (var i = days - 1; i >= 0; i--) {
       var date = addDaysISO(as, -i);
       var log = byDate[date];
-      var raw = log ? log[field] : undefined;
+      // `field` may be a dotted path (e.g. 'nutrition.protein') to reach a nested
+      // derived value; a plain key is the common case.
+      var raw = !log ? undefined
+        : field.indexOf('.') < 0 ? log[field]
+        : field.split('.').reduce(function (o, k) { return o == null ? undefined : o[k]; }, log);
       var num = (raw === '' || raw == null) ? NaN : Number(raw);
       out.push({ date: date, value: isNum(num) ? num : null });
     }
@@ -1073,6 +1121,7 @@
     scoringConfig: scoringConfig,
     gradeBinary: gradeBinary,
     gradeNumeric: gradeNumeric,
+    gradeBand: gradeBand,
     gradeWake: gradeWake,
     creditFor: creditFor,
     computeDailyScore: computeDailyScore,
@@ -1113,6 +1162,7 @@
     ENTRY_TYPES: ENTRY_TYPES,
     MEAL_SLOTS: MEAL_SLOTS,
     MEAL_MACROS: MEAL_MACROS,
+    INT_MACROS: INT_MACROS,
     validateEntry: validateEntry,
     validateMealItem: validateMealItem,
     projectDay: projectDay,

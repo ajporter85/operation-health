@@ -65,6 +65,15 @@
   eq('gradeNumeric 80% → yellow', L.gradeNumeric(6400, 8000, cfg), 'yellow');
   eq('gradeNumeric 74% → red', L.gradeNumeric(5920, 8000, cfg), 'red');
   eq('gradeNumeric blank value → red', L.gradeNumeric(undefined, 8000, cfg), 'red');
+  // gradeBand — a range goal (calories): near target green, over OR under is a miss
+  eq('gradeBand on-target → green', L.gradeBand(2400, 2400, cfg), 'green');
+  eq('gradeBand +8% → green', L.gradeBand(2592, 2400, cfg), 'green');
+  eq('gradeBand +15% over → yellow', L.gradeBand(2760, 2400, cfg), 'yellow');
+  eq('gradeBand -15% under → yellow', L.gradeBand(2040, 2400, cfg), 'yellow');
+  eq('gradeBand +25% over → red (overshoot is a miss)', L.gradeBand(3000, 2400, cfg), 'red');
+  eq('gradeBand -25% under → red', L.gradeBand(1800, 2400, cfg), 'red');
+  eq('gradeBand blank value → red', L.gradeBand(undefined, 2400, cfg), 'red');
+  eq('gradeBand no target → red', L.gradeBand(2400, 0, cfg), 'red');
   eq('gradeWake ±0 → green', L.gradeWake('06:30', '06:30', cfg), 'green');
   eq('gradeWake ±45 → yellow', L.gradeWake('07:15', '06:30', cfg), 'yellow');
   eq('gradeWake ±90 → red', L.gradeWake('08:00', '06:30', cfg), 'red');
@@ -146,6 +155,37 @@
   eq('consistency: no targets → 3 active signals', cMin.signals.length, 3);
   eq('consistency: no targets still 100', cMin.score, 100);
 
+  // ----------------- nutrition dials (Meals M3) -------------------------
+  // Each dial activates only when its target is set (like steps/water); sodium
+  // is tracked but never scored. proteinTotal is separate from the morning binary.
+  var nutriProfile = { proteinTarget: 170, calorieTarget: 2400, fiberTarget: 30, sodiumTarget: 2300 };
+  var nSig = L.computeConsistency([], nutriProfile, AS).signals;
+  ok('M3: proteinTotal active when target set', nSig.indexOf('proteinTotal') >= 0);
+  ok('M3: calories active when target set', nSig.indexOf('calories') >= 0);
+  ok('M3: fiber active when target set', nSig.indexOf('fiber') >= 0);
+  ok('M3: sodium is never a scored signal, even with a target', nSig.indexOf('sodium') < 0);
+  var nBlank = L.computeConsistency([], {}, AS).signals;
+  ok('M3: nutrition dials inactive without targets', nBlank.indexOf('proteinTotal') < 0);
+
+  var nOnTarget = L.computeDailyScore(
+    log(AS, { proteinWithin30: 'Y', nutrition: { protein: 175, calories: 2450, fiber: 32 } }),
+    nutriProfile);
+  eq('M3: proteinTotal green at/over target', nOnTarget.states.proteinTotal, 'green');
+  eq('M3: calories green inside band', nOnTarget.states.calories, 'green');
+  eq('M3: fiber green at/over target', nOnTarget.states.fiber, 'green');
+  eq('M3: morning protein binary stays a distinct signal', nOnTarget.states.protein, 'green');
+
+  var nMiss = L.computeDailyScore(
+    log(AS, { nutrition: { protein: 100, calories: 3200, fiber: 10 } }), nutriProfile);
+  eq('M3: proteinTotal under target → red', nMiss.states.proteinTotal, 'red');
+  eq('M3: calories far over → red (band penalizes overshoot)', nMiss.states.calories, 'red');
+  eq('M3: fiber well under → red', nMiss.states.fiber, 'red');
+
+  // a day with no meals logged misses the nutrition dials (like an unlogged steps day)
+  var nNone = L.computeDailyScore(log(AS, { proteinWithin30: 'Y' }), nutriProfile);
+  eq('M3: no nutrition logged → proteinTotal red', nNone.states.proteinTotal, 'red');
+  eq('M3: no nutrition logged → calories red', nNone.states.calories, 'red');
+
   // ---------------------------- dot strip -------------------------------
   var strip = L.last7Grades([greenLog(AS), redLog(L.addDaysISO(AS, -1))], profile, AS);
   eq('last7Grades: returns 7 days', strip.length, 7);
@@ -169,6 +209,11 @@
   eq('buildSeries: missing day is null', wSeries[2].value, null);
   eq('buildSeries: blank/absent field is null',
      L.buildSeries([log(AS, { steps: '' })], 'steps', AS, 1)[0].value, null);
+  // dotted path reaches nested derived values (nutrition charts, Meals M3)
+  eq('buildSeries: dotted path reads nutrition.protein',
+     L.buildSeries([log(AS, { nutrition: { protein: 165 } })], 'nutrition.protein', AS, 1)[0].value, 165);
+  eq('buildSeries: dotted path on a day with no nutrition is null',
+     L.buildSeries([log(AS, { steps: 9000 })], 'nutrition.protein', AS, 1)[0].value, null);
 
   var wStats = L.seriesStats(wSeries);
   eq('seriesStats: min', wStats.min, 196);
@@ -408,7 +453,20 @@
   ok('projectDay: partial-macro meal leaves others unset',
      L.projectDay([{ date: AS, type: 'meal', slot: 'S', fiber: 5 }]).nutrition.calories === undefined);
   eq('MEAL_SLOTS has 4 slots', L.MEAL_SLOTS.length, 4);
-  eq('MEAL_MACROS has 5 macros', L.MEAL_MACROS.length, 5);
+  eq('MEAL_MACROS has 6 macros (incl. sodium)', L.MEAL_MACROS.length, 6);
+
+  // sodium — a nullable 6th macro (Meals M3): accepted, accrues, but tracked-only
+  ok('validateEntry: meal with sodium valid',
+     L.validateEntry({ date: AS, type: 'meal', slot: 'S', sodium: 300 }).valid);
+  ok('validateEntry: meal out-of-range sodium invalid',
+     !L.validateEntry({ date: AS, type: 'meal', slot: 'S', sodium: 99999 }).valid);
+  eq('projectDay: meals sum sodium when present',
+     L.projectDay([
+       { date: AS, type: 'meal', slot: 'B', protein: 20, sodium: 400 },
+       { date: AS, type: 'meal', slot: 'L', protein: 20, sodium: 250 }
+     ]).nutrition.sodium, 650);
+  ok('projectDay: meals without sodium leave it unset',
+     L.projectDay([{ date: AS, type: 'meal', slot: 'S', protein: 20 }]).nutrition.sodium === undefined);
 
   // meal library items — name required (that's how you pick one), >=1 macro
   ok('validateMealItem: valid', L.validateMealItem({ name: 'Oatmeal', slot: 'B', calories: 480, protein: 42 }).valid);

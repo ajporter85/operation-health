@@ -127,7 +127,7 @@
     var days = L.rangeToDays(rangeKey, logs.concat(measurements), today);
 
     var gunit = profile.weightUnit === 'kg' ? 'kg' : 'lb';
-    host.innerHTML = [
+    var cards = [
       chartCard({ label: 'Weight', field: 'weight', unit: L.weightUnitLabel(gunit),
                   logs: measurements, today: today, days: days,
                   toDisplay: function (v) { return L.weightToDisplay(v, gunit); } }),
@@ -135,7 +135,24 @@
                   target: profile.stepsTarget }),
       chartCard({ label: 'Sleep', field: 'sleepHours', unit: 'h', logs: logs, today: today, days: days,
                   target: L.goalSleepHours(profile) })
-    ].join('');
+    ];
+    // Nutrition trends (Meals M3): only surface once meals have been logged, so
+    // users who don't track food don't see three empty cards. The target line is
+    // a single reference (for calories that's the middle of the range goal).
+    var hasNutrition = logs.some(function (l) {
+      return l.nutrition && L.MEAL_MACROS.some(function (mm) { return isFiniteNum(l.nutrition[mm.key]); });
+    });
+    if (hasNutrition) {
+      cards.push(
+        chartCard({ label: 'Protein', field: 'nutrition.protein', unit: 'g', logs: logs,
+                    today: today, days: days, target: profile.proteinTarget }),
+        chartCard({ label: 'Calories', field: 'nutrition.calories', unit: 'kcal', logs: logs,
+                    today: today, days: days, target: profile.calorieTarget }),
+        chartCard({ label: 'Fiber', field: 'nutrition.fiber', unit: 'g', logs: logs,
+                    today: today, days: days, target: profile.fiberTarget })
+      );
+    }
+    host.innerHTML = cards.join('');
   }
 
   function round1(v) { return Math.round(v * 10) / 10; }
@@ -543,8 +560,16 @@
   // The scored signals, each with its grade dot and the value behind the grade.
   var SIGNAL_LABEL = {
     protein: 'Morning protein', morningExercise: 'Morning exercise',
-    steps: 'Steps', water: 'Water', wake: 'Wake time'
+    steps: 'Steps', water: 'Water', wake: 'Wake time',
+    proteinTotal: 'Daily protein', calories: 'Calories', fiber: 'Daily fiber'
   };
+  // Format a nutrition total via its MEAL_MACROS spec (e.g. "165 g", "2410 kcal").
+  function nutriVal(log, key) {
+    var v = log.nutrition && log.nutrition[key];
+    if (!isFiniteNum(v)) return '—';
+    var mm = L.MEAL_MACROS.filter(function (m) { return m.key === key; })[0];
+    return mm ? fmtMacro(v, mm) : String(v);
+  }
   function signalValue(sig, log, profile) {
     switch (sig) {
       case 'protein': return log.proteinWithin30 === 'Y' ? 'Yes' : 'No';
@@ -555,6 +580,9 @@
         var wu = profile.waterUnit === 'oz' ? 'oz' : 'L';
         return fmtWater(log.waterLiters, wu) + ' ' + L.waterUnitLabel(wu);
       case 'wake': return log.wakeTime ? fmtTime(log.wakeTime) : '—';
+      case 'proteinTotal': return nutriVal(log, 'protein');
+      case 'calories': return nutriVal(log, 'calories');
+      case 'fiber': return nutriVal(log, 'fiber');
       default: return '';
     }
   }
@@ -743,7 +771,7 @@
       var val = isFiniteNum(m[mm.key]) ? m[mm.key] : '';
       return '<div class="field"><label for="meal-' + mm.key + '">' + mm.label + ' (' + mm.unit + ')</label>' +
         '<input type="number" id="meal-' + mm.key + '" inputmode="decimal" min="0" step="' +
-        (mm.key === 'calories' ? '10' : '1') + '" value="' + val + '"></div>';
+        (L.INT_MACROS[mm.key] ? '10' : '1') + '" value="' + val + '"></div>';
     }).join('');
     return '<div class="slot-row" id="meal-slots">' + slots + '</div>' +
       '<div class="field"><label for="meal-name">Name <span class="muted small">(optional)</span></label>' +
@@ -783,7 +811,7 @@
       var raw = $('#meal-' + mm.key).value;
       if (raw === '') return;
       var n = Number(raw);
-      if (isFiniteNum(n)) out[mm.key] = mm.key === 'calories' ? Math.round(n) : round1(n);
+      if (isFiniteNum(n)) out[mm.key] = L.INT_MACROS[mm.key] ? Math.round(n) : round1(n);
     });
     return out;
   }
@@ -795,7 +823,7 @@
     slot.setAttribute('aria-pressed', 'true');
     return true;
   }
-  function fmtMacro(v, mm) { return (mm.key === 'calories' ? Math.round(v) : round1(v)) + ' ' + mm.unit; }
+  function fmtMacro(v, mm) { return (L.INT_MACROS[mm.key] ? Math.round(v) : round1(v)) + ' ' + mm.unit; }
   function mealSlotLabel(key) {
     var s = L.MEAL_SLOTS.filter(function (x) { return x.key === key; })[0];
     return s ? s.label : 'Meal';
@@ -1156,6 +1184,7 @@
     $('#s-carbs').value = valOr(p.carbTarget);
     $('#s-fat').value = valOr(p.fatTarget);
     $('#s-fiber').value = valOr(p.fiberTarget);
+    $('#s-sodium').value = valOr(p.sodiumTarget);
     renderMealLibrary();
     $('#settings-saved').hidden = true;
   }
@@ -1223,6 +1252,7 @@
     setNum(p, 'carbTarget', $('#s-carbs').value);
     setNum(p, 'fatTarget', $('#s-fat').value);
     setNum(p, 'fiberTarget', $('#s-fiber').value);
+    setNum(p, 'sodiumTarget', $('#s-sodium').value);
     S.saveProfile(p);
     flash($('#settings-saved'));
     renderDashboard();
