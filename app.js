@@ -12,11 +12,26 @@
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
   // ---------------------------------------------------------------- views
+  // Views reachable only via the bottom nav's "More" overflow (keeps the bar to
+  // ~4 primary tabs; append here as the app grows).
+  var OVERFLOW_VIEWS = ['history', 'settings'];
+
+  function closeMoreSheet() {
+    var sheet = $('#more-sheet'), btn = $('#more-btn');
+    if (sheet) sheet.hidden = true;
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+
   function showView(name) {
     $$('.view').forEach(function (v) { v.hidden = v.dataset.view !== name; });
-    $$('.tab').forEach(function (t) {
-      t.setAttribute('aria-selected', String(t.dataset.view === name));
+    // Nav buttons (bottom bar + More items) mark the active destination; the More
+    // button itself lights up when the current view lives inside the overflow.
+    $$('.nav-btn').forEach(function (b) {
+      b.setAttribute('aria-current', b.dataset.view === name ? 'page' : 'false');
     });
+    var moreBtn = $('#more-btn');
+    if (moreBtn) moreBtn.setAttribute('aria-current', OVERFLOW_VIEWS.indexOf(name) >= 0 ? 'page' : 'false');
+    closeMoreSheet();
     // Leaving the Log tab closes any open sheet, so its form ids (shared with the
     // History meal editor) can't linger in the DOM and collide.
     if (name !== 'log') closeSheet();
@@ -28,8 +43,22 @@
     if (name === 'settings') loadSettingsForm();
   }
 
-  $$('.tab').forEach(function (t) {
-    t.addEventListener('click', function () { showView(t.dataset.view); });
+  // Bottom-nav + More-sheet destinations both carry data-view.
+  $$('.nav-btn').forEach(function (b) {
+    b.addEventListener('click', function () { showView(b.dataset.view); });
+  });
+  $('#more-btn').addEventListener('click', function (e) {
+    e.stopPropagation(); // don't let the outside-click handler immediately re-close it
+    var sheet = $('#more-sheet'), btn = $('#more-btn');
+    var willOpen = sheet.hidden;
+    sheet.hidden = !willOpen;
+    btn.setAttribute('aria-expanded', String(willOpen));
+  });
+  // Tap anywhere outside an open More sheet to dismiss it.
+  document.addEventListener('click', function (e) {
+    if ($('#more-sheet').hidden) return;
+    if (e.target.closest('#more-sheet') || e.target.closest('#more-btn')) return;
+    closeMoreSheet();
   });
 
   // ------------------------------------------------------------ dashboard

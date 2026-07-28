@@ -12,14 +12,6 @@
 
 <header class="app-header">
   <h1>Operation: <span>Health</span></h1>
-  <nav class="tabs" role="tablist">
-    <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
-    <button class="tab" data-view="log" role="tab" aria-selected="false">Log</button>
-    <button class="tab" data-view="routine" role="tab" aria-selected="false">Routine</button>
-    <button class="tab" data-view="history" role="tab" aria-selected="false">History</button>
-    <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
-    <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
-  </nav>
 </header>
 
 <main>
@@ -267,6 +259,26 @@
     <button type="button" class="btn btn-ghost" data-choice="cancel">Cancel</button>
   </div>
 </dialog>
+
+<!-- Overflow menu for the bottom nav's "More" (secondary destinations). -->
+<div class="more-sheet" id="more-sheet" role="menu" aria-label="More" hidden>
+  <button type="button" class="more-item nav-btn" data-view="history" role="menuitem">🗂️ History</button>
+  <button type="button" class="more-item nav-btn" data-view="settings" role="menuitem">⚙️ Settings</button>
+</div>
+
+<!-- Primary navigation — a thumb-reachable bottom bar; secondary views live in More. -->
+<nav class="botnav" aria-label="Main">
+  <button type="button" class="botnav-tab nav-btn" data-view="dashboard" aria-current="page">
+    <span class="botnav-ico" aria-hidden="true">🏠</span><span class="botnav-lbl">Today</span></button>
+  <button type="button" class="botnav-tab nav-btn" data-view="log">
+    <span class="botnav-ico" aria-hidden="true">➕</span><span class="botnav-lbl">Log</span></button>
+  <button type="button" class="botnav-tab nav-btn" data-view="routine">
+    <span class="botnav-ico" aria-hidden="true">🗓️</span><span class="botnav-lbl">Routine</span></button>
+  <button type="button" class="botnav-tab nav-btn" data-view="trends">
+    <span class="botnav-ico" aria-hidden="true">📊</span><span class="botnav-lbl">Trends</span></button>
+  <button type="button" class="botnav-tab" id="more-btn" aria-haspopup="true" aria-expanded="false">
+    <span class="botnav-ico" aria-hidden="true">⋯</span><span class="botnav-lbl">More</span></button>
+</nav>
 
 <script src="logic.js"></script>
 <script src="storage.js"></script>

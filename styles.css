@@ -9,6 +9,7 @@
   --line: #e2e6e5;
   --brand: #0f766e;
   --brand-ink: #ffffff;
+  --brand-tint: rgba(15, 118, 110, .12); /* active-nav pill fill */
   --good: #15803d;
   --warn: #b45309;
   --bad: #b91c1c;
@@ -30,6 +31,7 @@
     --line: #2a3634;
     --brand: #2dd4bf;
     --brand-ink: #04302b;
+    --brand-tint: rgba(45, 212, 191, .16);
     --grade-green: #34d399;
     --grade-amber: #fbbf24;
     --grade-red:   #f87171;
@@ -52,7 +54,7 @@ body {
   text-size-adjust: 100%;
 }
 
-/* ---- Header & tabs ---- */
+/* ---- Header ---- */
 .app-header {
   position: sticky;
   top: 0;
@@ -63,7 +65,7 @@ body {
 }
 .app-header h1 {
   margin: 0;
-  padding: 14px 16px 8px;
+  padding: 14px 16px 12px;
   font-size: 20px;
   letter-spacing: .2px;
   max-width: var(--maxw);
@@ -71,35 +73,86 @@ body {
 }
 .app-header h1 span { color: var(--brand); }
 
-.tabs {
+/* ---- Bottom navigation (thumb-reachable; secondary views live behind "More") ---- */
+.botnav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 20;
   display: flex;
-  gap: 4px;
-  padding: 0 12px 8px;
+  gap: 2px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
   max-width: var(--maxw);
   margin-inline: auto;
 }
-.tab {
+.botnav-tab {
   flex: 1;
-  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   border: 0;
   background: transparent;
   color: var(--muted);
   font: inherit;
   font-weight: 600;
+  font-size: 11px;
+  padding: 4px 2px;
   border-radius: 10px;
+  min-height: 48px;
   cursor: pointer;
+}
+.botnav-ico {
+  font-size: 20px;
+  line-height: 1.1;
+  padding: 3px 16px;               /* the pill footprint — always reserved so nothing shifts */
+  border-radius: 999px;
+  transition: background-color .15s ease;
+}
+.botnav-tab[aria-current="page"] { color: var(--brand); }
+.botnav-tab[aria-current="page"] .botnav-ico { background: var(--brand-tint); } /* active pill */
+
+/* "More" overflow sheet, anchored above the bar's right edge */
+.more-sheet {
+  position: fixed;
+  /* Align to the centered nav's right edge on desktop; 10px inset on phones. */
+  right: max(10px, calc((100% - var(--maxw)) / 2 + 10px));
+  bottom: calc(60px + env(safe-area-inset-bottom));
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 168px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.more-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 10px;
   min-height: 44px;
+  cursor: pointer;
 }
-.tab[aria-selected="true"] {
-  background: var(--brand);
-  color: var(--brand-ink);
-}
+.more-item[aria-current="page"] { color: var(--brand); }
 
 /* ---- Layout ---- */
 main {
   max-width: var(--maxw);
   margin-inline: auto;
-  padding: 16px;
+  /* Clear the fixed bottom nav (bar height + safe-area home indicator). */
+  padding: 16px 16px calc(88px + env(safe-area-inset-bottom));
 }
 .view { animation: fade .15s ease; }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }

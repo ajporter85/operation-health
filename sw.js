@@ -3,7 +3,7 @@
    reminders are a later phase. Bump CACHE when shell files change. */
 'use strict';
 
-var CACHE = 'operation-health-v4';
+var CACHE = 'operation-health-v5';
 var SHELL = [
   './',
   './index.html',
