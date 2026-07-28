@@ -3,7 +3,7 @@
    reminders are a later phase. Bump CACHE when shell files change. */
 'use strict';
 
-var CACHE = 'operation-health-v2';
+var CACHE = 'operation-health-v3';
 var SHELL = [
   './',
   './index.html',
@@ -12,7 +12,10 @@ var SHELL = [
   './storage.js',
   './cookbook-meals.js',
   './app.js',
-  './manifest.webmanifest'
+  './manifest.webmanifest',
+  './apple-touch-icon.png',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', function (e) {
