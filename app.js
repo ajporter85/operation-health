@@ -22,6 +22,7 @@
     if (name !== 'log') closeSheet();
     if (name === 'dashboard') renderDashboard();
     if (name === 'log') renderLog();
+    if (name === 'routine') renderRoutine();
     if (name === 'history') renderHistory();
     if (name === 'trends') renderTrends();
     if (name === 'settings') loadSettingsForm();
@@ -294,6 +295,84 @@
       '<h3>' + title + ' <span class="chart-latest">' + round1(stats.last) + unit +
       '</span></h3>' + svg + legend + meta + statsRow + '</article>';
   }
+
+  // -------------------------------------------------------------- routine
+  // The prescribed day (profile.routine) with live plan-vs-actuals from today's
+  // entries. Mapped blocks that aren't done yet get a one-tap Log that jumps to
+  // the matching quick-add sheet. V1 is today-only.
+  var ROUTINE_ICON = { move: '🚶', fuel: '🍽️', eat: '🌿', sleep: '😴', enjoy: '🎮' };
+  var ROUTINE_STATUS = {
+    done:    { label: 'Done ✓' },
+    pending: { label: 'Upcoming' },
+    missed:  { label: 'Not yet' },
+    info:    { label: '' }
+  };
+
+  function routineLogLabel(b) {
+    if (!b.map) return '';
+    if (b.map.mealSlot) return mealSlotLabel(b.map.mealSlot).toLowerCase();
+    return { wake: 'wake', bed: 'sleep', water: 'water', steps: 'steps' }[b.map.track] || '';
+  }
+
+  function routineItemHtml(b, status, i) {
+    var icon = ROUTINE_ICON[b.category] || '•';
+    var meta = ROUTINE_STATUS[status] || ROUTINE_STATUS.info;
+    var pill = meta.label
+      ? ' <span class="routine-status ' + status + '">' + meta.label + '</span>' : '';
+    var canLog = b.map && status !== 'done';
+    var label = routineLogLabel(b);
+    var logBtn = canLog
+      ? '<button type="button" class="btn btn-sm routine-log" data-routine-log="' + i + '">Log' +
+        (label ? ' ' + escapeHtml(label) : '') + '</button>'
+      : '';
+    return '<li class="routine-item routine-' + status + ' cat-' + escapeHtml(b.category || '') + '">' +
+      '<div class="routine-time">' + escapeHtml(fmtTime(b.time)) + '</div>' +
+      '<div class="routine-body">' +
+        '<div class="routine-title"><span class="routine-icon">' + icon + '</span>' +
+          escapeHtml(b.title) + pill + '</div>' +
+        (b.detail ? '<div class="routine-detail muted small">' + escapeHtml(b.detail) + '</div>' : '') +
+        logBtn +
+      '</div></li>';
+  }
+
+  function currentRoutine() {
+    var r = S.getProfile().routine;
+    return (r && r.length) ? r : L.DEFAULT_ROUTINE;
+  }
+
+  function renderRoutine() {
+    var routine = currentRoutine();
+    var today = L.todayISO();
+    var entries = S.getDayEntries(today);
+    var nowMin = L.timeToMinutes(currentTime());
+    var statuses = L.routineStatus(entries, routine, nowMin);
+
+    var trackable = 0, done = 0;
+    statuses.forEach(function (s) {
+      if (s === 'info') return;
+      trackable++;
+      if (s === 'done') done++;
+    });
+    $('#routine-summary').textContent = trackable
+      ? done + ' of ' + trackable + ' done · now ' + fmtTime(currentTime())
+      : 'Your day at a glance.';
+
+    $('#routine-timeline').innerHTML = routine.map(function (b, i) {
+      return routineItemHtml(b, statuses[i], i);
+    }).join('');
+  }
+
+  // One-tap log from a routine block → jump to the Log tab with the right sheet
+  // open (meal sheet prefilled to the block's slot), landing the entry on today.
+  $('#routine-timeline').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-routine-log]');
+    if (!btn) return;
+    var b = currentRoutine()[Number(btn.dataset.routineLog)];
+    if (!b || !b.map) return;
+    $('#f-date').value = L.todayISO();
+    showView('log');
+    openSheet(b.map.sheet, b.map.mealSlot ? { slot: b.map.mealSlot } : null);
+  });
 
   // -------------------------------------------------------------- history
   // One ISO anchor date drives all three zoom levels; the level decides what
@@ -897,12 +976,14 @@
     }
   }
 
-  function openSheet(type) {
+  function openSheet(type, prefill) {
     openType = type;
     var sheet = $('#log-sheet');
     sheet.innerHTML = sheetHtml(type);
     sheet.hidden = false;
     $$('.chip').forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.chip === type)); });
+    // Optional prefill (e.g. the Routine tab opens the meal sheet on a given slot).
+    if (type === 'meal' && prefill && prefill.slot) prefillMealForm({ slot: prefill.slot });
     var first = sheet.querySelector('input');
     if (first) first.focus();
     sheet.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

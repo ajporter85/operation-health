@@ -15,6 +15,7 @@
   <nav class="tabs" role="tablist">
     <button class="tab" data-view="dashboard" role="tab" aria-selected="true">Today</button>
     <button class="tab" data-view="log" role="tab" aria-selected="false">Log</button>
+    <button class="tab" data-view="routine" role="tab" aria-selected="false">Routine</button>
     <button class="tab" data-view="history" role="tab" aria-selected="false">History</button>
     <button class="tab" data-view="trends" role="tab" aria-selected="false">Trends</button>
     <button class="tab" data-view="settings" role="tab" aria-selected="false">Settings</button>
@@ -81,6 +82,15 @@
 
     <h2 class="section-title">This day so far</h2>
     <div id="day-summary" class="day-summary"></div>
+  </section>
+
+  <!-- ============================ ROUTINE ============================ -->
+  <section id="view-routine" class="view" data-view="routine" hidden>
+    <div class="routine-head">
+      <h2 class="section-title">Today’s routine</h2>
+      <p class="muted small" id="routine-summary"></p>
+    </div>
+    <ol class="routine-timeline" id="routine-timeline"></ol>
   </section>
 
   <!-- ============================ HISTORY ============================ -->

@@ -692,3 +692,34 @@ input:focus, select:focus, textarea:focus {
 }
 .chart-stats .stat { font-weight: 600; }
 .chart-stats .stat-k { color: var(--muted); font-weight: 400; margin-right: 2px; }
+
+/* ---- Daily Routine timeline ---- */
+.routine-head { margin-bottom: 12px; }
+.routine-timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.routine-item {
+  display: flex;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+.routine-item.routine-done   { border-left-color: var(--grade-green); }
+.routine-item.routine-missed { border-left-color: var(--grade-red); }
+.routine-item.routine-info   { opacity: .82; }
+.routine-time {
+  min-width: 62px;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.routine-body { flex: 1; min-width: 0; }
+.routine-title { font-weight: 600; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.routine-detail { margin-top: 2px; }
+.routine-status { font-size: 12px; font-weight: 600; }
+.routine-status.done    { color: var(--grade-green); }
+.routine-status.missed  { color: var(--grade-red); }
+.routine-status.pending { color: var(--muted); }
+.routine-log { margin-top: 8px; }

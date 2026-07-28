@@ -49,6 +49,77 @@
   // Macros stored/shown as whole numbers (the rest round to 0.1).
   var INT_MACROS = { calories: true, sodium: true };
 
+  // ---- Daily Routine (the prescribed day; actuals come from the entries) ----
+  // The schedule is the user's OWN routine (times/doses are personal — seeded here
+  // but stored in profile.routine so they're configurable, per the no-hard-coding
+  // guardrail). Each block: { time 'HH:MM', title, detail, category, map? }.
+  //   category — one of the 5 pillars (move|fuel|eat|sleep|enjoy) → icon/color.
+  //   map      — links the block to logging: { track } or { mealSlot } drives the
+  //              done-check; `sheet` (UI only) says which quick-add sheet to open.
+  //              No map ⇒ info-only (psyllium/melatonin/wind-down — not tracked in V1).
+  var ROUTINE_CATEGORIES = ['move', 'fuel', 'eat', 'sleep', 'enjoy'];
+
+  var DEFAULT_ROUTINE = [
+    { time: '09:00', title: 'Wake & hydrate', detail: 'Up at 9:00 — big glass of water first thing.', category: 'sleep', map: { track: 'wake', sheet: 'sleep' } },
+    { time: '09:30', title: 'Breakfast', detail: '30g+ protein to start the day.', category: 'fuel', map: { mealSlot: 'B', sheet: 'meal' } },
+    { time: '10:00', title: '30/30/30 walk', detail: '30 min after eating · 30g+ protein in · 30 min walk.', category: 'move', map: { track: 'steps', sheet: 'steps' } },
+    { time: '12:45', title: 'Psyllium', detail: '1 scoop, wait ~15 min before lunch.', category: 'eat' },
+    { time: '13:00', title: 'Lunch', detail: '40–50g protein.', category: 'fuel', map: { mealSlot: 'L', sheet: 'meal' } },
+    { time: '16:00', title: 'Protein snack', detail: '20–30g protein to bridge to dinner.', category: 'fuel', map: { mealSlot: 'S', sheet: 'meal' } },
+    { time: '18:45', title: 'Psyllium', detail: '1 scoop, wait ~15 min before dinner.', category: 'eat' },
+    { time: '19:00', title: 'Dinner', detail: '40–50g protein.', category: 'fuel', map: { mealSlot: 'D', sheet: 'meal' } },
+    { time: '19:00', title: 'Gaming / hobby', detail: 'Enjoy life — unwind with something fun.', category: 'enjoy' },
+    { time: '22:00', title: 'Protein snack', detail: '20–30g protein — evening.', category: 'fuel', map: { mealSlot: 'S', sheet: 'meal' } },
+    { time: '22:05', title: 'Melatonin (optional)', detail: 'If using — a few hours before sleep.', category: 'sleep' },
+    { time: '22:05', title: 'Wind down', detail: 'Dim screens, ease off food & caffeine.', category: 'enjoy' },
+    { time: '00:00', title: 'Bedtime routine', detail: 'Teeth, lights, prep for bed.', category: 'sleep' },
+    { time: '01:00', title: 'Sleep', detail: 'Lights out — target ~8 hrs (1:00–9:00).', category: 'sleep', map: { track: 'bed', sheet: 'sleep' } }
+  ];
+
+  /**
+   * routineStatus(entries, routine, nowMin) → [status] aligned to routine blocks.
+   * PURE. status ∈ 'done' | 'pending' | 'missed' | 'info'.
+   *   done    — a matching entry exists (by track type, or ≥N meals of a slot).
+   *   info    — the block has no map (nothing to track).
+   *   pending — not done and its time is still ahead (or nowMin unknown).
+   *   missed  — not done and its time has passed.
+   * The day is treated as starting at routine[0].time (e.g. 09:00), so post-midnight
+   * blocks (00:00, 01:00) sort AFTER the evening rather than before the morning.
+   * `entries` are one day's raw LogEntry records; `nowMin` = minutes-since-midnight
+   * now (pass null when not viewing today → everything not-done reads 'pending').
+   */
+  function routineStatus(entries, routine, nowMin) {
+    entries = entries || [];
+    routine = routine || [];
+    var mealCount = {};
+    var has = { wake: false, bed: false, water: false, steps: false };
+    entries.forEach(function (e) {
+      if (!e) return;
+      if (e.type === 'meal' && e.slot) mealCount[e.slot] = (mealCount[e.slot] || 0) + 1;
+      else if (has.hasOwnProperty(e.type)) has[e.type] = true;
+    });
+    var dayStart = routine.length ? (timeToMinutes(routine[0].time) || 0) : 0;
+    function norm(m) { return m < dayStart ? m + 1440 : m; }
+    var nowN = isNum(nowMin) ? norm(nowMin) : null;
+    var slotSeen = {};
+    return routine.map(function (b) {
+      var map = b && b.map;
+      if (!map) return 'info';
+      var done;
+      if (map.mealSlot) {
+        slotSeen[map.mealSlot] = (slotSeen[map.mealSlot] || 0) + 1;
+        done = (mealCount[map.mealSlot] || 0) >= slotSeen[map.mealSlot];
+      } else {
+        done = !!has[map.track];
+      }
+      if (done) return 'done';
+      if (nowN === null) return 'pending';
+      var t = timeToMinutes(b.time);
+      if (t === null) return 'pending';
+      return norm(t) > nowN ? 'pending' : 'missed';
+    });
+  }
+
   // ---- Log entries (the incremental-logging model) ----
   // A day is no longer one big record; it's a stream of small timestamped
   // LogEntry records that a pure projection (projectDay) rolls up into the same
@@ -1163,6 +1234,10 @@
     MEAL_SLOTS: MEAL_SLOTS,
     MEAL_MACROS: MEAL_MACROS,
     INT_MACROS: INT_MACROS,
+    // daily routine (plan vs actuals)
+    ROUTINE_CATEGORIES: ROUTINE_CATEGORIES,
+    DEFAULT_ROUTINE: DEFAULT_ROUTINE,
+    routineStatus: routineStatus,
     validateEntry: validateEntry,
     validateMealItem: validateMealItem,
     projectDay: projectDay,

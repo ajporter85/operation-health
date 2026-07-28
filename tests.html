@@ -548,6 +548,50 @@
   eq('projectAll → computeConsistency = 100 over a perfect week',
      L.computeConsistency(L.projectAll(entriesWeek), profile, AS).score, 100);
 
+  // --------------------------- daily routine ----------------------------
+  var rt = [
+    { time: '09:00', title: 'Wake', category: 'sleep', map: { track: 'wake', sheet: 'sleep' } },   // 0
+    { time: '09:30', title: 'Breakfast', category: 'fuel', map: { mealSlot: 'B', sheet: 'meal' } },// 1
+    { time: '12:45', title: 'Psyllium', category: 'eat' },                                          // 2 info
+    { time: '13:00', title: 'Lunch', category: 'fuel', map: { mealSlot: 'L', sheet: 'meal' } },     // 3
+    { time: '16:00', title: 'Snack 1', category: 'fuel', map: { mealSlot: 'S', sheet: 'meal' } },   // 4
+    { time: '22:00', title: 'Snack 2', category: 'fuel', map: { mealSlot: 'S', sheet: 'meal' } },   // 5
+    { time: '01:00', title: 'Sleep', category: 'sleep', map: { track: 'bed', sheet: 'sleep' } }     // 6
+  ];
+  // wake + breakfast + ONE snack logged; lunch & second snack & bed not.
+  var rtEntries = [
+    { type: 'wake', value: '09:05' },
+    { type: 'meal', slot: 'B', calories: 400, protein: 30 },
+    { type: 'meal', slot: 'S', calories: 200, protein: 20 }
+  ];
+  var st = L.routineStatus(rtEntries, rt, L.timeToMinutes('17:00')); // afternoon
+  eq('routine: wake done', st[0], 'done');
+  eq('routine: breakfast done (1 meal ≥ 1st B block)', st[1], 'done');
+  eq('routine: un-mapped block is info', st[2], 'info');
+  eq('routine: lunch past & unlogged → missed', st[3], 'missed');
+  eq('routine: 1st snack done', st[4], 'done');
+  eq('routine: 2nd snack needs a 2nd S meal → pending', st[5], 'pending');
+  eq('routine: sleep (01:00) still ahead → pending', st[6], 'pending');
+
+  // second snack becomes done once a second S meal exists
+  var st2 = L.routineStatus(rtEntries.concat([{ type: 'meal', slot: 'S', protein: 15 }]),
+    rt, L.timeToMinutes('22:30'));
+  eq('routine: 2nd snack done after 2nd S meal', st2[5], 'done');
+
+  // midnight wrap: at 00:30 the 22:00 snack is PAST (missed) but 01:00 sleep is AHEAD
+  var stMid = L.routineStatus(rtEntries, rt, L.timeToMinutes('00:30'));
+  eq('routine: wrap — 22:00 block missed at 00:30', stMid[5], 'missed');
+  eq('routine: wrap — 01:00 block pending at 00:30', stMid[6], 'pending');
+
+  // no "now" (viewing a non-today day) → not-done reads pending, never missed
+  var stNull = L.routineStatus(rtEntries, rt, null);
+  eq('routine: null now → lunch pending not missed', stNull[3], 'pending');
+
+  // seeded default routine sanity
+  eq('routine: DEFAULT_ROUTINE has 14 blocks', L.DEFAULT_ROUTINE.length, 14);
+  eq('routine: default first block tracks wake', L.DEFAULT_ROUTINE[0].map.track, 'wake');
+  ok('routine: empty routine → empty status', L.routineStatus(rtEntries, [], 600).length === 0);
+
   // -------------------- validateImport (v4 entries) --------------------
   ok('validateImport: entries with records valid',
      L.validateImport({ app: 'operation-health', schemaVersion: 4,

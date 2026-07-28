@@ -45,6 +45,9 @@
     fatTarget: 75,
     fiberTarget: 30,
     sodiumTarget: 2300, // mg — FDA/DGA daily limit; tracked, not scored (Meals M3)
+    // Daily Routine — the user's own schedule; seeded from logic.js so it lives in
+    // the config layer (editable/importable later), never hard-coded in the UI.
+    routine: L.DEFAULT_ROUTINE,
     // Display-unit preferences (§9.3 Slice 4). Canonical storage is unchanged
     // (water = L, weight = lb); these only affect display/entry. Defaulted on
     // read for older profiles, so no schema bump is needed.
