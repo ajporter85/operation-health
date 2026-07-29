@@ -130,10 +130,13 @@ function runCard(file) {
     const sauce = MEAL.sauces[v.sauceId || MEAL.defaults.sauceId];
     const shop = v.shopping || {};
     const expect = [];
+    // a build may declare fresh toppings it doesn't use; those are not expected
+    const skipFresh = (shop.skipFresh || []).map(s => s.toLowerCase());
+    const kept = x => skipFresh.indexOf(String(x.item).toLowerCase()) < 0;
     if (shop.protein) expect.push(shop.protein.item);
     (sauce.shop || []).forEach(x => expect.push(x.item));
-    d.produce.forEach(x => expect.push(x.item));
-    d.pantry.forEach(p => {
+    d.produce.filter(kept).forEach(x => expect.push(x.item));
+    d.pantry.filter(kept).forEach(p => {
       if (p.grain && shop.pantrySwap && new RegExp(shop.pantrySwap.from, "i").test(p.item)) expect.push(shop.pantrySwap.to.item);
       else expect.push(p.item);
     });

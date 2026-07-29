@@ -1141,6 +1141,23 @@
   function grainOf(v) { return (v.overrides && v.overrides.grain) ? v.overrides.grain : MEAL.grain; }
   function sauceOf(v) { return MEAL.sauces[v.sauceId || MEAL.defaults.sauceId]; }
   function kindLabel(k) { return k === "remix-plant" ? "Plant" : (k === "remix" ? "Remix" : ""); }
+  // Fresh toppings are theme-level unless a build declares its own (a Big Mac
+  // has no tomato; a build may want its own optional extras).
+  function freshOf(v) { return (v.fresh && v.fresh.length) ? v.fresh : MEAL.defaults.fresh; }
+  // A build can rewrite any shared prep step it doesn't follow — the veg step
+  // shouldn't say "sauté the mushrooms" on a build that has no mushrooms.
+  function stepOver(v, st) {
+    var key = st.id || st.kind;
+    return (key && v.prepOverrides && v.prepOverrides[key]) || {};
+  }
+  // Lower-case the lead word only when the name isn't a proper noun, so
+  // "Special burger sauce" reads naturally mid-sentence but "Big Mac-style
+  // special sauce" and "Western BBQ" keep their capitals.
+  function midSentence(name) {
+    return /[A-Z]/.test(String(name).slice(1))
+      ? String(name)
+      : String(name).charAt(0).toLowerCase() + String(name).slice(1);
+  }
 
   // Split the base list into its two pucks: the grain (always the first base
   // item) and everything else (the veg & beans puck).
@@ -1207,6 +1224,12 @@
     });
   }
 
+  // The Protein puck card must quote the puck's own protein, not the whole
+  // meal's — the grain, veg and sauce contribute the rest.
+  function puckProtein(v) {
+    return (v.pucks && v.pucks.protein) ? v.pucks.protein.macros.protein : v.macros.protein;
+  }
+
   function buyLi(x) {
     return '<li><span>' + esc(x.item) + (x.amt ? ' <span class="q amt">' + esc(x.amt) + "</span>" : "") + "</span></li>";
   }
@@ -1236,6 +1259,15 @@
       return p;
     });
     d.produce.forEach(function (x) { buckets[classify(x)].push(x); });
+    // A build can drop a theme fresh topping it doesn't use — a Big Mac has no
+    // tomato, so don't put one on its shopping list. Declared, not inferred, so
+    // the validators can check the same intent.
+    var skipFresh = (shop.skipFresh || []).map(function (s) { return s.toLowerCase(); });
+    if (skipFresh.length) {
+      buckets.fresh = buckets.fresh.filter(function (x) {
+        return skipFresh.indexOf(String(x.item).toLowerCase()) < 0;
+      });
+    }
     pantry.forEach(function (x) { buckets[classify(x)].push(x); });
     (shop.produceAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
     (shop.pantryAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
@@ -1252,7 +1284,7 @@
         '<div class="comp-title"><span class="num">1</span> Protein puck <span class="sub">Your build</span></div>' +
         '<div class="picked-protein">' +
           '<span class="pname">' + esc(v.protein.name) + "</span>" +
-          '<span class="pserve">' + esc(v.protein.serving) + " · " + v.macros.protein + "g protein</span>" +
+          '<span class="pserve">' + esc(v.protein.serving) + " · " + puckProtein(v) + "g protein</span>" +
         "</div>" + buyBlock(buckets.protein) + "</div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">2</span> Grain puck <span class="sub">1-cup base</span></div>' +
@@ -1267,7 +1299,7 @@
         '<ul class="ing">' + mealLis(sauce.items) + "</ul>" + buyBlock(buckets.sauce) + "</div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">5</span> Fresh <span class="sub">On top at serving</span></div>' +
-        '<ul class="ing">' + MEAL.defaults.fresh.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
+        '<ul class="ing">' + freshOf(v).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
         buyBlock(buckets.fresh) + "</div>";
 
     var seasoningCard = shopMode ?
@@ -1289,14 +1321,14 @@
 
   function renderPrep() {
     var v = activeVar(), grain = grainOf(v), sauce = sauceOf(v);
-    var freshShort = MEAL.defaults.fresh.filter(function (f) { return !/^optional/i.test(f); })
+    var freshShort = freshOf(v).filter(function (f) { return !/^optional/i.test(f); })
       .map(function (f) { return f.replace(/\s*\(.*\)/, "").toLowerCase(); }).join(", ");
     var steps;
 
     if (state.mode === "reheat") {
       var sauceLine = sauce.freezes
         ? "pop a 2-Tbsp sauce cube on top"
-        : "add your fresh " + sauce.name.toLowerCase() + " from the fridge";
+        : "add your fresh " + midSentence(sauce.name) + " from the fridge";
       steps = [
         { h: "Grab your pucks",
           p: "From the freezer: one <b>" + esc(v.protein.name) + "</b> puck, one grain puck and one veg &amp; beans puck (~1 cup each). That trio is one ~3-cup meal — swap in a different protein or grain puck any time.",
@@ -1315,12 +1347,13 @@
       var isRice = /rice/i.test(grain);
       var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t); }); };
       steps = MEAL.prep.map(function (st) {
+        var ov = stepOver(v, st);
         if (st.kind === "grain") {
           return {
-            h: "Cook the " + grain,
-            p: (isRice && st.pRice) ? st.pRice : st.p,
-            chips: mkChips(st.chips),
-            tip: (isRice && st.tipRice) ? st.tipRice : (st.tip || "")
+            h: ov.h || ("Cook the " + grain),
+            p: ov.p || ((isRice && st.pRice) ? st.pRice : st.p),
+            chips: mkChips(ov.chips || st.chips),
+            tip: ov.tip || ((isRice && st.tipRice) ? st.tipRice : (st.tip || ""))
           };
         }
         if (st.kind === "protein") {
@@ -1328,13 +1361,18 @@
             h: "Cook &amp; season: " + esc(v.protein.name),
             p: v.protein.method + " Target " + esc(v.protein.serving) + " per meal.",
             chips: v.protein.appliance.map(function (a) { return chip(a); }),
-            tip: /chicken|turkey/i.test(v.protein.name) ? "<b>Safe temp:</b> poultry to 165°F internal."
-               : (/steak|brisket|pork|beef/i.test(v.protein.name) ? "<b>Rest it:</b> 5 min before slicing keeps the juices in." : "")
+            // A build can state its own tip; the fallbacks only guess from the
+            // name, so they cover whole-muscle cuts and poultry only. Ground
+            // beef and patties get chopped into the bowl, never sliced — those
+            // builds declare protein.tip rather than inherit a wrong one.
+            tip: v.protein.tip
+               || (/chicken|turkey/i.test(v.protein.name) ? "<b>Safe temp:</b> poultry to 165°F internal."
+               : (/steak|brisket|pork/i.test(v.protein.name) ? "<b>Rest it:</b> 5 min before slicing keeps the juices in." : ""))
           };
         }
         if (st.kind === "sauce") {
           return {
-            h: "Make the " + sauce.name.toLowerCase(),
+            h: "Make the " + midSentence(sauce.name),
             p: sauce.recipe,
             chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
             tip: sauce.freezes
@@ -1342,20 +1380,25 @@
               : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
           };
         }
-        return { h: st.h, p: st.p, chips: mkChips(st.chips), tip: st.tip || "" };
+        return {
+          h: ov.h || st.h,
+          p: ov.p || st.p,
+          chips: mkChips(ov.chips || st.chips),
+          tip: ov.tip || st.tip || ""
+        };
       });
 
       if (state.mode === "prep") {
         steps.push({
           h: "Portion &amp; freeze as pucks",
-          p: "Pack each component into your 1-cup molds — one protein, one grain and one veg &amp; beans puck per meal (a batch makes 4 of each). Cool completely, freeze solid, then pop out and bag by type. Freeze the sauce in 2-Tbsp cubes.",
+          p: "Pack each component into your 1-cup molds — one protein, one grain and one veg &amp; beans puck per meal (a batch makes 4 of each). Cool completely, freeze solid, then pop out and bag by type. Freeze the sauce in 2-Tbsp cubes. Keep the fresh toppings — " + esc(freshShort) + " — out of the freezer; those go on at serving.",
           chips: [chip("1-cup molds", "freezes"), chip("Pop out & bag", "freezes")],
           tip: "<b>Molds are throughput, not the limit:</b> once pucks are solid, bag them and the molds are free again. Cool before freezing so they don't ice-crystal; label by date and use oldest first (keeps ~3 mo). Then just switch to Reheat from Freezer."
         });
       } else {
         steps.push({
           h: "Combine &amp; portion for the fridge",
-          p: "Fold the protein, grain, veg &amp; beans together (stir the sauce through, or keep it aside to add fresh). Divide into 4 containers, ~3 cups each. Cool, then refrigerate.",
+          p: "Fold the protein, grain, veg &amp; beans together (stir the sauce through, or keep it aside to add fresh). Divide into 4 containers, ~3 cups each. Cool, then refrigerate. Add the fresh toppings — " + esc(freshShort) + " — at serving, not now.",
           chips: [chip("4 containers"), chip("Fridge ~4 days", "warn")],
           tip: "<b>Eating later than 4 days?</b> Freeze some portions instead — switch to Cook &amp; Freeze above for the puck plan."
         });
