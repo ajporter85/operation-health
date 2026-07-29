@@ -65,16 +65,17 @@ cards.forEach(card => {
   card.click(); // selectTheme -> update() ; default mode = prep
   assert(/modebtn active/.test(els["modebar"].innerHTML), id + ": modebar active after select");
   assert(/One meal =/.test(els["modebar"].innerHTML) && els["modebar"].innerHTML.indexOf("🍲") >= 0, id + ": meal strip + reheat icon");
-  const bs = els["body-buildshop"].innerHTML;
-  assert(bs.indexOf("Protein puck") >= 0 && bs.indexOf("Grain puck") >= 0 && bs.indexOf("Veg &amp; beans puck") >= 0 && bs.indexOf("Seasoning") >= 0, id + ": merged Build&Shop cards");
-  assert(/Buy for 4/.test(bs), id + ": buy blocks in prep");
+  const bs = els["body-bowl"].innerHTML;
+  assert(bs.indexOf("Protein puck") >= 0 && bs.indexOf("Grain puck") >= 0 && bs.indexOf("Veg &amp; beans puck") >= 0, id + ": bowl composition cards");
+  assert(!/class="aisle"/.test(bs), id + ": bowl carries no shopping content");
+  assert(/class="aisle"/.test(els["body-shop"].innerHTML), id + ": shopping list in prep");
   assert(/Cook &amp; season/.test(els["body-prep"].innerHTML) && /freeze as pucks/i.test(els["body-prep"].innerHTML), id + ": prep mode cook+freeze");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), id + ": puck table shown (prep)");
   assert(!("hidden" in (els["sec-swaps"]._attr || {})), id + ": swaps visible in prep");
   // reheat
   clickMode("reheat");
   assert(/Grab your pucks/.test(els["body-prep"].innerHTML) && !/Cook &amp; season/.test(els["body-prep"].innerHTML), id + ": reheat is assemble-only");
-  assert(!/Buy for 4/.test(els["body-buildshop"].innerHTML), id + ": no buy blocks in reheat");
+  assert(!/class="aisle"/.test(els["body-shop"].innerHTML), id + ": shopping list suppressed in reheat");
   assert("hidden" in (els["sec-swaps"]._attr || {}), id + ": swaps hidden in reheat");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), id + ": puck table shown (reheat)");
   // fresh

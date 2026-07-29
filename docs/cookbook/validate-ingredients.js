@@ -79,7 +79,7 @@ function auditCard(file) {
     const skipFresh = (shop.skipFresh || []).map(s => s.toLowerCase());
     [].concat(d.produce, d.pantry, shop.produceAdd || [], shop.pantryAdd || [], sauce.shop || [])
       .filter(x => skipFresh.indexOf(String(x.item).toLowerCase()) < 0)
-      .forEach(x => shown.push(["buy", x.item]));
+      .forEach(x => shown.push(["shop", x.item]));
     d.seasoning.forEach(s => shown.push(["staple", s]));
 
     // ---- what the Prep Workflow says, across both modes ----

@@ -25,7 +25,7 @@ let fns = appScript
   .replace(/\s*renderNotes\(\);\s*update\(\);\s*$/, "\n");
 
 // sanity: the render fns must survive extraction
-["function renderTabs", "function renderNotes", "function update", "function renderBuildShop"].forEach(k => {
+["function renderTabs", "function renderNotes", "function update", "function renderBowl", "function renderShop"].forEach(k => {
   if (fns.indexOf(k) === -1) { console.error("extraction lost " + k); process.exit(1); }
 });
 if (/document\.getElementById\("meal-data"\)/.test(fns)) { console.error("meal-data ref still present"); process.exit(1); }
@@ -47,8 +47,13 @@ THEMES.forEach(t => {
 
 // --- the 6 collapsible detail sections (verbatim from a theme card) ---
 const detailSections = `  <details class="sec" open>
-    <summary><span class="caret">›</span><h2 id="h-buildshop">Build &amp; Shop</h2><span class="rule"></span><span class="subnote" id="sub-buildshop">Per meal · buy for 4</span></summary>
-    <div class="secbody"><div class="build" id="body-buildshop"></div></div>
+    <summary><span class="caret">›</span><h2 id="h-bowl">In One Bowl</h2><span class="rule"></span><span class="subnote" id="sub-bowl">~3 cups · one meal</span></summary>
+    <div class="secbody"><div class="build" id="body-bowl"></div></div>
+  </details>
+
+  <details class="sec" open id="sec-shop">
+    <summary><span class="caret">›</span><h2>Shopping List</h2><span class="rule"></span><span class="subnote" id="sub-shop">Buy for 4 meals</span></summary>
+    <div class="secbody"><div id="body-shop"></div></div>
   </details>
 
   <details class="sec" open>

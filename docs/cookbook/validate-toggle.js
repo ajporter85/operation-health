@@ -91,14 +91,20 @@ function runCard(file) {
   assert(modebar.innerHTML.indexOf("♨️") < 0, "old ♨️ icon gone");
   assert(/One meal =/.test(modebar.innerHTML), "'one meal =' strip present");
 
-  // BUILD & SHOP (prep mode): 6 cards (5 pucks + seasoning), buy blocks present
-  const bs = els["body-buildshop"].innerHTML;
-  ["Protein puck", "Grain puck", "Veg &amp; beans puck", "Sauce", "Fresh", "Seasoning"].forEach(c =>
-    assert(bs.indexOf(c) >= 0, "build&shop card present: " + c));
-  assert((bs.match(/comp-title/g) || []).length === 6, "build&shop has 6 cards in shop mode");
-  assert(/Buy for 4/.test(bs), "build&shop: buy blocks present in shop mode");
-  assert(els["h-buildshop"].textContent === "Build & Shop", "h-buildshop title (prep)");
-  assert(els["sub-buildshop"].textContent === "Per meal · buy for 4", "sub-buildshop (prep)");
+  // IN ONE BOWL (composition only — never any buy quantities)
+  const bs = els["body-bowl"].innerHTML;
+  ["Protein puck", "Grain puck", "Veg &amp; beans puck", "Sauce", "Fresh"].forEach(c =>
+    assert(bs.indexOf(c) >= 0, "bowl card present: " + c));
+  assert((bs.match(/comp-title/g) || []).length === 5, "bowl has 5 composition cards");
+  assert(!/Buy for 4|buylabel|checks/.test(bs), "bowl: no shopping content leaked in");
+  assert(els["sub-bowl"].textContent === "~3 cups · one meal", "sub-bowl (prep)");
+
+  // SHOPPING LIST (prep mode): grouped by aisle, no per-meal amounts
+  const sh = els["body-shop"].innerHTML;
+  assert(/class="aisle"/.test(sh), "shop: aisle groups present");
+  assert(/Produce/.test(sh) && /Seasoning/.test(sh), "shop: expected aisle labels");
+  assert(!/comp-title|puck/.test(sh), "shop: no composition content leaked in");
+  assert(els["sub-shop"].textContent === "Buy for 4 meals", "sub-shop (prep)");
 
   // Swaps & Boosts (not hidden in prep) = subs + boost only, no batch/freeze
   assert(!els["sec-swaps"] || !("hidden" in (els["sec-swaps"]._attr||{})), "sec-swaps visible in prep");
@@ -126,7 +132,7 @@ function runCard(file) {
   const tabById = id => (LAST[".tab"] || []).find(t => t.getAttribute("data-id") === id);
   MEAL.variations.forEach(v => {
     const t = tabById(v.id); if (t) t.click();
-    const html = els["body-buildshop"].innerHTML;
+    const html = els["body-shop"].innerHTML;
     const sauce = MEAL.sauces[v.sauceId || MEAL.defaults.sauceId];
     const shop = v.shopping || {};
     const expect = [];
@@ -143,22 +149,23 @@ function runCard(file) {
     (shop.produceAdd || []).forEach(x => expect.push(x.item));
     (shop.pantryAdd || []).forEach(x => expect.push(x.item));
     d.seasoning.forEach(s => expect.push(s));
-    expect.forEach(item => assert(html.indexOf(esc(item)) >= 0, v.id + ": shopping item missing from Build&Shop → " + item));
+    expect.forEach(item => assert(html.indexOf(esc(item)) >= 0, v.id + ": shopping item missing from Shopping List → " + item));
   });
 
   // REHEAT — assemble-only: composition (5 cards, no buy blocks), no cooking, puck table stays, swaps hidden
   clickMode("reheat");
-  const bsR = els["body-buildshop"].innerHTML;
-  assert(!/Buy for 4/.test(bsR), "reheat: no buy blocks");
-  assert((bsR.match(/comp-title/g) || []).length === 5, "reheat: 5 composition cards (no seasoning)");
-  assert(els["h-buildshop"].textContent === "Build Your Meal", "reheat: h-buildshop title");
+  const bsR = els["body-bowl"].innerHTML;
+  assert((bsR.match(/comp-title/g) || []).length === 5, "reheat: 5 composition cards");
+  assert(!/class="aisle"/.test(els["body-shop"].innerHTML), "reheat: shopping list suppressed");
+  assert(/Nothing to buy/.test(els["body-shop"].innerHTML), "reheat: shop shows the 'nothing to buy' note");
+  assert(els["sub-shop"].textContent === "Nothing to buy", "reheat: sub-shop");
   assert(/Grab your pucks/.test(els["body-prep"].innerHTML) && !/Cook &amp; season/.test(els["body-prep"].innerHTML), "reheat: assemble-only prep");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), "reheat: puck table still shown");
   assert("hidden" in (els["sec-swaps"]._attr || {}), "reheat: sec-swaps hidden");
 
   // FRESH — cook + fridge, buy blocks return, no puck table, swaps visible
   clickMode("fresh");
-  assert(/Buy for 4/.test(els["body-buildshop"].innerHTML), "fresh: buy blocks present");
+  assert(/class="aisle"/.test(els["body-shop"].innerHTML), "fresh: shopping list present");
   assert(/portion for the fridge/i.test(els["body-prep"].innerHTML), "fresh: fridge ending");
   assert(!/pucktbl/.test(els["body-nutri"].innerHTML), "fresh: no puck table");
   assert(!("hidden" in (els["sec-swaps"]._attr || {})), "fresh: sec-swaps visible");

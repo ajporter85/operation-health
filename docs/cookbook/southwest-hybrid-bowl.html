@@ -146,6 +146,14 @@
 
   /* BUILD GRID */
   .build { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+  /* SHOPPING LIST — one list, grouped by aisle */
+  .shopgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; align-items: start; }
+  .aisle { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 17px 19px; box-shadow: var(--shadow); break-inside: avoid; }
+  .aisle h4 { margin: 0 0 12px; padding-bottom: 9px; border-bottom: 1px dashed var(--line-strong); font-family: var(--font-ui); font-size: var(--t-label); font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: var(--chipotle); }
+  .freshtag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-strong); font-family: var(--font-ui); font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); vertical-align: 1px; }
+  @media (max-width: 700px) { .shopgrid { grid-template-columns: 1fr; } }
+  @media print { .shopgrid { grid-template-columns: repeat(2, 1fr); } .aisle { box-shadow: none; } }
   .comp-title { display: flex; align-items: center; gap: 10px; font-weight: 800; text-transform: uppercase; font-size: var(--t-h3); letter-spacing: .02em; margin-bottom: 12px; }
   .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--chipotle); color: #fff; font-size: 16px; font-weight: 800; flex: none; }
   .num.g { background: var(--chipotle); }
@@ -272,8 +280,13 @@
   <div class="modebar" id="modebar"></div>
 
   <details class="sec" open>
-    <summary><span class="caret">›</span><h2 id="h-buildshop">Build &amp; Shop</h2><span class="rule"></span><span class="subnote" id="sub-buildshop">Per meal · buy for 4</span></summary>
-    <div class="secbody"><div class="build" id="body-buildshop"></div></div>
+    <summary><span class="caret">›</span><h2 id="h-bowl">In One Bowl</h2><span class="rule"></span><span class="subnote" id="sub-bowl">~3 cups · one meal</span></summary>
+    <div class="secbody"><div class="build" id="body-bowl"></div></div>
+  </details>
+
+  <details class="sec" open id="sec-shop">
+    <summary><span class="caret">›</span><h2>Shopping List</h2><span class="rule"></span><span class="subnote" id="sub-shop">Buy for 4 meals</span></summary>
+    <div class="secbody"><div id="body-shop"></div></div>
   </details>
 
   <details class="sec" open>
@@ -1493,87 +1506,116 @@
     return '<li><span>' + esc(x.item) + (x.amt ? ' <span class="q amt">' + esc(x.amt) + "</span>" : "") + "</span></li>";
   }
 
-  function renderBuildShop() {
+  // ---- IN ONE BOWL: what a single meal is made of. No quantities to buy —
+  // that job belongs to the shopping list, and mixing the two made both hard
+  // to scan (and forced a guess about which puck each purchase belonged to).
+  function renderBowl() {
     var v = activeVar(), sauce = sauceOf(v), sb = splitBase(v);
-    var shopMode = state.mode !== "reheat";
-    var d = MEAL.defaults.shopping, shop = v.shopping || {};
-
-    // classify the buy-for-4 items into the puck buckets (nothing is dropped —
-    // veg is the catch-all; sauce ingredients & seasonings have their own homes)
-    var buckets = { protein: [], grain: [], veg: [], sauce: [], fresh: [], staple: [] };
-    (sauce.shop || []).forEach(function (x) { buckets.sauce.push(x); });
-    if (shop.protein) buckets.protein.push(shop.protein);
-    var grainKw = (sb.grain[0] ? sb.grain[0].item : (MEAL.grain || "")).toLowerCase().replace(/\(.*?\)/g, "").trim().split(/\s+/).pop();
-    var classify = function (x) {
-      if (x.group && buckets[x.group]) return x.group;   // data can name its own bucket
-      if (x.grain) return "grain";
-      if (/fresh topping/i.test(x.amt || "")) return "fresh";
-      if (grainKw && (x.item || "").toLowerCase().indexOf(grainKw) >= 0) return "grain";
-      return "veg";
-    };
-    var pantry = d.pantry.map(function (p) {
-      if (p.grain && shop.pantrySwap && new RegExp(shop.pantrySwap.from, "i").test(p.item)) {
-        return { item: shop.pantrySwap.to.item, amt: shop.pantrySwap.to.amt, grain: true };
-      }
-      return p;
-    });
-    d.produce.forEach(function (x) { buckets[classify(x)].push(x); });
-    // A build can drop a theme fresh topping it doesn't use — a Big Mac has no
-    // tomato, so don't put one on its shopping list. Declared, not inferred, so
-    // the validators can check the same intent.
-    var skipFresh = (shop.skipFresh || []).map(function (s) { return s.toLowerCase(); });
-    if (skipFresh.length) {
-      buckets.fresh = buckets.fresh.filter(function (x) {
-        return skipFresh.indexOf(String(x.item).toLowerCase()) < 0;
-      });
-    }
-    pantry.forEach(function (x) { buckets[classify(x)].push(x); });
-    (shop.produceAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
-    (shop.pantryAdd || []).forEach(function (x) { buckets[classify(x)].push(x); });
-
     var mealLis = function (arr) { return arr.map(function (b) {
       return '<li>' + esc(b.item) + ' <span class="q amt">' + esc(b.amt) + "</span></li>";
     }).join(""); };
-    var buyBlock = function (arr) {
-      return (shopMode && arr.length) ? '<div class="buylabel">Buy for 4</div><ul class="checks">' + arr.map(buyLi).join("") + "</ul>" : "";
-    };
 
-    var cards =
+    document.getElementById("body-bowl").innerHTML =
       '<div class="card picked">' +
         '<div class="comp-title"><span class="num">1</span> Protein puck <span class="sub">Your build</span></div>' +
         '<div class="picked-protein">' +
           '<span class="pname">' + esc(v.protein.name) + "</span>" +
           '<span class="pserve">' + esc(v.protein.serving) + " · " + puckProtein(v) + "g protein</span>" +
-        "</div>" + buyBlock(buckets.protein) + "</div>" +
+        "</div></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">2</span> Grain puck <span class="sub">1-cup base</span></div>' +
-        '<ul class="ing">' + mealLis(sb.grain) + "</ul>" + buyBlock(buckets.grain) + "</div>" +
+        '<ul class="ing">' + mealLis(sb.grain) + "</ul></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">3</span> Veg &amp; beans puck <span class="sub">1-cup base</span></div>' +
         '<ul class="ing">' + mealLis(sb.veg) + "</ul>" +
-        '<div class="mini">The plant base brings ' + esc(MEAL.baseContribution) + ".</div>" + buyBlock(buckets.veg) + "</div>" +
+        '<div class="mini">The plant base brings ' + esc(MEAL.baseContribution) + ".</div></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">4</span> Sauce <span class="sub">2-Tbsp cube</span></div>' +
         '<div class="saucename">' + esc(sauce.name) + "</div>" +
-        '<ul class="ing">' + mealLis(sauce.items) + "</ul>" + buyBlock(buckets.sauce) + "</div>" +
+        '<ul class="ing">' + mealLis(sauce.items) + "</ul></div>" +
       '<div class="card">' +
         '<div class="comp-title"><span class="num g">5</span> Fresh <span class="sub">On top at serving</span></div>' +
-        '<ul class="ing">' + freshOf(v).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
-        buyBlock(buckets.fresh) + "</div>";
-
-    var seasoningCard = shopMode ?
-      '<div class="card">' +
-        '<div class="comp-title"><span class="num g">6</span> Seasoning &amp; staples <span class="sub">Buy for 4</span></div>' +
-        '<ul class="checks">' + d.seasoning.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join("") +
-          buckets.staple.map(buyLi).join("") + "</ul></div>" : "";
-
-    var note = shopMode ?
-      '<div class="shop-note"><b>Exact for the ' + esc(v.name) + ' build.</b> Each meal is three ~1-cup pucks + a 2-Tbsp sauce; the “buy for 4” amounts make four meals. Fresh toppings are tagged; buy ~20% extra raw protein for cooking shrink; scale linearly for more.</div>' :
-      '<div class="shop-note">These are the components in one ~3-cup meal — grab one puck of each from the freezer. Switch to <b>Cook &amp; Freeze</b> for the shopping list.</div>';
-
-    document.getElementById("body-buildshop").innerHTML =
-      cards + seasoningCard + note +
+        '<ul class="ing">' + freshOf(v).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul></div>" +
       '<div class="buildnote"><b>This build:</b> ' + esc(v.note) + "</div>";
+  }
+
+  // Aisles, in the order you walk a shop. An item's aisle comes from the list
+  // it lives in; `aisle` on the item overrides that. No inference from names.
+  var AISLES = [
+    { id: "produce",   label: "Produce" },
+    { id: "meat",      label: "Meat &amp; dairy" },
+    { id: "pantry",    label: "Pantry" },
+    { id: "seasoning", label: "Seasoning &amp; staples" }
+  ];
+
+  // ---- SHOPPING LIST: one contiguous list, grouped by aisle, quantities for 4.
+  function renderShop() {
+    var v = activeVar(), sauce = sauceOf(v), shop = v.shopping || {}, d = MEAL.defaults.shopping;
+    var el = document.getElementById("body-shop");
+
+    if (state.mode === "reheat") {
+      el.innerHTML = '<div class="shop-note">Nothing to buy — you already have the pucks. ' +
+        'Switch to <b>Cook &amp; Freeze</b> or <b>Fresh</b> above for the shopping list.</div>';
+      return;
+    }
+
+    // a build can drop a theme fresh topping it doesn't use (a Big Mac has no
+    // tomato) — declared in data so the validators check the same intent
+    var skipFresh = (shop.skipFresh || []).map(function (s) { return s.toLowerCase(); });
+    var kept = function (x) { return skipFresh.indexOf(String(x.item).toLowerCase()) < 0; };
+
+    var items = [];
+    var add = function (x, defAisle) {
+      if (!x || !kept(x)) return;
+      items.push({ item: x.item, amt: x.amt || "", aisle: x.aisle || defAisle,
+                   fresh: x.fresh || /fresh topping/i.test(x.amt || "") });
+    };
+
+    add(shop.protein, "meat");
+    d.produce.forEach(function (x) { add(x, "produce"); });
+    d.pantry.forEach(function (p) {
+      if (p.grain && shop.pantrySwap && new RegExp(shop.pantrySwap.from, "i").test(p.item)) {
+        add({ item: shop.pantrySwap.to.item, amt: shop.pantrySwap.to.amt }, "pantry");
+      } else add(p, "pantry");
+    });
+    (shop.produceAdd || []).forEach(function (x) { add(x, "produce"); });
+    (shop.pantryAdd || []).forEach(function (x) { add(x, "pantry"); });
+    (sauce.shop || []).forEach(function (x) { add(x, "pantry"); });
+    d.seasoning.forEach(function (s) { add({ item: s }, "seasoning"); });
+
+    // A build needing more of a theme staple restates the total rather than
+    // adding a second line — "Yellow onions 2" + "Yellow onion 1 extra" reads
+    // fine nested under a puck, but silly on one flat list.
+    (shop.qtyOverride || []).forEach(function (o) {
+      var t = String(o.item).toLowerCase();
+      items.forEach(function (x) { if (String(x.item).toLowerCase() === t) x.amt = o.amt; });
+    });
+
+    // merge duplicate lines (a sauce and the pantry can both want Greek yogurt)
+    var byKey = {}, order = [];
+    items.forEach(function (x) {
+      var k = x.aisle + "|" + String(x.item).toLowerCase();
+      if (byKey[k]) { if (!byKey[k].amt) byKey[k].amt = x.amt; return; }
+      byKey[k] = x; order.push(k);
+    });
+
+    var groups = AISLES.map(function (a) {
+      var rows = order.map(function (k) { return byKey[k]; }).filter(function (x) { return x.aisle === a.id; });
+      if (!rows.length) return "";
+      return '<div class="aisle"><h4>' + a.label + '</h4><ul class="checks">' +
+        rows.map(function (x) {
+          return "<li><span>" + esc(x.item) +
+            (x.amt ? ' <span class="q amt">' + esc(x.amt) + "</span>" : "") +
+            (x.fresh ? ' <span class="freshtag">fresh</span>' : "") + "</span></li>";
+        }).join("") + "</ul></div>";
+    }).join("");
+
+    var n = order.length;
+    el.innerHTML = '<div class="shopgrid">' + groups + "</div>" +
+      '<div class="shop-note"><b>' + n + " items for the " + esc(v.name) + " build — four meals.</b> " +
+      "Quantities make four ~3-cup bowls; scale linearly for more. Buy ~20% extra raw protein " +
+      "for cooking shrink. Lines tagged <span class=\"freshtag\">fresh</span> go on at serving, " +
+      "so buy those close to when you'll eat them.</div>";
   }
 
   function chip(txt, cls) { return '<span class="chip' + (cls ? " " + cls : "") + '">' + esc(txt) + "</span>"; }
@@ -1735,15 +1777,16 @@
   function update() {
     renderMode();
     renderTabs();
-    renderBuildShop();
+    renderBowl();
+    renderShop();
     renderPrep();
     renderNutrition();
     var mo = curMode(), reheat = state.mode === "reheat";
     var setTxt = function (id, t) { var el = document.getElementById(id); if (el) el.textContent = t; };
     setTxt("sub-prep", mo.prepSub);
     setTxt("sub-nutri", mo.nutriSub);
-    setTxt("h-buildshop", reheat ? "Build Your Meal" : "Build & Shop");
-    setTxt("sub-buildshop", reheat ? "What’s in each meal" : "Per meal · buy for 4");
+    setTxt("sub-bowl", reheat ? "~3 cups · grab three pucks" : "~3 cups · one meal");
+    setTxt("sub-shop", reheat ? "Nothing to buy" : "Buy for 4 meals");
     var sw = document.getElementById("sec-swaps");
     if (sw) { if (reheat) sw.setAttribute("hidden", ""); else sw.removeAttribute("hidden"); }
   }
