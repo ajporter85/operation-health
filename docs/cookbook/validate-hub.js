@@ -10,7 +10,9 @@ function assert(c, m) { if (!c) { console.error("  ✗ " + m); fail++; } }
 // islands
 const islands = {};
 [...src.matchAll(/id="(data-[a-z]+)">([\s\S]*?)<\/script>/g)].forEach(m => { islands[m[1]] = m[2].trim(); });
-assert(Object.keys(islands).length === 6, "6 theme islands embedded (got " + Object.keys(islands).length + ")");
+const NTHEMES = (fs.readFileSync("build-hub.js", "utf8").match(/{ file: "[^"]+.html",/g) || []).length;
+assert(NTHEMES > 0, "read theme count from build-hub.js");
+assert(Object.keys(islands).length === NTHEMES, NTHEMES + " theme islands embedded (got " + Object.keys(islands).length + ")");
 Object.values(islands).forEach(j => JSON.parse(j)); // valid
 islands["snack-data"] = src.match(/id="snack-data">([\s\S]*?)<\/script>/)[1].trim();
 const SNACKJSON = JSON.parse(islands["snack-data"]);
@@ -58,23 +60,36 @@ try { vm.runInContext(appScript, sandbox, { timeout: 5000 }); } catch (e) { asse
 
 // select each meal via its theme-card, drive the toggle
 const cards = LAST[".theme-card"] || [];
-assert(cards.length === 6, "6 theme cards rendered (got " + cards.length + ")");
+assert(cards.length === NTHEMES, NTHEMES + " theme cards rendered (got " + cards.length + ")");
 const clickMode = m => { const b = (LAST[".modebtn"] || []).find(x => x.getAttribute("data-mode") === m); if (b) b.click(); return b; };
 cards.forEach(card => {
   const id = card.getAttribute("data-id");
+  // islands are keyed "data-<id>" and hold raw JSON text, not objects
+  const mf = JSON.parse(islands["data-" + id] || "{}").format;
+  const onepot = mf && (typeof mf === "object" ? mf.id : mf) === "onepot";
+  const cups = (mf && mf.cups) || 3;
+  const E = onepot ? {
+    lead: "Each " + cups + "-cup portion =",
+    bowl: ["Protein", "Grain", "Veg &amp; beans"],
+    proteinLead: /Prep the protein/, freezeStep: /Portion &amp; freeze/, reheatLead: /Grab a portion/
+  } : {
+    lead: "One meal =",
+    bowl: ["Protein puck", "Grain puck", "Veg &amp; beans puck"],
+    proteinLead: /Cook &amp; season/, freezeStep: /freeze as pucks/i, reheatLead: /Grab your pucks/
+  };
   card.click(); // selectTheme -> update() ; default mode = prep
   assert(/modebtn active/.test(els["modebar"].innerHTML), id + ": modebar active after select");
-  assert(/One meal =/.test(els["modebar"].innerHTML) && els["modebar"].innerHTML.indexOf("🍲") >= 0, id + ": meal strip + reheat icon");
+  assert(els["modebar"].innerHTML.indexOf(E.lead) >= 0 && els["modebar"].innerHTML.indexOf("🍲") >= 0, id + ": meal strip + reheat icon");
   const bs = els["body-bowl"].innerHTML;
-  assert(bs.indexOf("Protein puck") >= 0 && bs.indexOf("Grain puck") >= 0 && bs.indexOf("Veg &amp; beans puck") >= 0, id + ": bowl composition cards");
+  assert(E.bowl.every(c => bs.indexOf(c) >= 0), id + ": bowl composition cards");
   assert(!/class="aisle"/.test(bs), id + ": bowl carries no shopping content");
   assert(/class="aisle"/.test(els["body-shop"].innerHTML), id + ": shopping list in prep");
-  assert(/Cook &amp; season/.test(els["body-prep"].innerHTML) && /freeze as pucks/i.test(els["body-prep"].innerHTML), id + ": prep mode cook+freeze");
+  assert(E.proteinLead.test(els["body-prep"].innerHTML) && E.freezeStep.test(els["body-prep"].innerHTML), id + ": prep mode cook+freeze");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), id + ": puck table shown (prep)");
   assert(!("hidden" in (els["sec-swaps"]._attr || {})), id + ": swaps visible in prep");
   // reheat
   clickMode("reheat");
-  assert(/Grab your pucks/.test(els["body-prep"].innerHTML) && !/Cook &amp; season/.test(els["body-prep"].innerHTML), id + ": reheat is assemble-only");
+  assert(E.reheatLead.test(els["body-prep"].innerHTML) && !E.proteinLead.test(els["body-prep"].innerHTML), id + ": reheat is assemble-only");
   assert(!/class="aisle"/.test(els["body-shop"].innerHTML), id + ": shopping list suppressed in reheat");
   assert("hidden" in (els["sec-swaps"]._attr || {}), id + ": swaps hidden in reheat");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), id + ": puck table shown (reheat)");

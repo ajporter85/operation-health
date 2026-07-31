@@ -9,6 +9,7 @@ const THEMES = [
   { file: "burger-bowl.html",           id: "burger",    emoji: "🍔" },
   { file: "italian-bowl.html",          id: "italian",   emoji: "🍝" },
   { file: "chili-bowl.html",            id: "chili",      emoji: "🫘" },
+  { file: "cajun-bowl.html",            id: "cajun",     emoji: "⚜️" },
 ];
 
 // --- engine source (CSS + render functions) from chili ---

@@ -82,6 +82,29 @@ function runCard(file) {
   const esc = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
   const MEAL = JSON.parse(island);
 
+  // What each assembly format is expected to say. Deliberately restated here
+  // rather than read back off the card — a test that derives its expectations
+  // from the thing under test proves nothing.
+  const fmtId = (MEAL.format && typeof MEAL.format === "object") ? MEAL.format.id : (MEAL.format || "pucks");
+  const cups = (MEAL.format && MEAL.format.cups) || 3;
+  const EXP = fmtId === "onepot" ? {
+    stripLead: "Each " + cups + "-cup portion =",
+    bowlCards: ["Protein", "Grain", "Veg &amp; beans", "Seasoning &amp; sauce", "Fresh"],
+    subBowl: "~" + cups + " cups · one meal",
+    freezeStep: /Portion &amp; freeze/,
+    totalRow: new RegExp("Total · ~" + cups + "-cup portion"),
+    reheatLead: /Grab a portion/,
+    proteinLead: /Prep the protein/
+  } : {
+    stripLead: "One meal =",
+    bowlCards: ["Protein puck", "Grain puck", "Veg &amp; beans puck", "Sauce", "Fresh"],
+    subBowl: "~3 cups · one meal",
+    freezeStep: /freeze as pucks/i,
+    totalRow: /Total · ~3-cup meal/,
+    reheatLead: /Grab your pucks/,
+    proteinLead: /Cook &amp; season/
+  };
+
   // after load: default mode = prep (Cook & Freeze)
   const modebar = els["modebar"];
   assert(modebar && /modebtn active/.test(modebar.innerHTML), "modebar rendered with an active button");
@@ -89,15 +112,14 @@ function runCard(file) {
     assert(modebar.innerHTML.indexOf(lbl) >= 0, "mode button present: " + lbl));
   assert(modebar.innerHTML.indexOf("🍲") >= 0, "reheat icon 🍲 present (not ♨️)");
   assert(modebar.innerHTML.indexOf("♨️") < 0, "old ♨️ icon gone");
-  assert(/One meal =/.test(modebar.innerHTML), "'one meal =' strip present");
+  assert(modebar.innerHTML.indexOf(EXP.stripLead) >= 0, "meal strip lead present: " + EXP.stripLead);
 
   // IN ONE BOWL (composition only — never any buy quantities)
   const bs = els["body-bowl"].innerHTML;
-  ["Protein puck", "Grain puck", "Veg &amp; beans puck", "Sauce", "Fresh"].forEach(c =>
-    assert(bs.indexOf(c) >= 0, "bowl card present: " + c));
+  EXP.bowlCards.forEach(c => assert(bs.indexOf(c) >= 0, "bowl card present: " + c));
   assert((bs.match(/comp-title/g) || []).length === 5, "bowl has 5 composition cards");
   assert(!/Buy for 4|buylabel|checks/.test(bs), "bowl: no shopping content leaked in");
-  assert(els["sub-bowl"].textContent === "~3 cups · one meal", "sub-bowl (prep)");
+  assert(els["sub-bowl"].textContent === EXP.subBowl, "sub-bowl (prep) → " + els["sub-bowl"].textContent);
 
   // SHOPPING LIST (prep mode): grouped by aisle, no per-meal amounts
   const sh = els["body-shop"].innerHTML;
@@ -113,9 +135,11 @@ function runCard(file) {
   assert(!/Weekly batch plan/.test(notes) && !/Freezes well/.test(notes), "swaps: batch/freeze removed");
 
   // PREP (Cook & Freeze) + Nutrition
-  assert(/Cook &amp; season/.test(els["body-prep"].innerHTML) && /freeze as pucks/i.test(els["body-prep"].innerHTML), "prep: cook + freeze");
-  assert(/pucktbl/.test(els["body-nutri"].innerHTML) && /Total · ~3-cup meal/.test(els["body-nutri"].innerHTML), "prep: puck table");
-  assert(!/2-cup/.test(els["body-nutri"].innerHTML), "no stale '2-cup' text");
+  assert(EXP.proteinLead.test(els["body-prep"].innerHTML) && EXP.freezeStep.test(els["body-prep"].innerHTML), "prep: cook + freeze");
+  assert(/pucktbl/.test(els["body-nutri"].innerHTML) && EXP.totalRow.test(els["body-nutri"].innerHTML), "prep: component table");
+  // the old 2-cup mold copy was retired from the puck cards; a one-pot card
+  // genuinely portions into 2-cup molds, so the guard only applies to pucks
+  if (fmtId === "pucks") assert(!/2-cup/.test(els["body-nutri"].innerHTML), "no stale '2-cup' text");
 
   // puck-sum integrity
   MEAL.variations.forEach(v => {
@@ -159,7 +183,7 @@ function runCard(file) {
   assert(!/class="aisle"/.test(els["body-shop"].innerHTML), "reheat: shopping list suppressed");
   assert(/Nothing to buy/.test(els["body-shop"].innerHTML), "reheat: shop shows the 'nothing to buy' note");
   assert(els["sub-shop"].textContent === "Nothing to buy", "reheat: sub-shop");
-  assert(/Grab your pucks/.test(els["body-prep"].innerHTML) && !/Cook &amp; season/.test(els["body-prep"].innerHTML), "reheat: assemble-only prep");
+  assert(EXP.reheatLead.test(els["body-prep"].innerHTML) && !EXP.proteinLead.test(els["body-prep"].innerHTML), "reheat: assemble-only prep");
   assert(/pucktbl/.test(els["body-nutri"].innerHTML), "reheat: puck table still shown");
   assert("hidden" in (els["sec-swaps"]._attr || {}), "reheat: sec-swaps hidden");
 

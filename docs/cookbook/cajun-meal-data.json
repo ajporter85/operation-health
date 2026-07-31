@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 3,
+  "id": "cajun-bowl",
+  "theme": "Cajun & Creole Bowl",
+  "title": "Cajun & Creole Bowl",
+  "format": {
+    "id": "onepot",
+    "vessel": "rice cooker",
+    "cups": 2,
+    "mold": "2-cup",
+    "count": 4
+  },
+  "servings": 4,
+  "prepMin": 10,
+  "cookMin": 60,
+  "freezeMonths": 3,
+  "reheatMin": [6, 9],
+  "slot": "L/D",
+  "macrosEstimated": true,
+  "macroSource": "standard-per-ingredient-v1",
+  "grain": "rice",
+  "baseContribution": "~9 g protein & ~7 g fiber before you add your protein",
+  "molds": {
+    "assembled": { "size": "2-cup", "count": 4, "use": "one complete meal each — this is the mold this card actually uses" },
+    "component": { "size": "1-cup", "count": 8, "use": "spare portions if you'd rather freeze half-meals" },
+    "sauce": { "size": "2-Tbsp", "count": 16, "use": "not needed here — the seasoning cooks into the pot" }
+  },
+  "prep": [
+    {
+      "id": "blend",
+      "h": "Mix the salt-free Creole blend",
+      "p": "Read the Zatarain's label and it's all spice — paprika, red and chili pepper, black pepper, onion, garlic, dried bell pepper, then hydrolyzed corn protein and yeast extract for umami and citric acid for brightness. Salt is the second ingredient and does none of the work you want. Mix a jar once: 3 Tbsp sweet paprika, 1 tsp smoked paprika, 1 Tbsp each garlic powder and onion powder, 2 tsp each dried thyme and dried oregano, 1–2 tsp cayenne pepper, 1 tsp chili powder, 2 tsp black pepper, 1 tsp celery seed, and 2 tsp nutritional yeast for the umami the yeast extract was doing. Use 2 Tbsp per pot. Keeps for months.",
+      "chips": [
+        { "t": "Jar · 5 min, once" },
+        { "t": "~0 mg sodium vs 2,500 mg in the box", "cls": "fast" }
+      ],
+      "tip": "<b>The citric acid stays out of the jar</b> — that's the lemon you squeeze over the bowl at the table, and it's most of why the boxed one tastes bright. Louisiana hot sauce belongs at the table too, not in the pot, so you can dial the heat per bowl."
+    },
+    {
+      "kind": "sauce"
+    },
+    {
+      "kind": "protein"
+    },
+    {
+      "id": "cook",
+      "kind": "grain",
+      "h": "Load the rice cooker and walk away",
+      "p": "Into the pot: 2/3 cup parboiled brown rice, 1 1/2 cups unsalted chicken broth, 1 1/2 cups frozen seasoning blend (the holy trinity — onion, celery and bell pepper, already chopped), 2 Tbsp no-salt tomato paste, 2 Tbsp of the Creole blend, and your prepped protein. Stir once, close the lid and run the brown-rice cycle — about 45–50 min. Nothing to do until it flips to Keep Warm.",
+      "chips": [
+        { "t": "Rice cooker · brown-rice cycle" },
+        { "t": "Instant Pot · Rice + 10 min natural", "cls": "fast" }
+      ],
+      "tip": "<b>Nothing browns in a rice cooker.</b> The smoked paprika, the andouille and the tomato paste cover most of that gap. If a test batch tastes flat, brown the sausage and protein in a skillet first — one pan, 8 minutes — and tip it in. Try it lazy first; lazy is the point of this meal."
+    },
+    {
+      "id": "finish",
+      "h": "Stir in the beans &amp; tomatoes at the end",
+      "p": "When it flips to Keep Warm, stir in one 15-oz can no-salt-added red kidney beans (drained &amp; rinsed) and one 14.5-oz can no-salt diced tomatoes (drained). Close the lid for 10 more minutes. That is the only time you touch it.",
+      "chips": [
+        { "t": "Keep Warm · 10 min" },
+        { "t": "Rinsing canned beans cuts ~40% of their sodium", "cls": "fast" }
+      ],
+      "tip": "<b>Why late, not early:</b> canned beans are already cooked and go to paste over a full cycle, and tomato acid stops rice absorbing water properly. Want it truly zero-touch? Put both in at the start and take softer beans and chewier rice — that's a fair trade, just not the default."
+    }
+  ],
+  "defaults": {
+    "sauceId": "creole",
+    "base": [
+      { "item": "Parboiled brown rice", "amt": "1/2 cup" },
+      { "item": "Red kidney beans", "amt": "1/3 cup" },
+      { "item": "Frozen seasoning blend", "amt": "1/4 cup" }
+    ],
+    "fresh": [
+      "Sliced scallions",
+      "Chopped flat-leaf parsley",
+      "Lemon wedge",
+      "Louisiana hot sauce"
+    ],
+    "shopping": {
+      "produce": [
+        { "item": "Frozen seasoning blend (trinity)", "amt": "1 1/2 cups" },
+        { "item": "Scallions", "amt": "1 bunch", "fresh": true },
+        { "item": "Flat-leaf parsley", "amt": "1 bunch", "fresh": true },
+        { "item": "Lemons", "amt": "2", "fresh": true }
+      ],
+      "pantry": [
+        { "item": "Parboiled brown rice", "amt": "2/3 cup dry", "grain": true },
+        { "item": "Red kidney beans, no-salt-added", "amt": "1 can (15 oz)" },
+        { "item": "Diced tomatoes, no-salt-added", "amt": "1 can (14.5 oz)" },
+        { "item": "Unsalted chicken broth", "amt": "1 1/2 cups" }
+      ],
+      "seasoning": [
+        "Sweet paprika",
+        "Smoked paprika",
+        "Garlic powder",
+        "Onion powder",
+        "Dried thyme",
+        "Dried oregano",
+        "Cayenne pepper",
+        "Chili powder",
+        "Black pepper",
+        "Celery seed",
+        "Nutritional yeast",
+        "Louisiana hot sauce"
+      ]
+    }
+  },
+  "sauces": {
+    "creole": {
+      "name": "Creole pot seasoning",
+      "midName": "Creole pot seasoning",
+      "tool": "Whisk into the broth · 1 min",
+      "freezes": true,
+      "recipe": "Nothing to cook — this build seasons the pot directly. Whisk 2 Tbsp of the Creole blend you jarred and 2 Tbsp no-salt-added tomato paste into the unsalted broth before it goes in the cooker. The drained no-salt diced tomatoes go in at the end with the beans, so they keep some texture rather than melting into the rice.",
+      "items": [
+        { "item": "Salt-free Creole blend", "amt": "2 Tbsp" },
+        { "item": "Tomato paste, no-salt-added", "amt": "2 Tbsp" },
+        { "item": "Diced tomatoes, no-salt-added", "amt": "1/4 cup" },
+        { "item": "Louisiana hot sauce", "amt": "to taste" }
+      ],
+      "shop": [
+        { "item": "Tomato paste, no-salt-added", "amt": "1 small can" }
+      ]
+    },
+    "gumbo-roux": {
+      "name": "Dry-roux gumbo gravy",
+      "tool": "Oven · 30 min, make ahead",
+      "freezes": true,
+      "recipe": "Spread 1/2 cup all-purpose flour on a dry sheet pan and toast at 350°F, stirring every 5 min, until it's the color of milk chocolate — 25–35 min. That is a roux with none of the fat: a traditional one is half oil, and this gets you the same toasted depth for about 15 calories a serving. Whisk 3 Tbsp into the unsalted broth before it goes in the cooker, along with 2 Tbsp of the Creole blend. Jar the rest. If you want it, 1/2 tsp file powder stirred in at the end thickens further and adds the classic root-beer-ish note — optional, and never boil it.",
+      "items": [
+        { "item": "Toasted dry roux", "amt": "3 Tbsp" },
+        { "item": "Salt-free Creole blend", "amt": "2 Tbsp" },
+        { "item": "Filé powder (optional)", "amt": "1/2 tsp" }
+      ],
+      "shop": [
+        { "item": "All-purpose flour", "amt": "1 small bag" },
+        { "item": "Filé powder (optional)", "amt": "1 jar" }
+      ]
+    },
+    "creole-tomato": {
+      "name": "Creole tomato sauce",
+      "tool": "Saucepan · 15 min",
+      "freezes": true,
+      "recipe": "Simmer one 14.5-oz can no-salt diced tomatoes with 2 Tbsp no-salt tomato paste, 2 Tbsp of the Creole blend, 2 bay leaves and a splash of the unsalted broth for 15 min until it thickens. Pull the bay leaves out and finish with a squeeze of lemon. This is the tomato-forward Creole base rather than the drier jambalaya seasoning.",
+      "items": [
+        { "item": "Diced tomatoes, no-salt-added", "amt": "1/2 cup" },
+        { "item": "Tomato paste, no-salt-added", "amt": "2 Tbsp" },
+        { "item": "Salt-free Creole blend", "amt": "2 Tbsp" },
+        { "item": "Bay leaves", "amt": "1" }
+      ],
+      "shop": [
+        { "item": "Tomato paste, no-salt-added", "amt": "1 small can" },
+        { "item": "Bay leaves", "amt": "1 jar" }
+      ]
+    }
+  },
+  "variations": [
+    {
+      "id": "chicken-andouille-jambalaya",
+      "name": "Chicken & Andouille Jambalaya",
+      "kind": "protein-swap",
+      "featured": true,
+      "sauceId": "creole",
+      "protein": {
+        "name": "Chicken thigh & breast + andouille",
+        "serving": "5 oz / ~140 g cooked chicken + 3/4 oz sausage",
+        "method": "Cut 14 oz boneless skinless chicken thigh and 14 oz breast into 1-inch pieces, and slice 3 oz chicken andouille thin. It all goes into the cooker raw and poaches as the rice cooks — thigh for the flavor, breast for the macros. The sausage is a seasoning here, not the protein: that one swap is most of the sodium saving.",
+        "appliance": ["Rice cooker · in with the rice", "Skillet · 8 min if you want it browned"],
+        "tip": "<b>Safe temp:</b> poultry to 165°F internal — check the thickest piece before you portion."
+      },
+      "macros": { "kcal": 530, "protein": 55, "carbs": 46, "fiber": 9, "fat": 13 },
+      "shopping": {
+        "protein": { "item": "Chicken thigh & breast, boneless skinless", "amt": "14 oz of each" },
+        "produceAdd": [],
+        "pantryAdd": [{ "item": "Chicken andouille sausage", "amt": "3 oz (~1 link)", "aisle": "meat" }]
+      },
+      "note": "The direct rebuild of the boxed jambalaya + rope sausage, and the featured build. Your usual pot splits four ways as 480 kcal / 16 g protein / 25 g fat / 1.3 g fiber / ~1,500 mg sodium. This lands at ~360 mg sodium — roughly a quarter — with 39 g more protein, 8 g more fiber and 12 g less fat, for about 50 more calories.",
+      "pucks": {
+        "protein": { "label": "Chicken thigh & breast + andouille", "macros": { "kcal": 300, "protein": 44, "carbs": 0, "fiber": 0, "fat": 12 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Red beans & the trinity", "macros": { "kcal": 85, "protein": 6, "carbs": 16, "fiber": 5, "fat": 0 } },
+        "sauce": { "label": "Salt-free Creole blend", "macros": { "kcal": 35, "protein": 2, "carbs": 7, "fiber": 2, "fat": 0 } }
+      }
+    },
+    {
+      "id": "red-beans-rice",
+      "name": "Red Beans & Rice",
+      "kind": "remix",
+      "sauceId": "creole",
+      "protein": {
+        "name": "Roasted turkey thigh + andouille",
+        "serving": "4.5 oz / ~130 g cooked + 3/4 oz sausage",
+        "method": "Roast 1 1/2 lb boneless turkey thigh tossed with 1 Tbsp of the Creole blend at 400°F for ~30 min, then cube it. Uncured roasted turkey is the whole trick — smoked deli turkey would bring roughly 800 mg of sodium per 4 oz on its own, which is more than this entire bowl. Slice 3 oz chicken andouille thin; both go in the cooker.",
+        "appliance": ["Oven · 400°F · 30 min", "Rice cooker · in with the rice"],
+        "tip": "<b>Safe temp:</b> poultry to 165°F internal. Turkey thigh stays far juicier than breast through a reheat."
+      },
+      "macros": { "kcal": 585, "protein": 51, "carbs": 63, "fiber": 15, "fat": 14 },
+      "shopping": {
+        "protein": { "item": "Boneless turkey thigh", "amt": "1 1/2 lb" },
+        "produceAdd": [],
+        "pantryAdd": [
+          { "item": "Chicken andouille sausage", "amt": "3 oz (~1 link)", "aisle": "meat" }
+        ],
+        "qtyOverride": [{ "item": "Red kidney beans, no-salt-added", "amt": "2 cans (15 oz)" }]
+      },
+      "note": "The Monday-in-Louisiana classic, and the highest-fiber build in the card at 15 g — the beans move from a supporting role to the main event. Traditionally this is built on a ham hock, which is where the sodium usually comes from; roasted turkey thigh does the same job for a fraction of it. ~355 mg sodium.",
+      "overrides": {
+        "base": [
+          { "item": "Parboiled brown rice", "amt": "1/2 cup" },
+          { "item": "Red kidney beans", "amt": "3/4 cup" },
+          { "item": "Frozen seasoning blend", "amt": "1/4 cup" }
+        ]
+      },
+      "prepOverrides": {
+        "finish": {
+          "h": "Stir in a double batch of beans",
+          "p": "When it flips to Keep Warm, stir in two 15-oz cans no-salt-added red kidney beans (drained &amp; rinsed) and one 14.5-oz can no-salt diced tomatoes (drained). Mash about a quarter of the beans against the side of the pot — that's what makes red beans and rice creamy without cream. Close the lid for 10 more minutes.",
+          "chips": [{ "t": "Keep Warm · 10 min" }, { "t": "Mash 1/4 of the beans", "cls": "fast" }],
+          "tip": "<b>Creaminess comes from starch, not fat:</b> mashing part of the beans thickens the pot. Add a splash of broth if it tightens up too much."
+        }
+      },
+      "pucks": {
+        "protein": { "label": "Roasted turkey thigh + andouille", "macros": { "kcal": 260, "protein": 34, "carbs": 0, "fiber": 0, "fat": 12 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Double red beans & the trinity", "macros": { "kcal": 180, "protein": 12, "carbs": 33, "fiber": 11, "fat": 1 } },
+        "sauce": { "label": "Salt-free Creole blend", "macros": { "kcal": 35, "protein": 2, "carbs": 7, "fiber": 2, "fat": 0 } }
+      }
+    },
+    {
+      "id": "chicken-sausage-gumbo",
+      "name": "Chicken & Sausage Gumbo Bowl",
+      "kind": "remix",
+      "sauceId": "gumbo-roux",
+      "protein": {
+        "name": "Chicken thigh + andouille",
+        "serving": "5 oz / ~140 g cooked + 1 oz sausage",
+        "method": "Cut 1 3/4 lb boneless skinless chicken thigh into 1-inch pieces and slice 4 oz chicken andouille thin. Both go in raw with the roux-thickened broth. All thigh here rather than a thigh-breast mix — gumbo wants the richer meat, and the dry roux gave back the fat budget to pay for it.",
+        "appliance": ["Rice cooker · in with the rice", "Skillet · 8 min if you want it browned"],
+        "tip": "<b>Safe temp:</b> poultry to 165°F internal."
+      },
+      "macros": { "kcal": 585, "protein": 53, "carbs": 49, "fiber": 10, "fat": 18 },
+      "shopping": {
+        "protein": { "item": "Chicken thigh, boneless skinless", "amt": "1 3/4 lb" },
+        "produceAdd": [{ "item": "Frozen cut okra", "amt": "2 cups" }],
+        "pantryAdd": [{ "item": "Chicken andouille sausage", "amt": "4 oz (~1 1/2 links)", "aisle": "meat" }]
+      },
+      "note": "Gumbo's flavor lives in a dark roux, which is traditionally half oil — this uses an oven-toasted dry roux instead and gets the same toasted depth for almost no fat. Okra does double duty as thickener and fiber. The richest build at 18 g fat, and still 7 g under the boxed original. ~420 mg sodium.",
+      "overrides": {
+        "base": [
+          { "item": "Parboiled brown rice", "amt": "1/2 cup" },
+          { "item": "Frozen cut okra", "amt": "1/2 cup" },
+          { "item": "Red kidney beans", "amt": "1/4 cup" },
+          { "item": "Frozen seasoning blend", "amt": "1/4 cup" }
+        ]
+      },
+      "prepOverrides": {
+        "finish": {
+          "h": "Stir in the okra, beans &amp; tomatoes",
+          "p": "When it flips to Keep Warm, stir in 2 cups frozen cut okra, one 15-oz can no-salt-added red kidney beans (drained &amp; rinsed) and one 14.5-oz can no-salt diced tomatoes (drained). Close the lid for 10 more minutes — the okra thickens the pot as it heats through.",
+          "chips": [{ "t": "Keep Warm · 10 min" }, { "t": "Okra thickens as it heats", "cls": "fast" }],
+          "tip": "<b>If okra's sliminess puts you off:</b> that mucilage is exactly what thickens gumbo, and it disappears into the pot. Adding it frozen and late keeps it from breaking down completely."
+        }
+      },
+      "pucks": {
+        "protein": { "label": "Chicken thigh + andouille", "macros": { "kcal": 345, "protein": 42, "carbs": 0, "fiber": 0, "fat": 17 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Okra, red beans & the trinity", "macros": { "kcal": 85, "protein": 6, "carbs": 17, "fiber": 6, "fat": 0 } },
+        "sauce": { "label": "Dry-roux gumbo gravy", "macros": { "kcal": 45, "protein": 2, "carbs": 9, "fiber": 2, "fat": 0 } }
+      }
+    },
+    {
+      "id": "blackened-turkey-dirty-rice",
+      "name": "Blackened Turkey \"Dirty\" Rice",
+      "kind": "remix",
+      "sauceId": "creole",
+      "protein": {
+        "name": "Blackened ground turkey (93/7)",
+        "serving": "6 oz / ~170 g cooked",
+        "method": "Brown 1 1/2 lb 93/7 ground turkey with 2 Tbsp of the Creole blend in a dry-ish hot skillet until it's in fine crumbles with deeply blackened edges. This is the one build worth the extra pan — 'dirty' rice is entirely about that browned crust, and a rice cooker can't make it.",
+        "appliance": ["Skillet · 8–10 min"],
+        "tip": "<b>Blackened, not burned:</b> hot pan, don't crowd it, and let the crumbles sit still for a minute at a time so a crust forms. The mushrooms go in later — they're standing in for the chicken livers in the original, and they bring the same earthy depth."
+      },
+      "macros": { "kcal": 515, "protein": 54, "carbs": 47, "fiber": 9, "fat": 12 },
+      "shopping": {
+        "protein": { "item": "Ground turkey 93/7", "amt": "1 1/2 lb" },
+        "produceAdd": [{ "item": "Cremini mushrooms", "amt": "8 oz" }],
+        "pantryAdd": []
+      },
+      "note": "The leanest build in the card — 12 g fat and the lowest sodium at ~240 mg, because it's the only one with no sausage in it at all. Classic dirty rice gets its color and depth from chicken livers; hard-browned mushrooms do the same job and add fiber. Half the sodium of any other build here, and a sixth of the boxed original.",
+      "overrides": {
+        "base": [
+          { "item": "Parboiled brown rice", "amt": "1/2 cup" },
+          { "item": "Browned cremini mushrooms", "amt": "1/2 cup" },
+          { "item": "Red kidney beans", "amt": "1/4 cup" },
+          { "item": "Frozen seasoning blend", "amt": "1/4 cup" }
+        ]
+      },
+      "prepOverrides": {
+        "finish": {
+          "h": "Stir in the mushrooms, beans &amp; tomatoes",
+          "p": "Brown 8 oz sliced cremini in the same skillet after the turkey — they'll pick up the fond. When the cooker flips to Keep Warm, stir them in with one 15-oz can no-salt-added red kidney beans (drained &amp; rinsed) and one 14.5-oz can no-salt diced tomatoes (drained). Close the lid for 10 more minutes.",
+          "chips": [{ "t": "Same skillet · 5 min" }, { "t": "Keep Warm · 10 min" }],
+          "tip": "<b>Don't wash that pan:</b> the browned bits left from the turkey are most of the flavor, and the mushrooms release enough water to lift them straight off."
+        }
+      },
+      "pucks": {
+        "protein": { "label": "Blackened ground turkey (93/7)", "macros": { "kcal": 275, "protein": 43, "carbs": 0, "fiber": 0, "fat": 11 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Mushrooms, red beans & the trinity", "macros": { "kcal": 95, "protein": 6, "carbs": 17, "fiber": 5, "fat": 0 } },
+        "sauce": { "label": "Salt-free Creole blend", "macros": { "kcal": 35, "protein": 2, "carbs": 7, "fiber": 2, "fat": 0 } }
+      }
+    },
+    {
+      "id": "shrimp-creole",
+      "name": "Shrimp Creole",
+      "kind": "remix",
+      "sauceId": "creole-tomato",
+      "protein": {
+        "name": "Creole shrimp",
+        "serving": "6 oz / ~170 g cooked",
+        "method": "Peel 1 1/2 lb raw shrimp and toss with 1 Tbsp of the Creole blend. Buy untreated if you can — a lot of frozen shrimp is soaked in sodium tripolyphosphate, which adds sodium and makes them spongy. These do NOT go in at the start; they wait for the very end.",
+        "appliance": ["Rice cooker · last 5 min on Keep Warm"],
+        "tip": "<b>The one rule that makes or breaks shrimp:</b> pull them the moment they turn opaque and curl into a loose C. A tight O means overcooked — that's the rubbery, faintly ammonia-smelling shrimp that puts people off seafood. Five minutes on Keep Warm is all they need."
+      },
+      "macros": { "kcal": 445, "protein": 51, "carbs": 49, "fiber": 10, "fat": 4 },
+      "shopping": {
+        "protein": { "item": "Raw shrimp, peeled (untreated if possible)", "amt": "1 1/2 lb" },
+        "produceAdd": [],
+        "pantryAdd": []
+      },
+      "note": "The only seafood build on the card, and a deliberately gentle one: shrimp is shellfish, not fish — no fishy aroma, and it takes on whatever it cooks in, which here is tomato and Creole spice. Just 4 g fat, the lowest in the whole meal library. Sodium is the highest here at ~505 mg because shrimp is naturally salty, and it's still a third of the boxed original.",
+      "prepOverrides": {
+        "finish": {
+          "h": "Beans and tomatoes first, shrimp last",
+          "p": "When it flips to Keep Warm, stir in one 15-oz can no-salt-added red kidney beans (drained &amp; rinsed) and the Creole tomato sauce. Give it 5 minutes, THEN fold the seasoned shrimp in and close the lid for 5 more — no longer. They finish in the residual heat.",
+          "chips": [{ "t": "Beans · 5 min" }, { "t": "Shrimp · 5 min, no more", "cls": "fast" }],
+          "tip": "<b>Freezing and reheating this one:</b> shrimp does toughen a little on a second heat — that's real, and it's still perfectly good. If you'd rather not, freeze the pot without the shrimp and cook 6 oz fresh in 3 minutes when you reheat. Your call, not a rule."
+        }
+      },
+      "pucks": {
+        "protein": { "label": "Creole shrimp", "macros": { "kcal": 200, "protein": 40, "carbs": 0, "fiber": 0, "fat": 2 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Red beans & the trinity", "macros": { "kcal": 85, "protein": 6, "carbs": 16, "fiber": 5, "fat": 0 } },
+        "sauce": { "label": "Creole tomato sauce", "macros": { "kcal": 50, "protein": 2, "carbs": 10, "fiber": 3, "fat": 1 } }
+      }
+    },
+    {
+      "id": "black-eyed-pea-mushroom",
+      "name": "Black-Eyed Pea & Smoked Mushroom Jambalaya",
+      "kind": "remix-plant",
+      "sauceId": "creole",
+      "protein": {
+        "name": "Black-eyed peas, smoked mushrooms & plant andouille",
+        "serving": "3/4 cup peas + 1/2 cup mushrooms + 1 1/2 oz plant sausage",
+        "method": "Roast 12 oz cremini mushrooms with 1 Tbsp of the Creole blend and 1/2 tsp liquid smoke at 425°F for 20 min, until they've given up their water and browned hard. Slice 6 oz plant-based andouille. The mushrooms and sausage go in with the rice; the black-eyed peas go in at the end with the beans.",
+        "appliance": ["Oven · 425°F · 20 min", "Rice cooker · in with the rice"],
+        "tip": "<b>Mushrooms are the smoke here:</b> roasting them hard concentrates the glutamates, and with smoked paprika and a little liquid smoke they do the job the andouille does in the meat builds. Don't crowd the pan or they steam instead of browning."
+      },
+      "macros": { "kcal": 500, "protein": 33, "carbs": 80, "fiber": 19, "fat": 7 },
+      "shopping": {
+        "protein": { "item": "Plant-based andouille sausage", "amt": "6 oz" },
+        "produceAdd": [{ "item": "Cremini mushrooms", "amt": "12 oz" }],
+        "pantryAdd": [
+          { "item": "Black-eyed peas, no-salt-added", "amt": "2 cans (15 oz)" },
+          { "item": "Liquid smoke", "amt": "1 small bottle" }
+        ],
+        "pantrySwap": {
+          "from": "chicken broth",
+          "to": { "item": "Unsalted vegetable broth", "amt": "1 1/2 cups" }
+        }
+      },
+      "note": "The fully plant-based build, and the fiber champion at 19 g — nearly fifteen times the boxed original. 33 g protein puts it in line with the other plant builds in the library. Plant sausages are salty too, so at ~485 mg this is not the low-sodium pick; the dirty rice is. Swap the broth for vegetable stock and it's fully vegan.",
+      "prepOverrides": {
+        "finish": {
+          "h": "Stir in the peas, beans &amp; tomatoes",
+          "p": "When it flips to Keep Warm, stir in two 15-oz cans no-salt-added black-eyed peas and one 15-oz can no-salt red kidney beans (all drained &amp; rinsed) with one 14.5-oz can no-salt diced tomatoes (drained). Close the lid for 10 more minutes.",
+          "chips": [{ "t": "Keep Warm · 10 min" }, { "t": "Rinse everything — cuts ~40% of the sodium", "cls": "fast" }],
+          "tip": "<b>Black-eyed peas hold their shape</b> better than most beans through a freeze and reheat, which is why they carry this build instead of more kidney beans."
+        }
+      },
+      "pucks": {
+        "protein": { "label": "Peas, smoked mushrooms & plant andouille", "macros": { "kcal": 270, "protein": 22, "carbs": 34, "fiber": 10, "fat": 6 } },
+        "grain": { "label": "Parboiled brown rice", "macros": { "kcal": 110, "protein": 3, "carbs": 23, "fiber": 2, "fat": 1 } },
+        "veg": { "label": "Red beans & the trinity", "macros": { "kcal": 85, "protein": 6, "carbs": 16, "fiber": 5, "fat": 0 } },
+        "sauce": { "label": "Salt-free Creole blend", "macros": { "kcal": 35, "protein": 2, "carbs": 7, "fiber": 2, "fat": 0 } }
+      }
+    }
+  ],
+  "notes": {
+    "subs": [
+      "Chicken thigh → all breast (leaner, about 5 g less fat) or all thigh (richer, 4 g more)",
+      "Chicken andouille → turkey smoked sausage rope, widely stocked and about half the fat of pork rope at the same sodium",
+      "No andouille at all → 1/2 tsp liquid smoke plus an extra tsp of smoked paprika carries a surprising amount of it",
+      "Parboiled brown rice → white rice for the boxed-authentic version (about 2 g less fiber), or cauliflower rice to lighten it",
+      "Red kidney beans → black-eyed peas, pinto or black — keep ~1/3 cup for the fiber",
+      "No rice cooker? Instant Pot on Rice, a slow cooker on low 3–4 h, or a covered Dutch oven at 350°F",
+      "Too hot? Halve the cayenne — the blend is paprika-forward, not fiery"
+    ],
+    "boost": [
+      "Another 1/4 cup beans: +3 g protein, +4 g fiber, ~5 mg sodium",
+      "Swap 2 oz thigh for breast: +3 g protein, −4 g fat",
+      "Stir 2 Tbsp nutritional yeast through the pot: +4 g protein, more umami, zero sodium",
+      "A soft-boiled egg on top: +6 g protein",
+      "Sodium lever, in order of size: drop the sausage to 1 oz (−500 mg), unsalted broth instead of regular (−700 mg across the pot), rinse the canned beans (−40% of theirs), and the salt-free blend instead of the boxed mix (−2,500 mg across the pot)"
+    ]
+  }
+}
