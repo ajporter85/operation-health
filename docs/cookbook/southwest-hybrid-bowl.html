@@ -1425,11 +1425,15 @@
   // Lower-case the lead word only when the name isn't a proper noun, so
   // "Special burger sauce" reads naturally mid-sentence but "Big Mac-style
   // special sauce" and "Western BBQ" keep their capitals.
+  // The heuristic can't see a lone proper noun — "Creole pot seasoning" has no
+  // second capital, so it would come out "creole". A sauce can declare its own
+  // mid-sentence form; absent, the heuristic stands.
   function midSentence(name) {
     return /[A-Z]/.test(String(name).slice(1))
       ? String(name)
       : String(name).charAt(0).toLowerCase() + String(name).slice(1);
   }
+  function sauceMid(sauce) { return sauce.midName || midSentence(sauce.name); }
 
   // Split the base list into its two pucks: the grain (always the first base
   // item) and everything else (the veg & beans puck).
@@ -1438,39 +1442,233 @@
     return { grain: base.slice(0, 1), veg: base.slice(1) };
   }
 
-  var MODES = {
-    prep: {
-      label: "Cook &amp; Freeze", icon: "🧊",
-      desc: "The batch session that stocks your freezer. Cook every component, then portion into <b>1-cup pucks</b> — protein, grain and veg &amp; beans each on their own — cool, and freeze. Later you just grab and reheat.",
-      prepSub: "Cook → freeze as pucks", cap: "three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
+  // ---- ASSEMBLY FORMAT -------------------------------------------------
+  // How a meal gets cooked, frozen and put back together. The original cards
+  // all use "pucks": each component is cooked and frozen on its own in 1-cup
+  // molds, so any protein pairs with any grain. A one-vessel meal can't work
+  // that way — everything cooks together and freezes as a finished portion —
+  // so its modes, strip, bowl cards, prep steps and nutrition table all read
+  // differently. A meal picks a format with a top-level `format`, either the
+  // id string or an object carrying extras:
+  //     "format": { "id": "onepot", "vessel": "Rice cooker", "cups": 2 }
+  // ABSENT means "pucks", so every existing card behaves exactly as before.
+  //
+  // Strings may use {vessel} {cups} {mold} {count}; curFormat() substitutes
+  // them once from the meal's own options.
+  //
+  // A format must never drop a mode over a *quality* tradeoff — roasted veg
+  // going softer in the freezer is a caveat to write in the copy, not a reason
+  // to take the choice away. `order` is only for modes that truly don't apply.
+  var FORMATS = {
+    pucks: {
+      order: ["prep", "reheat", "fresh"],
+      strip: { lead: "One meal =", parts: ["Protein", "Grain", "Veg &amp; beans"], sauce: "Sauce" },
+      modes: {
+        prep: {
+          label: "Cook &amp; Freeze", icon: "🧊",
+          desc: "The batch session that stocks your freezer. Cook every component, then portion into <b>1-cup pucks</b> — protein, grain and veg &amp; beans each on their own — cool, and freeze. Later you just grab and reheat.",
+          prepSub: "Cook → freeze as pucks", cap: "three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
+        },
+        reheat: {
+          label: "Reheat from Freezer", icon: "🍲",
+          desc: "Pucks already made? Grab <b>1 protein + 1 grain + 1 veg &amp; beans puck + a sauce cube</b>, reheat, and top. No cooking — a ~3-cup meal in minutes, and you can mix &amp; match pucks between meals.",
+          prepSub: "Grab pucks → reheat", cap: "grab three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
+        },
+        fresh: {
+          label: "Cook Fresh", icon: "🍽️",
+          desc: "Cook the whole recipe as one <b>~4-serving batch</b> to eat now or keep in the fridge (<b>~4 days</b>) — no molds, no freezing.",
+          prepSub: "Cook → serve or fridge", cap: "cooked together into one ~3-cup bowl", puckTable: false, nutriSub: "Per 3-cup serving · estimated"
+        }
+      },
+      bowl: {
+        protein: { title: "Protein puck", sub: "Your build" },
+        grain: { title: "Grain puck", sub: "1-cup base" },
+        veg: { title: "Veg &amp; beans puck", sub: "1-cup base" },
+        sauce: { title: "Sauce", sub: "2-Tbsp cube" },
+        fresh: { title: "Fresh", sub: "On top at serving" },
+        subReheat: "~3 cups · grab three pucks", subOther: "~3 cups · one meal"
+      },
+      prepProteinLead: "Cook &amp; season: ",
+      sauceStep: function (sauce) {
+        return {
+          chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
+          tip: sauce.freezes
+            ? "<b>Freeze it separately:</b> portion into your 2-Tbsp molds and pop one onto a meal at serving so it isn't absorbed."
+            : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
+        };
+      },
+      shopReheatNote: "Nothing to buy — you already have the pucks. ",
+      nutri: {
+        caption: "By puck · mix &amp; match",
+        rows: [["protein", "Protein puck"], ["grain", "Grain puck"], ["veg", "Veg & beans puck"], ["sauce", "Sauce cube"]],
+        totalLabel: "Total · ~3-cup meal", servingSuffix: " · ~3-cup meal",
+        disclaimLead: "Per ~3-cup meal (3 one-cup pucks + 2 Tbsp sauce)."
+      },
+      reheatSteps: function (c) {
+        return [
+          { h: "Grab your pucks",
+            p: "From the freezer: one <b>" + esc(c.v.protein.name) + "</b> puck, one grain puck and one veg &amp; beans puck (~1 cup each). That trio is one ~3-cup meal — swap in a different protein or grain puck any time.",
+            chips: [chip("3 pucks + sauce", "freezes")],
+            tip: "<b>Mix &amp; match:</b> because each component froze on its own, any protein pairs with any grain and veg." },
+          { h: "Reheat together",
+            p: "Reheat the three pucks together straight from frozen — microwave 6–9 min, stirring halfway, or a covered pan over medium. Then " + c.sauceLine + ".",
+            chips: [chip("Microwave 6–9 min"), chip("or covered pan")],
+            tip: "<b>No thawing:</b> straight from the freezer is fine; stir halfway so it heats evenly." },
+          { h: "Finish fresh",
+            p: "Top with the fresh add-ons — " + esc(c.freshShort) + " — and serve.",
+            chips: [chip("Add fresh", "warn")],
+            tip: "" }
+        ];
+      },
+      freezeStep: function (c) {
+        return {
+          h: "Portion &amp; freeze as pucks",
+          p: "Pack each component into your 1-cup molds — one protein, one grain and one veg &amp; beans puck per meal (a batch makes 4 of each). Cool completely, freeze solid, then pop out and bag by type. Freeze the sauce in 2-Tbsp cubes. Keep the fresh toppings — " + esc(c.freshShort) + " — out of the freezer; those go on at serving.",
+          chips: [chip("1-cup molds", "freezes"), chip("Pop out & bag", "freezes")],
+          tip: "<b>Molds are throughput, not the limit:</b> once pucks are solid, bag them and the molds are free again. Cool before freezing so they don't ice-crystal; label by date and use oldest first (keeps ~3 mo). Then just switch to Reheat from Freezer."
+        };
+      },
+      fridgeStep: function (c) {
+        return {
+          h: "Combine &amp; portion for the fridge",
+          p: "Fold the protein, grain, veg &amp; beans together (stir the sauce through, or keep it aside to add fresh). Divide into 4 containers, ~3 cups each. Cool, then refrigerate. Add the fresh toppings — " + esc(c.freshShort) + " — at serving, not now.",
+          chips: [chip("4 containers"), chip("Fridge ~4 days", "warn")],
+          tip: "<b>Eating later than 4 days?</b> Freeze some portions instead — switch to Cook &amp; Freeze above for the puck plan."
+        };
+      }
     },
-    reheat: {
-      label: "Reheat from Freezer", icon: "🍲",
-      desc: "Pucks already made? Grab <b>1 protein + 1 grain + 1 veg &amp; beans puck + a sauce cube</b>, reheat, and top. No cooking — a ~3-cup meal in minutes, and you can mix &amp; match pucks between meals.",
-      prepSub: "Grab pucks → reheat", cap: "grab three 1-cup pucks + a sauce cube · ~3 cups", puckTable: true, nutriSub: "Per 3-cup meal · by puck"
-    },
-    fresh: {
-      label: "Cook Fresh", icon: "🍽️",
-      desc: "Cook the whole recipe as one <b>~4-serving batch</b> to eat now or keep in the fridge (<b>~4 days</b>) — no molds, no freezing.",
-      prepSub: "Cook → serve or fridge", cap: "cooked together into one ~3-cup bowl", puckTable: false, nutriSub: "Per 3-cup serving · estimated"
+
+    // One vessel, everything in together, frozen as finished portions. Nothing
+    // is ever separated, so the puck vocabulary would be a lie here — the
+    // components are a *ratio* that goes into the pot, not things you handle.
+    onepot: {
+      order: ["prep", "reheat", "fresh"],
+      strip: { lead: "Each {cups}-cup portion =", parts: ["Protein", "Grain", "Veg &amp; beans"], sauce: "Sauce" },
+      modes: {
+        prep: {
+          label: "Cook &amp; Freeze", icon: "🧊",
+          desc: "One session in the {vessel}: everything goes in together, cooks as a single dish, then gets scooped into <b>{mold} molds</b> and frozen as finished meals. Nothing to separate — the ratio below is what goes in the pot, not something you portion out by hand.",
+          prepSub: "One pot → freeze portions", cap: "one {cups}-cup portion, cooked together", puckTable: true, nutriSub: "Per {cups}-cup meal · by component"
+        },
+        reheat: {
+          label: "Reheat from Freezer", icon: "🍲",
+          desc: "Already portioned? Grab <b>one {cups}-cup block</b> and reheat — no cooking, no assembly, because the whole meal froze together. Fresh toppings go on after.",
+          prepSub: "Grab a portion → reheat", cap: "one {cups}-cup portion + fresh on top", puckTable: true, nutriSub: "Per {cups}-cup meal · by component"
+        },
+        fresh: {
+          label: "Cook Fresh", icon: "🍽️",
+          desc: "Run the same {vessel} batch to eat now and keep in the fridge (<b>~4 days</b>) instead of freezing — no molds. Makes {count} servings.",
+          prepSub: "One pot → serve or fridge", cap: "cooked together into one {cups}-cup bowl", puckTable: false, nutriSub: "Per {cups}-cup serving · estimated"
+        }
+      },
+      bowl: {
+        protein: { title: "Protein", sub: "Your build" },
+        grain: { title: "Grain", sub: "Cooks in the pot" },
+        veg: { title: "Veg &amp; beans", sub: "Cooks in the pot" },
+        sauce: { title: "Seasoning &amp; sauce", sub: "Stirred through" },
+        fresh: { title: "Fresh", sub: "On top at serving" },
+        subReheat: "~{cups} cups · grab one portion", subOther: "~{cups} cups · one meal"
+      },
+      prepProteinLead: "Prep the protein: ",
+      sauceStep: function (sauce) {
+        return {
+          chips: [chip(sauce.tool || "Saucepan"), sauce.freezes ? chip("Cooks into the pot", "freezes") : chip("Best fresh — add at serving", "warn")],
+          tip: sauce.freezes
+            ? "<b>No separate sauce cube here:</b> this seasons the pot itself, so it's already in every portion you freeze — there's nothing to add back when you reheat."
+            : "<b>Add it at serving:</b> this one splits or browns if it's frozen in, so keep it in the fridge (~1 week) and spoon it over after reheating."
+        };
+      },
+      shopReheatNote: "Nothing to buy — the portions are already in the freezer. ",
+      nutri: {
+        caption: "By component · what's in each portion",
+        rows: [["protein", "Protein"], ["grain", "Grain"], ["veg", "Veg & beans"], ["sauce", "Seasoning & sauce"]],
+        totalLabel: "Total · ~{cups}-cup portion", servingSuffix: " · ~{cups}-cup portion",
+        disclaimLead: "Per ~{cups}-cup portion, cooked together in the {vessel}. The component rows are the ratio that goes in the pot — you never separate them."
+      },
+      reheatSteps: function (c) {
+        return [
+          { h: "Grab a portion",
+            p: "One <b>{cups}-cup</b> block from the freezer is one whole meal — protein, grain, veg and beans already cooked together. Nothing to assemble.".replace(/\{cups\}/g, c.tok.cups),
+            chips: [chip("1 portion", "freezes")],
+            tip: "<b>Why there's nothing to mix &amp; match:</b> this one cooks as a single dish, so the portion is the unit. Freeze a couple of builds if you want variety." },
+          { h: "Reheat it",
+            // A one-pot's seasoning cooked in with everything else, so there's
+            // nothing to add back — unless the sauce is a fridge-kept finisher.
+            p: "Straight from frozen — microwave 6–9 min covered, stirring halfway, or a covered pan over medium-low with a splash of water to loosen it." + (c.sauce.freezes ? "" : " Then " + c.sauceLine + "."),
+            chips: [chip("Microwave 6–9 min"), chip("or covered pan")],
+            tip: "<b>A splash of water helps:</b> rice and beans tighten up in the freezer; a tablespoon of water and a lid brings the texture back." },
+          { h: "Finish fresh",
+            p: "Top with the fresh add-ons — " + esc(c.freshShort) + " — and serve.",
+            chips: [chip("Add fresh", "warn")],
+            tip: "" }
+        ];
+      },
+      freezeStep: function (c) {
+        return {
+          h: "Portion &amp; freeze",
+          p: ("Scoop the finished dish straight into your {mold} molds — {count} of them, about {cups} cups each. Cool completely, freeze solid, then pop out and bag. Keep the fresh toppings — " + esc(c.freshShort) + " — out of the freezer; those go on at serving.").replace(/\{(\w+)\}/g, function (m, k) { return c.tok[k] != null ? c.tok[k] : m; }),
+          chips: [chip("{mold} molds".replace("{mold}", c.tok.mold), "freezes"), chip("Pop out & bag", "freezes")],
+          tip: "<b>Cool it first:</b> a hot dish straight into the freezer ices over and waters down on reheat. Spread it out to cool, then freeze. Label by date, oldest first (keeps ~3 mo)."
+        };
+      },
+      fridgeStep: function (c) {
+        return {
+          h: "Portion for the fridge",
+          p: ("Divide straight into {count} containers, about {cups} cups each. Cool, then refrigerate. Add the fresh toppings — " + esc(c.freshShort) + " — at serving, not now.").replace(/\{(\w+)\}/g, function (m, k) { return c.tok[k] != null ? c.tok[k] : m; }),
+          chips: [chip("{count} containers".replace("{count}", c.tok.count)), chip("Fridge ~4 days", "warn")],
+          tip: "<b>Eating later than 4 days?</b> Freeze some portions instead — switch to Cook &amp; Freeze above."
+        };
+      }
     }
   };
-  function curMode() { return MODES[state.mode] || MODES.prep; }
+
+  // Resolve the meal's format once: pick the table entry and substitute the
+  // {vessel}/{cups}/{mold}/{count} tokens from the meal's own options. Format
+  // strings are plain data, so a card with no `format` gets FORMATS.pucks with
+  // no tokens to replace — byte-for-byte what the engine emitted before.
+  // Keyed on MEAL itself, not a bare flag: the hub reuses this engine and
+  // swaps MEAL when you pick a different meal, so a plain cache would pin
+  // every meal to the first one's format.
+  var _fmt = null, _fmtFor = null;
+  function curFormat() {
+    if (_fmt && _fmtFor === MEAL) return _fmt;
+    _fmtFor = MEAL;
+    var f = MEAL.format, o = (f && typeof f === "object") ? f : {};
+    var base = FORMATS[(typeof f === "object" && f) ? f.id : f] || FORMATS.pucks;
+    var tok = {
+      vessel: o.vessel || "one pot", cups: o.cups != null ? o.cups : 3,
+      mold: o.mold || "1-cup", count: o.count != null ? o.count : 4
+    };
+    var walk = function (x) {
+      if (typeof x === "string") return x.replace(/\{(\w+)\}/g, function (m, k) { return tok[k] != null ? tok[k] : m; });
+      if (Array.isArray(x)) return x.map(walk);
+      if (x && typeof x === "object") {
+        var r = {}; Object.keys(x).forEach(function (k) { r[k] = walk(x[k]); }); return r;
+      }
+      return x; // functions pass through; they substitute from ctx.tok
+    };
+    _fmt = walk(base);
+    _fmt.tok = tok;
+    return _fmt;
+  }
+  function modeIds() { return curFormat().order; }
+  function curMode() {
+    var ms = curFormat().modes;
+    return ms[state.mode] || ms[modeIds()[0]];
+  }
 
   function renderMode() {
-    var mo = curMode();
-    var seg = Object.keys(MODES).map(function (k) {
-      var mm = MODES[k];
+    var fmt = curFormat(), mo = curMode();
+    var seg = modeIds().map(function (k) {
+      var mm = fmt.modes[k];
       return '<button class="modebtn' + (k === state.mode ? " active" : "") + '" type="button" data-mode="' + k + '" aria-pressed="' + (k === state.mode) + '">' +
         '<span class="mi">' + mm.icon + '</span><span>' + mm.label + "</span></button>";
     }).join("");
     var plus = '<span class="ms-plus">+</span>';
     var strip =
-      '<div class="mealstrip"><span class="ms-lead">One meal =</span>' +
-      '<span class="ms-puck">Protein</span>' + plus +
-      '<span class="ms-puck">Grain</span>' + plus +
-      '<span class="ms-puck">Veg &amp; beans</span>' + plus +
-      '<span class="ms-puck sauce">Sauce</span>' +
+      '<div class="mealstrip"><span class="ms-lead">' + fmt.strip.lead + "</span>" +
+      fmt.strip.parts.map(function (p) { return '<span class="ms-puck">' + p + "</span>" + plus; }).join("") +
+      '<span class="ms-puck sauce">' + fmt.strip.sauce + "</span>" +
       '<span class="ms-cap">' + esc(mo.cap) + "</span></div>";
     document.getElementById("modebar").innerHTML =
       '<div class="modeseg" role="group" aria-label="Prep mode">' + seg + "</div>" +
@@ -1510,31 +1708,31 @@
   // that job belongs to the shopping list, and mixing the two made both hard
   // to scan (and forced a guess about which puck each purchase belonged to).
   function renderBowl() {
-    var v = activeVar(), sauce = sauceOf(v), sb = splitBase(v);
+    var v = activeVar(), sauce = sauceOf(v), sb = splitBase(v), b = curFormat().bowl;
     var mealLis = function (arr) { return arr.map(function (b) {
       return '<li>' + esc(b.item) + ' <span class="q amt">' + esc(b.amt) + "</span></li>";
     }).join(""); };
 
     document.getElementById("body-bowl").innerHTML =
       '<div class="card picked">' +
-        '<div class="comp-title"><span class="num">1</span> Protein puck <span class="sub">Your build</span></div>' +
+        '<div class="comp-title"><span class="num">1</span> ' + b.protein.title + ' <span class="sub">' + b.protein.sub + "</span></div>" +
         '<div class="picked-protein">' +
           '<span class="pname">' + esc(v.protein.name) + "</span>" +
           '<span class="pserve">' + esc(v.protein.serving) + " · " + puckProtein(v) + "g protein</span>" +
         "</div></div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">2</span> Grain puck <span class="sub">1-cup base</span></div>' +
+        '<div class="comp-title"><span class="num g">2</span> ' + b.grain.title + ' <span class="sub">' + b.grain.sub + "</span></div>" +
         '<ul class="ing">' + mealLis(sb.grain) + "</ul></div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">3</span> Veg &amp; beans puck <span class="sub">1-cup base</span></div>' +
+        '<div class="comp-title"><span class="num g">3</span> ' + b.veg.title + ' <span class="sub">' + b.veg.sub + "</span></div>" +
         '<ul class="ing">' + mealLis(sb.veg) + "</ul>" +
         '<div class="mini">The plant base brings ' + esc(MEAL.baseContribution) + ".</div></div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">4</span> Sauce <span class="sub">2-Tbsp cube</span></div>' +
+        '<div class="comp-title"><span class="num g">4</span> ' + b.sauce.title + ' <span class="sub">' + b.sauce.sub + "</span></div>" +
         '<div class="saucename">' + esc(sauce.name) + "</div>" +
         '<ul class="ing">' + mealLis(sauce.items) + "</ul></div>" +
       '<div class="card">' +
-        '<div class="comp-title"><span class="num g">5</span> Fresh <span class="sub">On top at serving</span></div>' +
+        '<div class="comp-title"><span class="num g">5</span> ' + b.fresh.title + ' <span class="sub">' + b.fresh.sub + "</span></div>" +
         '<ul class="ing">' + freshOf(v).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul></div>" +
       '<div class="buildnote"><b>This build:</b> ' + esc(v.note) + "</div>";
   }
@@ -1554,7 +1752,7 @@
     var el = document.getElementById("body-shop");
 
     if (state.mode === "reheat") {
-      el.innerHTML = '<div class="shop-note">Nothing to buy — you already have the pucks. ' +
+      el.innerHTML = '<div class="shop-note">' + curFormat().shopReheatNote +
         'Switch to <b>Cook &amp; Freeze</b> or <b>Fresh</b> above for the shopping list.</div>';
       return;
     }
@@ -1629,21 +1827,10 @@
     if (state.mode === "reheat") {
       var sauceLine = sauce.freezes
         ? "pop a 2-Tbsp sauce cube on top"
-        : "add your fresh " + midSentence(sauce.name) + " from the fridge";
-      steps = [
-        { h: "Grab your pucks",
-          p: "From the freezer: one <b>" + esc(v.protein.name) + "</b> puck, one grain puck and one veg &amp; beans puck (~1 cup each). That trio is one ~3-cup meal — swap in a different protein or grain puck any time.",
-          chips: [chip("3 pucks + sauce", "freezes")],
-          tip: "<b>Mix &amp; match:</b> because each component froze on its own, any protein pairs with any grain and veg." },
-        { h: "Reheat together",
-          p: "Reheat the three pucks together straight from frozen — microwave 6–9 min, stirring halfway, or a covered pan over medium. Then " + sauceLine + ".",
-          chips: [chip("Microwave 6–9 min"), chip("or covered pan")],
-          tip: "<b>No thawing:</b> straight from the freezer is fine; stir halfway so it heats evenly." },
-        { h: "Finish fresh",
-          p: "Top with the fresh add-ons — " + esc(freshShort) + " — and serve.",
-          chips: [chip("Add fresh", "warn")],
-          tip: "" }
-      ];
+        : "add your fresh " + sauceMid(sauce) + " from the fridge";
+      steps = curFormat().reheatSteps({
+        v: v, sauce: sauce, freshShort: freshShort, sauceLine: sauceLine, tok: curFormat().tok
+      });
     } else {
       var isRice = /rice/i.test(grain);
       var mkChips = function (arr) { return (arr || []).map(function (c) { return chip(c.t); }); };
@@ -1651,7 +1838,9 @@
         var ov = stepOver(v, st);
         if (st.kind === "grain") {
           return {
-            h: ov.h || ("Cook the " + grain),
+            // A one-pot's grain step is the whole cooker run, not "cook the
+            // rice", so the meal may name its own step; the default stands.
+            h: ov.h || st.h || ("Cook the " + grain),
             p: ov.p || ((isRice && st.pRice) ? st.pRice : st.p),
             chips: mkChips(ov.chips || st.chips),
             tip: ov.tip || ((isRice && st.tipRice) ? st.tipRice : (st.tip || ""))
@@ -1659,7 +1848,7 @@
         }
         if (st.kind === "protein") {
           return {
-            h: "Cook &amp; season: " + esc(v.protein.name),
+            h: curFormat().prepProteinLead + esc(v.protein.name),
             p: v.protein.method + " Target " + esc(v.protein.serving) + " per meal.",
             chips: v.protein.appliance.map(function (a) { return chip(a); }),
             // A build can state its own tip; the fallbacks only guess from the
@@ -1672,13 +1861,14 @@
           };
         }
         if (st.kind === "sauce") {
+          // Chips and tip are format-owned: a puck meal freezes the sauce as a
+          // separate 2-Tbsp cube, a one-pot cooks it into every portion.
+          var ss = curFormat().sauceStep(sauce);
           return {
-            h: "Make the " + midSentence(sauce.name),
+            h: "Make the " + sauceMid(sauce),
             p: sauce.recipe,
-            chips: [chip(sauce.tool || "Blender"), sauce.freezes ? chip("Freeze in 2-Tbsp molds", "freezes") : chip("Best fresh — fridge only", "warn")],
-            tip: sauce.freezes
-              ? "<b>Freeze it separately:</b> portion into your 2-Tbsp molds and pop one onto a meal at serving so it isn't absorbed."
-              : "<b>Make it fresh:</b> this sauce splits/browns when frozen — keep it in the fridge (~1 week) and add at serving."
+            chips: ss.chips,
+            tip: ss.tip
           };
         }
         return {
@@ -1689,21 +1879,10 @@
         };
       });
 
-      if (state.mode === "prep") {
-        steps.push({
-          h: "Portion &amp; freeze as pucks",
-          p: "Pack each component into your 1-cup molds — one protein, one grain and one veg &amp; beans puck per meal (a batch makes 4 of each). Cool completely, freeze solid, then pop out and bag by type. Freeze the sauce in 2-Tbsp cubes. Keep the fresh toppings — " + esc(freshShort) + " — out of the freezer; those go on at serving.",
-          chips: [chip("1-cup molds", "freezes"), chip("Pop out & bag", "freezes")],
-          tip: "<b>Molds are throughput, not the limit:</b> once pucks are solid, bag them and the molds are free again. Cool before freezing so they don't ice-crystal; label by date and use oldest first (keeps ~3 mo). Then just switch to Reheat from Freezer."
-        });
-      } else {
-        steps.push({
-          h: "Combine &amp; portion for the fridge",
-          p: "Fold the protein, grain, veg &amp; beans together (stir the sauce through, or keep it aside to add fresh). Divide into 4 containers, ~3 cups each. Cool, then refrigerate. Add the fresh toppings — " + esc(freshShort) + " — at serving, not now.",
-          chips: [chip("4 containers"), chip("Fridge ~4 days", "warn")],
-          tip: "<b>Eating later than 4 days?</b> Freeze some portions instead — switch to Cook &amp; Freeze above for the puck plan."
-        });
-      }
+      var closeCtx = { v: v, sauce: sauce, freshShort: freshShort, tok: curFormat().tok };
+      steps.push(state.mode === "prep"
+        ? curFormat().freezeStep(closeCtx)
+        : curFormat().fridgeStep(closeCtx));
     }
 
     document.getElementById("body-prep").innerHTML = steps.map(function (s, i) {
@@ -1722,9 +1901,10 @@
       return '<div class="stat"><span class="v ' + (cls || "") + '">' + val + '</span><span class="u">' + unit + '</span><span class="stat-label">' + label + "</span></div>";
     };
 
+    var nu = curFormat().nutri;
     var puckTbl = "";
     if (state.mode !== "fresh" && v.pucks) {
-      var order = [["protein", "Protein puck"], ["grain", "Grain puck"], ["veg", "Veg & beans puck"], ["sauce", "Sauce cube"]];
+      var order = nu.rows;
       var prows = order.map(function (o) {
         var p = v.pucks[o[0]]; if (!p) return "";
         var mm = p.macros;
@@ -1733,17 +1913,17 @@
           '</td><td class="mono">' + mm.fiber + '</td><td class="mono">' + mm.fat + "</td></tr>";
       }).join("");
       puckTbl =
-        '<table class="pucktbl"><caption>By puck · mix &amp; match</caption>' +
+        '<table class="pucktbl"><caption>' + nu.caption + "</caption>" +
         '<thead><tr><th>Component</th><th>kcal</th><th class="mp">P</th><th class="mc">C</th><th class="mf">fiber</th><th class="mx">fat</th></tr></thead>' +
         "<tbody>" + prows +
-        '<tr class="ptot"><td>Total · ~3-cup meal</td><td class="mono">' + m.kcal + '</td><td class="mono">' + m.protein +
+        '<tr class="ptot"><td>' + nu.totalLabel + '</td><td class="mono">' + m.kcal + '</td><td class="mono">' + m.protein +
         '</td><td class="mono">' + m.carbs + '</td><td class="mono">' + m.fiber + '</td><td class="mono">' + m.fat + "</td></tr>" +
         "</tbody></table>";
     }
 
     document.getElementById("body-nutri").innerHTML =
       '<div class="nutri">' +
-        '<span class="nlabel">Estimated macros — ' + esc(v.name) + " · ~3-cup meal</span>" +
+        '<span class="nlabel">Estimated macros — ' + esc(v.name) + nu.servingSuffix + "</span>" +
         '<div class="stat-row">' +
           stat(m.kcal, " kcal", "Calories") + stat(m.protein, "g", "Protein", "prot") +
           stat(m.carbs, "g", "Carbs", "carb") + stat(m.fiber, "g", "Fiber", "fib") + stat(m.fat, "g", "Fat", "fat") +
@@ -1760,7 +1940,7 @@
           '<span><i style="background:var(--macro-fat)"></i>Fat <b>' + m.fat + "g · " + fp + '%</b></span>' +
         "</div>" +
         puckTbl +
-        '<p class="disclaim">Per ~3-cup meal (3 one-cup pucks + 2 Tbsp sauce). Fiber is counted within carbs. Estimates from standard per-ingredient values (~±10–15%) — actual macros vary with exact weights. V2: swap in a food-database lookup for label-accurate numbers.</p>' +
+        '<p class="disclaim">' + nu.disclaimLead + ' Fiber is counted within carbs. Estimates from standard per-ingredient values (~±10–15%) — actual macros vary with exact weights. V2: swap in a food-database lookup for label-accurate numbers.</p>' +
       "</div>";
   }
 
@@ -1775,6 +1955,10 @@
   }
 
   function update() {
+    // state.mode is seeded before the meal (and so the format) is known, and
+    // the hub keeps one state across meals — so a mode the current format
+    // doesn't offer falls back to its first rather than rendering no toggle.
+    if (modeIds().indexOf(state.mode) < 0) state.mode = modeIds()[0];
     renderMode();
     renderTabs();
     renderBowl();
@@ -1785,7 +1969,7 @@
     var setTxt = function (id, t) { var el = document.getElementById(id); if (el) el.textContent = t; };
     setTxt("sub-prep", mo.prepSub);
     setTxt("sub-nutri", mo.nutriSub);
-    setTxt("sub-bowl", reheat ? "~3 cups · grab three pucks" : "~3 cups · one meal");
+    setTxt("sub-bowl", reheat ? curFormat().bowl.subReheat : curFormat().bowl.subOther);
     setTxt("sub-shop", reheat ? "Nothing to buy" : "Buy for 4 meals");
     var sw = document.getElementById("sec-swaps");
     if (sw) { if (reheat) sw.setAttribute("hidden", ""); else sw.removeAttribute("hidden"); }
