@@ -46,6 +46,11 @@ THEMES.forEach(t => {
   islands.push('<script type="application/json" class="theme-data" id="data-' + t.id + '">\n' + jsonTxt + '\n</script>');
 });
 
+// The meal count was spelled out by hand while the build count was derived, so
+// adding Meal 07 left the hub reading "Six freezer meals · 44 builds".
+const COUNT_WORD = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+  "Eight", "Nine", "Ten", "Eleven", "Twelve"][THEMES.length] || String(THEMES.length);
+
 // --- the 6 collapsible detail sections (verbatim from a theme card) ---
 const detailSections = `  <details class="sec" open>
     <summary><span class="caret">›</span><h2 id="h-bowl">In One Bowl</h2><span class="rule"></span><span class="subnote" id="sub-bowl">~3 cups · one meal</span></summary>
@@ -212,7 +217,7 @@ const body = `<div class="wrap">
   <header class="lib-hero">
     <span class="eyebrow">Operation Health</span>
     <h1>Meal <span class="lead">Library</span></h1>
-    <p class="tagline">Six freezer meals · ${totalBuilds} builds. Tap a meal for its full recipe card — ingredients, macros, Souper Cube fill, freeze &amp; reheat, and an exact shopping list, all driven by the build you pick.</p>
+    <p class="tagline">${COUNT_WORD} freezer meals · ${totalBuilds} builds. Tap a meal for its full recipe card — ingredients, macros, freeze &amp; reheat, and an exact shopping list, all driven by the build you pick.</p>
   </header>
 
   <nav class="hubnav" id="hubnav">
