@@ -11,6 +11,9 @@ A personal health-tracking app, built as a **local-first PWA**. The full vision 
 
 **No slice is currently queued.** Candidates: **Meals M3** (nutrition → consistency dials + nutrition trend charts), the **Workouts** heavy module, the **scoring-dials Settings UI**, or per-habit dot strips. Still **not** started: rule engine, reminders, sync, installability/iPhone home-screen. See design-doc **§13** (handoff) and **§14** (future directions + the external-dependency decision). **Confirm the next piece with the user and share a build plan before writing code.**
 
+## The ideas inbox (`docs/ideas/`)
+Pre-engineering brainstorms (often done in the Claude app, then pasted in) land in `docs/ideas/`. **The folder is gitignored except its README** — the notes carry personal health/macro detail and the repo is public, so they're local-only. **When a module gets queued, check `docs/ideas/` first** for a matching note and fold it into the build plan. These notes are *input*, not spec — the two `docs/` source-of-truth files still win, and anything from a note that becomes real should graduate into them.
+
 ## Hard constraints (the default — see §14 on when to revisit)
 - **No build step, no framework, no external/CDN dependencies.** Vanilla HTML/CSS/JS — held through Phase 2 + the logging rework + Meals (charts are hand-rolled inline SVG). Node is dev-tooling only; the app ships zero-dependency.
 - Persistence via **`localStorage`** through a thin storage module (so IndexedDB can replace it later without touching the UI).

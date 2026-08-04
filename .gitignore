@@ -12,3 +12,9 @@ operation-health-*.json
 # whatever the files are named. Only the explanatory README is tracked.
 /live-data/*
 !/live-data/README.md
+
+# The ideas folder is the private brainstorm inbox — notes here are expected to
+# carry personal health/macro detail, so keep ALL of it off git. Only the
+# explanatory README (which holds no personal data) is tracked.
+/docs/ideas/*
+!/docs/ideas/README.md
