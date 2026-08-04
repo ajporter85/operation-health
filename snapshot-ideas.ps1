@@ -100,8 +100,13 @@ if ($all.Count -gt $Keep) {
 
       $arg = '-NoProfile -ExecutionPolicy Bypass -File "D:\ProjectHealth\snapshot-ideas.ps1"'
       $a = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument $arg
-      $t = New-ScheduledTaskTrigger -Daily -At 9am
-      Register-ScheduledTask -TaskName 'OperationHealth-SnapshotIdeas' -Action $a -Trigger $t
+      $t = New-ScheduledTaskTrigger -Daily -At 6pm
+      $s = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+      Register-ScheduledTask -TaskName 'OperationHealth-SnapshotIdeas' -Action $a -Trigger $t -Settings $s
+
+    -StartWhenAvailable is NOT optional. Without it a run scheduled while the PC is
+    off is skipped outright - Task Scheduler does not catch up at boot - so the
+    backup silently stops happening on any day the machine was off at 6pm.
 
     To restore: copy the file you want back out of the snapshot folder.
 #>
